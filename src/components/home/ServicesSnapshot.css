@@ -1,6 +1,8 @@
 .services-snapshot {
-  background-color: var(--bg-white);
+  background: linear-gradient(180deg, var(--bg-white) 0%, var(--bg-light) 100%);
   padding: 100px 0;
+  position: relative;
+  overflow: hidden;
 }
 
 .services-header {
@@ -72,14 +74,40 @@
   border-radius: 15px;
   overflow: hidden;
   box-shadow: var(--shadow);
-  transition: all 0.4s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
+  border: 2px solid transparent;
+  position: relative;
+}
+
+.special-service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-pink) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 0;
+  border-radius: 15px;
+}
+
+.special-service-card:hover::before {
+  opacity: 0.05;
 }
 
 .special-service-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(26, 35, 126, 0.2);
+  border-color: var(--primary-color);
+}
+
+.special-service-content {
+  position: relative;
+  z-index: 1;
 }
 
 .special-service-image-wrapper {

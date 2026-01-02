@@ -26,7 +26,7 @@ const ServicesSnapshot = () => {
           <div className="special-service-card">
             <div className="special-service-image-wrapper">
               <img 
-                src="https://images.unsplash.com/photo-1551076805-e1869033e561?w=600&h=400&fit=crop" 
+                src="https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=600&h=400&fit=crop" 
                 alt="Auto Injury Treatment"
                 className="special-service-image"
                 loading="lazy"
@@ -42,7 +42,7 @@ const ServicesSnapshot = () => {
           <div className="special-service-card">
             <div className="special-service-image-wrapper">
               <img 
-                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop" 
+                src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600&h=400&fit=crop" 
                 alt="Sports Medicine"
                 className="special-service-image"
                 loading="lazy"
@@ -58,7 +58,7 @@ const ServicesSnapshot = () => {
           <div className="special-service-card">
             <div className="special-service-image-wrapper">
               <img 
-                src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=600&h=400&fit=crop" 
+                src="https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=600&h=400&fit=crop" 
                 alt="Workers Compensation"
                 className="special-service-image"
                 loading="lazy"

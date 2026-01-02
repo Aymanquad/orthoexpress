@@ -20,10 +20,9 @@ const Header = () => {
   ]
 
   const locations = [
-    { name: 'Lancaster', slug: 'lancaster' },
-    { name: 'Farmers Branch', slug: 'farmers-branch' },
-    { name: 'Midland', slug: 'midland' },
-    { name: 'Waxahachie', slug: 'waxahachie' }
+    { name: 'Los Angeles', slug: 'los-angeles' },
+    { name: 'London', slug: 'london' },
+    { name: 'Berlin', slug: 'berlin' }
   ]
 
   const toggleMenu = () => {
@@ -103,7 +102,7 @@ const Header = () => {
                   {locations.map((location) => (
                     <li key={location.slug}>
                       <Link 
-                        to="/locations"
+                        to={`/locations/${location.slug}`}
                         onClick={() => {
                           setIsMenuOpen(false)
                           setIsLocationsOpen(false)

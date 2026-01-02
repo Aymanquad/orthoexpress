@@ -13,12 +13,20 @@
 }
 
 .testimonial-card {
-  background-color: var(--bg-light);
+  background: linear-gradient(135deg, var(--bg-light) 0%, white 100%);
   padding: 50px 40px;
-  border-radius: 10px;
+  border-radius: 15px;
   box-shadow: var(--shadow-lg);
   flex: 1;
   position: relative;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(26, 35, 126, 0.2);
 }
 
 .testimonial-header {

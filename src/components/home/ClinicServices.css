@@ -29,11 +29,18 @@
 }
 
 .service-slide-content {
-  background-color: var(--bg-light);
+  background: linear-gradient(135deg, var(--bg-light) 0%, white 100%);
   padding: 60px 50px;
-  border-radius: 10px;
+  border-radius: 15px;
   text-align: center;
   box-shadow: var(--shadow);
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.service-slide-content:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 8px 30px rgba(26, 35, 126, 0.15);
 }
 
 .service-slide-title {

@@ -11,6 +11,7 @@ const BlogDetail = () => {
       title: 'Understanding Common Orthopedic Injuries',
       date: 'March 15, 2024',
       category: 'General Health',
+      image: 'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=1200&h=600&fit=crop',
       content: `
         <p>Orthopedic injuries are among the most common medical conditions affecting people of all ages. Understanding these injuries can help you recognize symptoms early and seek appropriate treatment.</p>
         
@@ -42,6 +43,7 @@ const BlogDetail = () => {
       title: 'Recovery Tips After Orthopedic Surgery',
       date: 'March 10, 2024',
       category: 'Recovery',
+      image: '/assets/recovery-after-orthopedicsurgery.jpg',
       content: `
         <p>Recovery after orthopedic surgery requires patience, dedication, and following your doctor's instructions carefully. Here are essential tips to help you through the recovery process.</p>
         
@@ -65,6 +67,7 @@ const BlogDetail = () => {
       title: 'Sports Injury Prevention Strategies',
       date: 'March 5, 2024',
       category: 'Sports Medicine',
+      image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=1200&h=600&fit=crop',
       content: `
         <p>Preventing sports injuries is essential for athletes of all levels. Here are proven strategies to keep you in the game.</p>
         
@@ -83,6 +86,69 @@ const BlogDetail = () => {
         <h3>Listen to Your Body</h3>
         <p>Pay attention to pain and fatigue. Rest when needed and don't push through injuries.</p>
       `
+    },
+    'managing-chronic-pain': {
+      title: 'Managing Chronic Orthopedic Pain',
+      date: 'February 28, 2024',
+      category: 'Pain Management',
+      image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1200&h=600&fit=crop',
+      content: `
+        <p>Chronic orthopedic pain can significantly impact your daily life and well-being. Here are effective strategies for managing long-term pain and improving your quality of life.</p>
+        
+        <h3>Understanding Chronic Pain</h3>
+        <p>Chronic pain persists beyond the normal healing period and may require ongoing management strategies. Understanding your pain is the first step toward effective treatment.</p>
+
+        <h3>Medical Treatment Options</h3>
+        <p>Various medical treatments can help manage chronic pain, including medications, injections, and physical therapy. Work with your healthcare provider to find the right combination.</p>
+
+        <h3>Lifestyle Modifications</h3>
+        <p>Simple lifestyle changes can make a significant difference. This includes maintaining a healthy weight, staying active within your limits, and practicing stress management techniques.</p>
+
+        <h3>Mind-Body Techniques</h3>
+        <p>Techniques such as meditation, deep breathing, and mindfulness can help you better manage pain and reduce its impact on your life.</p>
+      `
+    },
+    'exercise-for-joint-health': {
+      title: 'Exercise for Joint Health',
+      date: 'February 20, 2024',
+      category: 'Exercise',
+      image: '/assets/joint-img.jpg',
+      content: `
+        <p>Regular exercise is essential for maintaining healthy joints and preventing orthopedic issues. Discover the best exercises to keep your joints strong and flexible.</p>
+        
+        <h3>Low-Impact Exercises</h3>
+        <p>Low-impact activities like swimming, cycling, and walking are excellent for joint health. These exercises strengthen muscles without excessive stress on joints.</p>
+
+        <h3>Strength Training</h3>
+        <p>Building muscle strength supports and protects your joints. Focus on exercises that target the muscles around your joints without causing pain.</p>
+
+        <h3>Flexibility and Range of Motion</h3>
+        <p>Stretching and range-of-motion exercises help maintain joint flexibility and prevent stiffness. Regular stretching can improve mobility and reduce the risk of injury.</p>
+
+        <h3>Balance and Stability</h3>
+        <p>Balance exercises help prevent falls and injuries. Simple balance training can significantly improve joint stability and coordination.</p>
+      `
+    },
+    'when-to-see-orthopedic-specialist': {
+      title: 'When to See an Orthopedic Specialist',
+      date: 'February 15, 2024',
+      category: 'General Health',
+      image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=1200&h=600&fit=crop',
+      content: `
+        <p>Knowing when to see an orthopedic specialist can help you get the right care at the right time. Here are key signs and symptoms that indicate you should consult with an orthopedic specialist.</p>
+        
+        <h3>Persistent Pain</h3>
+        <p>If you experience pain that lasts more than a few weeks or interferes with your daily activities, it's time to see a specialist. Persistent pain may indicate an underlying condition that needs professional evaluation.</p>
+
+        <h3>Limited Range of Motion</h3>
+        <p>Difficulty moving a joint through its full range of motion, or feeling that a joint is stuck, warrants a specialist consultation. This could indicate injury or joint degeneration.</p>
+
+        <h3>Joint Instability</h3>
+        <p>If a joint feels weak, gives way, or feels like it might "pop out," you should see an orthopedic specialist. Instability can lead to further injury if not addressed.</p>
+
+        <h3>Visible Deformity or Swelling</h3>
+        <p>Visible changes in joint appearance, significant swelling, or deformity require immediate medical attention. These symptoms may indicate serious injury or infection.</p>
+      `
     }
   }
 
@@ -90,12 +156,23 @@ const BlogDetail = () => {
     title: 'Blog Post',
     date: 'Date',
     category: 'Category',
+    image: '',
     content: '<p>Content not found.</p>'
   }
 
   return (
     <div className="blog-detail-page">
       <section className="blog-detail-hero section">
+        {blog.image && (
+          <div className="blog-detail-hero-background">
+            <img 
+              src={blog.image} 
+              alt={blog.title}
+              className="blog-detail-hero-image"
+            />
+            <div className="blog-detail-hero-overlay"></div>
+          </div>
+        )}
         <div className="container">
           <Link to="/blogs" className="back-link">← Back to Blogs</Link>
           <div className="blog-header">

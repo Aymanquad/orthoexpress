@@ -8,40 +8,34 @@ const LocationsPreview = () => {
 
   const locations = [
     {
-      name: 'Lancaster',
-      address: '2700 W Pleasant Run Road, Suite 340',
-      city: 'Lancaster, TX 75146',
-      phone: '(469) 225-0666',
+      name: 'Los Angeles',
+      slug: 'los-angeles',
+      address: '8500 Beverly Boulevard, Suite 450',
+      city: 'Los Angeles, CA 90048',
+      phone: '(323) 655-8450',
       image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&h=600&fit=crop',
-      hours: 'Mon-Fri: 8AM-6PM',
-      features: ['Walk-in Available', 'X-Ray On-Site', 'Parking Available']
+      hours: 'Mon-Fri: 9AM-5PM',
+      features: ['Advanced Sports Medicine', 'Joint Replacement', 'Spinal Surgery']
     },
     {
-      name: 'Farmers Branch',
-      address: '13988 Diplomat Drive, Suite 100',
-      city: 'Farmers Branch, TX 75234',
-      phone: '(214) 949-8918',
+      name: 'London',
+      slug: 'london',
+      address: '123 Harley Street',
+      city: 'London, UK W1G 6AX',
+      phone: '+44 20 7935 5555',
       image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&h=600&fit=crop',
-      hours: 'Mon-Fri: 8AM-6PM',
-      features: ['Same-Day Appointments', 'Physical Therapy', 'Easy Access']
+      hours: 'Mon-Fri: 9AM-5PM',
+      features: ['Hand & Wrist Surgery', 'Orthopedic Trauma Care', 'Rehabilitation Services']
     },
     {
-      name: 'Midland',
-      address: '1304 West Texas Avenue',
-      city: 'Midland, Texas 79701',
-      phone: '(432) 599-9580',
-      image: 'https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=800&h=600&fit=crop',
-      hours: 'Mon-Fri: 8AM-6PM',
-      features: ['Full Service Clinic', 'Expert Staff', 'Modern Facility']
-    },
-    {
-      name: 'Waxahachie',
-      address: '1324 Brown St#100',
-      city: 'Waxahachie, Tx 75165',
-      phone: '(972) 937-8900',
-      image: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=800&h=600&fit=crop',
-      hours: 'Mon-Fri: 8AM-6PM',
-      features: ['Comprehensive Care', 'Friendly Staff', 'Convenient Location']
+      name: 'Berlin',
+      slug: 'berlin',
+      address: 'Friedrichstraße 123',
+      city: '10117 Berlin, Germany',
+      phone: '+49 30 1234 5678',
+      image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&h=600&fit=crop',
+      hours: 'Mon-Fri: 9AM-5PM',
+      features: ['Minimally Invasive Surgery', 'Hip & Knee Care', 'Pain Management']
     }
   ]
 
@@ -125,7 +119,7 @@ const LocationsPreview = () => {
                     ))}
                   </div>
 
-                  <Link to="/locations" className="location-action-btn">
+                  <Link to={`/locations/${location.slug}`} className="location-action-btn">
                     <FaDirections className="btn-icon" />
                     <span>Get Directions</span>
                   </Link>

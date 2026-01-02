@@ -1,67 +1,88 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { FaMapMarkerAlt, FaArrowRight } from 'react-icons/fa'
 import './WorkersComp.css'
 
 const WorkersComp = () => {
+  const locations = [
+    'Lancaster',
+    'Farmers Branch',
+    'Midland',
+    'Waxahachie'
+  ]
+
   return (
     <div className="workers-comp-page">
-      <section className="workers-comp-hero section">
-        <div className="container">
-          <h1 className="page-title">Workers' Compensation Services</h1>
-          <p className="page-subtitle">Expert Care for Work-Related Injuries</p>
+      {/* Hero Section with Background Image */}
+      <section className="workers-comp-hero">
+        <div className="workers-comp-hero-background">
+          <img 
+            src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1920&h=800&fit=crop" 
+            alt="Worker with safety equipment"
+            className="workers-comp-hero-image"
+          />
+          <div className="workers-comp-hero-overlay"></div>
         </div>
       </section>
 
+      {/* Main Content Section */}
       <section className="workers-comp-content section">
-        <div className="container">
-          <div className="content-section">
-            <h2>Comprehensive Workers' Compensation Care</h2>
-            <p>
-              At Orthoexpress, we understand the unique challenges that come with 
-              work-related injuries. Our experienced team specializes in providing 
-              comprehensive orthopedic care for workers' compensation cases, ensuring 
-              you receive the treatment you need to return to work safely and efficiently.
-            </p>
-          </div>
+        <div className="workers-comp-container">
+          {/* Main Content Column */}
+          <div className="workers-comp-main">
+            <div className="workers-comp-intro">
+              <p className="intro-text">
+                With our workers' compensation and injury care services, your employees get convenient access to high-quality care at a lower cost and in an appropriate setting.
+              </p>
+              <p className="intro-text highlight">
+                Better care for employees. Better savings for companies. Employees love our responsive, personalized care. You'll love the reduced care costs we make possible.
+              </p>
+            </div>
 
-          <div className="content-section">
-            <h2>Our Services</h2>
-            <div className="services-list">
-              <div className="service-item">
-                <h3>Immediate Injury Assessment</h3>
-                <p>Quick evaluation and diagnosis of work-related orthopedic injuries.</p>
-              </div>
-              <div className="service-item">
-                <h3>Treatment Planning</h3>
-                <p>Customized treatment plans designed to get you back to work safely.</p>
-              </div>
-              <div className="service-item">
-                <h3>Documentation & Reporting</h3>
-                <p>Complete documentation for your workers' compensation claim.</p>
-              </div>
-              <div className="service-item">
-                <h3>Rehabilitation Services</h3>
-                <p>Comprehensive rehabilitation to restore function and prevent re-injury.</p>
-              </div>
+            <div className="workers-comp-section">
+              <h3 className="section-heading">Experienced Orthopedic Clinicians</h3>
+              <p className="section-text">
+                Orthopedic clinicians are available on demand when you need them.
+              </p>
+            </div>
+
+            <div className="workers-comp-section">
+              <h3 className="section-heading">Comprehensive Treatment</h3>
+              <p className="section-text">
+                On-site treatment strategies include advanced diagnostics, treatment and injection therapy for immediate or chronic workplace problems.
+              </p>
+            </div>
+
+            <div className="workers-comp-section">
+              <h3 className="section-heading">Medication Management</h3>
+              <p className="section-text">
+                Doctors at orthocare clinics can prescribe medications to help manage pain, inflammation, and other symptoms associated with your work injury.
+              </p>
+            </div>
+
+            <div className="workers-comp-section">
+              <h3 className="section-heading">Patient Education</h3>
+              <p className="section-text">
+                The clinic can provide you with educational resources on your specific work-related <strong>injury</strong> or <strong>illness</strong>, including tips on preventing future injuries and how to manage your condition effectively.
+              </p>
             </div>
           </div>
 
-          <div className="content-section">
-            <h2>Why Choose Us for Workers' Comp</h2>
-            <ul className="benefits-list">
-              <li>Walk-in appointments available - no need to wait</li>
-              <li>Experienced in workers' compensation protocols</li>
-              <li>Direct communication with employers and insurance companies</li>
-              <li>Focus on safe return to work</li>
-              <li>Comprehensive documentation for claims</li>
-            </ul>
-          </div>
-
-          <div className="cta-section">
-            <Link to="/contact-us" className="btn btn-primary">
-              Contact Us for Workers' Comp Services
-            </Link>
-          </div>
+          {/* Sidebar Column */}
+          <aside className="workers-comp-sidebar">
+            <div className="locations-card">
+              <h4 className="locations-card-title">Orthocare Locations</h4>
+              <ul className="locations-list">
+                {locations.map((location, index) => (
+                  <li key={index} className="location-item">
+                    <FaMapMarkerAlt className="location-icon" />
+                    <span className="location-name">{location}</span>
+                    <FaArrowRight className="location-arrow" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
         </div>
       </section>
     </div>

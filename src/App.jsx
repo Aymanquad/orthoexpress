@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import WorkersComp from './pages/WorkersComp'
 import Locations from './pages/Locations'
+import LocationDetail from './pages/LocationDetail'
 import Blogs from './pages/Blogs'
 import BlogDetail from './pages/BlogDetail'
 import ContactUs from './pages/ContactUs'
@@ -23,6 +24,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/workers-comp" element={<WorkersComp />} />
           <Route path="/locations" element={<Locations />} />
+          <Route path="/locations/:locationName" element={<LocationDetail />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:slug" element={<BlogDetail />} />
           <Route path="/contact-us" element={<ContactUs />} />

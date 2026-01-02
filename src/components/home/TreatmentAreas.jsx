@@ -32,7 +32,7 @@ const TreatmentAreas = () => {
       title: 'Foot & Ankle Care',
       description: "Orthocare's on-site foot and ankle specialists.",
       slug: 'foot-ankle-care',
-      image: 'https://images.unsplash.com/photo-1542281286-9e0a4bb2342b?w=600&h=400&fit=crop'
+      image: '/assets/knee-injury.webp'
     },
     {
       title: 'Total Joint Replacement',

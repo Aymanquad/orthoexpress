@@ -54,7 +54,7 @@ const BlogPreview = () => {
                     className="blog-image"
                     loading="lazy"
                     onError={(e) => {
-                      e.target.src = 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=800&h=600&fit=crop'
+                      e.target.src = 'https://images.unsplash.com/photo-1551076805-e1869033e561?w=800&h=600&fit=crop'
                     }}
                   />
                   <div className="blog-category-badge">{blog.category}</div>
