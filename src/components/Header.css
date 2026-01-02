@@ -1,0 +1,259 @@
+.header {
+  background-color: var(--bg-white);
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-top-bar {
+  background-color: #f5f5f5;
+  border-bottom: 1px solid var(--border-color);
+  padding: 10px 0;
+}
+
+.header-top-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.header-top-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.logo-top {
+  display: flex;
+  align-items: center;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.top-tagline {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.header-top-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.top-location {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.phone-icon-top {
+  color: #e91e63;
+  font-size: 1.2rem;
+}
+
+.location-name-top {
+  font-weight: 600;
+  color: var(--text-dark);
+  display: block;
+  font-size: 0.9rem;
+}
+
+.phone-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+}
+
+.phone-info a {
+  color: var(--text-dark);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.phone-info a:hover {
+  color: var(--primary-color);
+}
+
+.fax {
+  color: var(--text-light);
+  font-size: 0.8rem;
+}
+
+.btn-book-top {
+  background-color: #1a237e;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.btn-book-top:hover {
+  background-color: #283593;
+  transform: translateY(-2px);
+}
+
+.header-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.nav {
+  position: relative;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  font-size: 1.5rem;
+  color: var(--text-dark);
+  padding: 10px;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  gap: 30px;
+  padding: 15px 0;
+  margin: 0;
+}
+
+.nav-menu li {
+  position: relative;
+}
+
+.nav-menu li a {
+  color: var(--text-dark);
+  font-weight: 500;
+  transition: color 0.3s ease;
+  display: block;
+  padding: 5px 0;
+}
+
+.nav-menu li a:hover {
+  color: var(--primary-color);
+}
+
+.nav-item-dropdown {
+  cursor: pointer;
+}
+
+.nav-item-dropdown > span {
+  color: var(--text-dark);
+  font-weight: 500;
+  display: block;
+  padding: 5px 0;
+}
+
+.nav-item-dropdown:hover > span {
+  color: var(--primary-color);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--bg-white);
+  box-shadow: var(--shadow-lg);
+  list-style: none;
+  padding: 10px 0;
+  margin: 0;
+  min-width: 250px;
+  border-radius: 5px;
+  z-index: 100;
+}
+
+.dropdown-menu li {
+  margin: 0;
+}
+
+.dropdown-menu li a {
+  padding: 10px 20px;
+  display: block;
+  color: var(--text-dark);
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-menu li a:hover {
+  background-color: var(--bg-light);
+  color: var(--primary-color);
+}
+
+.btn-book {
+  background-color: var(--accent-color) !important;
+  color: white !important;
+  padding: 10px 20px !important;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.btn-book:hover {
+  background-color: #008f5a !important;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+@media (max-width: 968px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-white);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    gap: 15px;
+  }
+
+  .nav-open .nav-menu {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav-item-dropdown {
+    width: 100%;
+  }
+
+  .dropdown-menu {
+    position: static;
+    box-shadow: none;
+    background-color: var(--bg-light);
+    margin-top: 10px;
+    border-radius: 0;
+  }
+
+  .btn-book {
+    width: 100%;
+    text-align: center;
+  }
+}
+

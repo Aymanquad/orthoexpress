@@ -1,0 +1,85 @@
+.treatment-areas {
+  background-color: var(--bg-light);
+  padding: 100px 0;
+}
+
+.treatment-areas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.treatment-area-card {
+  background-color: var(--bg-white);
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: all 0.4s ease;
+  display: block;
+  text-decoration: none;
+  border: 2px solid transparent;
+}
+
+.treatment-area-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-color);
+}
+
+.treatment-area-image-wrapper {
+  width: 100%;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.treatment-area-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.treatment-area-card:hover .treatment-area-image {
+  transform: scale(1.1);
+}
+
+.treatment-area-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent, rgba(26, 35, 126, 0.3));
+}
+
+.treatment-area-content {
+  padding: 30px;
+}
+
+.treatment-area-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 15px;
+}
+
+.treatment-area-description {
+  font-size: 1rem;
+  color: var(--text-light);
+  line-height: 1.7;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .treatment-areas {
+    padding: 60px 0;
+  }
+
+  .treatment-areas-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+

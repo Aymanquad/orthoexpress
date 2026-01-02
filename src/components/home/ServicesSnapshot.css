@@ -1,0 +1,156 @@
+.services-snapshot {
+  background-color: var(--bg-white);
+  padding: 100px 0;
+}
+
+.services-header {
+  max-width: 900px;
+  margin: 0 auto 60px;
+  text-align: center;
+}
+
+.services-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #e91e63;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.services-header .section-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 30px;
+  line-height: 1.2;
+}
+
+.services-description {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.services-description .highlight {
+  color: #e91e63;
+  font-weight: 600;
+}
+
+.no-appointment-banner {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  color: white;
+  padding: 50px 40px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 60px 0;
+}
+
+.no-appointment-banner h3 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  opacity: 0.9;
+}
+
+.no-appointment-banner h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.special-services {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+  margin-top: 60px;
+}
+
+.special-service-card {
+  background-color: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: all 0.4s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.special-service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.special-service-image-wrapper {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  position: relative;
+}
+
+.special-service-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.special-service-card:hover .special-service-image {
+  transform: scale(1.1);
+}
+
+.special-service-content {
+  padding: 30px;
+  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.special-service-content h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+}
+
+.special-service-content p {
+  font-size: 1rem;
+  color: var(--text-light);
+  line-height: 1.7;
+  margin-bottom: 25px;
+  flex: 1;
+}
+
+.know-more-link {
+  color: var(--primary-color);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  display: inline-block;
+}
+
+.know-more-link:hover {
+  color: var(--primary-dark);
+}
+
+@media (max-width: 768px) {
+  .services-snapshot {
+    padding: 60px 0;
+  }
+
+  .services-header .section-title {
+    font-size: 2rem;
+  }
+
+  .no-appointment-banner h2 {
+    font-size: 1.8rem;
+  }
+
+  .special-services {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+

@@ -1,0 +1,140 @@
+.clinic-services {
+  background-color: var(--bg-white);
+  padding: 100px 0;
+}
+
+.services-carousel {
+  position: relative;
+  max-width: 900px;
+  margin: 50px auto 0;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.carousel-container {
+  flex: 1;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  padding: 0 20px;
+}
+
+.service-slide-content {
+  background-color: var(--bg-light);
+  padding: 60px 50px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.service-slide-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 15px;
+}
+
+.service-slide-subtitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 25px;
+}
+
+.service-slide-description {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  line-height: 1.8;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.carousel-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  font-size: 1.2rem;
+}
+
+.carousel-btn:hover {
+  background-color: var(--primary-dark);
+  transform: scale(1.1);
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.carousel-dots .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background-color: #ccc;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-dots .dot.active {
+  background-color: var(--primary-color);
+  transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+  .clinic-services {
+    padding: 60px 0;
+  }
+
+  .services-carousel {
+    flex-direction: column;
+  }
+
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+
+  .carousel-btn-left {
+    left: -25px;
+  }
+
+  .carousel-btn-right {
+    right: -25px;
+  }
+
+  .service-slide-content {
+    padding: 40px 30px;
+  }
+
+  .service-slide-title {
+    font-size: 1.5rem;
+  }
+
+  .service-slide-subtitle {
+    font-size: 1.1rem;
+  }
+}
+
