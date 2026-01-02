@@ -14,8 +14,8 @@ const LocationDetail = () => {
       city: 'Los Angeles, CA 90048',
       phone: '(323) 655-8450',
       hours: 'Mon - Fri: 9 am to 5 pm',
-      heroImage: 'https://images.unsplash.com/photo-1516541196182-6bdb0516ed27?w=1920&h=800&fit=crop',
-      contentImage: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800&h=600&fit=crop',
+      heroImage: '/assets/los-angeles.avif',
+      contentImage: '/assets/los-angeles.avif',
       title: 'Orthopedic Urgent Care',
       description: 'Conveniently located in the heart of Los Angeles with ample parking, our clinic provides quality and compassionate urgent and acute care walk-in services for non-life threatening illnesses and auto injuries.',
       description2: 'From preventive care to careful diagnosis, from back pain or other problems related to a spinal condition, our team of expert physicians provide accurate diagnosis and a wide range of treatments.',
@@ -50,8 +50,8 @@ const LocationDetail = () => {
       city: 'London, UK W1G 6AX',
       phone: '+44 20 7935 5555',
       hours: 'Mon - Fri: 9 am to 5 pm',
-      heroImage: 'https://images.unsplash.com/photo-1577906096421-f5e9a85c8cc6?w=1920&h=800&fit=crop',
-      contentImage: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=800&h=600&fit=crop',
+      heroImage: '/assets/london.jpg',
+      contentImage: '/assets/london.jpg',
       title: 'Orthopedic Urgent Care',
       description: 'Conveniently located in the prestigious Harley Street medical district with ample parking, our clinic provides quality and compassionate urgent and acute care walk-in services for non-life threatening illnesses and auto injuries.',
       description2: 'From preventive care to careful diagnosis, from back pain or other problems related to a spinal condition, our team of expert physicians provide accurate diagnosis and a wide range of treatments.',
@@ -86,8 +86,8 @@ const LocationDetail = () => {
       city: '10117 Berlin, Germany',
       phone: '+49 30 1234 5678',
       hours: 'Mon - Fri: 9 am to 5 pm',
-      heroImage: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1920&h=800&fit=crop',
-      contentImage: 'https://images.unsplash.com/photo-1542281286-9e0a4bb2342b?w=800&h=600&fit=crop',
+      heroImage: '/assets/berlin.webp',
+      contentImage: '/assets/berlin.webp',
       title: 'Orthopedic Urgent Care',
       description: 'Conveniently located in central Berlin with ample parking, our clinic provides quality and compassionate urgent and acute care walk-in services for non-life threatening illnesses and auto injuries.',
       description2: 'From preventive care to careful diagnosis, from back pain or other problems related to a spinal condition, our team of expert physicians provide accurate diagnosis and a wide range of treatments.',
@@ -201,7 +201,7 @@ const LocationDetail = () => {
             <div className="location-text-content">
               <div className="label-badge">
                 <FaHospital className="label-icon" />
-                <span className="location-section-label">ORTHOCARE AT {location.displayName.toUpperCase()}</span>
+                <span className="location-section-label">ORTHOEXPRESS AT {location.displayName.toUpperCase()}</span>
               </div>
               <h2 className="location-main-title">{location.title}</h2>
               <div className="description-wrapper">
@@ -221,7 +221,7 @@ const LocationDetail = () => {
               <div className="image-wrapper">
                 <img 
                   src={location.contentImage} 
-                  alt={`Orthocare ${location.displayName}`}
+                  alt={`OrthoExpress ${location.displayName}`}
                   className="location-content-image"
                 />
                 <div className="image-overlay"></div>

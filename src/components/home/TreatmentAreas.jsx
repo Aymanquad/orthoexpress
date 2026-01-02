@@ -30,7 +30,7 @@ const TreatmentAreas = () => {
     },
     {
       title: 'Foot & Ankle Care',
-      description: "Orthocare's on-site foot and ankle specialists.",
+      description: "OrthoExpress's on-site foot and ankle specialists.",
       slug: 'foot-ankle-care',
       image: '/assets/knee-injury.webp'
     },

@@ -21,7 +21,7 @@ const InsuranceBar = () => {
       <div className="container">
         <h2 className="insurance-title">Insurance</h2>
         <p className="insurance-subtitle">
-          We accept most insurance plans. Call your neighborhood Orthocare for center details.
+          We accept most insurance plans. Call your neighborhood OrthoExpress for center details.
         </p>
         <p className="insurance-note-bold">
           <strong>No insurance? No problem. We offer affordable cash pay options.</strong>

@@ -18,7 +18,7 @@ const ServicesSnapshot = () => {
         </div>
         
         <div className="no-appointment-banner">
-          <h3>Orthocare accepts walk-ins</h3>
+          <h3>OrthoExpress accepts walk-ins</h3>
           <h2>NO APPOINTMENT NECESSARY!</h2>
         </div>
 

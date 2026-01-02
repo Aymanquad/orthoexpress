@@ -56,7 +56,7 @@ const WorkersComp = () => {
             <div className="workers-comp-section">
               <h3 className="section-heading">Medication Management</h3>
               <p className="section-text">
-                Doctors at orthocare clinics can prescribe medications to help manage pain, inflammation, and other symptoms associated with your work injury.
+                Doctors at OrthoExpress clinics can prescribe medications to help manage pain, inflammation, and other symptoms associated with your work injury.
               </p>
             </div>
 
@@ -71,7 +71,7 @@ const WorkersComp = () => {
           {/* Sidebar Column */}
           <aside className="workers-comp-sidebar">
             <div className="locations-card">
-              <h4 className="locations-card-title">Orthocare Locations</h4>
+              <h4 className="locations-card-title">OrthoExpress Locations</h4>
               <ul className="locations-list">
                 {locations.map((location, index) => (
                   <li key={index} className="location-item">

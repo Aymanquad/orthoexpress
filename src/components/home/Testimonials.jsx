@@ -12,17 +12,17 @@ const Testimonials = () => {
     {
       name: 'John DB',
       location: 'Midland',
-      text: "Recent surgery, quick recovery thanks to Orthocare's skilled team. Highly recommend!"
+      text: "Recent surgery, quick recovery thanks to OrthoExpress's skilled team. Highly recommend!"
     },
     {
       name: 'Alfonso L.',
       location: 'Waxachie',
-      text: "Awesome service, great attention and fast response from the Orthocare team in Waxachie, great people taking care fast and secure to their patients."
+      text: "Awesome service, great attention and fast response from the OrthoExpress team in Waxachie, great people taking care fast and secure to their patients."
     },
     {
       name: 'Michelle B.',
       location: 'Farmers Branch',
-      text: "Orthocare's expertise got me back on the field, pain-free! Thanks for the excellent care."
+      text: "OrthoExpress's expertise got me back on the field, pain-free! Thanks for the excellent care."
     }
   ]
 

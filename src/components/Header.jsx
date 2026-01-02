@@ -35,7 +35,7 @@ const Header = () => {
         <div className="header-top-container">
           <div className="header-top-left">
             <Link to="/" className="logo-top">
-              <span className="logo-text">Orthocare</span>
+              <span className="logo-text">OrthoExpress</span>
             </Link>
             <span className="top-tagline">Orthopedic Walk-In Clinic and #Teleorthopedics.</span>
           </div>

@@ -41,7 +41,7 @@ const About = () => {
           <div className="about-hero-overlay"></div>
         </div>
         <div className="container">
-          <h1 className="page-title">About Orthoexpress</h1>
+          <h1 className="page-title">About OrthoExpress</h1>
           <p className="page-subtitle">Your Trusted Orthopedic Care Partner</p>
         </div>
       </section>
@@ -61,7 +61,7 @@ const About = () => {
             <span className="section-label">Our Mission</span>
             <h2 className="split-title">Dedicated to Your Recovery</h2>
             <p className="split-text">
-              At Orthoexpress, we are dedicated to providing exceptional orthopedic care 
+              At OrthoExpress, we are dedicated to providing exceptional orthopedic care 
               that is accessible, personalized, and focused on your recovery. Our mission 
               is to help you regain your mobility, reduce pain, and return to the activities 
               you love as quickly and safely as possible.
@@ -180,7 +180,7 @@ const About = () => {
                 <h2 className="story-title">Built on Compassion and Excellence</h2>
                 <div className="story-text-container">
                   <p className="story-text">
-                    Orthoexpress was founded with a simple goal: to make quality orthopedic care 
+                    OrthoExpress was founded with a simple goal: to make quality orthopedic care 
                     accessible to everyone. We recognized that injuries don't wait for appointments, 
                     and neither should your treatment. Our walk-in clinic model ensures that you 
                     can receive expert orthopedic care on the same day, helping you start your 

@@ -20,7 +20,7 @@ const Footer = () => {
       <div className="footer-container">
         <div className="footer-content">
           <div className="footer-section">
-            <h3>Orthoexpress</h3>
+            <h3>OrthoExpress</h3>
             <p className="footer-tagline">Expert Orthopedic Care</p>
             <p>Walk-in, same day appointments available. Providing comprehensive orthopedic services with personalized patient care.</p>
             <div className="social-links">
@@ -74,7 +74,7 @@ const Footer = () => {
         </div>
 
         <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} Orthoexpress. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} OrthoExpress. All rights reserved.</p>
           <div className="footer-links">
             <Link to="/privacy-policy">Privacy Policy</Link>
             <span>|</span>
