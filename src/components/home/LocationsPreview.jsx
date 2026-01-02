@@ -33,7 +33,7 @@ const LocationsPreview = () => {
       address: 'Friedrichstraße 123',
       city: '10117 Berlin, Germany',
       phone: '+49 30 1234 5678',
-      image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&h=600&fit=crop',
+      image: '/assets/berlin.webp',
       hours: 'Mon-Fri: 9AM-5PM',
       features: ['Minimally Invasive Surgery', 'Hip & Knee Care', 'Pain Management']
     }

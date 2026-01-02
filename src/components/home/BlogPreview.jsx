@@ -3,27 +3,30 @@ import { Link } from 'react-router-dom'
 import './BlogPreview.css'
 
 const BlogPreview = () => {
-  const featuredBlogs = [
+  const blogs = [
     {
-      slug: 'sprained-ankle-treatment',
-      title: 'Sprained Ankle: Understanding and Treating This Common Injury',
-      excerpt: 'A sprained ankle is a common injury that occurs when the ligaments...',
-      category: 'Top Orthopedic Surgeon',
-      location: 'Top-Orthopedic surgeon in Lancaster | Sprained ankle treatment'
+      slug: 'understanding-orthopedic-injuries',
+      title: 'Understanding Common Orthopedic Injuries',
+      excerpt: 'Learn about the most common orthopedic injuries and how to prevent them in your daily life.',
+      date: 'March 15, 2024',
+      category: 'General Health',
+      image: 'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=800&h=600&fit=crop'
     },
     {
-      slug: 'wrist-pain-orthopedics',
-      title: 'Wrist Pain Woes? Find Relief with an Orthopedic Specialist',
-      excerpt: 'Wrist pain is a common complaint that can arise from a...',
-      category: 'Wrist Pain Orthopedics',
-      location: 'Wrist pain | Orthopedics in Farmers Branch, TX'
+      slug: 'recovery-after-surgery',
+      title: 'Recovery Tips After Orthopedic Surgery',
+      excerpt: 'Essential tips and guidelines for a smooth recovery process after orthopedic procedures.',
+      date: 'March 10, 2024',
+      category: 'Recovery',
+      image: '/assets/recovery-after-orthopedicsurgery.jpg'
     },
     {
-      slug: 'turf-toe-treatment',
-      title: 'Conquering Turf Toe: Effective Orthopedic Care for Foot and Ankle Health',
-      excerpt: 'Our feet and ankles are the foundation of our...',
-      category: 'Foot and Ankle Health',
-      location: 'Turf toe got you down? See an ortho doc'
+      slug: 'sports-injury-prevention',
+      title: 'Sports Injury Prevention Strategies',
+      excerpt: 'Expert advice on preventing sports-related injuries and maintaining peak performance.',
+      date: 'March 5, 2024',
+      category: 'Sports Medicine',
+      image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&h=600&fit=crop'
     }
   ]
 
@@ -35,39 +38,35 @@ const BlogPreview = () => {
           <Link to="/blogs" className="all-blogs-link">All Blogs →</Link>
         </div>
         <div className="blog-grid">
-          {featuredBlogs.map((blog, index) => {
-            const blogImages = [
-              'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&h=600&fit=crop',
-              'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&h=600&fit=crop',
-              'https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=800&h=600&fit=crop'
-            ]
-            return (
-              <Link 
-                key={blog.slug} 
-                to={`/blogs/${blog.slug}`}
-                className="blog-card"
-              >
-                <div className="blog-image-wrapper">
-                  <img 
-                    src={blogImages[index]} 
-                    alt={blog.title}
-                    className="blog-image"
-                    loading="lazy"
-                    onError={(e) => {
-                      e.target.src = 'https://images.unsplash.com/photo-1551076805-e1869033e561?w=800&h=600&fit=crop'
-                    }}
-                  />
-                  <div className="blog-category-badge">{blog.category}</div>
+          {blogs.map((blog) => (
+            <Link 
+              key={blog.slug} 
+              to={`/blogs/${blog.slug}`}
+              className="blog-card"
+            >
+              <div className="blog-image-wrapper">
+                <img 
+                  src={blog.image} 
+                  alt={blog.title}
+                  className="blog-image"
+                  loading="lazy"
+                  onError={(e) => {
+                    e.target.src = 'https://images.unsplash.com/photo-1551076805-e1869033e561?w=800&h=600&fit=crop'
+                  }}
+                />
+                <div className="blog-category-badge">{blog.category}</div>
+              </div>
+              <div className="blog-content">
+                <div className="blog-meta-preview">
+                  <span className="blog-category-preview">{blog.category}</span>
+                  <span className="blog-date-preview">{blog.date}</span>
                 </div>
-                <div className="blog-content">
-                  <p className="blog-location">{blog.location}</p>
-                  <h3 className="blog-title">{blog.title}</h3>
-                  <p className="blog-excerpt">{blog.excerpt}</p>
-                  <span className="blog-read-more">Read More →</span>
-                </div>
-              </Link>
-            )
-          })}
+                <h3 className="blog-title">{blog.title}</h3>
+                <p className="blog-excerpt">{blog.excerpt}</p>
+                <span className="blog-read-more">Read More →</span>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </section>

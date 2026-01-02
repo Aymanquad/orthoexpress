@@ -103,11 +103,24 @@
   z-index: 1;
 }
 
-.blog-location {
-  font-size: 0.85rem;
-  color: var(--text-light);
+.blog-meta-preview {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 15px;
-  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.blog-category-preview {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.blog-date-preview {
+  color: var(--text-light);
 }
 
 .blog-title {
