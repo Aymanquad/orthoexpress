@@ -1,0 +1,54 @@
+.mobile-action-bar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-action-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -8px 30px rgba(15, 23, 42, 0.1);
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+    gap: 10px;
+  }
+
+  body.has-mobile-action-bar {
+    padding-bottom: 76px;
+  }
+
+  .mobile-action-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .mobile-action-btn:active {
+    transform: scale(0.98);
+  }
+
+  .mobile-action-call {
+    background: linear-gradient(135deg, var(--primary-color), #283593);
+    color: white;
+    box-shadow: 0 4px 14px rgba(26, 35, 126, 0.3);
+  }
+
+  .mobile-action-book {
+    background: linear-gradient(135deg, var(--accent-color), #26c281);
+    color: white;
+    box-shadow: 0 4px 14px rgba(0, 168, 107, 0.3);
+  }
+}

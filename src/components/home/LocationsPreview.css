@@ -1,6 +1,6 @@
 .locations-preview {
-  background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
-  padding: 120px 0;
+  background: linear-gradient(180deg, #f4f6fb 0%, #eef2ff 100%);
+  padding: 96px 0;
   position: relative;
   overflow: hidden;
 }
@@ -45,9 +45,11 @@
 
 .locations-preview .section-title {
   color: var(--text-dark);
-  font-size: 3.5rem;
-  margin-bottom: 20px;
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  margin-bottom: 16px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 .highlight-text {
@@ -328,6 +330,12 @@
   font-size: 1rem;
 }
 
+.location-action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .location-action-btn {
   display: flex;
   align-items: center;
@@ -343,6 +351,28 @@
   border-radius: 12px;
   transition: all 0.4s ease;
   box-shadow: 0 4px 15px rgba(26, 35, 126, 0.3);
+}
+
+.location-directions-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 30px;
+  background: white;
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  border: 2px solid var(--primary-color);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.location-directions-btn:hover {
+  background: var(--primary-color);
+  color: white;
 }
 
 .location-action-btn:hover {

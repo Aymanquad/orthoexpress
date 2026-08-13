@@ -1,0 +1,123 @@
+/* Shared page hero — handles mixed image dimensions without stretching */
+
+.page-hero {
+  position: relative;
+  color: white;
+  overflow: hidden;
+  min-height: clamp(280px, 34vw, 400px);
+  display: flex;
+  align-items: center;
+}
+
+.page-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+}
+
+.page-hero__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.page-hero--no-media {
+  min-height: auto;
+}
+
+.page-hero--no-media.page-hero {
+  display: block;
+}
+
+/* Landscape / clinical photos — full bleed, lighter right fade */
+.page-hero__media--photo .page-hero__image {
+  object-position: center 40%;
+}
+.page-hero__media--photo .page-hero__overlay {
+  background:
+    linear-gradient(
+      100deg,
+      rgba(13, 27, 107, 0.9) 0%,
+      rgba(26, 35, 126, 0.72) 40%,
+      rgba(26, 35, 126, 0.38) 68%,
+      rgba(13, 71, 161, 0.2) 100%
+    );
+}
+
+/* Square product shots — contain on right, never stretch */
+.page-hero__media--product .page-hero__image {
+  left: auto;
+  width: min(50%, 540px);
+  height: 100%;
+  object-fit: contain;
+  object-position: center right;
+  padding: 16px 28px 16px 0;
+}
+
+.page-hero__media--product .page-hero__overlay {
+  background:
+    linear-gradient(
+      100deg,
+      rgba(13, 27, 107, 0.95) 0%,
+      rgba(13, 27, 107, 0.9) 38%,
+      rgba(26, 35, 126, 0.55) 52%,
+      rgba(26, 35, 126, 0.12) 72%,
+      transparent 100%
+    );
+}
+
+/* Portrait — anchor top, show subject */
+.page-hero__media--portrait .page-hero__image {
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+.page-hero__media--portrait .page-hero__overlay {
+  background:
+    linear-gradient(
+      100deg,
+      rgba(13, 27, 107, 0.92) 0%,
+      rgba(26, 35, 126, 0.7) 45%,
+      rgba(26, 35, 126, 0.35) 70%,
+      rgba(13, 71, 161, 0.15) 100%
+    );
+}
+
+/* Low-resolution wide assets — center crop, avoid upscaling blur band */
+.page-hero__media--compact .page-hero__image {
+  object-fit: cover;
+  object-position: center 45%;
+}
+
+.page-hero__media--compact .page-hero__overlay {
+  background:
+    linear-gradient(
+      100deg,
+      rgba(13, 27, 107, 0.93) 0%,
+      rgba(26, 35, 126, 0.78) 45%,
+      rgba(26, 35, 126, 0.45) 100%
+    );
+}
+
+.page-hero__content,
+.page-hero > .container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .page-hero {
+    min-height: clamp(240px, 58vw, 320px);
+  }
+
+  .page-hero__media--product .page-hero__image {
+    width: 46%;
+    padding: 10px 12px 10px 0;
+    opacity: 0.92;
+  }
+}

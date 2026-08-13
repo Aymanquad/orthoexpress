@@ -1,29 +1,16 @@
 import React from 'react'
-import { FaUsers, FaUserMd, FaHeart, FaHandsHelping } from 'react-icons/fa'
+import { FaUsers, FaUserMd, FaHandsHelping } from 'react-icons/fa'
+import { useLanguage } from '../../context/LanguageContext'
 import './Stats.css'
 
 const Stats = () => {
+  const { t } = useLanguage()
+
   const stats = [
-    {
-      icon: <FaUsers />,
-      number: '150K +',
-      label: 'Happy Patients'
-    },
-    {
-      icon: <FaUsers />,
-      number: '200K +',
-      label: 'Patients Served'
-    },
-    {
-      icon: <FaUserMd />,
-      number: '56+',
-      label: 'Professional Nurses'
-    },
-    {
-      icon: <FaHandsHelping />,
-      number: '308',
-      label: 'Active Volunteers'
-    }
+    { icon: <FaUsers />, number: '150K +', label: t('home.stats.happyPatients') },
+    { icon: <FaUsers />, number: '200K +', label: t('home.stats.patientsServed') },
+    { icon: <FaUserMd />, number: '56+', label: t('home.stats.nurses') },
+    { icon: <FaHandsHelping />, number: '308', label: t('home.stats.volunteers') },
   ]
 
   return (
@@ -44,4 +31,3 @@ const Stats = () => {
 }
 
 export default Stats
-

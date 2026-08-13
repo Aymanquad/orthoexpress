@@ -1,81 +1,133 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { FaCalendarAlt, FaClock, FaUser, FaPhone, FaEnvelope } from 'react-icons/fa'
+import { CLINIC, LOCATIONS } from '../data'
+import { getTodayDateString } from '../data/utils'
+import { validateAppointmentForm, submitAppointmentForm } from '../utils/forms'
+import { useFormModal } from '../hooks/useFormModal'
+import { useLanguage } from '../context/LanguageContext'
+import Modal from '../components/Modal'
+import PageMeta from '../components/PageMeta'
+import '../components/FormFeedback.css'
 import './BookAppointment.css'
 
+const initialFormState = {
+  name: '',
+  email: '',
+  phone: '',
+  preferredDate: '',
+  preferredTime: '',
+  reason: '',
+  location: '',
+  consent: false,
+}
+
 const BookAppointment = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    preferredDate: '',
-    preferredTime: '',
-    reason: '',
-    location: ''
-  })
+  const { t } = useLanguage()
+  const [formData, setFormData] = useState(initialFormState)
+  const [errors, setErrors] = useState({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { modal, closeModal, showSuccess, showError, showValidationErrors } = useFormModal()
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
+    const { name, value, type, checked } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value,
+    }))
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: '' }))
+    }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // Handle appointment booking here
-    alert('Thank you! We will contact you shortly to confirm your appointment.')
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      preferredDate: '',
-      preferredTime: '',
-      reason: '',
-      location: ''
-    })
+
+    const validationErrors = validateAppointmentForm(formData, t)
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors)
+      showValidationErrors(validationErrors, t('pages.modal.checkForm'))
+      return
+    }
+
+    setErrors({})
+    setIsSubmitting(true)
+
+    try {
+      const result = await submitAppointmentForm(formData)
+      setFormData(initialFormState)
+      showSuccess(
+        t('pages.book.successTitle'),
+        result.viaMailto ? t('pages.book.successMailto') : t('pages.book.successForm')
+      )
+    } catch (error) {
+      showError(
+        t('pages.book.errorTitle'),
+        error.message || t('forms.errors.submitFailed')
+      )
+    } finally {
+      setIsSubmitting(false)
+    }
   }
+
+  const consentText = t('pages.book.consent').replace('{clinic}', CLINIC.name)
 
   return (
     <div className="book-appointment-page">
+      <PageMeta
+        title={t('pages.meta.book.title')}
+        description={t('pages.meta.book.description')}
+      />
+
+      <Modal
+        isOpen={modal.isOpen}
+        onClose={closeModal}
+        type={modal.type}
+        title={modal.title}
+        message={modal.message}
+        primaryLabel={t('pages.contact.gotIt')}
+      />
+
       <section className="appointment-hero section">
         <div className="container">
-          <h1 className="page-title">Book an Appointment</h1>
-          <p className="page-subtitle">Schedule your visit with our orthopedic specialists</p>
+          <h1 className="page-title">{t('pages.book.title')}</h1>
+          <p className="page-subtitle">{t('pages.book.subtitle')}</p>
         </div>
       </section>
 
       <section className="appointment-content section">
         <div className="container">
-          <div className="appointment-info">
-            <h2>Walk-in Appointments Available</h2>
-            <p>
-              While you can schedule an appointment in advance, we also welcome walk-in patients. 
-              No appointment is necessary - simply visit us during our business hours.
-            </p>
+            <div className="appointment-info">
+            <h2>{t('pages.book.title')}</h2>
+            <p>{t('pages.book.subtitle')}</p>
+            <p>{t('pages.book.formHint')}</p>
             <div className="info-cards">
               <div className="info-card">
                 <FaClock className="info-icon" />
-                <h3>Same Day Service</h3>
-                <p>Get seen on the same day you visit</p>
+                <h3>{t('pages.about.feature1Title')}</h3>
+                <p>{t('pages.about.feature1Text')}</p>
               </div>
               <div className="info-card">
                 <FaCalendarAlt className="info-icon" />
-                <h3>Flexible Scheduling</h3>
-                <p>Choose a time that works for you</p>
+                <h3>{t('pages.book.preferredTime')}</h3>
+                <p>{t('pages.book.noPreference')}</p>
               </div>
             </div>
           </div>
 
           <div className="appointment-form-container">
-            <h2>Request an Appointment</h2>
-            <p className="form-subtitle">
-              Fill out the form below and we'll contact you to confirm your appointment time.
-            </p>
-            <form className="appointment-form" onSubmit={handleSubmit}>
+            <h2>{t('pages.book.formTitle')}</h2>
+            <p className="form-subtitle">{t('pages.book.formHint')}</p>
+
+            <form
+              className={`appointment-form ${isSubmitting ? 'form-submitting' : ''}`}
+              onSubmit={handleSubmit}
+              noValidate
+            >
               <div className="form-row">
-                <div className="form-group">
+                <div className={`form-group ${errors.name ? 'has-error' : ''}`}>
                   <label htmlFor="name">
-                    <FaUser /> Full Name *
+                    <FaUser /> {t('pages.book.fullName')} *
                   </label>
                   <input
                     type="text"
@@ -83,13 +135,14 @@ const BookAppointment = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    required
+                    autoComplete="name"
                   />
+                  {errors.name && <span className="field-error">{errors.name}</span>}
                 </div>
 
-                <div className="form-group">
+                <div className={`form-group ${errors.phone ? 'has-error' : ''}`}>
                   <label htmlFor="phone">
-                    <FaPhone /> Phone Number *
+                    <FaPhone /> {t('pages.book.phone')} *
                   </label>
                   <input
                     type="tel"
@@ -97,15 +150,16 @@ const BookAppointment = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    required
+                    autoComplete="tel"
                   />
+                  {errors.phone && <span className="field-error">{errors.phone}</span>}
                 </div>
               </div>
 
               <div className="form-row">
-                <div className="form-group">
+                <div className={`form-group ${errors.email ? 'has-error' : ''}`}>
                   <label htmlFor="email">
-                    <FaEnvelope /> Email *
+                    <FaEnvelope /> {t('pages.book.email')} *
                   </label>
                   <input
                     type="email"
@@ -113,69 +167,89 @@ const BookAppointment = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    required
+                    autoComplete="email"
                   />
+                  {errors.email && <span className="field-error">{errors.email}</span>}
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="location">Preferred Location</label>
+                <div className={`form-group ${errors.location ? 'has-error' : ''}`}>
+                  <label htmlFor="location">{t('pages.book.location')} *</label>
                   <select
                     id="location"
                     name="location"
                     value={formData.location}
                     onChange={handleChange}
                   >
-                    <option value="">Select a location</option>
-                    <option value="main">Main Clinic</option>
-                    <option value="downtown">Downtown Location</option>
-                    <option value="north">North Branch</option>
+                    <option value="">{t('pages.book.selectLocation')}</option>
+                    {LOCATIONS.map((loc) => (
+                      <option key={loc.slug} value={loc.slug}>
+                        {loc.name} — {loc.city}
+                      </option>
+                    ))}
                   </select>
+                  {errors.location && <span className="field-error">{errors.location}</span>}
                 </div>
               </div>
 
               <div className="form-row">
-                <div className="form-group">
-                  <label htmlFor="preferredDate">Preferred Date *</label>
+                <div className={`form-group ${errors.preferredDate ? 'has-error' : ''}`}>
+                  <label htmlFor="preferredDate">{t('pages.book.preferredDate')} *</label>
                   <input
                     type="date"
                     id="preferredDate"
                     name="preferredDate"
                     value={formData.preferredDate}
                     onChange={handleChange}
-                    required
+                    min={getTodayDateString()}
                   />
+                  {errors.preferredDate && <span className="field-error">{errors.preferredDate}</span>}
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="preferredTime">Preferred Time</label>
+                  <label htmlFor="preferredTime">{t('pages.book.preferredTime')}</label>
                   <select
                     id="preferredTime"
                     name="preferredTime"
                     value={formData.preferredTime}
                     onChange={handleChange}
                   >
-                    <option value="">Select a time</option>
-                    <option value="morning">Morning (8AM - 12PM)</option>
-                    <option value="afternoon">Afternoon (12PM - 4PM)</option>
-                    <option value="evening">Evening (4PM - 6PM)</option>
+                    <option value="">{t('pages.book.noPreference')}</option>
+                    <option value="morning">{t('pages.book.morning')}</option>
+                    <option value="afternoon">{t('pages.book.afternoon')}</option>
+                    <option value="evening">{t('pages.book.lateAfternoon')}</option>
                   </select>
                 </div>
               </div>
 
               <div className="form-group">
-                <label htmlFor="reason">Reason for Visit</label>
+                <label htmlFor="reason">{t('pages.book.reason')}</label>
                 <textarea
                   id="reason"
                   name="reason"
                   rows="4"
                   value={formData.reason}
                   onChange={handleChange}
-                  placeholder="Please describe your condition or reason for the visit..."
+                  placeholder={t('pages.book.reasonPlaceholder')}
                 />
               </div>
 
-              <button type="submit" className="btn btn-primary btn-large">
-                Request Appointment
+              <div className={`form-group form-consent ${errors.consent ? 'has-error' : ''}`}>
+                <input
+                  type="checkbox"
+                  id="consent"
+                  name="consent"
+                  checked={formData.consent}
+                  onChange={handleChange}
+                />
+                <label htmlFor="consent">
+                  {consentText}{' '}
+                  <Link to="/privacy-policy">{t('common.privacyPolicy')}</Link>.
+                </label>
+                {errors.consent && <span className="field-error">{errors.consent}</span>}
+              </div>
+
+              <button type="submit" className="btn btn-primary btn-large" disabled={isSubmitting}>
+                {isSubmitting ? t('pages.book.submitting') : t('pages.book.submit')}
               </button>
             </form>
           </div>
@@ -186,4 +260,3 @@ const BookAppointment = () => {
 }
 
 export default BookAppointment
-

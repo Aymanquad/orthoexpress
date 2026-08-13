@@ -1,0 +1,123 @@
+.order-status-page {
+  background: var(--bg-white);
+  min-height: 60vh;
+}
+
+.order-status-content {
+  padding-top: 56px;
+  padding-bottom: 80px;
+}
+
+.order-status-card {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 40px 32px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  background: white;
+  box-shadow: var(--shadow);
+}
+
+.order-status-icon {
+  font-size: 3.5rem;
+  margin-bottom: 16px;
+}
+
+.order-status-icon.success {
+  color: var(--accent-color);
+}
+
+.order-status-icon.failure {
+  color: #dc2626;
+}
+
+.order-status-card .page-title {
+  margin: 0 0 12px;
+  color: var(--primary-color);
+}
+
+.order-status-message {
+  margin: 0 0 10px;
+  color: var(--text-light);
+  font-size: 1.05rem;
+}
+
+.order-status-id {
+  margin: 0 0 24px;
+  color: var(--text-dark);
+}
+
+.order-status-summary {
+  text-align: left;
+  margin: 28px 0;
+  padding: 22px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-light);
+}
+
+.order-status-summary h2 {
+  margin: 0 0 14px;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+}
+
+.order-status-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.order-status-items li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.95rem;
+}
+
+.order-status-items li:last-child {
+  border-bottom: none;
+}
+
+.order-status-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-color);
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+.order-status-shipping,
+.order-status-email,
+.order-status-help {
+  margin: 12px 0 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.order-status-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+@media (max-width: 600px) {
+  .order-status-card {
+    padding: 28px 20px;
+  }
+
+  .order-status-actions {
+    flex-direction: column;
+  }
+
+  .order-status-actions .btn {
+    width: 100%;
+  }
+}

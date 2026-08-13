@@ -1,0 +1,69 @@
+.page-body-media {
+  margin: 0;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: #e8eef5;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  width: 100%;
+  justify-self: end;
+}
+
+.page-body-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+/* Filled square clinical cards — slight zoom crops internal white margins */
+.page-body-media--square {
+  aspect-ratio: 1;
+  max-width: 360px;
+}
+
+.page-body-media--square img {
+  object-fit: cover;
+  transform: scale(1.22);
+  transform-origin: center center;
+}
+
+/* True product packshots — full product visible */
+.page-body-media--pack {
+  aspect-ratio: 1;
+  max-width: 340px;
+  background: linear-gradient(160deg, #f8fafc 0%, #e8eef5 100%);
+}
+
+.page-body-media--pack img {
+  object-fit: contain;
+  padding: 12px;
+}
+
+/* Portrait clinical */
+.page-body-media--portrait {
+  aspect-ratio: 4 / 5;
+  max-width: 300px;
+}
+
+.page-body-media--portrait img {
+  object-position: center 18%;
+}
+
+/* Mild landscape figures in body */
+.page-body-media--wide {
+  aspect-ratio: 4 / 3;
+  max-width: 420px;
+}
+
+@media (max-width: 900px) {
+  .page-body-media--square,
+  .page-body-media--pack,
+  .page-body-media--portrait,
+  .page-body-media--wide {
+    justify-self: center;
+    max-width: min(100%, 380px);
+    margin-inline: auto;
+  }
+}

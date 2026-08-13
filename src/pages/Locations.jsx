@@ -1,73 +1,66 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { FaMapMarkerAlt, FaPhone, FaClock } from 'react-icons/fa'
+import { FaMapMarkerAlt, FaPhone, FaClock, FaDirections } from 'react-icons/fa'
+import { LOCATIONS } from '../data'
+import { getMapsDirectionsUrl } from '../data/utils'
+import { useLanguage } from '../context/LanguageContext'
+import PageMeta from '../components/PageMeta'
 import './Locations.css'
 
 const Locations = () => {
-  const locations = [
-    {
-      slug: 'los-angeles',
-      name: 'Los Angeles',
-      address: '8500 Beverly Boulevard, Suite 450',
-      city: 'Los Angeles, CA 90048',
-      phone: '(323) 655-8450',
-      hours: 'Mon - Fri: 9 am to 5 pm'
-    },
-    {
-      slug: 'london',
-      name: 'London',
-      address: '123 Harley Street',
-      city: 'London, UK W1G 6AX',
-      phone: '+44 20 7935 5555',
-      hours: 'Mon - Fri: 9 am to 5 pm'
-    },
-    {
-      slug: 'berlin',
-      name: 'Berlin',
-      address: 'Friedrichstraße 123',
-      city: '10117 Berlin, Germany',
-      phone: '+49 30 1234 5678',
-      hours: 'Mon - Fri: 9 am to 5 pm'
-    }
-  ]
+  const { t } = useLanguage()
 
   return (
     <div className="locations-page">
+      <PageMeta
+        title={t('pages.meta.locations.title')}
+        description={t('pages.meta.locations.description')}
+      />
+
       <section className="locations-hero section">
         <div className="container">
-          <span className="locations-label">CONTACT US</span>
-          <h1 className="page-title">Locations</h1>
+          <span className="locations-label">{t('pages.locations.label')}</span>
+          <h1 className="page-title">{t('pages.locations.title')}</h1>
         </div>
       </section>
 
       <section className="locations-content section">
         <div className="container">
           <div className="locations-grid">
-            {locations.map((location) => (
-              <Link 
-                key={location.slug}
-                to={`/locations/${location.slug}`}
-                className="location-card-full"
-              >
-                <div className="location-card-icon">
+            {LOCATIONS.map((location) => (
+              <article key={location.slug} className="locations-page-card">
+                <div className="locations-page-card-icon">
                   <FaMapMarkerAlt />
                 </div>
-                <div className="location-card-content">
-                  <h2 className="location-name-full">{location.name}</h2>
-                  <p className="location-address">{location.address}</p>
-                  <p className="location-city">{location.city}</p>
-                  <div className="location-contact-info">
-                    <div className="location-contact-item">
-                      <FaPhone className="contact-item-icon" />
+                <div className="locations-page-card-body">
+                  <h2 className="locations-page-name">{location.name}</h2>
+                  <p className="locations-page-address">{location.address}</p>
+                  <p className="locations-page-city">{location.city}</p>
+                  <div className="locations-page-contact">
+                    <div className="locations-page-contact-item">
+                      <FaPhone className="locations-page-contact-icon" />
                       <span>{location.phone}</span>
                     </div>
-                    <div className="location-contact-item">
-                      <FaClock className="contact-item-icon" />
+                    <div className="locations-page-contact-item">
+                      <FaClock className="locations-page-contact-icon" />
                       <span>{location.hours}</span>
                     </div>
                   </div>
+                  <div className="locations-page-actions">
+                    <Link to={`/locations/${location.slug}`} className="locations-page-btn locations-page-btn-primary">
+                      {t('pages.locations.viewDetails')}
+                    </Link>
+                    <a
+                      href={getMapsDirectionsUrl(location)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="locations-page-btn locations-page-btn-secondary"
+                    >
+                      <FaDirections /> {t('pages.locations.directions')}
+                    </a>
+                  </div>
                 </div>
-              </Link>
+              </article>
             ))}
           </div>
         </div>
@@ -77,4 +70,3 @@ const Locations = () => {
 }
 
 export default Locations
-

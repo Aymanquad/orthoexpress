@@ -6,35 +6,8 @@
 .workers-comp-hero {
   position: relative;
   width: 100%;
-  height: 400px;
+  min-height: clamp(220px, 30vw, 360px);
   overflow: hidden;
-}
-
-.workers-comp-hero-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 0;
-}
-
-.workers-comp-hero-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: blur(3px);
-  transform: scale(1.05);
-}
-
-.workers-comp-hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%);
-  z-index: 1;
 }
 
 /* Main Content Section */
@@ -146,6 +119,8 @@
   border-bottom: 1px solid var(--border-color);
   cursor: pointer;
   transition: all 0.3s ease;
+  text-decoration: none;
+  color: inherit;
 }
 
 .location-item:last-child {
@@ -189,6 +164,22 @@
 
 .location-item:hover .location-arrow {
   transform: translateX(5px);
+}
+
+.workers-comp-book-link {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 12px 20px;
+  background: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.workers-comp-book-link:hover {
+  background: var(--primary-dark);
 }
 
 /* Responsive Design */

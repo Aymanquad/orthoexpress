@@ -1,156 +1,25 @@
 import React, { useEffect, useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { FaMapMarkerAlt, FaPhone, FaClock, FaCheckCircle, FaStethoscope, FaHospital } from 'react-icons/fa'
+import { FaMapMarkerAlt, FaPhone, FaClock, FaCheckCircle, FaStethoscope, FaHospital, FaDirections } from 'react-icons/fa'
+import { toTelLink, getMapsDirectionsUrl } from '../data/utils'
+import { getLocalizedLocation } from '../i18n/locations'
+import { useLanguage } from '../context/LanguageContext'
+import PageMeta from '../components/PageMeta'
+import PageHeroMedia from '../components/PageHeroMedia'
+import NotFound from './NotFound'
 import './LocationDetail.css'
 
 const LocationDetail = () => {
   const { locationName } = useParams()
-
-  const locationsData = {
-    'los-angeles': {
-      name: 'Los Angeles',
-      displayName: 'Los Angeles',
-      address: '8500 Beverly Boulevard, Suite 450',
-      city: 'Los Angeles, CA 90048',
-      phone: '(323) 655-8450',
-      hours: 'Mon - Fri: 9 am to 5 pm',
-      heroImage: '/assets/los-angeles.avif',
-      contentImage: '/assets/los-angeles.avif',
-      title: 'Orthopedic Urgent Care',
-      description: 'Conveniently located in the heart of Los Angeles with ample parking, our clinic provides quality and compassionate urgent and acute care walk-in services for non-life threatening illnesses and auto injuries.',
-      description2: 'From preventive care to careful diagnosis, from back pain or other problems related to a spinal condition, our team of expert physicians provide accurate diagnosis and a wide range of treatments.',
-      description3: 'Our Los Angeles facility features state-of-the-art diagnostic equipment and a dedicated team of orthopedic specialists. We offer comprehensive treatment options including non-surgical interventions, advanced surgical procedures, and personalized rehabilitation programs. Our clinic is equipped to handle everything from sports injuries to complex joint replacements, ensuring you receive the highest quality care in a comfortable, modern environment.',
-      highlights: ['urgent and acute care', 'illnesses', 'Injuries'],
-      specialties: ['Advanced Sports Medicine', 'Joint Replacement', 'Spinal Surgery'],
-      services: [
-        'Emergency Orthopedic Care',
-        'Sports Injury Treatment',
-        'Joint Replacement Surgery',
-        'Spinal Surgery & Treatment',
-        'Physical Therapy & Rehabilitation',
-        'X-Ray & Diagnostic Imaging',
-        'Pain Management',
-        'Workers Compensation Services'
-      ],
-      features: [
-        'Same-Day Appointments Available',
-        'Walk-In Urgent Care',
-        'On-Site X-Ray Facilities',
-        'Expert Orthopedic Surgeons',
-        'Modern Surgical Suites',
-        'Physical Therapy Center',
-        'Ample Parking Available',
-        'Wheelchair Accessible'
-      ]
-    },
-    'london': {
-      name: 'London',
-      displayName: 'London',
-      address: '123 Harley Street',
-      city: 'London, UK W1G 6AX',
-      phone: '+44 20 7935 5555',
-      hours: 'Mon - Fri: 9 am to 5 pm',
-      heroImage: '/assets/london.jpg',
-      contentImage: '/assets/london.jpg',
-      title: 'Orthopedic Urgent Care',
-      description: 'Conveniently located in the prestigious Harley Street medical district with ample parking, our clinic provides quality and compassionate urgent and acute care walk-in services for non-life threatening illnesses and auto injuries.',
-      description2: 'From preventive care to careful diagnosis, from back pain or other problems related to a spinal condition, our team of expert physicians provide accurate diagnosis and a wide range of treatments.',
-      description3: 'Our Harley Street location represents the pinnacle of orthopedic excellence in London. With a reputation built on precision, innovation, and patient-centered care, our facility offers specialized services in hand and wrist surgery, orthopedic trauma management, and comprehensive rehabilitation. Our team of internationally recognized surgeons utilizes the latest techniques and technologies to deliver exceptional outcomes for our patients.',
-      highlights: ['urgent and acute care', 'illnesses', 'Injuries'],
-      specialties: ['Hand & Wrist Surgery', 'Orthopedic Trauma Care', 'Rehabilitation Services'],
-      services: [
-        'Hand & Wrist Surgery',
-        'Orthopedic Trauma Care',
-        'Complex Fracture Management',
-        'Microsurgery',
-        'Rehabilitation Services',
-        'Occupational Therapy',
-        'Custom Splinting & Bracing',
-        'Arthroscopic Procedures'
-      ],
-      features: [
-        'Prestigious Harley Street Location',
-        'Internationally Recognized Surgeons',
-        'Advanced Surgical Facilities',
-        'Comprehensive Rehabilitation Center',
-        'Private Consultation Rooms',
-        'Multilingual Staff',
-        'International Patient Services',
-        'Easy Transport Access'
-      ]
-    },
-    'berlin': {
-      name: 'Berlin',
-      displayName: 'Berlin',
-      address: 'Friedrichstraße 123',
-      city: '10117 Berlin, Germany',
-      phone: '+49 30 1234 5678',
-      hours: 'Mon - Fri: 9 am to 5 pm',
-      heroImage: '/assets/berlin.webp',
-      contentImage: '/assets/berlin.webp',
-      title: 'Orthopedic Urgent Care',
-      description: 'Conveniently located in central Berlin with ample parking, our clinic provides quality and compassionate urgent and acute care walk-in services for non-life threatening illnesses and auto injuries.',
-      description2: 'From preventive care to careful diagnosis, from back pain or other problems related to a spinal condition, our team of expert physicians provide accurate diagnosis and a wide range of treatments.',
-      description3: 'Our Berlin clinic combines cutting-edge medical technology with a patient-first approach. Specializing in minimally invasive surgical techniques, hip and knee care, and comprehensive pain management, we serve both local and international patients. Our multilingual team ensures clear communication, and our modern facility is designed to provide a comfortable, efficient healthcare experience in the heart of Europe.',
-      highlights: ['urgent and acute care', 'illnesses', 'Injuries'],
-      specialties: ['Minimally Invasive Surgery', 'Hip & Knee Care', 'Pain Management'],
-      services: [
-        'Minimally Invasive Surgery',
-        'Hip & Knee Replacement',
-        'Arthroscopic Surgery',
-        'Pain Management & Injections',
-        'Physical Therapy',
-        'Sports Medicine',
-        'Pediatric Orthopedics',
-        'Geriatric Orthopedic Care'
-      ],
-      features: [
-        'Central Berlin Location',
-        'Minimally Invasive Techniques',
-        'State-of-the-Art Operating Rooms',
-        'Multilingual Medical Staff',
-        'International Patient Coordination',
-        'Comprehensive Pain Management',
-        'Rehabilitation Services',
-        'Public Transport Access'
-      ]
-    }
-  }
-
-  const location = locationsData[locationName] || {
-    name: 'Location',
-    displayName: 'Location',
-    address: '',
-    city: '',
-    phone: '',
-    hours: '',
-    heroImage: '',
-    contentImage: '',
-    title: '',
-    description: '',
-    description2: '',
-    description3: '',
-    highlights: [],
-    specialties: [],
-    services: [],
-    features: []
-  }
-
-  const renderDescription = (text, highlights) => {
-    let result = text
-    highlights.forEach(highlight => {
-      const regex = new RegExp(`(${highlight})`, 'gi')
-      result = result.replace(regex, `<strong>$1</strong>`)
-    })
-    return result
-  }
+  const { t, lang } = useLanguage()
+  const location = getLocalizedLocation(locationName, lang)
 
   const sectionRefs = useRef([])
 
   useEffect(() => {
     const observerOptions = {
       threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+      rootMargin: '0px 0px -50px 0px',
     }
 
     const observer = new IntersectionObserver((entries) => {
@@ -172,42 +41,60 @@ const LocationDetail = () => {
     }
   }, [])
 
+  if (!location) {
+    return <NotFound />
+  }
+
+  const renderDescription = (text, highlights) => {
+    let result = text
+    highlights.forEach((highlight) => {
+      const regex = new RegExp(`(${highlight})`, 'gi')
+      result = result.replace(regex, '<strong>$1</strong>')
+    })
+    return result
+  }
+
   return (
     <div className="location-detail-page">
-      {/* Hero Section */}
-      <section className="location-hero">
-        <div className="location-hero-background">
-          <img 
-            src={location.heroImage} 
-            alt={location.displayName}
-            className="location-hero-image"
-          />
-          <div className="location-hero-overlay"></div>
-        </div>
-        <div className="container">
-          <span className="location-hero-label">LOCATIONS</span>
+      <PageMeta
+        title={t('pages.locationDetail.metaTitle').replace('{name}', location.displayName)}
+        description={t('pages.locationDetail.metaDescription')
+          .replace('{name}', location.displayName)
+          .replace('{address}', location.address)
+          .replace('{city}', location.city)}
+      />
+      <section className="location-hero page-hero">
+        <PageHeroMedia
+          src={location.heroImage}
+          alt={location.displayName}
+          layout="photo"
+        />
+        <div className="container page-hero__content">
+          <span className="location-hero-label">{t('pages.locationDetail.label')}</span>
           <h1 className="location-hero-title">{location.displayName}</h1>
         </div>
       </section>
 
-      {/* Main Content Section */}
       <section className="location-content">
         <div className="container">
-          <div 
+          <div
             ref={(el) => (sectionRefs.current[0] = el)}
             className="location-main-layout animate-section"
           >
-            {/* Left Side - Text Content */}
             <div className="location-text-content">
               <div className="label-badge">
                 <FaHospital className="label-icon" />
-                <span className="location-section-label">ORTHOEXPRESS AT {location.displayName.toUpperCase()}</span>
+                <span className="location-section-label">
+                  {t('pages.locationDetail.atLocation')} {location.displayName.toUpperCase()}
+                </span>
               </div>
               <h2 className="location-main-title">{location.title}</h2>
               <div className="description-wrapper">
-                <p 
+                <p
                   className="location-description"
-                  dangerouslySetInnerHTML={{ __html: renderDescription(location.description, location.highlights) }}
+                  dangerouslySetInnerHTML={{
+                    __html: renderDescription(location.description, location.highlights),
+                  }}
                 />
                 <p className="location-description-2">{location.description2}</p>
                 {location.description3 && (
@@ -216,11 +103,10 @@ const LocationDetail = () => {
               </div>
             </div>
 
-            {/* Right Side - Image */}
             <div className="location-image-content">
               <div className="image-wrapper">
-                <img 
-                  src={location.contentImage} 
+                <img
+                  src={location.contentImage}
                   alt={`OrthoExpress ${location.displayName}`}
                   className="location-content-image"
                 />
@@ -229,17 +115,16 @@ const LocationDetail = () => {
             </div>
           </div>
 
-          {/* Services & Features Section */}
-          {(location.services && location.services.length > 0) || (location.features && location.features.length > 0) ? (
-            <div 
+          {(location.services?.length > 0 || location.features?.length > 0) && (
+            <div
               ref={(el) => (sectionRefs.current[1] = el)}
               className="location-services-features animate-section"
             >
-              {location.services && location.services.length > 0 && (
+              {location.services?.length > 0 && (
                 <div className="services-section modern-card">
                   <div className="section-header">
                     <FaStethoscope className="section-icon" />
-                    <h3 className="section-heading">Our Services</h3>
+                    <h3 className="section-heading">{t('pages.locationDetail.ourServices')}</h3>
                   </div>
                   <ul className="services-list">
                     {location.services.map((service, index) => (
@@ -251,11 +136,11 @@ const LocationDetail = () => {
                   </ul>
                 </div>
               )}
-              {location.features && location.features.length > 0 && (
+              {location.features?.length > 0 && (
                 <div className="features-section modern-card">
                   <div className="section-header">
                     <FaHospital className="section-icon" />
-                    <h3 className="section-heading">Location Features</h3>
+                    <h3 className="section-heading">{t('pages.locationDetail.locationFeatures')}</h3>
                   </div>
                   <ul className="features-list">
                     {location.features.map((feature, index) => (
@@ -268,10 +153,9 @@ const LocationDetail = () => {
                 </div>
               )}
             </div>
-          ) : null}
+          )}
 
-          {/* Contact Cards Section */}
-          <div 
+          <div
             ref={(el) => (sectionRefs.current[2] = el)}
             className="location-contact-cards animate-section"
           >
@@ -279,13 +163,17 @@ const LocationDetail = () => {
               <div className="contact-icon-wrapper">
                 <FaMapMarkerAlt className="contact-icon" />
               </div>
-              <p className="contact-text">{location.address}, {location.city}</p>
+              <p className="contact-text">
+                {location.address}, {location.city}
+              </p>
             </div>
             <div className="contact-card contact-card-2">
               <div className="contact-icon-wrapper">
                 <FaPhone className="contact-icon" />
               </div>
-              <p className="contact-text">{location.phone}</p>
+              <p className="contact-text">
+                <a href={toTelLink(location.phone)}>{location.phone}</a>
+              </p>
             </div>
             <div className="contact-card contact-card-3">
               <div className="contact-icon-wrapper">
@@ -294,6 +182,20 @@ const LocationDetail = () => {
               <p className="contact-text">{location.hours}</p>
             </div>
           </div>
+
+          <div className="location-action-row">
+            <a
+              href={getMapsDirectionsUrl(location)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary location-directions-btn"
+            >
+              <FaDirections /> {t('pages.locationDetail.getDirections')}
+            </a>
+            <Link to="/book-appointment" className="btn btn-outline location-book-btn">
+              {t('pages.locationDetail.bookAppointment')}
+            </Link>
+          </div>
         </div>
       </section>
     </div>
@@ -301,4 +203,3 @@ const LocationDetail = () => {
 }
 
 export default LocationDetail
-

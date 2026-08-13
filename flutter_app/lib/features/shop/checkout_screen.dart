@@ -1,0 +1,293 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import '../../config/theme.dart';
+import '../../data/models/order.dart';
+import '../../core/shop/checkout_logic.dart';
+import '../../core/utils/responsive.dart';
+import '../../core/widgets/responsive_page.dart';
+import '../../data/products.dart';
+import '../../data/shop_labels.dart';
+import '../../providers/cart_provider.dart';
+import '../../providers/language_provider.dart';
+import '../../providers/orders_provider.dart';
+import 'widgets/order_summary_panel.dart';
+
+class CheckoutScreen extends StatefulWidget {
+  const CheckoutScreen({super.key});
+
+  @override
+  State<CheckoutScreen> createState() => _CheckoutScreenState();
+}
+
+class _CheckoutScreenState extends State<CheckoutScreen> {
+  final _form = CheckoutFormData();
+  final _errors = <String, String>{};
+  bool _processing = false;
+
+  late final Map<String, TextEditingController> _controllers;
+
+  @override
+  void initState() {
+    super.initState();
+    _controllers = {
+      'firstName': TextEditingController(),
+      'lastName': TextEditingController(),
+      'email': TextEditingController(),
+      'phone': TextEditingController(),
+      'address': TextEditingController(),
+      'city': TextEditingController(),
+      'state': TextEditingController(),
+      'zip': TextEditingController(),
+      'cardNumber': TextEditingController(),
+      'cardName': TextEditingController(),
+      'expiry': TextEditingController(),
+      'cvv': TextEditingController(),
+    };
+  }
+
+  @override
+  void dispose() {
+    for (final c in _controllers.values) {
+      c.dispose();
+    }
+    super.dispose();
+  }
+
+  void _syncFormFromControllers() {
+    _form.firstName = _controllers['firstName']!.text;
+    _form.lastName = _controllers['lastName']!.text;
+    _form.email = _controllers['email']!.text;
+    _form.phone = _controllers['phone']!.text;
+    _form.address = _controllers['address']!.text;
+    _form.city = _controllers['city']!.text;
+    _form.state = _controllers['state']!.text;
+    _form.zip = _controllers['zip']!.text;
+    _form.cardNumber = _controllers['cardNumber']!.text;
+    _form.cardName = _controllers['cardName']!.text;
+    _form.expiry = _controllers['expiry']!.text;
+    _form.cvv = _controllers['cvv']!.text;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final lang = context.watch<LanguageProvider>().locale.languageCode;
+    final cart = context.watch<CartProvider>();
+    final lines = cart.cartLines;
+    final totals = calculateOrderTotals(cart.subtotal);
+
+    if (lines.isEmpty) {
+      return Center(
+        child: ResponsivePage(
+          alignTop: false,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(ShopLabels.cartEmptyCheckout(lang)),
+              const SizedBox(height: 16),
+              FilledButton(
+                onPressed: () => context.go('/shop'),
+                style: FilledButton.styleFrom(backgroundColor: AppColors.accent),
+                child: Text(ShopLabels.goToShop(lang)),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    final formSection = _buildForm(lang);
+    final summary = OrderSummaryPanel(lines: lines, totals: totals, lang: lang);
+    final submitButton = FilledButton(
+      onPressed: _processing ? null : () => _submit(lang, cart, totals),
+      style: FilledButton.styleFrom(
+        backgroundColor: AppColors.accent,
+        minimumSize: const Size.fromHeight(48),
+      ),
+      child: _processing
+          ? Text(ShopLabels.processing(lang))
+          : Text(ShopLabels.completeDemoOrder(lang, formatPrice(totals.total))),
+    );
+
+    return SingleChildScrollView(
+      child: ResponsivePage(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              ShopLabels.demoNote(lang),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.w600,
+                  ),
+            ),
+            const SizedBox(height: 20),
+            if (context.isTablet)
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(flex: 3, child: formSection),
+                  const SizedBox(width: 24),
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      children: [summary, const SizedBox(height: 16), submitButton],
+                    ),
+                  ),
+                ],
+              )
+            else
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  formSection,
+                  const SizedBox(height: 20),
+                  summary,
+                  const SizedBox(height: 16),
+                  submitButton,
+                ],
+              ),
+            const SizedBox(height: 24),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildForm(String lang) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(ShopLabels.shippingInfo(lang), style: Theme.of(context).textTheme.titleLarge),
+        const SizedBox(height: 12),
+        _fieldGrid([
+          _field('firstName', lang),
+          _field('lastName', lang),
+          _field('email', lang, keyboard: TextInputType.emailAddress),
+          _field('phone', lang, keyboard: TextInputType.phone),
+          _field('address', lang, fullWidth: true),
+          _field('city', lang),
+          _field('state', lang),
+          _field('zip', lang),
+        ]),
+        const SizedBox(height: 24),
+        Text(ShopLabels.paymentInfo(lang), style: Theme.of(context).textTheme.titleLarge),
+        const SizedBox(height: 8),
+        Text(
+          lang == 'es' ? 'Pago de demostración (sin cargo real)' : 'Demo Payment (no real charge)',
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
+        ),
+        const SizedBox(height: 12),
+        _fieldGrid([
+          _field('cardNumber', lang, onChanged: _onCardChanged),
+          _field('cardName', lang),
+          _field('expiry', lang, onChanged: _onExpiryChanged),
+          _field('cvv', lang, obscure: true, digitsOnly: true),
+        ]),
+      ],
+    );
+  }
+
+  Widget _fieldGrid(List<Widget> fields) {
+    if (context.isPhone) {
+      return Column(
+        children: fields
+            .map((f) => Padding(padding: const EdgeInsets.only(bottom: 12), child: f))
+            .toList(),
+      );
+    }
+    final width = (MediaQuery.sizeOf(context).width - 48 - 12) / 2;
+    return Wrap(
+      spacing: 12,
+      runSpacing: 12,
+      children: fields.map((f) => SizedBox(width: width, child: f)).toList(),
+    );
+  }
+
+  Widget _field(
+    String name,
+    String lang, {
+    TextInputType? keyboard,
+    bool fullWidth = false,
+    bool obscure = false,
+    bool digitsOnly = false,
+    void Function(String)? onChanged,
+  }) {
+    final label = ShopLabels.fieldLabels[name]?.forLang(lang) ?? name;
+    return TextField(
+      controller: _controllers[name],
+      decoration: InputDecoration(
+        labelText: label,
+        errorText: _errors[name],
+        border: const OutlineInputBorder(),
+      ),
+      keyboardType: keyboard,
+      obscureText: obscure,
+      inputFormatters: digitsOnly ? [FilteringTextInputFormatter.digitsOnly] : null,
+      onChanged: (v) {
+        _errors.remove(name);
+        onChanged?.call(v);
+      },
+    );
+  }
+
+  void _onCardChanged(String value) {
+    final digits = value.replaceAll(RegExp(r'\D'), '');
+    final clipped = digits.length > 16 ? digits.substring(0, 16) : digits;
+    final formatted = clipped.replaceAllMapped(RegExp(r'.{4}'), (m) => '${m.group(0)} ').trim();
+    if (formatted != _controllers['cardNumber']!.text) {
+      _controllers['cardNumber']!.value = TextEditingValue(
+        text: formatted,
+        selection: TextSelection.collapsed(offset: formatted.length),
+      );
+    }
+  }
+
+  void _onExpiryChanged(String value) {
+    final digits = value.replaceAll(RegExp(r'\D'), '');
+    final clipped = digits.length > 4 ? digits.substring(0, 4) : digits;
+    final formatted = clipped.length > 2
+        ? '${clipped.substring(0, 2)}/${clipped.substring(2)}'
+        : clipped;
+    if (formatted != _controllers['expiry']!.text) {
+      _controllers['expiry']!.value = TextEditingValue(
+        text: formatted,
+        selection: TextSelection.collapsed(offset: formatted.length),
+      );
+    }
+  }
+
+  Future<void> _submit(String lang, CartProvider cart, OrderTotals totals) async {
+    _syncFormFromControllers();
+    setState(() {
+      _processing = true;
+      _errors.clear();
+    });
+
+    final result = await processDemoCheckout(
+      formData: _form,
+      cartLines: cart.cartLines,
+      totals: totals,
+      lang: lang,
+    );
+
+    if (!mounted) return;
+    setState(() => _processing = false);
+
+    if (!result.success) {
+      if (result.fieldErrors != null && result.fieldErrors!.isNotEmpty) {
+        setState(() => _errors.addAll(result.fieldErrors!));
+        return;
+      }
+      context.push('/shop/order-failure', extra: result.errorMessage);
+      return;
+    }
+
+    final order = result.order!;
+    await context.read<OrdersProvider>().saveOrder(order);
+    await cart.clearCart();
+    if (!mounted) return;
+    context.go('/shop/order-success/${order.id}');
+  }
+}

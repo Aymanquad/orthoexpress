@@ -1,43 +1,15 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FaPhone, FaMapMarkerAlt, FaClock, FaDirections, FaCheckCircle } from 'react-icons/fa'
+import { CLINIC, LOCATIONS, toTelLink, getMapsDirectionsUrl } from '../../data'
+import { useLanguage } from '../../context/LanguageContext'
+import { getLocalizedLocation } from '../../i18n/locations'
 import './LocationsPreview.css'
 
 const LocationsPreview = () => {
+  const { t, lang } = useLanguage()
   const [hoveredIndex, setHoveredIndex] = useState(null)
-
-  const locations = [
-    {
-      name: 'Los Angeles',
-      slug: 'los-angeles',
-      address: '8500 Beverly Boulevard, Suite 450',
-      city: 'Los Angeles, CA 90048',
-      phone: '(323) 655-8450',
-      image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&h=600&fit=crop',
-      hours: 'Mon-Fri: 9AM-5PM',
-      features: ['Advanced Sports Medicine', 'Joint Replacement', 'Spinal Surgery']
-    },
-    {
-      name: 'London',
-      slug: 'london',
-      address: '123 Harley Street',
-      city: 'London, UK W1G 6AX',
-      phone: '+44 20 7935 5555',
-      image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&h=600&fit=crop',
-      hours: 'Mon-Fri: 9AM-5PM',
-      features: ['Hand & Wrist Surgery', 'Orthopedic Trauma Care', 'Rehabilitation Services']
-    },
-    {
-      name: 'Berlin',
-      slug: 'berlin',
-      address: 'Friedrichstraße 123',
-      city: '10117 Berlin, Germany',
-      phone: '+49 30 1234 5678',
-      image: '/assets/berlin.webp',
-      hours: 'Mon-Fri: 9AM-5PM',
-      features: ['Minimally Invasive Surgery', 'Hip & Knee Care', 'Pain Management']
-    }
-  ]
+  const { headquarters } = CLINIC
 
   return (
     <section className="locations-preview section">
@@ -45,34 +17,42 @@ const LocationsPreview = () => {
       <div className="container">
         <div className="locations-header">
           <div className="locations-header-content">
-            <span className="locations-label">FIND US NEAR YOU</span>
+            <span className="locations-label">{t('home.locationsPreview.label')}</span>
             <h2 className="section-title">
-              Our <span className="highlight-text">Locations</span>
+              {t('home.locationsPreview.title').includes('Locations') ? (
+                <>
+                  Our <span className="highlight-text">Locations</span>
+                </>
+              ) : (
+                <>
+                  Nuestras <span className="highlight-text">ubicaciones</span>
+                </>
+              )}
             </h2>
-            <p className="section-subtitle">
-              Where quality, convenience and affordability meet healthcare.
-            </p>
+            <p className="section-subtitle">{t('home.locationsPreview.subtitle')}</p>
             <div className="locations-phone-cta">
-              <a href="tel:+12149498918" className="locations-phone-link">
-                <FaPhone /> Call (214) 949-8918 →
+              <a href={toTelLink(headquarters.phone)} className="locations-phone-link">
+                <FaPhone /> {t('home.locationsPreview.call')} {headquarters.phone} →
               </a>
             </div>
           </div>
         </div>
-        
+
         <div className="locations-creative-grid">
-          {locations.map((location, index) => (
-            <div 
-              key={index} 
+          {LOCATIONS.map((location, index) => {
+            const localized = getLocalizedLocation(location.slug, lang)
+            return (
+            <div
+              key={location.slug}
               className={`location-card-creative ${index % 2 === 0 ? 'card-left' : 'card-right'} ${hoveredIndex === index ? 'hovered' : ''}`}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
               <div className="location-card-inner">
                 <div className="location-image-wrapper">
-                  <img 
-                    src={location.image} 
-                    alt={`${location.name} Orthopedic Clinic`}
+                  <img
+                    src={location.image}
+                    alt={`${location.name} ${t('home.locationsPreview.clinicAlt')}`}
                     className="location-image"
                     loading="lazy"
                   />
@@ -84,7 +64,7 @@ const LocationsPreview = () => {
                     <h3>{location.name}</h3>
                   </div>
                 </div>
-                
+
                 <div className="location-card-content">
                   <div className="location-main-info">
                     <div className="location-address-section">
@@ -94,24 +74,26 @@ const LocationsPreview = () => {
                         <p className="location-city">{location.city}</p>
                       </div>
                     </div>
-                    
+
                     <div className="location-contact-section">
                       <div className="location-phone-section">
                         <FaPhone className="content-icon phone-icon" />
-                        <a href={`tel:${location.phone.replace(/\D/g, '')}`} className="location-phone">
+                        <a href={toTelLink(location.phone)} className="location-phone">
                           {location.phone}
                         </a>
                       </div>
-                      
+
                       <div className="location-hours-section">
                         <FaClock className="content-icon clock-icon" />
-                        <span className="location-hours">{location.hours}</span>
+                        <span className="location-hours">
+                          {localized.hoursShort}
+                        </span>
                       </div>
                     </div>
                   </div>
 
                   <div className="location-features">
-                    {location.features.map((feature, fIndex) => (
+                    {localized.cardFeatures.map((feature, fIndex) => (
                       <div key={fIndex} className="location-feature-item">
                         <FaCheckCircle className="feature-check" />
                         <span>{feature}</span>
@@ -119,14 +101,25 @@ const LocationsPreview = () => {
                     ))}
                   </div>
 
-                  <Link to={`/locations/${location.slug}`} className="location-action-btn">
-                    <FaDirections className="btn-icon" />
-                    <span>Get Directions</span>
-                  </Link>
+                  <div className="location-action-buttons">
+                    <Link to={`/locations/${location.slug}`} className="location-action-btn">
+                      {t('home.locationsPreview.viewLocation')}
+                    </Link>
+                    <a
+                      href={getMapsDirectionsUrl(location)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="location-directions-btn"
+                    >
+                      <FaDirections className="btn-icon" />
+                      <span>{t('home.locationsPreview.getDirections')}</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </section>
@@ -134,4 +127,3 @@ const LocationsPreview = () => {
 }
 
 export default LocationsPreview
-

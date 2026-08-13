@@ -1,0 +1,105 @@
+.a11y-toolbar {
+  position: fixed;
+  right: 18px;
+  bottom: 88px;
+  z-index: 1400;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.a11y-fab {
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, var(--primary-color), #283593);
+  color: white;
+  font-size: 1.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 28px rgba(26, 35, 126, 0.35);
+}
+
+.a11y-panel {
+  width: 250px;
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.a11y-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 6px 8px;
+  color: var(--primary-color);
+}
+
+.a11y-panel-head button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-light);
+}
+
+.a11y-panel > button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  background: #f8fafc;
+  color: var(--text-dark);
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+.a11y-panel > button.active {
+  background: #eef4ff;
+  border-color: #93c5fd;
+  color: var(--primary-color);
+}
+
+html {
+  font-size: calc(16px * var(--a11y-font-scale, 1));
+}
+
+body.a11y-high-contrast {
+  filter: contrast(1.15);
+}
+
+body.a11y-high-contrast .App {
+  background: #fff;
+}
+
+body.a11y-highlight-links a {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+  outline: 2px solid transparent;
+}
+
+body.a11y-highlight-links a:hover,
+body.a11y-highlight-links a:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .a11y-toolbar {
+    bottom: 96px;
+    right: 14px;
+  }
+}

@@ -1,0 +1,1308 @@
+{
+  "insuranceProviders": [
+    "ACPN",
+    "AvMed",
+    "AETNA",
+    "Molina",
+    "Cigna",
+    "United Healthcare",
+    "Coventry",
+    "Florida Blue",
+    "Simply Healthcare",
+    "Medicare",
+    "Medicaid"
+  ],
+  "selfPayPricing": [
+    {
+      "id": "office-visit",
+      "name": {
+        "en": "New Patient Office Visit",
+        "es": "Consulta de paciente nuevo"
+      },
+      "price": "$150 – $225",
+      "note": {
+        "en": "Includes evaluation by an orthopedic specialist.",
+        "es": "Incluye evaluación por un especialista ortopédico."
+      }
+    },
+    {
+      "id": "follow-up",
+      "name": {
+        "en": "Follow-Up Visit",
+        "es": "Consulta de seguimiento"
+      },
+      "price": "$85 – $125",
+      "note": {
+        "en": "Established patients returning for continued care.",
+        "es": "Pacientes establecidos que regresan para seguimiento."
+      }
+    },
+    {
+      "id": "xray",
+      "name": {
+        "en": "Digital X-Ray (per region)",
+        "es": "Radiografía digital (por región)"
+      },
+      "price": "$75 – $120",
+      "note": {
+        "en": "On-site imaging when clinically indicated.",
+        "es": "Imágenes en el centro cuando esté clínicamente indicado."
+      }
+    },
+    {
+      "id": "casting",
+      "name": {
+        "en": "Casting / Splinting",
+        "es": "Yeso / Férula"
+      },
+      "price": "$100 – $250",
+      "note": {
+        "en": "Price varies by type and complexity of immobilization.",
+        "es": "El precio varía según el tipo y complejidad."
+      }
+    },
+    {
+      "id": "injection",
+      "name": {
+        "en": "Joint Injection",
+        "es": "Inyección articular"
+      },
+      "price": "$175 – $350",
+      "note": {
+        "en": "Therapeutic injection when appropriate for your condition.",
+        "es": "Inyección terapéutica cuando sea adecuada para su condición."
+      }
+    }
+  ],
+  "faqs": [
+    {
+      "id": "walk-in",
+      "specialty": "general",
+      "category": {
+        "en": "Visits",
+        "es": "Visitas"
+      },
+      "q": {
+        "en": "Do I need an appointment?",
+        "es": "¿Necesito una cita?"
+      },
+      "a": {
+        "en": "No. OrthoExpress accepts walk-ins and same-day visits. Appointments are available if you prefer to book ahead.",
+        "es": "No. OrthoExpress acepta visitas sin cita y el mismo día. También puede reservar con anticipación si lo prefiere."
+      }
+    },
+    {
+      "id": "what-bring",
+      "specialty": "general",
+      "category": {
+        "en": "Visits",
+        "es": "Visitas"
+      },
+      "q": {
+        "en": "What should I bring to my visit?",
+        "es": "¿Qué debo llevar a mi visita?"
+      },
+      "a": {
+        "en": "Please bring a photo ID, your insurance card (if applicable), a list of current medications, and any prior imaging or records related to your injury.",
+        "es": "Lleve una identificación con foto, su tarjeta de seguro (si aplica), una lista de medicamentos actuales y cualquier imagen o historial previo relacionado con su lesión."
+      }
+    },
+    {
+      "id": "insurance",
+      "specialty": "general",
+      "category": {
+        "en": "Payment",
+        "es": "Pagos"
+      },
+      "q": {
+        "en": "Do you accept insurance?",
+        "es": "¿Aceptan seguros?"
+      },
+      "a": {
+        "en": "Yes. We accept most major insurance plans. Call your local center to verify coverage, or visit our Insurance Providers page.",
+        "es": "Sí. Aceptamos la mayoría de los planes de seguro principales. Llame a su centro local para verificar cobertura, o visite nuestra página de Aseguradoras."
+      }
+    },
+    {
+      "id": "self-pay",
+      "specialty": "general",
+      "category": {
+        "en": "Payment",
+        "es": "Pagos"
+      },
+      "q": {
+        "en": "What if I don’t have insurance?",
+        "es": "¿Qué pasa si no tengo seguro?"
+      },
+      "a": {
+        "en": "No problem. We offer transparent self-pay pricing for common services. See Self-Pay Pricing for estimated ranges.",
+        "es": "No hay problema. Ofrecemos precios transparentes de pago propio. Consulte Precios de pago propio para rangos estimados."
+      }
+    },
+    {
+      "id": "kids",
+      "specialty": "pediatric-care",
+      "category": {
+        "en": "Pediatric Care",
+        "es": "Atención pediátrica"
+      },
+      "q": {
+        "en": "Do you treat children?",
+        "es": "¿Atienden a niños?"
+      },
+      "a": {
+        "en": "Yes. We provide pediatric orthopedic care for injuries and growth-related concerns in children and teens.",
+        "es": "Sí. Ofrecemos atención ortopédica pediátrica para lesiones y preocupaciones relacionadas con el crecimiento en niños y adolescentes."
+      }
+    },
+    {
+      "id": "imaging",
+      "specialty": "mri-digital-imaging",
+      "category": {
+        "en": "Imaging",
+        "es": "Imágenes"
+      },
+      "q": {
+        "en": "Do you offer X-rays or MRI?",
+        "es": "¿Ofrecen radiografías o resonancia magnética?"
+      },
+      "a": {
+        "en": "We provide digital X-ray evaluation and coordinate MRI / advanced imaging when needed for accurate diagnosis.",
+        "es": "Ofrecemos evaluación con radiografía digital y coordinamos resonancia / imágenes avanzadas cuando sea necesario."
+      }
+    },
+    {
+      "id": "workers-comp",
+      "specialty": "workers-comp",
+      "category": {
+        "en": "Workers' Compensation",
+        "es": "Compensación laboral"
+      },
+      "q": {
+        "en": "Do you handle workers’ compensation injuries?",
+        "es": "¿Atienden lesiones de compensación laboral?"
+      },
+      "a": {
+        "en": "Yes. We provide workers’ compensation injury care with documentation and return-to-work support.",
+        "es": "Sí. Brindamos atención para lesiones de compensación laboral con documentación y apoyo para el regreso al trabajo."
+      }
+    },
+    {
+      "id": "hours",
+      "specialty": "general",
+      "category": {
+        "en": "Locations",
+        "es": "Ubicaciones"
+      },
+      "q": {
+        "en": "What are your hours?",
+        "es": "¿Cuáles son sus horarios?"
+      },
+      "a": {
+        "en": "Most centers are open Monday–Friday, 9:00 AM – 5:00 PM. Check your location page for specific hours.",
+        "es": "La mayoría de los centros abren de lunes a viernes, 9:00 AM – 5:00 PM. Consulte la página de su ubicación para horarios específicos."
+      }
+    },
+    {
+      "id": "tele",
+      "specialty": "telehealth",
+      "category": {
+        "en": "Telehealth",
+        "es": "Telemedicina"
+      },
+      "q": {
+        "en": "Do you offer teleorthopedics?",
+        "es": "¿Ofrecen teleortopedia?"
+      },
+      "a": {
+        "en": "Yes. OrthoNOW Live offers secure virtual follow-ups for eligible patients. Visit our Telehealth page or call your center to schedule.",
+        "es": "Sí. OrthoNOW Live ofrece seguimientos virtuales seguros para pacientes elegibles. Visite nuestra página de Telemedicina o llame a su centro para programar."
+      }
+    },
+    {
+      "id": "shop",
+      "specialty": "general",
+      "category": {
+        "en": "Shop",
+        "es": "Tienda"
+      },
+      "q": {
+        "en": "Can I buy braces or wellness products online?",
+        "es": "¿Puedo comprar órtesis o productos de bienestar en línea?"
+      },
+      "a": {
+        "en": "Yes. Visit the OrthoExpress Shop for braces, CBD topicals, cold therapy, and recovery essentials.",
+        "es": "Sí. Visite la Tienda OrthoExpress para órtesis, productos tópicos de CBD, terapia de frío y esenciales de recuperación."
+      }
+    },
+    {
+      "id": "sports-acl",
+      "specialty": "sports-medicine",
+      "category": {
+        "en": "Sports Medicine",
+        "es": "Medicina deportiva"
+      },
+      "q": {
+        "en": "Can you evaluate a suspected ACL or meniscus injury same day?",
+        "es": "¿Pueden evaluar una posible lesión de LCA o menisco el mismo día?"
+      },
+      "a": {
+        "en": "Yes. We perform clinical exams, order imaging when needed, and discuss bracing, PT, or specialist referral options the same visit.",
+        "es": "Sí. Realizamos exámenes clínicos, ordenamos imágenes cuando es necesario y comentamos opciones de férula, fisioterapia o referencia al especialista en la misma visita."
+      }
+    },
+    {
+      "id": "sports-return",
+      "specialty": "sports-medicine",
+      "category": {
+        "en": "Sports Medicine",
+        "es": "Medicina deportiva"
+      },
+      "q": {
+        "en": "When can I return to sports after a sprain or strain?",
+        "es": "¿Cuándo puedo volver al deporte después de un esguince o distensión?"
+      },
+      "a": {
+        "en": "It depends on the injury and healing stage. We provide activity-specific timelines and may coordinate PT before full return-to-play.",
+        "es": "Depende de la lesión y la etapa de curación. Ofrecemos plazos según la actividad y podemos coordinar fisioterapia antes del regreso completo."
+      }
+    },
+    {
+      "id": "sports-concussion",
+      "specialty": "sports-medicine",
+      "category": {
+        "en": "Sports Medicine",
+        "es": "Medicina deportiva"
+      },
+      "q": {
+        "en": "Do you treat sports-related concussions or head injuries?",
+        "es": "¿Tratan conmociones o lesiones en la cabeza relacionadas con el deporte?"
+      },
+      "a": {
+        "en": "We evaluate musculoskeletal injuries on site. Suspected concussions may require ER or neurology referral — we help coordinate next steps.",
+        "es": "Evaluamos lesiones musculoesqueléticas en el centro. Las posibles conmociones pueden requerir referencia a urgencias o neurología; ayudamos a coordinar los siguientes pasos."
+      }
+    },
+    {
+      "id": "wc-first-visit",
+      "specialty": "workers-comp",
+      "category": {
+        "en": "Workers' Compensation",
+        "es": "Compensación laboral"
+      },
+      "q": {
+        "en": "What should I bring for a workers’ compensation visit?",
+        "es": "¿Qué debo llevar para una visita de compensación laboral?"
+      },
+      "a": {
+        "en": "Bring your claim number, employer details, photo ID, and any incident reports. We handle required documentation for adjusters and employers.",
+        "es": "Lleve su número de reclamo, datos del empleador, identificación con foto y cualquier informe del incidente. Gestionamos la documentación requerida para ajustadores y empleadores."
+      }
+    },
+    {
+      "id": "wc-rtw",
+      "specialty": "workers-comp",
+      "category": {
+        "en": "Workers' Compensation",
+        "es": "Compensación laboral"
+      },
+      "q": {
+        "en": "Can you provide work restrictions and return-to-work notes?",
+        "es": "¿Pueden proporcionar restricciones laborales y notas de regreso al trabajo?"
+      },
+      "a": {
+        "en": "Yes. We document functional limitations and modified-duty recommendations and communicate with employers when authorized.",
+        "es": "Sí. Documentamos limitaciones funcionales y recomendaciones de trabajo modificado y nos comunicamos con empleadores cuando está autorizado."
+      }
+    },
+    {
+      "id": "wc-urgent",
+      "specialty": "workers-comp",
+      "category": {
+        "en": "Workers' Compensation",
+        "es": "Compensación laboral"
+      },
+      "q": {
+        "en": "Do you accept walk-in workplace injuries?",
+        "es": "¿Aceptan lesiones laborales sin cita?"
+      },
+      "a": {
+        "en": "Yes. Walk-ins are welcome for acute workplace injuries. Early evaluation helps prevent complications and supports faster recovery.",
+        "es": "Sí. Aceptamos visitas sin cita para lesiones laborales agudas. La evaluación temprana ayuda a prevenir complicaciones y apoya una recuperación más rápida."
+      }
+    },
+    {
+      "id": "mri-wait",
+      "specialty": "mri-digital-imaging",
+      "category": {
+        "en": "Imaging",
+        "es": "Imágenes"
+      },
+      "q": {
+        "en": "How long do X-ray results take?",
+        "es": "¿Cuánto tardan los resultados de radiografía?"
+      },
+      "a": {
+        "en": "Digital X-rays are often reviewed during your visit. Your provider discusses findings and next steps before you leave when possible.",
+        "es": "Las radiografías digitales a menudo se revisan durante su visita. Su proveedor comenta los hallazgos y siguientes pasos antes de salir cuando es posible."
+      }
+    },
+    {
+      "id": "mri-order",
+      "specialty": "mri-digital-imaging",
+      "category": {
+        "en": "Imaging",
+        "es": "Imágenes"
+      },
+      "q": {
+        "en": "Can you order an MRI from the walk-in clinic?",
+        "es": "¿Pueden ordenar una resonancia desde la clínica sin cita?"
+      },
+      "a": {
+        "en": "Yes. When clinically indicated, we order MRI or advanced imaging and coordinate scheduling with trusted imaging partners.",
+        "es": "Sí. Cuando está clínicamente indicado, ordenamos resonancia o imágenes avanzadas y coordinamos la programación con socios de imágenes de confianza."
+      }
+    },
+    {
+      "id": "peds-fracture",
+      "specialty": "pediatric-care",
+      "category": {
+        "en": "Pediatric Care",
+        "es": "Atención pediátrica"
+      },
+      "q": {
+        "en": "Do you cast or splint children’s fractures?",
+        "es": "¿Colocan yeso o férula en fracturas de niños?"
+      },
+      "a": {
+        "en": "Yes. We provide pediatric casting and splinting with growth-plate considerations and family-friendly discharge instructions.",
+        "es": "Sí. Ofrecemos yeso y férulas pediátricas considerando las placas de crecimiento e instrucciones al alta adaptadas a la familia."
+      }
+    },
+    {
+      "id": "peds-sports",
+      "specialty": "pediatric-care",
+      "category": {
+        "en": "Pediatric Care",
+        "es": "Atención pediátrica"
+      },
+      "q": {
+        "en": "Can teens be seen for sports injuries without a pediatrician referral?",
+        "es": "¿Pueden atender a adolescentes por lesiones deportivas sin referencia de pediatra?"
+      },
+      "a": {
+        "en": "Yes. No referral is needed. We treat teen athletes for sprains, overuse injuries, and growth-related concerns.",
+        "es": "Sí. No se necesita referencia. Tratamos a adolescentes deportistas por esguinces, lesiones por uso excesivo y preocupaciones relacionadas con el crecimiento."
+      }
+    },
+    {
+      "id": "spine-radicular",
+      "specialty": "lumbar-cervical-spine",
+      "category": {
+        "en": "Spine",
+        "es": "Columna"
+      },
+      "q": {
+        "en": "Do you treat back pain with leg numbness or tingling?",
+        "es": "¿Tratan dolor de espalda con entumecimiento u hormigueo en la pierna?"
+      },
+      "a": {
+        "en": "Yes. We evaluate radicular symptoms, order imaging when appropriate, and discuss injections, PT, or specialist referral.",
+        "es": "Sí. Evaluamos síntomas radiculares, ordenamos imágenes cuando corresponde y comentamos inyecciones, fisioterapia o referencia a especialista."
+      }
+    },
+    {
+      "id": "spine-conservative",
+      "specialty": "lumbar-cervical-spine",
+      "category": {
+        "en": "Spine",
+        "es": "Columna"
+      },
+      "q": {
+        "en": "Will I need surgery for my neck or back pain?",
+        "es": "¿Necesitaré cirugía por dolor de cuello o espalda?"
+      },
+      "a": {
+        "en": "Most patients improve with conservative care first. We focus on accurate diagnosis and non-surgical options before surgical referral.",
+        "es": "La mayoría de los pacientes mejoran primero con tratamiento conservador. Nos enfocamos en diagnóstico preciso y opciones no quirúrgicas antes de referir a cirugía."
+      }
+    },
+    {
+      "id": "chiro-same-day",
+      "specialty": "chiropractic-surgery",
+      "category": {
+        "en": "Chiropractic Surgery",
+        "es": "Cirugía quiropráctica"
+      },
+      "q": {
+        "en": "Can I get a same-day chiropractic or spine evaluation?",
+        "es": "¿Puedo obtener una evaluación quiropráctica o de columna el mismo día?"
+      },
+      "a": {
+        "en": "Yes. Walk-in appointments are available for neck and back pain. We evaluate, order imaging when needed, and discuss conservative and surgical pathways.",
+        "es": "Sí. Hay citas sin cita previa para dolor de cuello y espalda. Evaluamos, ordenamos imágenes cuando sea necesario y comentamos vías conservadoras y quirúrgicas."
+      }
+    },
+    {
+      "id": "chiro-vs-surgery",
+      "specialty": "chiropractic-surgery",
+      "category": {
+        "en": "Chiropractic Surgery",
+        "es": "Cirugía quiropráctica"
+      },
+      "q": {
+        "en": "What is the difference between chiropractic care and spine surgery?",
+        "es": "¿Cuál es la diferencia entre atención quiropráctica y cirugía de columna?"
+      },
+      "a": {
+        "en": "Chiropractic care focuses on manual therapy, alignment, and decompression. Surgery is considered when structural damage or nerve compression requires direct correction. We coordinate both under one care team.",
+        "es": "La atención quiropráctica se enfoca en terapia manual, alineación y descompresión. La cirugía se considera cuando el daño estructural o la compresión nerviosa requieren corrección directa. Coordinamos ambas bajo un mismo equipo de atención."
+      }
+    },
+    {
+      "id": "spine-surgery-candidate",
+      "specialty": "spine-surgery",
+      "category": {
+        "en": "Spine Surgery",
+        "es": "Cirugía de columna"
+      },
+      "q": {
+        "en": "How do I know if I am a candidate for spine surgery?",
+        "es": "¿Cómo sé si soy candidato para cirugía de columna?"
+      },
+      "a": {
+        "en": "Candidates typically have persistent pain, weakness, or numbness after conservative treatment, with imaging showing disc herniation, stenosis, or instability. Our surgeons review your case and explain all options.",
+        "es": "Los candidatos suelen tener dolor persistente, debilidad o entumecimiento después del tratamiento conservador, con imágenes que muestran hernia discal, estenosis o inestabilidad. Nuestros cirujanos revisan su caso y explican todas las opciones."
+      }
+    },
+    {
+      "id": "spine-surgery-recovery",
+      "specialty": "spine-surgery",
+      "category": {
+        "en": "Spine Surgery",
+        "es": "Cirugía de columna"
+      },
+      "q": {
+        "en": "What is recovery like after spine surgery?",
+        "es": "¿Cómo es la recuperación después de la cirugía de columna?"
+      },
+      "a": {
+        "en": "Recovery varies by procedure. Many minimally invasive surgeries allow same-day walking and a return to light activity within weeks. We provide a structured rehab plan and follow-up visits.",
+        "es": "La recuperación varía según el procedimiento. Muchas cirugías mínimamente invasivas permiten caminar el mismo día y retomar actividad ligera en pocas semanas. Ofrecemos un plan de rehabilitación estructurado y visitas de seguimiento."
+      }
+    },
+    {
+      "id": "hand-carpal",
+      "specialty": "hand-wrist-care",
+      "category": {
+        "en": "Hand & Wrist",
+        "es": "Mano y muñeca"
+      },
+      "q": {
+        "en": "Can you evaluate carpal tunnel or wrist pain?",
+        "es": "¿Pueden evaluar túnel carpiano o dolor de muñeca?"
+      },
+      "a": {
+        "en": "Yes. We assess nerve compression, tendon issues, and fractures with exam and imaging, then discuss splinting, injections, or referral.",
+        "es": "Sí. Evaluamos compresión nerviosa, problemas de tendones y fracturas con examen e imágenes, luego comentamos férulas, inyecciones o referencia."
+      }
+    },
+    {
+      "id": "hand-fracture",
+      "specialty": "hand-wrist-care",
+      "category": {
+        "en": "Hand & Wrist",
+        "es": "Mano y muñeca"
+      },
+      "q": {
+        "en": "Do you treat finger and hand fractures same day?",
+        "es": "¿Tratan fracturas de dedos y mano el mismo día?"
+      },
+      "a": {
+        "en": "Yes. We provide same-day splinting and casting for many hand and finger injuries with follow-up planning.",
+        "es": "Sí. Ofrecemos férulas y yeso el mismo día para muchas lesiones de mano y dedos con planificación de seguimiento."
+      }
+    },
+    {
+      "id": "injury-fracture",
+      "specialty": "injuries-fractures-sprains",
+      "category": {
+        "en": "Injuries",
+        "es": "Lesiones"
+      },
+      "q": {
+        "en": "Should I go to the ER or OrthoExpress for a possible fracture?",
+        "es": "¿Debo ir a urgencias o a OrthoExpress por una posible fractura?"
+      },
+      "a": {
+        "en": "Open fractures, severe bleeding, or head trauma need the ER. Most closed fractures and sprains are treated efficiently in our walk-in clinic.",
+        "es": "Las fracturas abiertas, sangrado severo o trauma craneal requieren urgencias. La mayoría de fracturas cerradas y esguinces se tratan eficientemente en nuestra clínica sin cita."
+      }
+    },
+    {
+      "id": "injury-sprain",
+      "specialty": "injuries-fractures-sprains",
+      "category": {
+        "en": "Injuries",
+        "es": "Lesiones"
+      },
+      "q": {
+        "en": "Do I need imaging for every ankle or wrist sprain?",
+        "es": "¿Necesito imágenes para cada esguince de tobillo o muñeca?"
+      },
+      "a": {
+        "en": "Not always. We use clinical criteria to decide when X-ray is needed, avoiding unnecessary radiation and cost.",
+        "es": "No siempre. Usamos criterios clínicos para decidir cuándo se necesita radiografía, evitando radiación y costos innecesarios."
+      }
+    },
+    {
+      "id": "arthritis-injection",
+      "specialty": "arthritis",
+      "category": {
+        "en": "Arthritis",
+        "es": "Artritis"
+      },
+      "q": {
+        "en": "Do you offer joint injections for arthritis pain?",
+        "es": "¿Ofrecen inyecciones articulares para dolor de artritis?"
+      },
+      "a": {
+        "en": "Yes. When appropriate, we provide therapeutic injections and discuss long-term options including PT and lifestyle modifications.",
+        "es": "Sí. Cuando es apropiado, ofrecemos inyecciones terapéuticas y comentamos opciones a largo plazo incluyendo fisioterapia y cambios de estilo de vida."
+      }
+    },
+    {
+      "id": "arthritis-oa",
+      "specialty": "arthritis",
+      "category": {
+        "en": "Arthritis",
+        "es": "Artritis"
+      },
+      "q": {
+        "en": "Can walk-in care help osteoarthritis flare-ups?",
+        "es": "¿Puede la atención sin cita ayudar con brotes de osteoartritis?"
+      },
+      "a": {
+        "en": "Yes. We address acute flares with pain management, activity guidance, and coordination with your ongoing care plan.",
+        "es": "Sí. Abordamos brotes agudos con manejo del dolor, orientación de actividad y coordinación con su plan de atención continua."
+      }
+    },
+    {
+      "id": "pain-urgent",
+      "specialty": "pain-inflammation",
+      "category": {
+        "en": "Pain Management",
+        "es": "Manejo del dolor"
+      },
+      "q": {
+        "en": "Can I walk in for sudden joint or muscle pain?",
+        "es": "¿Puedo ir sin cita por dolor articular o muscular repentino?"
+      },
+      "a": {
+        "en": "Yes. Same-day evaluation helps identify the cause and start treatment — from anti-inflammatory plans to imaging and injections.",
+        "es": "Sí. La evaluación el mismo día ayuda a identificar la causa e iniciar tratamiento — desde planes antiinflamatorios hasta imágenes e inyecciones."
+      }
+    },
+    {
+      "id": "pain-chronic",
+      "specialty": "pain-inflammation",
+      "category": {
+        "en": "Pain Management",
+        "es": "Manejo del dolor"
+      },
+      "q": {
+        "en": "Do you manage chronic orthopedic pain?",
+        "es": "¿Manejan dolor ortopédico crónico?"
+      },
+      "a": {
+        "en": "We evaluate chronic pain, adjust care plans, and coordinate specialists or PT. Ongoing pain may benefit from scheduled follow-ups.",
+        "es": "Evaluamos dolor crónico, ajustamos planes de atención y coordinamos especialistas o fisioterapia. El dolor continuo puede beneficiarse de seguimientos programados."
+      }
+    },
+    {
+      "id": "tele-eligible",
+      "specialty": "telehealth",
+      "category": {
+        "en": "Telehealth",
+        "es": "Telemedicina"
+      },
+      "q": {
+        "en": "Who is eligible for OrthoNOW Live virtual visits?",
+        "es": "¿Quién es elegible para visitas virtuales OrthoNOW Live?"
+      },
+      "a": {
+        "en": "Established patients with follow-up needs, post-procedure check-ins, and some consultation types qualify. Acute injuries may still need an in-person exam.",
+        "es": "Pacientes establecidos con necesidades de seguimiento, controles post-procedimiento y algunos tipos de consulta califican. Las lesiones agudas pueden requerir examen presencial."
+      }
+    },
+    {
+      "id": "tele-device",
+      "specialty": "telehealth",
+      "category": {
+        "en": "Telehealth",
+        "es": "Telemedicina"
+      },
+      "q": {
+        "en": "What device do I need for a telehealth visit?",
+        "es": "¿Qué dispositivo necesito para una visita de telemedicina?"
+      },
+      "a": {
+        "en": "A smartphone, tablet, or computer with camera and internet works. We send simple join instructions before your appointment.",
+        "es": "Funciona un teléfono inteligente, tableta u ordenador con cámara e internet. Enviamos instrucciones simples antes de su cita."
+      }
+    }
+  ],
+  "careers": [
+    {
+      "id": "ma",
+      "title": {
+        "en": "Medical Assistant",
+        "es": "Asistente médico"
+      },
+      "type": {
+        "en": "Full-time",
+        "es": "Tiempo completo"
+      },
+      "location": {
+        "en": "Multiple locations",
+        "es": "Varias ubicaciones"
+      },
+      "summary": {
+        "en": "Support clinic flow, vitals, patient intake, and provider assistance in a fast-paced orthopedic walk-in setting.",
+        "es": "Apoye el flujo clínico, signos vitales, ingreso de pacientes y asistencia a proveedores en un entorno ortopédico sin cita."
+      }
+    },
+    {
+      "id": "frontdesk",
+      "title": {
+        "en": "Front Desk Coordinator",
+        "es": "Coordinador de recepción"
+      },
+      "type": {
+        "en": "Full-time",
+        "es": "Tiempo completo"
+      },
+      "location": {
+        "en": "Midland / satellite centers",
+        "es": "Midland / centros satélite"
+      },
+      "summary": {
+        "en": "Welcome patients, verify insurance, schedule visits, and create a calm, helpful first impression.",
+        "es": "Reciba pacientes, verifique seguros, programe visitas y cree una primera impresión calmada y útil."
+      }
+    },
+    {
+      "id": "np-pa",
+      "title": {
+        "en": "Orthopedic NP / PA",
+        "es": "NP / PA ortopédico"
+      },
+      "type": {
+        "en": "Full-time",
+        "es": "Tiempo completo"
+      },
+      "location": {
+        "en": "Openings vary by center",
+        "es": "Disponibilidad según el centro"
+      },
+      "summary": {
+        "en": "Evaluate and treat musculoskeletal injuries with a collaborative orthopedic team focused on same-day care.",
+        "es": "Evalúe y trate lesiones musculoesqueléticas con un equipo ortopédico colaborativo enfocado en atención el mismo día."
+      }
+    }
+  ],
+  "newsItems": [
+    {
+      "id": "spring-hours",
+      "date": "2026-03-12",
+      "tag": {
+        "en": "Clinic Update",
+        "es": "Actualización"
+      },
+      "title": {
+        "en": "Extended walk-in hours at select centers",
+        "es": "Horario extendido sin cita en centros seleccionados"
+      },
+      "summary": {
+        "en": "We’re expanding afternoon walk-in availability so more patients can get same-day orthopedic care.",
+        "es": "Estamos ampliando la disponibilidad por la tarde para que más pacientes reciban atención ortopédica el mismo día."
+      }
+    },
+    {
+      "id": "community-day",
+      "date": "2026-02-20",
+      "tag": {
+        "en": "Event",
+        "es": "Evento"
+      },
+      "title": {
+        "en": "Community sports injury awareness day",
+        "es": "Día comunitario de concientización sobre lesiones deportivas"
+      },
+      "summary": {
+        "en": "Join our team for free screenings tips, Q&A, and guidance on when to seek urgent orthopedic care.",
+        "es": "Únase a nuestro equipo para consejos de evaluación, preguntas y orientación sobre cuándo buscar atención ortopédica urgente."
+      }
+    },
+    {
+      "id": "teleortho",
+      "date": "2026-01-15",
+      "tag": {
+        "en": "News",
+        "es": "Noticias"
+      },
+      "title": {
+        "en": "Teleorthopedics follow-ups now easier to schedule",
+        "es": "Los seguimientos de teleortopedia ahora son más fáciles de programar"
+      },
+      "summary": {
+        "en": "Eligible patients can book convenient virtual follow-ups after an in-clinic evaluation.",
+        "es": "Los pacientes elegibles pueden reservar seguimientos virtuales convenientes después de una evaluación en clínica."
+      }
+    }
+  ],
+  "telehealthWhen": [
+    {
+      "id": "follow-up",
+      "title": {
+        "en": "Follow-up visits",
+        "es": "Consultas de seguimiento"
+      },
+      "text": {
+        "en": "Review healing progress, adjust treatment plans, and discuss imaging results without another trip to the clinic.",
+        "es": "Revise la evolución, ajuste planes de tratamiento y comente resultados de imágenes sin otro viaje a la clínica."
+      }
+    },
+    {
+      "id": "post-op",
+      "title": {
+        "en": "Post-procedure check-ins",
+        "es": "Controles post-procedimiento"
+      },
+      "text": {
+        "en": "Quick virtual visits after casting, splinting, or minor procedures when an in-person exam is not required.",
+        "es": "Visitas virtuales rápidas después de yesos, férulas o procedimientos menores cuando no se requiere examen presencial."
+      }
+    },
+    {
+      "id": "second-opinion",
+      "title": {
+        "en": "Care coordination",
+        "es": "Coordinación de atención"
+      },
+      "text": {
+        "en": "Connect with your care team about PT referrals, medication questions, and return-to-work or sport guidance.",
+        "es": "Conéctese con su equipo sobre referencias de fisioterapia, medicamentos y orientación para volver al trabajo o deporte."
+      }
+    }
+  ],
+  "telehealthSteps": [
+    {
+      "id": "book",
+      "title": {
+        "en": "Request a virtual visit",
+        "es": "Solicite una visita virtual"
+      },
+      "text": {
+        "en": "Call your center or book online. Our team confirms whether teleorthopedics is appropriate for your concern.",
+        "es": "Llame a su centro o reserve en línea. Nuestro equipo confirma si la teleortopedia es adecuada para su caso."
+      }
+    },
+    {
+      "id": "prep",
+      "title": {
+        "en": "Prepare your visit",
+        "es": "Prepare su visita"
+      },
+      "text": {
+        "en": "Use a phone, tablet, or computer with camera. Have your ID, insurance card, and any prior imaging ready.",
+        "es": "Use teléfono, tableta u ordenador con cámara. Tenga su identificación, seguro e imágenes previas listas."
+      }
+    },
+    {
+      "id": "connect",
+      "title": {
+        "en": "Connect with your clinician",
+        "es": "Conéctese con su clínico"
+      },
+      "text": {
+        "en": "Join your secure OrthoNOW Live session. Your provider evaluates symptoms, answers questions, and orders next steps.",
+        "es": "Únase a su sesión segura OrthoNOW Live. Su proveedor evalúa síntomas, responde preguntas y ordena los siguientes pasos."
+      }
+    }
+  ],
+  "afterVisitSteps": [
+    {
+      "id": "instructions",
+      "icon": "clipboard",
+      "title": {
+        "en": "Discharge instructions",
+        "es": "Instrucciones al alta"
+      },
+      "text": {
+        "en": "Review home-care guidance, activity restrictions, and when to call if symptoms worsen.",
+        "es": "Revise cuidados en casa, restricciones de actividad y cuándo llamar si los síntomas empeoran."
+      },
+      "link": "/contact-us",
+      "linkLabel": {
+        "en": "Questions? Contact us",
+        "es": "¿Preguntas? Contáctenos"
+      }
+    },
+    {
+      "id": "imaging",
+      "icon": "scan",
+      "title": {
+        "en": "Imaging & results",
+        "es": "Imágenes y resultados"
+      },
+      "text": {
+        "en": "If X-ray or MRI was ordered, we coordinate scheduling and follow up when results are available.",
+        "es": "Si se ordenó radiografía o resonancia, coordinamos la programación y el seguimiento cuando haya resultados."
+      },
+      "link": "/services/mri-digital-imaging",
+      "linkLabel": {
+        "en": "Imaging services",
+        "es": "Servicios de imágenes"
+      }
+    },
+    {
+      "id": "pt",
+      "icon": "rehab",
+      "title": {
+        "en": "Physical therapy referrals",
+        "es": "Referencias de fisioterapia"
+      },
+      "text": {
+        "en": "We connect you with trusted PT partners and share recovery goals so rehab starts on the right track.",
+        "es": "Lo conectamos con socios de fisioterapia de confianza y compartimos metas de recuperación para un buen inicio."
+      },
+      "link": "/book-appointment",
+      "linkLabel": {
+        "en": "Schedule follow-up",
+        "es": "Programar seguimiento"
+      }
+    },
+    {
+      "id": "workers",
+      "icon": "work",
+      "title": {
+        "en": "Workers' comp paperwork",
+        "es": "Documentación de compensación laboral"
+      },
+      "text": {
+        "en": "Employer and adjuster documentation, work restrictions, and return-to-work plans are handled by our team.",
+        "es": "Documentación para empleador y ajustador, restricciones laborales y planes de regreso al trabajo los gestiona nuestro equipo."
+      },
+      "link": "/workers-comp",
+      "linkLabel": {
+        "en": "Workers' comp hub",
+        "es": "Centro de compensación laboral"
+      }
+    },
+    {
+      "id": "billing",
+      "icon": "billing",
+      "title": {
+        "en": "Billing & payment",
+        "es": "Facturación y pagos"
+      },
+      "text": {
+        "en": "Review estimates, insurance coverage, and self-pay options. Pay balances online when your portal is active.",
+        "es": "Revise estimados, cobertura de seguro y opciones de pago propio. Pague saldos en línea cuando su portal esté activo."
+      },
+      "link": "/payment",
+      "linkLabel": {
+        "en": "Payment & insurance",
+        "es": "Pagos y seguros"
+      }
+    },
+    {
+      "id": "tele",
+      "icon": "video",
+      "title": {
+        "en": "Virtual follow-ups",
+        "es": "Seguimientos virtuales"
+      },
+      "text": {
+        "en": "Eligible patients can continue recovery with OrthoNOW Live teleorthopedics between in-clinic visits.",
+        "es": "Pacientes elegibles pueden continuar la recuperación con teleortopedia OrthoNOW Live entre visitas presenciales."
+      },
+      "link": "/telehealth",
+      "linkLabel": {
+        "en": "OrthoNOW Live",
+        "es": "OrthoNOW Live"
+      }
+    }
+  ],
+  "portalFeatures": [
+    {
+      "id": "records",
+      "title": {
+        "en": "Visit summaries & records",
+        "es": "Resúmenes de visita e historial"
+      },
+      "text": {
+        "en": "Access discharge instructions, visit notes, and request copies of imaging or medical records.",
+        "es": "Acceda a instrucciones al alta, notas de visita y solicite copias de imágenes o historial médico."
+      },
+      "link": "/contact-us",
+      "internal": true
+    },
+    {
+      "id": "billing",
+      "title": {
+        "en": "Pay your bill",
+        "es": "Pague su factura"
+      },
+      "text": {
+        "en": "View statements, understand charges, and pay balances securely online.",
+        "es": "Vea estados de cuenta, entienda cargos y pague saldos de forma segura en línea."
+      },
+      "link": "/payment",
+      "internal": true
+    },
+    {
+      "id": "appointments",
+      "title": {
+        "en": "Appointments",
+        "es": "Citas"
+      },
+      "text": {
+        "en": "Book follow-ups, telehealth visits, and manage upcoming appointments.",
+        "es": "Reserve seguimientos, visitas de telemedicina y gestione citas próximas."
+      },
+      "link": "/book-appointment",
+      "internal": true
+    },
+    {
+      "id": "messages",
+      "title": {
+        "en": "Secure messaging",
+        "es": "Mensajería segura"
+      },
+      "text": {
+        "en": "Message your care team about non-urgent questions between visits (when portal messaging is enabled).",
+        "es": "Envíe mensajes a su equipo sobre preguntas no urgentes entre visitas (cuando la mensajería esté habilitada)."
+      },
+      "link": "/technology#orthochat",
+      "internal": true
+    }
+  ],
+  "technologyFeatures": [
+    {
+      "id": "ehr",
+      "title": {
+        "en": "Electronic health records (EHR)",
+        "es": "Historial clínico electrónico (ECE)"
+      },
+      "text": {
+        "en": "Unified digital records across centers so your history, allergies, and imaging follow you wherever you are seen.",
+        "es": "Historial digital unificado en todos los centros para que su historial, alergias e imágenes le sigan donde sea atendido."
+      }
+    },
+    {
+      "id": "imaging",
+      "title": {
+        "en": "Digital imaging workflow",
+        "es": "Flujo de imágenes digitales"
+      },
+      "text": {
+        "en": "On-site digital X-ray with rapid reads. MRI and advanced imaging are coordinated and results shared with your care team.",
+        "es": "Radiografía digital en el centro con lecturas rápidas. Resonancia e imágenes avanzadas se coordinan y se comparten con su equipo."
+      }
+    },
+    {
+      "id": "security",
+      "title": {
+        "en": "Privacy & security",
+        "es": "Privacidad y seguridad"
+      },
+      "text": {
+        "en": "HIPAA-aligned systems, encrypted data in transit and at rest, and role-based access for clinical staff only.",
+        "es": "Sistemas alineados con HIPAA, datos cifrados en tránsito y en reposo, y acceso basado en roles solo para personal clínico."
+      }
+    }
+  ],
+  "orthochatFeatures": [
+    {
+      "id": "referrals",
+      "title": {
+        "en": "Specialist referrals",
+        "es": "Referencias a especialistas"
+      },
+      "text": {
+        "en": "Clinicians share imaging, notes, and treatment context securely when coordinating with surgeons or PT partners.",
+        "es": "Los clínicos comparten imágenes, notas y contexto de tratamiento de forma segura al coordinar con cirujanos o fisioterapeutas."
+      }
+    },
+    {
+      "id": "multisite",
+      "title": {
+        "en": "Multi-center collaboration",
+        "es": "Colaboración multi-centro"
+      },
+      "text": {
+        "en": "Providers across OrthoExpress locations access the same record so follow-ups stay consistent when you travel.",
+        "es": "Los proveedores en todas las ubicaciones de OrthoExpress acceden al mismo historial para seguimientos consistentes cuando viaja."
+      }
+    },
+    {
+      "id": "urgent",
+      "title": {
+        "en": "Urgent case handoffs",
+        "es": "Transferencias de casos urgentes"
+      },
+      "text": {
+        "en": "OrthoChat flags complex injuries for rapid review by senior clinicians without delaying your visit.",
+        "es": "OrthoChat marca lesiones complejas para revisión rápida por clínicos senior sin retrasar su visita."
+      }
+    }
+  ],
+  "faqSpecialties": [
+    {
+      "id": "all",
+      "label": {
+        "en": "All topics",
+        "es": "Todos los temas"
+      }
+    },
+    {
+      "id": "general",
+      "label": {
+        "en": "General",
+        "es": "General"
+      }
+    },
+    {
+      "id": "sports-medicine",
+      "label": {
+        "en": "Sports Medicine",
+        "es": "Medicina deportiva"
+      }
+    },
+    {
+      "id": "workers-comp",
+      "label": {
+        "en": "Workers' Comp",
+        "es": "Compensación laboral"
+      }
+    },
+    {
+      "id": "mri-digital-imaging",
+      "label": {
+        "en": "Imaging",
+        "es": "Imágenes"
+      }
+    },
+    {
+      "id": "pediatric-care",
+      "label": {
+        "en": "Pediatric",
+        "es": "Pediátrico"
+      }
+    },
+    {
+      "id": "lumbar-cervical-spine",
+      "label": {
+        "en": "Spine",
+        "es": "Columna"
+      }
+    },
+    {
+      "id": "chiropractic-surgery",
+      "label": {
+        "en": "Chiropractic",
+        "es": "Quiropráctica"
+      }
+    },
+    {
+      "id": "spine-surgery",
+      "label": {
+        "en": "Spine Surgery",
+        "es": "Cirugía de columna"
+      }
+    },
+    {
+      "id": "hand-wrist-care",
+      "label": {
+        "en": "Hand & Wrist",
+        "es": "Mano y muñeca"
+      }
+    },
+    {
+      "id": "injuries-fractures-sprains",
+      "label": {
+        "en": "Injuries",
+        "es": "Lesiones"
+      }
+    },
+    {
+      "id": "arthritis",
+      "label": {
+        "en": "Arthritis",
+        "es": "Artritis"
+      }
+    },
+    {
+      "id": "pain-inflammation",
+      "label": {
+        "en": "Pain",
+        "es": "Dolor"
+      }
+    },
+    {
+      "id": "telehealth",
+      "label": {
+        "en": "Telehealth",
+        "es": "Telemedicina"
+      }
+    }
+  ],
+  "blogs": [
+    {
+      "slug": "understanding-orthopedic-injuries",
+      "title": {
+        "en": "Understanding Common Orthopedic Injuries",
+        "es": "Comprender las lesiones ortopédicas comunes"
+      },
+      "excerpt": {
+        "en": "Learn about the most common orthopedic injuries and how to prevent them in your daily life.",
+        "es": "Conozca las lesiones ortopédicas más comunes y cómo prevenirlas en su vida diaria."
+      },
+      "category": {
+        "en": "General Health",
+        "es": "Salud general"
+      },
+      "date": {
+        "en": "March 15, 2024",
+        "es": "15 de marzo de 2024"
+      },
+      "imagePath": "assets/images/blogs/orthopedic-injuries.webp",
+      "content": {
+        "en": "<p>Orthopedic injuries are among the most common medical conditions affecting people of all ages. Understanding these injuries can help you recognize symptoms early and seek appropriate treatment.</p>\n        \n        <h3>Common Types of Orthopedic Injuries</h3>\n        <p>Some of the most frequently encountered orthopedic injuries include:</p>\n        <ul>\n          <li><strong>Fractures:</strong> Broken bones that can occur from falls, accidents, or overuse.</li>\n          <li><strong>Sprains and Strains:</strong> Injuries to ligaments (sprains) or muscles/tendons (strains).</li>\n          <li><strong>Dislocations:</strong> When bones are forced out of their normal positions.</li>\n          <li><strong>Tendinitis:</strong> Inflammation of tendons, often from repetitive motion.</li>\n          <li><strong>Bursitis:</strong> Inflammation of the fluid-filled sacs that cushion joints.</li>\n        </ul>\n\n        <h3>Prevention Strategies</h3>\n        <p>While not all injuries can be prevented, there are steps you can take to reduce your risk:</p>\n        <ul>\n          <li>Maintain a healthy weight to reduce stress on joints</li>\n          <li>Engage in regular exercise to strengthen muscles and bones</li>\n          <li>Use proper technique when lifting or performing physical activities</li>\n          <li>Wear appropriate protective equipment during sports</li>\n          <li>Take breaks during repetitive activities</li>\n        </ul>\n\n        <h3>When to Seek Medical Attention</h3>\n        <p>If you experience severe pain, inability to move a joint, visible deformity, or symptoms that worsen over time, it's important to seek medical attention promptly. Early diagnosis and treatment can significantly improve outcomes.</p>",
+        "es": "<p>Las lesiones ortopédicas se encuentran entre las afecciones médicas más comunes que afectan a personas de todas las edades. Comprender estas lesiones puede ayudarle a reconocer los síntomas temprano y buscar el tratamiento adecuado.</p>\n        \n        <h3>Tipos comunes de lesiones ortopédicas</h3>\n        <p>Algunas de las lesiones ortopédicas más frecuentes incluyen:</p>\n        <ul>\n          <li><strong>Fracturas:</strong> Huesos rotos que pueden ocurrir por caídas, accidentes o sobreuso.</li>\n          <li><strong>Esguinces y distensiones:</strong> Lesiones en ligamentos (esguinces) o músculos/tendones (distensiones).</li>\n          <li><strong>Luxaciones:</strong> Cuando los huesos se salen de sus posiciones normales.</li>\n          <li><strong>Tendinitis:</strong> Inflamación de los tendones, a menudo por movimientos repetitivos.</li>\n          <li><strong>Bursitis:</strong> Inflamación de las bolsas llenas de líquido que amortiguan las articulaciones.</li>\n        </ul>\n\n        <h3>Estrategias de prevención</h3>\n        <p>Aunque no todas las lesiones pueden prevenirse, hay pasos que puede tomar para reducir su riesgo:</p>\n        <ul>\n          <li>Mantenga un peso saludable para reducir el estrés en las articulaciones</li>\n          <li>Realice ejercicio regular para fortalecer músculos y huesos</li>\n          <li>Use la técnica adecuada al levantar objetos o realizar actividades físicas</li>\n          <li>Use el equipo de protección apropiado durante los deportes</li>\n          <li>Tome descansos durante actividades repetitivas</li>\n        </ul>\n\n        <h3>Cuándo buscar atención médica</h3>\n        <p>Si experimenta dolor severo, incapacidad para mover una articulación, deformidad visible o síntomas que empeoran con el tiempo, es importante buscar atención médica de inmediato. El diagnóstico y tratamiento tempranos pueden mejorar significativamente los resultados.</p>"
+      }
+    },
+    {
+      "slug": "recovery-after-surgery",
+      "title": {
+        "en": "Recovery Tips After Orthopedic Surgery",
+        "es": "Consejos de recuperación después de cirugía ortopédica"
+      },
+      "excerpt": {
+        "en": "Essential tips and guidelines for a smooth recovery process after orthopedic procedures.",
+        "es": "Consejos esenciales y pautas para un proceso de recuperación fluido después de procedimientos ortopédicos."
+      },
+      "category": {
+        "en": "Recovery",
+        "es": "Recuperación"
+      },
+      "date": {
+        "en": "March 10, 2024",
+        "es": "10 de marzo de 2024"
+      },
+      "imagePath": "assets/images/blogs/recovery-surgery.jpg",
+      "content": {
+        "en": "<p>Recovery after orthopedic surgery requires patience, dedication, and following your doctor's instructions carefully. Here are essential tips to help you through the recovery process.</p>\n        \n        <h3>Follow Your Doctor's Instructions</h3>\n        <p>Your surgeon will provide specific instructions based on your procedure. It's crucial to follow these guidelines regarding activity levels, medications, and wound care.</p>\n\n        <h3>Manage Pain Effectively</h3>\n        <p>Pain management is crucial for recovery. Take prescribed medications as directed and communicate with your healthcare team about your pain levels.</p>\n\n        <h3>Physical Therapy</h3>\n        <p>Most orthopedic surgeries require physical therapy to restore function. Attend all sessions and perform home exercises as recommended.</p>\n\n        <h3>Nutrition and Hydration</h3>\n        <p>Proper nutrition supports healing. Focus on protein-rich foods, vitamins, and stay well-hydrated.</p>\n\n        <h3>Rest and Activity Balance</h3>\n        <p>Balance rest with appropriate activity. Too much rest can delay recovery, while too much activity can cause complications.</p>",
+        "es": "<p>La recuperación después de una cirugía ortopédica requiere paciencia, dedicación y seguir cuidadosamente las instrucciones de su médico. Aquí hay consejos esenciales para ayudarle durante el proceso de recuperación.</p>\n        \n        <h3>Siga las instrucciones de su médico</h3>\n        <p>Su cirujano le proporcionará instrucciones específicas según su procedimiento. Es crucial seguir estas pautas respecto a los niveles de actividad, medicamentos y cuidado de heridas.</p>\n\n        <h3>Maneje el dolor de manera efectiva</h3>\n        <p>El manejo del dolor es crucial para la recuperación. Tome los medicamentos recetados según las indicaciones y comunique a su equipo de salud sus niveles de dolor.</p>\n\n        <h3>Fisioterapia</h3>\n        <p>La mayoría de las cirugías ortopédicas requieren fisioterapia para restaurar la función. Asista a todas las sesiones y realice los ejercicios en casa según lo recomendado.</p>\n\n        <h3>Nutrición e hidratación</h3>\n        <p>Una nutrición adecuada apoya la sanación. Enfóquese en alimentos ricos en proteínas, vitaminas y manténgase bien hidratado.</p>\n\n        <h3>Equilibrio entre descanso y actividad</h3>\n        <p>Equilibre el descanso con actividad apropiada. Demasiado descanso puede retrasar la recuperación, mientras que demasiada actividad puede causar complicaciones.</p>"
+      }
+    },
+    {
+      "slug": "sports-injury-prevention",
+      "title": {
+        "en": "Sports Injury Prevention Strategies",
+        "es": "Estrategias de prevención de lesiones deportivas"
+      },
+      "excerpt": {
+        "en": "Expert advice on preventing sports-related injuries and maintaining peak performance.",
+        "es": "Consejos expertos para prevenir lesiones relacionadas con el deporte y mantener el máximo rendimiento."
+      },
+      "category": {
+        "en": "Sports Medicine",
+        "es": "Medicina deportiva"
+      },
+      "date": {
+        "en": "March 5, 2024",
+        "es": "5 de marzo de 2024"
+      },
+      "imagePath": "assets/images/blogs/sports-prevention.jpg",
+      "content": {
+        "en": "<p>Preventing sports injuries is essential for athletes of all levels. Here are proven strategies to keep you in the game.</p>\n        \n        <h3>Proper Warm-up and Cool-down</h3>\n        <p>Always warm up before activity and cool down afterward. This prepares your body for exercise and helps with recovery.</p>\n\n        <h3>Use Proper Equipment</h3>\n        <p>Wear appropriate protective gear and ensure equipment fits correctly. This includes helmets, pads, and proper footwear.</p>\n\n        <h3>Gradual Progression</h3>\n        <p>Avoid sudden increases in training intensity or duration. Gradually build up your activity level to prevent overuse injuries.</p>\n\n        <h3>Cross-Training</h3>\n        <p>Engage in a variety of activities to prevent overuse of specific muscle groups and maintain overall fitness.</p>\n\n        <h3>Listen to Your Body</h3>\n        <p>Pay attention to pain and fatigue. Rest when needed and don't push through injuries.</p>",
+        "es": "<p>Prevenir lesiones deportivas es esencial para atletas de todos los niveles. Aquí hay estrategias comprobadas para mantenerlo en el juego.</p>\n        \n        <h3>Calentamiento y enfriamiento adecuados</h3>\n        <p>Siempre caliente antes de la actividad y enfríe después. Esto prepara su cuerpo para el ejercicio y ayuda con la recuperación.</p>\n\n        <h3>Use el equipo adecuado</h3>\n        <p>Use equipo de protección apropiado y asegúrese de que el equipo le quede correctamente. Esto incluye cascos, protectores y calzado adecuado.</p>\n\n        <h3>Progresión gradual</h3>\n        <p>Evite aumentos repentinos en la intensidad o duración del entrenamiento. Aumente gradualmente su nivel de actividad para prevenir lesiones por sobreuso.</p>\n\n        <h3>Entrenamiento cruzado</h3>\n        <p>Participe en una variedad de actividades para prevenir el sobreuso de grupos musculares específicos y mantener una buena condición física general.</p>\n\n        <h3>Escuche a su cuerpo</h3>\n        <p>Preste atención al dolor y la fatiga. Descanse cuando sea necesario y no ignore las lesiones.</p>"
+      }
+    },
+    {
+      "slug": "managing-chronic-pain",
+      "title": {
+        "en": "Managing Chronic Orthopedic Pain",
+        "es": "Manejo del dolor ortopédico crónico"
+      },
+      "excerpt": {
+        "en": "Effective strategies for managing long-term orthopedic pain and improving quality of life.",
+        "es": "Estrategias efectivas para manejar el dolor ortopédico a largo plazo y mejorar la calidad de vida."
+      },
+      "category": {
+        "en": "Pain Management",
+        "es": "Manejo del dolor"
+      },
+      "date": {
+        "en": "February 28, 2024",
+        "es": "28 de febrero de 2024"
+      },
+      "imagePath": "assets/images/blogs/chronic-pain.webp",
+      "content": {
+        "en": "<p>Chronic orthopedic pain can significantly impact your daily life and well-being. Here are effective strategies for managing long-term pain and improving your quality of life.</p>\n        \n        <h3>Understanding Chronic Pain</h3>\n        <p>Chronic pain persists beyond the normal healing period and may require ongoing management strategies. Understanding your pain is the first step toward effective treatment.</p>\n\n        <h3>Medical Treatment Options</h3>\n        <p>Various medical treatments can help manage chronic pain, including medications, injections, and physical therapy. Work with your healthcare provider to find the right combination.</p>\n\n        <h3>Lifestyle Modifications</h3>\n        <p>Simple lifestyle changes can make a significant difference. This includes maintaining a healthy weight, staying active within your limits, and practicing stress management techniques.</p>\n\n        <h3>Mind-Body Techniques</h3>\n        <p>Techniques such as meditation, deep breathing, and mindfulness can help you better manage pain and reduce its impact on your life.</p>",
+        "es": "<p>El dolor ortopédico crónico puede afectar significativamente su vida diaria y bienestar. Aquí hay estrategias efectivas para manejar el dolor a largo plazo y mejorar su calidad de vida.</p>\n        \n        <h3>Comprender el dolor crónico</h3>\n        <p>El dolor crónico persiste más allá del período normal de sanación y puede requerir estrategias de manejo continuas. Comprender su dolor es el primer paso hacia un tratamiento efectivo.</p>\n\n        <h3>Opciones de tratamiento médico</h3>\n        <p>Varios tratamientos médicos pueden ayudar a manejar el dolor crónico, incluyendo medicamentos, inyecciones y fisioterapia. Trabaje con su proveedor de salud para encontrar la combinación adecuada.</p>\n\n        <h3>Modificaciones del estilo de vida</h3>\n        <p>Cambios simples en el estilo de vida pueden hacer una diferencia significativa. Esto incluye mantener un peso saludable, mantenerse activo dentro de sus límites y practicar técnicas de manejo del estrés.</p>\n\n        <h3>Técnicas mente-cuerpo</h3>\n        <p>Técnicas como la meditación, la respiración profunda y la atención plena pueden ayudarle a manejar mejor el dolor y reducir su impacto en su vida.</p>"
+      }
+    },
+    {
+      "slug": "exercise-for-joint-health",
+      "title": {
+        "en": "Exercise for Joint Health",
+        "es": "Ejercicio para la salud articular"
+      },
+      "excerpt": {
+        "en": "Discover the best exercises to maintain healthy joints and prevent orthopedic issues.",
+        "es": "Descubra los mejores ejercicios para mantener articulaciones saludables y prevenir problemas ortopédicos."
+      },
+      "category": {
+        "en": "Exercise",
+        "es": "Ejercicio"
+      },
+      "date": {
+        "en": "February 20, 2024",
+        "es": "20 de febrero de 2024"
+      },
+      "imagePath": "assets/images/blogs/joint-exercise.jpg",
+      "content": {
+        "en": "<p>Regular exercise is essential for maintaining healthy joints and preventing orthopedic issues. Discover the best exercises to keep your joints strong and flexible.</p>\n        \n        <h3>Low-Impact Exercises</h3>\n        <p>Low-impact activities like swimming, cycling, and walking are excellent for joint health. These exercises strengthen muscles without excessive stress on joints.</p>\n\n        <h3>Strength Training</h3>\n        <p>Building muscle strength supports and protects your joints. Focus on exercises that target the muscles around your joints without causing pain.</p>\n\n        <h3>Flexibility and Range of Motion</h3>\n        <p>Stretching and range-of-motion exercises help maintain joint flexibility and prevent stiffness. Regular stretching can improve mobility and reduce the risk of injury.</p>\n\n        <h3>Balance and Stability</h3>\n        <p>Balance exercises help prevent falls and injuries. Simple balance training can significantly improve joint stability and coordination.</p>",
+        "es": "<p>El ejercicio regular es esencial para mantener articulaciones saludables y prevenir problemas ortopédicos. Descubra los mejores ejercicios para mantener sus articulaciones fuertes y flexibles.</p>\n        \n        <h3>Ejercicios de bajo impacto</h3>\n        <p>Actividades de bajo impacto como nadar, andar en bicicleta y caminar son excelentes para la salud articular. Estos ejercicios fortalecen los músculos sin estrés excesivo en las articulaciones.</p>\n\n        <h3>Entrenamiento de fuerza</h3>\n        <p>Desarrollar fuerza muscular apoya y protege sus articulaciones. Enfóquese en ejercicios que trabajen los músculos alrededor de sus articulaciones sin causar dolor.</p>\n\n        <h3>Flexibilidad y rango de movimiento</h3>\n        <p>Los ejercicios de estiramiento y rango de movimiento ayudan a mantener la flexibilidad articular y prevenir la rigidez. El estiramiento regular puede mejorar la movilidad y reducir el riesgo de lesiones.</p>\n\n        <h3>Equilibrio y estabilidad</h3>\n        <p>Los ejercicios de equilibrio ayudan a prevenir caídas y lesiones. Un entrenamiento simple de equilibrio puede mejorar significativamente la estabilidad articular y la coordinación.</p>"
+      }
+    },
+    {
+      "slug": "when-to-see-orthopedic-specialist",
+      "title": {
+        "en": "When to See an Orthopedic Specialist",
+        "es": "Cuándo ver a un especialista ortopédico"
+      },
+      "excerpt": {
+        "en": "Learn the signs and symptoms that indicate you should consult with an orthopedic specialist.",
+        "es": "Conozca las señales y síntomas que indican que debe consultar con un especialista ortopédico."
+      },
+      "category": {
+        "en": "General Health",
+        "es": "Salud general"
+      },
+      "date": {
+        "en": "February 15, 2024",
+        "es": "15 de febrero de 2024"
+      },
+      "imagePath": "assets/images/blogs/see-specialist.jpg",
+      "content": {
+        "en": "<p>Knowing when to see an orthopedic specialist can help you get the right care at the right time. Here are key signs and symptoms that indicate you should consult with an orthopedic specialist.</p>\n        \n        <h3>Persistent Pain</h3>\n        <p>If you experience pain that lasts more than a few weeks or interferes with your daily activities, it's time to see a specialist. Persistent pain may indicate an underlying condition that needs professional evaluation.</p>\n\n        <h3>Limited Range of Motion</h3>\n        <p>Difficulty moving a joint through its full range of motion, or feeling that a joint is stuck, warrants a specialist consultation. This could indicate injury or joint degeneration.</p>\n\n        <h3>Joint Instability</h3>\n        <p>If a joint feels weak, gives way, or feels like it might \"pop out,\" you should see an orthopedic specialist. Instability can lead to further injury if not addressed.</p>\n\n        <h3>Visible Deformity or Swelling</h3>\n        <p>Visible changes in joint appearance, significant swelling, or deformity require immediate medical attention. These symptoms may indicate serious injury or infection.</p>",
+        "es": "<p>Saber cuándo ver a un especialista ortopédico puede ayudarle a obtener la atención adecuada en el momento correcto. Aquí hay señales y síntomas clave que indican que debe consultar con un especialista ortopédico.</p>\n        \n        <h3>Dolor persistente</h3>\n        <p>Si experimenta dolor que dura más de unas semanas o interfiere con sus actividades diarias, es hora de ver a un especialista. El dolor persistente puede indicar una condición subyacente que necesita evaluación profesional.</p>\n\n        <h3>Rango de movimiento limitado</h3>\n        <p>La dificultad para mover una articulación a través de su rango completo de movimiento, o la sensación de que una articulación está bloqueada, justifica una consulta con un especialista. Esto podría indicar lesión o degeneración articular.</p>\n\n        <h3>Inestabilidad articular</h3>\n        <p>Si una articulación se siente débil, cede o siente que podría \"salirse\", debe ver a un especialista ortopédico. La inestabilidad puede llevar a más lesiones si no se trata.</p>\n\n        <h3>Deformidad visible o hinchazón</h3>\n        <p>Cambios visibles en la apariencia de la articulación, hinchazón significativa o deformidad requieren atención médica inmediata. Estos síntomas pueden indicar lesión grave o infección.</p>"
+      }
+    }
+  ]
+}

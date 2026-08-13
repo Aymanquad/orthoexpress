@@ -1,116 +1,123 @@
 .clinic-services {
-  background-color: var(--bg-white);
-  padding: 100px 0;
+  background: white;
+  padding: 96px 0;
 }
 
 .services-carousel {
   position: relative;
-  max-width: 900px;
-  margin: 50px auto 0;
+  max-width: 860px;
+  margin: 40px auto 0;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
 }
 
 .carousel-container {
   flex: 1;
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
 }
 
 .carousel-track {
   display: flex;
-  transition: transform 0.5s ease;
+  transition: transform 0.55s var(--ease-out);
 }
 
 .carousel-slide {
   min-width: 100%;
-  padding: 0 20px;
+  padding: 0 8px;
 }
 
 .service-slide-content {
-  background: linear-gradient(135deg, var(--bg-light) 0%, white 100%);
-  padding: 60px 50px;
-  border-radius: 15px;
+  background: linear-gradient(160deg, var(--bg-light) 0%, white 100%);
+  padding: 52px 40px;
+  border-radius: var(--radius-xl);
   text-align: center;
-  box-shadow: var(--shadow);
-  border: 2px solid transparent;
-  transition: all 0.3s ease;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  transition: all 0.35s var(--ease-out);
 }
 
 .service-slide-content:hover {
-  border-color: var(--primary-color);
-  box-shadow: 0 8px 30px rgba(26, 35, 126, 0.15);
+  border-color: rgba(26, 35, 126, 0.2);
+  box-shadow: var(--shadow-lg);
 }
 
 .service-slide-title {
-  font-size: 2rem;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  font-weight: 600;
   color: var(--text-dark);
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
 }
 
 .service-slide-subtitle {
-  font-size: 1.3rem;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 700;
   color: var(--primary-color);
-  margin-bottom: 25px;
+  margin-bottom: 18px;
 }
 
 .service-slide-description {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: var(--text-light);
-  line-height: 1.8;
-  max-width: 700px;
+  line-height: 1.75;
+  max-width: 640px;
   margin: 0 auto;
 }
 
 .carousel-btn {
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  width: 50px;
-  height: 50px;
+  background: white;
+  color: var(--primary-color);
+  border: 1.5px solid var(--border-color);
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s var(--ease-out);
   flex-shrink: 0;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  box-shadow: var(--shadow);
 }
 
 .carousel-btn:hover {
-  background-color: var(--primary-dark);
-  transform: scale(1.1);
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  transform: scale(1.06);
 }
 
 .carousel-dots {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-top: 30px;
+  gap: 8px;
+  margin-top: 28px;
 }
 
 .carousel-dots .dot {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   border: none;
-  background-color: #ccc;
+  background-color: #cbd5e1;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s var(--ease-out);
+  padding: 0;
 }
 
 .carousel-dots .dot.active {
   background-color: var(--primary-color);
-  transform: scale(1.2);
+  width: 28px;
+  border-radius: 999px;
 }
 
 @media (max-width: 768px) {
   .clinic-services {
-    padding: 60px 0;
+    padding: 64px 0;
   }
 
   .services-carousel {
@@ -124,24 +131,10 @@
     z-index: 10;
   }
 
-  .carousel-btn-left {
-    left: -25px;
-  }
-
-  .carousel-btn-right {
-    right: -25px;
-  }
+  .carousel-btn-left { left: -6px; }
+  .carousel-btn-right { right: -6px; }
 
   .service-slide-content {
-    padding: 40px 30px;
-  }
-
-  .service-slide-title {
-    font-size: 1.5rem;
-  }
-
-  .service-slide-subtitle {
-    font-size: 1.1rem;
+    padding: 36px 24px;
   }
 }
-

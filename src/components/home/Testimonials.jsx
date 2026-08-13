@@ -1,31 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { FaChevronLeft, FaChevronRight, FaUser } from 'react-icons/fa'
+import { useLanguage } from '../../context/LanguageContext'
 import './Testimonials.css'
 
 const Testimonials = () => {
-  const testimonials = [
-    {
-      name: 'B.C.',
-      location: 'Lancaster',
-      text: "One of the most thoughtful and caring physicians out there! He is so good with all things orthopedics and sports care. He has such good outcomes from his surgeries. Highly recommend for your orthopedic needs!"
-    },
-    {
-      name: 'John DB',
-      location: 'Midland',
-      text: "Recent surgery, quick recovery thanks to OrthoExpress's skilled team. Highly recommend!"
-    },
-    {
-      name: 'Alfonso L.',
-      location: 'Waxachie',
-      text: "Awesome service, great attention and fast response from the OrthoExpress team in Waxachie, great people taking care fast and secure to their patients."
-    },
-    {
-      name: 'Michelle B.',
-      location: 'Farmers Branch',
-      text: "OrthoExpress's expertise got me back on the field, pain-free! Thanks for the excellent care."
-    }
-  ]
-
+  const { t } = useLanguage()
+  const testimonials = t('home.testimonials.items')
   const [currentIndex, setCurrentIndex] = useState(0)
 
   useEffect(() => {
@@ -46,36 +26,38 @@ const Testimonials = () => {
   return (
     <section className="testimonials section">
       <div className="container">
-        <h2 className="section-title">Hear from our happy Patients</h2>
-        <div className="testimonials-slider">
-          <button className="slider-btn slider-btn-left" onClick={goToPrevious}>
+        <h2 className="section-title">{t('home.testimonials.title')}</h2>
+        <div className="testimonials-slider" aria-roledescription="carousel" aria-label={t('home.testimonials.title')}>
+          <button className="slider-btn slider-btn-left" onClick={goToPrevious} aria-label={t('home.testimonials.prev')}>
             <FaChevronLeft />
           </button>
-          <div className="testimonial-card">
+          <div className="testimonial-card" aria-live="polite">
             <div className="testimonial-header">
               <div className="testimonial-icon-wrapper">
                 <FaUser className="testimonial-icon" />
               </div>
               <div>
-                <span className="testimonial-label">Patient</span>
+                <span className="testimonial-label">{t('home.testimonials.patient')}</span>
               </div>
             </div>
-            <p className="testimonial-text">
-              "{testimonials[currentIndex].text}"
-            </p>
+            <p className="testimonial-text">"{testimonials[currentIndex].text}"</p>
             <div className="testimonial-author">
               <span className="author-name">{testimonials[currentIndex].name}</span>
               <span className="author-location">{testimonials[currentIndex].location}</span>
             </div>
           </div>
-          <button className="slider-btn slider-btn-right" onClick={goToNext}>
+          <button className="slider-btn slider-btn-right" onClick={goToNext} aria-label={t('home.testimonials.next')}>
             <FaChevronRight />
           </button>
         </div>
-        <div className="testimonial-dots">
+        <div className="testimonial-dots" role="tablist" aria-label={t('home.testimonials.title')}>
           {testimonials.map((_, index) => (
             <button
               key={index}
+              type="button"
+              role="tab"
+              aria-selected={index === currentIndex}
+              aria-label={`${t('home.testimonials.goTo')} ${index + 1}`}
               className={`dot ${index === currentIndex ? 'active' : ''}`}
               onClick={() => setCurrentIndex(index)}
             />
@@ -87,4 +69,3 @@ const Testimonials = () => {
 }
 
 export default Testimonials
-

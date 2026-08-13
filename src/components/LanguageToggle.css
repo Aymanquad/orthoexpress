@@ -1,0 +1,29 @@
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  overflow: hidden;
+  background: white;
+}
+
+.lang-toggle button {
+  border: none;
+  background: transparent;
+  padding: 7px 11px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--text-light);
+  cursor: pointer;
+}
+
+.lang-toggle button.active {
+  background: var(--primary-color);
+  color: white;
+}
+
+.lang-toggle button:hover:not(.active) {
+  color: var(--primary-color);
+  background: #f1f5f9;
+}

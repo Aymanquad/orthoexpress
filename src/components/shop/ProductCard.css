@@ -1,0 +1,142 @@
+.product-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-white);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out), border-color 0.3s;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(26, 35, 126, 0.1);
+  border-color: rgba(37, 99, 235, 0.2);
+}
+
+.product-card-image-wrap {
+  position: relative;
+  background: linear-gradient(180deg, #eef4ff 0%, #f8fafc 100%);
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  overflow: hidden;
+}
+
+.product-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: transform 0.35s var(--ease-out);
+}
+
+.product-card:hover .product-card-image {
+  transform: scale(1.03);
+}
+
+/* CBD bottles & topical products */
+.product-card-image-wrap--bottle {
+  padding: 32px 36px;
+}
+
+.product-card-image-wrap--bottle .product-card-image {
+  max-height: 88%;
+}
+
+/* Pack shots on white / product-only backgrounds */
+.product-card-image-wrap--packshot {
+  padding: 24px 28px;
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+}
+
+.product-card-image-wrap--packshot .product-card-image {
+  max-height: 92%;
+}
+
+/* Retail packaging (boxes, pouches) */
+.product-card-image-wrap--packaging {
+  padding: 18px 22px;
+}
+
+.product-card-image-wrap--packaging .product-card-image {
+  object-fit: contain;
+  max-height: 96%;
+}
+
+/* Lifestyle / on-body product shots */
+.product-card-image-wrap--wearable {
+  padding: 14px 18px;
+  background: #ffffff;
+}
+
+.product-card-image-wrap--wearable .product-card-image {
+  object-fit: contain;
+  object-position: center center;
+  max-height: 100%;
+}
+
+.product-card-body {
+  padding: 20px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.product-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.product-card-price {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #2563eb;
+  margin: 0;
+}
+
+.product-card-btn {
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+  width: 100%;
+  padding: 13px 18px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: white;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+
+.product-card-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.28);
+}
+
+.product-card-btn:active {
+  transform: translateY(0);
+}
+
+.product-card-btn-added {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+@media (max-width: 600px) {
+  .product-card-image-wrap {
+    padding: 20px;
+  }
+
+  .product-card-image-wrap--wearable {
+    padding: 12px 14px;
+  }
+}

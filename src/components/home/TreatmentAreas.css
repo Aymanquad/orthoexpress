@@ -1,55 +1,30 @@
 .treatment-areas {
   background: linear-gradient(180deg, var(--bg-light) 0%, var(--bg-white) 100%);
-  padding: 100px 0;
-  position: relative;
+  padding: 96px 0;
 }
 
 .treatment-areas-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 30px;
-  margin-top: 50px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 22px;
+  margin-top: 40px;
 }
 
 .treatment-area-card {
-  background-color: var(--bg-white);
-  border-radius: 15px;
+  background: white;
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: var(--shadow);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-md);
+  transition: all 0.4s var(--ease-out);
   display: block;
-  text-decoration: none;
-  border: 2px solid transparent;
+  border: 1px solid var(--border-color);
   position: relative;
-}
-
-.treatment-area-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-pink) 100%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  z-index: 0;
-  border-radius: 15px;
-}
-
-.treatment-area-card:hover::before {
-  opacity: 0.05;
 }
 
 .treatment-area-card:hover {
-  transform: translateY(-12px) scale(1.02);
-  box-shadow: 0 12px 40px rgba(26, 35, 126, 0.2);
-  border-color: var(--primary-color);
-}
-
-.treatment-area-content {
-  position: relative;
-  z-index: 1;
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(26, 35, 126, 0.18);
 }
 
 .treatment-area-image-wrapper {
@@ -63,53 +38,47 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.6s var(--ease-out);
 }
 
 .treatment-area-card:hover .treatment-area-image {
-  transform: scale(1.1);
+  transform: scale(1.08);
 }
 
 .treatment-area-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(to bottom, transparent, rgba(26, 35, 126, 0.4));
-  transition: opacity 0.4s ease;
-}
-
-.treatment-area-card:hover .treatment-area-overlay {
-  opacity: 0.6;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.45), transparent 55%);
 }
 
 .treatment-area-content {
-  padding: 30px;
+  padding: 24px 26px 28px;
+  position: relative;
+  z-index: 1;
 }
 
 .treatment-area-title {
-  font-size: 1.5rem;
+  font-family: var(--font-display);
+  font-size: 1.28rem;
   font-weight: 600;
   color: var(--text-dark);
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
 }
 
 .treatment-area-description {
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--text-light);
-  line-height: 1.7;
+  line-height: 1.65;
   margin: 0;
 }
 
 @media (max-width: 768px) {
   .treatment-areas {
-    padding: 60px 0;
+    padding: 64px 0;
   }
 
   .treatment-areas-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
   }
 }
-
