@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import '../../config/theme.dart';
 import '../../core/widgets/asset_image.dart';
 import '../../core/widgets/responsive_page.dart';
+import '../../data/page_labels.dart';
+import '../../data/service_details_repository.dart';
 import '../../data/service_labels.dart';
 import '../../data/service_images.dart';
 import '../../data/services.dart';
@@ -17,15 +19,32 @@ class ServicesScreen extends StatelessWidget {
     final lang = context.watch<LanguageProvider>().locale.languageCode;
 
     return ResponsiveScrollPage(
+      onRefresh: () async {
+        await ServiceDetailRepository.reload();
+      },
       children: [
-        Text('Our Services', style: Theme.of(context).textTheme.displayMedium),
+        Text(
+          ServicesLabels.eyebrow.forLang(lang),
+          style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                color: AppColors.accent,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 1.1,
+              ),
+        ),
+        const SizedBox(height: 8),
+        Text(ServicesLabels.title.forLang(lang), style: Theme.of(context).textTheme.displayMedium),
         const SizedBox(height: 8),
         Text(
-          'Comprehensive orthopedic care for every need.',
+          ServicesLabels.intro.forLang(lang),
           style: Theme.of(context).textTheme.bodyMedium,
         ),
-        const SizedBox(height: 20),
-        Text('Core services', style: Theme.of(context).textTheme.titleLarge),
+        const SizedBox(height: 24),
+        Text(ServicesLabels.coreHeading.forLang(lang), style: Theme.of(context).textTheme.titleLarge),
+        const SizedBox(height: 6),
+        Text(
+          ServicesLabels.coreLead.forLang(lang),
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
         const SizedBox(height: 12),
         ResponsiveCardGrid(
           itemCount: primaryServices.length,
@@ -34,8 +53,13 @@ class ServicesScreen extends StatelessWidget {
             lang: lang,
           ),
         ),
-        const SizedBox(height: 20),
-        Text('Specialty care', style: Theme.of(context).textTheme.titleLarge),
+        const SizedBox(height: 24),
+        Text(ServicesLabels.specialtyHeading.forLang(lang), style: Theme.of(context).textTheme.titleLarge),
+        const SizedBox(height: 6),
+        Text(
+          ServicesLabels.specialtyLead.forLang(lang),
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
         const SizedBox(height: 12),
         ResponsiveCardGrid(
           itemCount: specialtyServices.length,
@@ -44,14 +68,37 @@ class ServicesScreen extends StatelessWidget {
             lang: lang,
           ),
         ),
+        const SizedBox(height: 24),
+        Text(ServicesLabels.workersHeading.forLang(lang), style: Theme.of(context).textTheme.titleLarge),
         const SizedBox(height: 12),
         ListTile(
           tileColor: AppColors.bgSoft,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           leading: const Icon(Icons.work_outline, color: AppColors.primary),
-          title: const Text('Workers Compensation'),
+          title: Text(ServiceLabels.name('workers-comp', lang)),
           trailing: const Icon(Icons.chevron_right),
           onTap: () => context.push('/more/workers-comp'),
+        ),
+        const SizedBox(height: 20),
+        Text(
+          ServicesLabels.ctaPrompt.forLang(lang),
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+        const SizedBox(height: 12),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            FilledButton(
+              onPressed: () => context.push('/more/book-appointment'),
+              style: FilledButton.styleFrom(backgroundColor: AppColors.accent),
+              child: Text(CommonLabels.bookAppointment.forLang(lang)),
+            ),
+            OutlinedButton(
+              onPressed: () => context.push('/more/contact-us'),
+              child: Text(CommonLabels.contactUs.forLang(lang)),
+            ),
+          ],
         ),
       ],
     );

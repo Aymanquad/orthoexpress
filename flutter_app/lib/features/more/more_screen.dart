@@ -1,51 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '../../config/theme.dart';
 import '../../core/widgets/responsive_page.dart';
+import '../../data/nav_labels.dart';
+import '../../providers/language_provider.dart';
 
 class MoreScreen extends StatelessWidget {
   const MoreScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final lang = context.watch<LanguageProvider>().locale.languageCode;
+
     return ResponsiveScrollPage(
       children: [
-        Text('More', style: Theme.of(context).textTheme.displayMedium),
+        Text(NavLabels.more.forLang(lang), style: Theme.of(context).textTheme.displayMedium),
         const SizedBox(height: 20),
         _Section(
-          title: 'Patient care',
+          title: NavLabels.patientCare.forLang(lang),
           items: [
-            _LinkItem('Telehealth', '/more/telehealth'),
-            _LinkItem('After Your Visit', '/more/after-your-visit'),
-            _LinkItem('Patient Portal', '/more/patient-portal'),
-            _LinkItem('Technology', '/more/technology'),
+            _LinkItem(NavLabels.telehealth.forLang(lang), '/more/telehealth'),
+            _LinkItem(NavLabels.afterVisit.forLang(lang), '/more/after-your-visit'),
+            _LinkItem(NavLabels.patientPortal.forLang(lang), '/more/patient-portal'),
+            _LinkItem(NavLabels.technology.forLang(lang), '/more/technology'),
           ],
         ),
         _Section(
-          title: 'Company',
+          title: NavLabels.company.forLang(lang),
           items: [
-            _LinkItem('About Us', '/more/about'),
-            _LinkItem('Workers Comp', '/more/workers-comp'),
-            _LinkItem('Careers', '/more/careers'),
-            _LinkItem('News', '/more/news'),
+            _LinkItem(NavLabels.aboutUs.forLang(lang), '/more/about'),
+            _LinkItem(NavLabels.workersComp.forLang(lang), '/more/workers-comp'),
+            _LinkItem(NavLabels.careers.forLang(lang), '/more/careers'),
+            _LinkItem(NavLabels.news.forLang(lang), '/more/news'),
           ],
         ),
         _Section(
-          title: 'Resources',
+          title: NavLabels.resources.forLang(lang),
           items: [
-            _LinkItem('Blogs', '/more/blogs'),
-            _LinkItem('FAQs', '/more/faqs'),
-            _LinkItem('Payment & Insurance', '/more/payment'),
-            _LinkItem('Contact Us', '/more/contact-us'),
-            _LinkItem('Book Appointment', '/more/book-appointment'),
+            _LinkItem(NavLabels.blogs.forLang(lang), '/more/blogs'),
+            _LinkItem(NavLabels.faqs.forLang(lang), '/more/faqs'),
+            _LinkItem(NavLabels.paymentAndInsurance.forLang(lang), '/more/payment'),
+            _LinkItem(NavLabels.contact.forLang(lang), '/more/contact-us'),
+            _LinkItem(NavLabels.bookAppointmentShort.forLang(lang), '/more/book-appointment'),
           ],
         ),
         _Section(
-          title: 'Legal',
+          title: NavLabels.legal.forLang(lang),
           items: [
-            _LinkItem('Privacy Policy', '/more/privacy-policy'),
-            _LinkItem('Terms of Service', '/more/terms'),
-            _LinkItem('Accessibility', '/more/accessibility'),
+            _LinkItem(NavLabels.privacyPolicy.forLang(lang), '/more/privacy-policy'),
+            _LinkItem(NavLabels.termsOfService.forLang(lang), '/more/terms'),
+            _LinkItem(NavLabels.accessibility.forLang(lang), '/more/accessibility'),
           ],
         ),
       ],

@@ -118,6 +118,48 @@ class ShopLabels {
   static String item(String lang) => lang == 'es' ? 'artículo' : 'item';
   static String items(String lang) => lang == 'es' ? 'artículos' : 'items';
 
+  static String shopEyebrow(String lang) =>
+      lang == 'es' ? 'TIENDA ORTHOEXPRESS' : 'ORTHOEXPRESS SHOP';
+
+  static String shopTitle(String lang) =>
+      lang == 'es' ? 'Productos de recuperación y bienestar' : 'Recovery & Wellness Products';
+
+  static String shopSubtitle(String lang) =>
+      lang == 'es'
+          ? 'Férulas seleccionadas por médicos, tópicos de CBD y esenciales de terapia fría — enviados directamente a su puerta.'
+          : 'Physician-selected braces, CBD topicals, and cold therapy essentials — shipped straight to your door.';
+
+  static String addToCart(String lang) =>
+      lang == 'es' ? 'Agregar al carrito' : 'Add to cart';
+
+  static String addToCartShort(String lang) => lang == 'es' ? 'Agregar' : 'Add';
+
+  static String addedToCart(String lang, String productName) =>
+      lang == 'es' ? '$productName agregado al carrito' : '$productName added to cart';
+
+  static String cartEmptyTitle(String lang) =>
+      lang == 'es' ? 'Su carrito está vacío' : 'Your cart is empty';
+
+  static String proceedCheckout(String lang) =>
+      lang == 'es' ? 'Proceder al pago' : 'Proceed to Checkout';
+
+  static String categoryLabel(String id, String lang) {
+    const en = {
+      'all': 'All Products',
+      'cbd-wellness': 'CBD & Wellness',
+      'pain-relief': 'Pain Relief',
+      'braces-supports': 'Braces & Supports',
+    };
+    const es = {
+      'all': 'Todos los productos',
+      'cbd-wellness': 'CBD y bienestar',
+      'pain-relief': 'Alivio del dolor',
+      'braces-supports': 'Férulas y soportes',
+    };
+    if (lang == 'es') return es[id] ?? en[id] ?? id;
+    return en[id] ?? id;
+  }
+
   static const fieldLabels = {
     'firstName': L10nString(en: 'First Name', es: 'Nombre'),
     'lastName': L10nString(en: 'Last Name', es: 'Apellido'),

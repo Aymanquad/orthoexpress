@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../config/theme.dart';
+import '../../data/content_repository.dart';
 import 'responsive_page.dart';
 
 class ContentPageScaffold extends StatelessWidget {
@@ -7,6 +8,7 @@ class ContentPageScaffold extends StatelessWidget {
   final String title;
   final String? lead;
   final List<Widget> children;
+  final Future<void> Function()? onRefresh;
 
   const ContentPageScaffold({
     super.key,
@@ -14,45 +16,44 @@ class ContentPageScaffold extends StatelessWidget {
     required this.title,
     this.lead,
     required this.children,
+    this.onRefresh,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: ResponsivePage(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (eyebrow != null) ...[
-              Text(
-                eyebrow!.toUpperCase(),
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: AppColors.accent,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 1.1,
-                    ),
-              ),
-              const SizedBox(height: 8),
-            ],
-            Text(title, style: Theme.of(context).textTheme.displaySmall),
-            if (lead != null) ...[
-              const SizedBox(height: 8),
-              Text(
-                lead!,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: AppColors.textLight,
-                    ),
-              ),
-            ],
-            const SizedBox(height: 24),
-            ...children,
-            const SizedBox(height: 24),
-          ],
-        ),
-      ),
+    return ResponsiveScrollPage(
+      onRefresh: onRefresh,
+      children: [
+        if (eyebrow != null) ...[
+          Text(
+            eyebrow!.toUpperCase(),
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: AppColors.accent,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 1.1,
+                ),
+          ),
+          const SizedBox(height: 8),
+        ],
+        Text(title, style: Theme.of(context).textTheme.displaySmall),
+        if (lead != null) ...[
+          const SizedBox(height: 8),
+          Text(
+            lead!,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: AppColors.textLight,
+                ),
+          ),
+        ],
+        const SizedBox(height: 24),
+        ...children,
+        const SizedBox(height: 24),
+      ],
     );
   }
 }
+
+Future<void> refreshContent() => ContentRepository.reload();
 
 class FeatureTile extends StatelessWidget {
   final String title;

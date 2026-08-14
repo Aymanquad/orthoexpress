@@ -1,15 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa'
-import { CLINIC, ALL_SERVICE_LINKS } from '../data'
-import { getServicePath, getServiceLabel } from '../data/services'
+import { CLINIC } from '../data'
 import { toTelLink } from '../data/utils'
 import { useLanguage } from '../context/LanguageContext'
 import './Footer.css'
 
 const Footer = () => {
-  const { headquarters, email, hours, social } = CLINIC
-  const { t, lang } = useLanguage()
+  const { headquarters, email, social } = CLINIC
+  const { t } = useLanguage()
 
   const socialLinks = [
     { key: 'facebook', icon: FaFacebook, label: 'Facebook', url: social.facebook },
@@ -42,31 +41,24 @@ const Footer = () => {
             <ul>
               <li><Link to="/">{t('nav.home')}</Link></li>
               <li><Link to="/about">{t('nav.about')}</Link></li>
-              <li><Link to="/payment">{t('nav.payment')}</Link></li>
-              <li><Link to="/telehealth">{t('nav.telehealth')}</Link></li>
-              <li><Link to="/after-your-visit">{t('nav.afterVisit')}</Link></li>
-              <li><Link to="/patient-portal">{t('nav.patientPortal')}</Link></li>
-              <li><Link to="/technology">{t('nav.technology')}</Link></li>
-              <li><Link to="/faqs">{t('nav.faqs')}</Link></li>
-              <li><Link to="/careers">{t('nav.careers')}</Link></li>
-              <li><Link to="/news">{t('nav.news')}</Link></li>
               <li><Link to="/locations">{t('nav.locations')}</Link></li>
-              <li><Link to="/blogs">{t('nav.blogs')}</Link></li>
               <li><Link to="/shop">{t('nav.shop')}</Link></li>
               <li><Link to="/contact-us">{t('nav.contact')}</Link></li>
+              <li><Link to="/book-appointment">{t('common.bookAppointment')}</Link></li>
             </ul>
           </div>
 
-          <div className="footer-section footer-section--services">
+          <div className="footer-section">
             <h4>{t('footer.services')}</h4>
-            <ul className="footer-services-list">
-              {ALL_SERVICE_LINKS.map((service) => (
-                <li key={getServicePath(service)}>
-                  <Link to={getServicePath(service)}>
-                    {getServiceLabel(service, lang)}
-                  </Link>
-                </li>
-              ))}
+            <p className="footer-services-desc">{t('footer.viewAllServicesDesc')}</p>
+            <Link to="/services" className="footer-services-cta">
+              {t('footer.viewAllServices')}
+            </Link>
+            <ul className="footer-services-short">
+              <li><Link to="/telehealth">{t('nav.telehealth')}</Link></li>
+              <li><Link to="/payment">{t('nav.payment')}</Link></li>
+              <li><Link to="/faqs">{t('nav.faqs')}</Link></li>
+              <li><Link to="/blogs">{t('nav.blogs')}</Link></li>
             </ul>
           </div>
 
@@ -84,7 +76,7 @@ const Footer = () => {
               <li>
                 <FaMapMarkerAlt aria-hidden="true" />
                 <Link to="/locations">
-                  {headquarters.label} ({headquarters.city}) {t('pages.locations.andMore')}
+                  {headquarters.city} {t('pages.locations.andMore')}
                 </Link>
               </li>
               <li>

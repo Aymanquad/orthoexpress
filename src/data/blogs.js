@@ -67,7 +67,7 @@ export const BLOGS = [
     title: 'Understanding Common Orthopedic Injuries',
     excerpt:
       'Learn about the most common orthopedic injuries and how to prevent them in your daily life.',
-    date: 'March 15, 2024',
+    date: 'August 8, 2026',
     category: 'General Health',
     image: getBlogImage('understanding-orthopedic-injuries').src,
     content: `
@@ -102,7 +102,7 @@ export const BLOGS = [
     title: 'Recovery Tips After Orthopedic Surgery',
     excerpt:
       'Essential tips and guidelines for a smooth recovery process after orthopedic procedures.',
-    date: 'March 10, 2024',
+    date: 'July 22, 2026',
     category: 'Recovery',
     image: getBlogImage('recovery-after-surgery').src,
     content: `
@@ -129,7 +129,7 @@ export const BLOGS = [
     title: 'Sports Injury Prevention Strategies',
     excerpt:
       'Expert advice on preventing sports-related injuries and maintaining peak performance.',
-    date: 'March 5, 2024',
+    date: 'July 3, 2026',
     category: 'Sports Medicine',
     image: getBlogImage('sports-injury-prevention').src,
     content: `
@@ -156,7 +156,7 @@ export const BLOGS = [
     title: 'Managing Chronic Orthopedic Pain',
     excerpt:
       'Effective strategies for managing long-term orthopedic pain and improving quality of life.',
-    date: 'February 28, 2024',
+    date: 'June 18, 2026',
     category: 'Pain Management',
     image: getBlogImage('managing-chronic-pain').src,
     content: `
@@ -180,7 +180,7 @@ export const BLOGS = [
     title: 'Exercise for Joint Health',
     excerpt:
       'Discover the best exercises to maintain healthy joints and prevent orthopedic issues.',
-    date: 'February 20, 2024',
+    date: 'May 27, 2026',
     category: 'Exercise',
     image: getBlogImage('exercise-for-joint-health').src,
     content: `
@@ -204,7 +204,7 @@ export const BLOGS = [
     title: 'When to See an Orthopedic Specialist',
     excerpt:
       'Learn the signs and symptoms that indicate you should consult with an orthopedic specialist.',
-    date: 'February 15, 2024',
+    date: 'May 6, 2026',
     category: 'General Health',
     image: getBlogImage('when-to-see-orthopedic-specialist').src,
     content: `

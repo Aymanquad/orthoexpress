@@ -1,6 +1,6 @@
 .blog-preview {
   background: white;
-  padding: 96px 0;
+  padding: 56px 0 72px;
 }
 
 .blog-header-section {
@@ -35,7 +35,7 @@
 .blog-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 22px;
+  gap: 28px;
 }
 
 .blog-card {
@@ -90,24 +90,11 @@
   padding: 24px;
 }
 
-.blog-meta-preview {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-  font-size: 0.8rem;
-}
-
-.blog-category-preview {
-  background: var(--primary-soft);
-  color: var(--primary-color);
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-weight: 700;
-}
-
 .blog-date-preview {
+  display: block;
   color: var(--text-muted);
+  font-size: 0.8rem;
+  margin-bottom: 8px;
 }
 
 .blog-title {

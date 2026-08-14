@@ -62,10 +62,11 @@ export const home = {
     locationsPreview: {
       label: 'FIND US NEAR YOU',
       title: 'Our Locations',
-      subtitle: 'Where quality, convenience and affordability meet healthcare.',
+      subtitle: 'Walk in today — or get directions in one tap.',
       call: 'Call',
-      viewLocation: 'View Location',
-      getDirections: 'Get Directions',
+      viewLocation: 'View clinic',
+      getDirections: 'Directions',
+      viewAll: 'All locations',
       clinicAlt: 'Orthopedic Clinic',
     },
     treatmentAreas: {
@@ -116,16 +117,39 @@ export const home = {
       volunteers: 'Active Volunteers',
     },
     blogPreview: {
-      title: 'Our Blogs',
+      title: 'From our blog',
       allBlogs: 'All Blogs →',
       readMore: 'Read More →',
     },
     insurance: {
       title: 'Insurance',
-      subtitle: 'We accept most insurance plans. Call your neighborhood OrthoExpress for center details.',
+      subtitle: 'Most plans accepted. Call to confirm your coverage.',
       noInsurance: 'No insurance? No problem. We offer affordable cash pay options.',
       verify: 'Verify coverage',
       viewPricing: 'View pricing & insurance →',
+      andMore: '+ many more',
+    },
+    howWeCare: {
+      title: 'How we care for you',
+      subtitle: 'Four clear steps from walk-in to recovery.',
+      tiles: {
+        diagnose: {
+          title: 'Diagnose',
+          desc: 'On-site X-rays, imaging, and expert evaluation — often same day.',
+        },
+        treat: {
+          title: 'Treat',
+          desc: 'Non-surgical care, injections, bracing, and pain management.',
+        },
+        surgery: {
+          title: 'Surgery when needed',
+          desc: 'Joint replacement and advanced procedures from experienced surgeons.',
+        },
+        recover: {
+          title: 'Recover',
+          desc: 'Rehab plans and sports medicine to get you moving again.',
+        },
+      },
     },
   },
   es: {
@@ -190,10 +214,11 @@ export const home = {
     locationsPreview: {
       label: 'ENCUÉNTRENOS CERCA',
       title: 'Nuestras ubicaciones',
-      subtitle: 'Donde la calidad, la conveniencia y la asequibilidad se encuentran con la atención médica.',
+      subtitle: 'Entre hoy — o obtenga indicaciones en un toque.',
       call: 'Llamar',
-      viewLocation: 'Ver ubicación',
+      viewLocation: 'Ver clínica',
       getDirections: 'Cómo llegar',
+      viewAll: 'Todas las ubicaciones',
       clinicAlt: 'Clínica ortopédica',
     },
     treatmentAreas: {
@@ -244,17 +269,39 @@ export const home = {
       volunteers: 'Voluntarios activos',
     },
     blogPreview: {
-      title: 'Nuestros blogs',
+      title: 'De nuestro blog',
       allBlogs: 'Todos los blogs →',
       readMore: 'Leer más →',
     },
     insurance: {
       title: 'Seguros',
-      subtitle:
-        'Aceptamos la mayoría de los planes. Llame a su OrthoExpress local para detalles del centro.',
+      subtitle: 'Aceptamos la mayoría de los planes. Llame para confirmar su cobertura.',
       noInsurance: '¿Sin seguro? No hay problema. Ofrecemos opciones asequibles de pago en efectivo.',
       verify: 'Verificar cobertura',
       viewPricing: 'Ver precios y seguros →',
+      andMore: '+ muchos más',
+    },
+    howWeCare: {
+      title: 'Cómo cuidamos de usted',
+      subtitle: 'Cuatro pasos claros desde la visita hasta la recuperación.',
+      tiles: {
+        diagnose: {
+          title: 'Diagnosticar',
+          desc: 'Rayos X, imágenes y evaluación experta en el sitio — a menudo el mismo día.',
+        },
+        treat: {
+          title: 'Tratar',
+          desc: 'Cuidado no quirúrgico, inyecciones, férulas y manejo del dolor.',
+        },
+        surgery: {
+          title: 'Cirugía cuando se necesita',
+          desc: 'Reemplazo articular y procedimientos avanzados de cirujanos experimentados.',
+        },
+        recover: {
+          title: 'Recuperar',
+          desc: 'Planes de rehabilitación y medicina deportiva para volver a moverse.',
+        },
+      },
     },
   },
 }

@@ -78,9 +78,10 @@ export const IMAGES = {
   services: {
     // 300×168 tiny wide → reuse clinical hero, skip blurry body crop
     'pain-inflammation': {
-      src: SHARED.clinicalLandscape,
-      fallback: SHARED.jointWide,
-      placement: 'photo',
+      src: '/assets/blogs/chronic-pain.webp',
+      fallback: '/assets/services/arthritis.webp',
+      placement: 'square',
+      heroSrc: SHARED.clinicalLandscape,
     },
     // 2560×1616 landscape
     'injuries-fractures-sprains': {
@@ -188,6 +189,11 @@ export const IMAGES = {
       fallback: SHARED.recovery,
       placement: 'photo',
     },
+    'workers-comp': {
+      src: '/assets/workers-comp/hero.jpg',
+      fallback: SHARED.recovery,
+      placement: 'photo',
+    },
   },
   blogs: {
     // 2048×1536 landscape
@@ -216,8 +222,8 @@ export const IMAGES = {
     },
     // 300×168 tiny — reuse
     'exercise-for-joint-health': {
-      src: SHARED.clinicalLandscape,
-      fallback: SHARED.jointWide,
+      src: SHARED.jointWide,
+      fallback: '/assets/services/arthritis.webp',
       placement: 'photo',
     },
     'when-to-see-orthopedic-specialist': {

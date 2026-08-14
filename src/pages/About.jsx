@@ -84,8 +84,8 @@ const About = () => {
         </div>
         <div className="split-image-right">
           <ImageWithFallback
-            src={IMAGES.about.clinic.src}
-            fallback={IMAGES.about.clinic.fallback}
+            src={IMAGES.about.facility.src}
+            fallback={IMAGES.about.facility.fallback}
             alt=""
             className="split-image"
           />

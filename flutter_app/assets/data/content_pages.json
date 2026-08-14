@@ -761,6 +761,52 @@
       }
     }
   ],
+  "patientReviews": [
+    {
+      "name": "Vivian P.",
+      "when": {
+        "en": "1 year ago",
+        "es": "Hace 1 año"
+      },
+      "text": {
+        "en": "Walked in first thing in the morning. Short wait, clear communication, and great follow-through from the team.",
+        "es": "Llegué a primera hora. Poca espera, buena comunicación y excelente seguimiento del equipo."
+      }
+    },
+    {
+      "name": "Natalie G.",
+      "when": {
+        "en": "1 year ago",
+        "es": "Hace 1 año"
+      },
+      "text": {
+        "en": "The staff took time to understand my foot pain and explained reasonable treatment options. Highly recommend.",
+        "es": "El personal se tomó el tiempo de entender el dolor de mi pie y explicó opciones de tratamiento razonables. Muy recomendable."
+      }
+    },
+    {
+      "name": "Craig R.",
+      "when": {
+        "en": "1 year ago",
+        "es": "Hace 1 año"
+      },
+      "text": {
+        "en": "Injured my foot while traveling. Front desk helped with insurance questions and the clinical team provided exactly the urgent care I needed.",
+        "es": "Me lesioné el pie viajando. Recepción ayudó con el seguro y el equipo clínico brindó exactamente la atención urgente que necesitaba."
+      }
+    },
+    {
+      "name": "Michelle B.",
+      "when": {
+        "en": "2 years ago",
+        "es": "Hace 2 años"
+      },
+      "text": {
+        "en": "OrthoExpress got me back on the field, pain-free. Professional, kind, and efficient care.",
+        "es": "OrthoExpress me devolvió al campo sin dolor. Atención profesional, amable y eficiente."
+      }
+    }
+  ],
   "telehealthWhen": [
     {
       "id": "follow-up",
@@ -1175,8 +1221,8 @@
         "es": "Salud general"
       },
       "date": {
-        "en": "March 15, 2024",
-        "es": "15 de marzo de 2024"
+        "en": "August 8, 2026",
+        "es": "8 de agosto de 2026"
       },
       "imagePath": "assets/images/blogs/orthopedic-injuries.webp",
       "content": {
@@ -1199,8 +1245,8 @@
         "es": "Recuperación"
       },
       "date": {
-        "en": "March 10, 2024",
-        "es": "10 de marzo de 2024"
+        "en": "July 22, 2026",
+        "es": "22 de julio de 2026"
       },
       "imagePath": "assets/images/blogs/recovery-surgery.jpg",
       "content": {
@@ -1223,8 +1269,8 @@
         "es": "Medicina deportiva"
       },
       "date": {
-        "en": "March 5, 2024",
-        "es": "5 de marzo de 2024"
+        "en": "July 3, 2026",
+        "es": "3 de julio de 2026"
       },
       "imagePath": "assets/images/blogs/sports-prevention.jpg",
       "content": {
@@ -1247,8 +1293,8 @@
         "es": "Manejo del dolor"
       },
       "date": {
-        "en": "February 28, 2024",
-        "es": "28 de febrero de 2024"
+        "en": "June 18, 2026",
+        "es": "18 de junio de 2026"
       },
       "imagePath": "assets/images/blogs/chronic-pain.webp",
       "content": {
@@ -1271,8 +1317,8 @@
         "es": "Ejercicio"
       },
       "date": {
-        "en": "February 20, 2024",
-        "es": "20 de febrero de 2024"
+        "en": "May 27, 2026",
+        "es": "27 de mayo de 2026"
       },
       "imagePath": "assets/images/blogs/joint-exercise.jpg",
       "content": {
@@ -1295,8 +1341,8 @@
         "es": "Salud general"
       },
       "date": {
-        "en": "February 15, 2024",
-        "es": "15 de febrero de 2024"
+        "en": "May 6, 2026",
+        "es": "6 de mayo de 2026"
       },
       "imagePath": "assets/images/blogs/see-specialist.jpg",
       "content": {

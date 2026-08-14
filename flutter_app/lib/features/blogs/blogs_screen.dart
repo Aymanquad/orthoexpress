@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../config/theme.dart';
 import '../../core/widgets/asset_image.dart';
 import '../../core/widgets/content_page_scaffold.dart';
 import '../../core/widgets/html_content.dart';
 import '../../core/widgets/responsive_page.dart';
 import '../../data/content_repository.dart';
+import '../../features/shared/not_found_screen.dart';
+import '../../data/nav_labels.dart';
 import '../../providers/language_provider.dart';
 
 class BlogsScreen extends StatelessWidget {
@@ -20,6 +23,7 @@ class BlogsScreen extends StatelessWidget {
     return ContentPageScaffold(
       title: ContentRepository.label('blogs', 'title', lang),
       lead: ContentRepository.label('blogs', 'subtitle', lang),
+      onRefresh: refreshContent,
       children: blogs
           .map(
             (blog) => Card(
@@ -91,10 +95,11 @@ class BlogDetailScreen extends StatelessWidget {
     final blog = ContentRepository.blogBySlug(slug);
 
     if (blog == null) {
-      return Center(
-        child: Text(lang == 'es' ? 'Artículo no encontrado' : 'Article not found'),
-      );
+      return const NotFoundScreen();
     }
+
+    final title = blog.title.forLang(lang);
+    final excerpt = blog.excerpt.forLang(lang);
 
     return SingleChildScrollView(
       child: Column(
@@ -109,10 +114,26 @@ class BlogDetailScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextButton.icon(
-                  onPressed: () => context.pop(),
-                  icon: const Icon(Icons.arrow_back),
-                  label: Text(ContentRepository.label('blogs', 'backToBlogs', lang)),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextButton.icon(
+                        onPressed: () => context.pop(),
+                        icon: const Icon(Icons.arrow_back),
+                        label: Text(ContentRepository.label('blogs', 'backToBlogs', lang)),
+                      ),
+                    ),
+                    IconButton(
+                      tooltip: NavLabels.share.forLang(lang),
+                      onPressed: () => SharePlus.instance.share(
+                        ShareParams(
+                          text: '$title\n\n$excerpt',
+                          subject: title,
+                        ),
+                      ),
+                      icon: const Icon(Icons.share_outlined),
+                    ),
+                  ],
                 ),
                 Text(
                   '${blog.category.forLang(lang)} · ${blog.date.forLang(lang)}',

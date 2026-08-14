@@ -19,7 +19,9 @@ class LanguageProvider extends ChangeNotifier {
   }
 
   Future<void> setLocale(Locale locale) async {
-    _locale = locale.languageCode == 'es' ? const Locale('es') : const Locale('en');
+    final next = locale.languageCode == 'es' ? const Locale('es') : const Locale('en');
+    if (_locale == next) return;
+    _locale = next;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_storageKey, _locale.languageCode);
     notifyListeners();

@@ -110,10 +110,10 @@ export const BLOG_CONTENT_ES = {
 }
 
 export const BLOG_DATES_ES = {
-  'understanding-orthopedic-injuries': '15 de marzo de 2024',
-  'recovery-after-surgery': '10 de marzo de 2024',
-  'sports-injury-prevention': '5 de marzo de 2024',
-  'managing-chronic-pain': '28 de febrero de 2024',
-  'exercise-for-joint-health': '20 de febrero de 2024',
-  'when-to-see-orthopedic-specialist': '15 de febrero de 2024',
+  'understanding-orthopedic-injuries': '8 de agosto de 2026',
+  'recovery-after-surgery': '22 de julio de 2026',
+  'sports-injury-prevention': '3 de julio de 2026',
+  'managing-chronic-pain': '18 de junio de 2026',
+  'exercise-for-joint-health': '27 de mayo de 2026',
+  'when-to-see-orthopedic-specialist': '6 de mayo de 2026',
 }

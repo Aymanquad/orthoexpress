@@ -30,8 +30,14 @@ class _ShopScreenState extends State<ShopScreen> {
     final maxExtent = context.isCompactPhone ? 170.0 : (context.isTablet ? 240.0 : 220.0);
     final aspectRatio = context.shopGridAspectRatio;
 
-    return CustomScrollView(
-      slivers: [
+    return RefreshIndicator(
+      onRefresh: () async {
+        await Future<void>.delayed(const Duration(milliseconds: 400));
+      },
+      color: Theme.of(context).colorScheme.primary,
+      child: CustomScrollView(
+        physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+        slivers: [
         SliverToBoxAdapter(
           child: ResponsivePage(
             padding: EdgeInsets.fromLTRB(
@@ -43,10 +49,22 @@ class _ShopScreenState extends State<ShopScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+                  ShopLabels.shopEyebrow(lang),
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        color: AppColors.accent,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 1.1,
+                      ),
+                ),
+                const SizedBox(height: 6),
                 Row(
                   children: [
                     Expanded(
-                      child: Text('Ortho Shop', style: Theme.of(context).textTheme.displayMedium),
+                      child: Text(
+                        ShopLabels.shopTitle(lang),
+                        style: Theme.of(context).textTheme.displayMedium,
+                      ),
                     ),
                     TextButton.icon(
                       onPressed: () => context.push('/shop/orders'),
@@ -57,7 +75,7 @@ class _ShopScreenState extends State<ShopScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Clinic-recommended braces, CBD wellness, and recovery products.',
+                  ShopLabels.shopSubtitle(lang),
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],
@@ -79,7 +97,10 @@ class _ShopScreenState extends State<ShopScreen> {
                 return Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: FilterChip(
-                    label: Text(cat.label, overflow: TextOverflow.ellipsis),
+                    label: Text(
+                      ShopLabels.categoryLabel(cat.id, lang),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                     selected: selected,
                     onSelected: (_) => setState(() => _category = cat.id),
                     selectedColor: AppColors.primarySoft,
@@ -105,20 +126,22 @@ class _ShopScreenState extends State<ShopScreen> {
               childAspectRatio: aspectRatio,
             ),
             delegate: SliverChildBuilderDelegate(
-              (context, index) => _ProductCard(product: filtered[index]),
+              (context, index) => _ProductCard(product: filtered[index], lang: lang),
               childCount: filtered.length,
             ),
           ),
         ),
       ],
+      ),
     );
   }
 }
 
 class _ProductCard extends StatelessWidget {
   final Product product;
+  final String lang;
 
-  const _ProductCard({required this.product});
+  const _ProductCard({required this.product, required this.lang});
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +198,7 @@ class _ProductCard extends StatelessWidget {
                       if (!context.mounted) return;
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('${product.name} added to cart'),
+                          content: Text(ShopLabels.addedToCart(lang, product.name)),
                           behavior: SnackBarBehavior.floating,
                           duration: const Duration(seconds: 2),
                         ),
@@ -189,7 +212,9 @@ class _ProductCard extends StatelessWidget {
                         compact ? VisualDensity.compact : VisualDensity.standard,
                   ),
                   child: Text(
-                    compact ? 'Add' : 'Add to Cart',
+                    compact
+                        ? ShopLabels.addToCartShort(lang)
+                        : ShopLabels.addToCart(lang),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),

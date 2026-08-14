@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import '../../features/shared/not_found_screen.dart';
 import '../../config/theme.dart';
 import '../../core/utils/responsive.dart';
 import '../../core/widgets/asset_image.dart';
 import '../../core/widgets/responsive_page.dart';
+import '../../data/page_labels.dart';
 import '../../data/service_details_repository.dart';
 import '../../providers/language_provider.dart';
 
@@ -19,7 +21,7 @@ class ServiceDetailScreen extends StatelessWidget {
     final service = ServiceDetailRepository.getView(slug, lang);
 
     if (service == null) {
-      return const Center(child: Text('Service not found'));
+      return const NotFoundScreen();
     }
 
     final heroHeight = context.isTablet ? 260.0 : 200.0;
@@ -42,13 +44,16 @@ class ServiceDetailScreen extends StatelessWidget {
                 TextButton.icon(
                   onPressed: () => context.go('/services'),
                   icon: const Icon(Icons.arrow_back, size: 18),
-                  label: const Text('All services'),
+                  label: Text(ServiceDetailLabels.backLink.forLang(lang)),
                 ),
                 Text(service.title, style: Theme.of(context).textTheme.displayMedium),
                 const SizedBox(height: 8),
                 Text(service.description, style: Theme.of(context).textTheme.bodyMedium),
                 const SizedBox(height: 24),
-                Text('About this service', style: Theme.of(context).textTheme.titleLarge),
+                Text(
+                  ServiceDetailLabels.about.forLang(lang),
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
                 const SizedBox(height: 12),
                 if (showBody)
                   Row(
@@ -87,11 +92,17 @@ class ServiceDetailScreen extends StatelessWidget {
                   ),
                 ],
                 const SizedBox(height: 24),
-                Text('Conditions we treat', style: Theme.of(context).textTheme.titleLarge),
+                Text(
+                  ServiceDetailLabels.conditions.forLang(lang),
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
                 const SizedBox(height: 8),
                 ...service.conditions.map((c) => _Bullet(text: c)),
                 const SizedBox(height: 20),
-                Text('Treatments & services', style: Theme.of(context).textTheme.titleLarge),
+                Text(
+                  ServiceDetailLabels.treatments.forLang(lang),
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
                 const SizedBox(height: 8),
                 ...service.treatments.map((t) => _Bullet(text: t)),
                 const SizedBox(height: 20),
@@ -99,9 +110,19 @@ class ServiceDetailScreen extends StatelessWidget {
                   color: AppColors.primarySoft,
                   child: Padding(
                     padding: const EdgeInsets.all(16),
-                    child: Text(
-                      service.additionalInfo,
-                      style: Theme.of(context).textTheme.bodyLarge,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          ServiceDetailLabels.whyChoose.forLang(lang),
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          service.additionalInfo,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -112,7 +133,7 @@ class ServiceDetailScreen extends StatelessWidget {
                     backgroundColor: AppColors.accent,
                     minimumSize: const Size.fromHeight(48),
                   ),
-                  child: const Text('Book Appointment'),
+                  child: Text(ServiceDetailLabels.bookAppointment.forLang(lang)),
                 ),
                 const SizedBox(height: 16),
               ],

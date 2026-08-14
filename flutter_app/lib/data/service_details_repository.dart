@@ -12,7 +12,10 @@ class ServiceDetailRepository {
 
   static Future<void> ensureLoaded() async {
     if (_cache != null) return;
+    await reload();
+  }
 
+  static Future<void> reload() async {
     final raw = await rootBundle.loadString('assets/data/service_details.json');
     final decoded = jsonDecode(raw) as Map<String, dynamic>;
 

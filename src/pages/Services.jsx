@@ -9,19 +9,33 @@ import {
   getServiceLabel,
   getServiceCardSummary,
 } from '../data/services'
+import { getServiceImage } from '../data/images'
 import { useLanguage } from '../context/LanguageContext'
+import ImageWithFallback from '../components/ImageWithFallback'
 import PageMeta from '../components/PageMeta'
 import './Services.css'
 
 function ServiceCard({ service }) {
-  const { lang, t } = useLanguage()
+  const { lang } = useLanguage()
+  const img = getServiceImage(service.slug)
+
   return (
     <Link to={getServicePath(service)} className="services-card">
-      <span className="services-card-arrow" aria-hidden="true">
-        <FaArrowRight />
-      </span>
-      <h2 className="services-card-title">{getServiceLabel(service, lang)}</h2>
-      <p className="services-card-summary">{getServiceCardSummary(service, lang)}</p>
+      <div className="services-card-thumb">
+        <ImageWithFallback
+          src={img.src}
+          fallback={img.fallback}
+          alt=""
+          className="services-card-img"
+        />
+      </div>
+      <div className="services-card-body">
+        <span className="services-card-arrow" aria-hidden="true">
+          <FaArrowRight />
+        </span>
+        <h2 className="services-card-title">{getServiceLabel(service, lang)}</h2>
+        <p className="services-card-summary">{getServiceCardSummary(service, lang)}</p>
+      </div>
     </Link>
   )
 }

@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../config/route_titles.dart';
 import '../../config/theme.dart';
 import '../../data/clinic.dart';
+import '../../data/nav_labels.dart';
 import '../../features/search/site_search.dart';
 import '../../providers/cart_provider.dart';
 import '../../providers/language_provider.dart';
@@ -23,20 +24,20 @@ class AppShell extends StatelessWidget {
     );
   }
 
-  List<NavigationDestination> _phoneDestinations(int cartCount) => [
-        const NavigationDestination(
-          icon: Icon(Icons.home_outlined),
-          selectedIcon: Icon(Icons.home),
-          label: 'Home',
+  List<NavigationDestination> _phoneDestinations(int cartCount, String lang) => [
+        NavigationDestination(
+          icon: const Icon(Icons.home_outlined),
+          selectedIcon: const Icon(Icons.home),
+          label: NavLabels.home.forLang(lang),
         ),
-        const NavigationDestination(
-          icon: Icon(Icons.medical_services_outlined),
-          selectedIcon: Icon(Icons.medical_services),
-          label: 'Services',
+        NavigationDestination(
+          icon: const Icon(Icons.medical_services_outlined),
+          selectedIcon: const Icon(Icons.medical_services),
+          label: NavLabels.services.forLang(lang),
         ),
         NavigationDestination(
           icon: Semantics(
-            label: 'Shop tab',
+            label: NavLabels.shop.forLang(lang),
             child: Badge(
               isLabelVisible: cartCount > 0,
               label: Text('$cartCount'),
@@ -44,41 +45,41 @@ class AppShell extends StatelessWidget {
             ),
           ),
           selectedIcon: Semantics(
-            label: 'Shop tab',
+            label: NavLabels.shop.forLang(lang),
             child: Badge(
               isLabelVisible: cartCount > 0,
               label: Text('$cartCount'),
               child: const Icon(Icons.shopping_bag),
             ),
           ),
-          label: 'Shop',
+          label: NavLabels.shop.forLang(lang),
         ),
-        const NavigationDestination(
-          icon: Icon(Icons.location_on_outlined),
-          selectedIcon: Icon(Icons.location_on),
-          label: 'Locations',
+        NavigationDestination(
+          icon: const Icon(Icons.location_on_outlined),
+          selectedIcon: const Icon(Icons.location_on),
+          label: NavLabels.locations.forLang(lang),
         ),
-        const NavigationDestination(
-          icon: Icon(Icons.menu),
-          selectedIcon: Icon(Icons.menu_open),
-          label: 'More',
+        NavigationDestination(
+          icon: const Icon(Icons.menu),
+          selectedIcon: const Icon(Icons.menu_open),
+          label: NavLabels.more.forLang(lang),
         ),
       ];
 
-  List<NavigationRailDestination> _railDestinations(int cartCount) => [
-        const NavigationRailDestination(
-          icon: Icon(Icons.home_outlined),
-          selectedIcon: Icon(Icons.home),
-          label: Text('Home'),
+  List<NavigationRailDestination> _railDestinations(int cartCount, String lang) => [
+        NavigationRailDestination(
+          icon: const Icon(Icons.home_outlined),
+          selectedIcon: const Icon(Icons.home),
+          label: Text(NavLabels.home.forLang(lang)),
         ),
-        const NavigationRailDestination(
-          icon: Icon(Icons.medical_services_outlined),
-          selectedIcon: Icon(Icons.medical_services),
-          label: Text('Services'),
+        NavigationRailDestination(
+          icon: const Icon(Icons.medical_services_outlined),
+          selectedIcon: const Icon(Icons.medical_services),
+          label: Text(NavLabels.services.forLang(lang)),
         ),
         NavigationRailDestination(
           icon: Semantics(
-            label: 'Shop tab',
+            label: NavLabels.shop.forLang(lang),
             child: Badge(
               isLabelVisible: cartCount > 0,
               label: Text('$cartCount'),
@@ -86,24 +87,24 @@ class AppShell extends StatelessWidget {
             ),
           ),
           selectedIcon: Semantics(
-            label: 'Shop tab',
+            label: NavLabels.shop.forLang(lang),
             child: Badge(
               isLabelVisible: cartCount > 0,
               label: Text('$cartCount'),
               child: const Icon(Icons.shopping_bag),
             ),
           ),
-          label: const Text('Shop'),
+          label: Text(NavLabels.shop.forLang(lang)),
         ),
-        const NavigationRailDestination(
-          icon: Icon(Icons.location_on_outlined),
-          selectedIcon: Icon(Icons.location_on),
-          label: Text('Locations'),
+        NavigationRailDestination(
+          icon: const Icon(Icons.location_on_outlined),
+          selectedIcon: const Icon(Icons.location_on),
+          label: Text(NavLabels.locations.forLang(lang)),
         ),
-        const NavigationRailDestination(
-          icon: Icon(Icons.menu),
-          selectedIcon: Icon(Icons.menu_open),
-          label: Text('More'),
+        NavigationRailDestination(
+          icon: const Icon(Icons.menu),
+          selectedIcon: const Icon(Icons.menu_open),
+          label: Text(NavLabels.more.forLang(lang)),
         ),
       ];
 
@@ -116,13 +117,30 @@ class AppShell extends StatelessWidget {
   }) {
     final showBack = !RouteTitles.isTabRoot(currentPath);
     final title = RouteTitles.forPath(currentPath, lang.locale.languageCode);
+    final code = lang.locale.languageCode;
 
     return AppBar(
       leading: showBack
           ? IconButton(
               icon: const Icon(Icons.arrow_back),
-              tooltip: 'Back',
-              onPressed: () => context.pop(),
+              tooltip: NavLabels.back.forLang(code),
+              onPressed: () {
+                if (context.canPop()) {
+                  context.pop();
+                  return;
+                }
+                if (currentPath.startsWith('/shop')) {
+                  context.go('/shop');
+                } else if (currentPath.startsWith('/services')) {
+                  context.go('/services');
+                } else if (currentPath.startsWith('/locations')) {
+                  context.go('/locations');
+                } else if (currentPath.startsWith('/more')) {
+                  context.go('/more');
+                } else {
+                  context.go('/home');
+                }
+              },
             )
           : null,
       title: Text(
@@ -131,18 +149,18 @@ class AppShell extends StatelessWidget {
       ),
       actions: [
         IconButton(
-          tooltip: lang.isSpanish ? 'Buscar' : 'Search',
+          tooltip: NavLabels.search.forLang(code),
           onPressed: () {
             showSearch(
               context: context,
-              delegate: SiteSearchDelegate(lang.locale.languageCode),
+              delegate: SiteSearchDelegate(code),
             );
           },
           icon: const Icon(Icons.search),
         ),
         if (showQuickActions) ...[
           IconButton(
-            tooltip: 'Call clinic',
+            tooltip: NavLabels.callClinic.forLang(code),
             onPressed: () async {
               final uri = Uri.parse(ClinicData.telLink(ClinicData.headquartersPhone));
               if (await canLaunchUrl(uri)) await launchUrl(uri);
@@ -150,14 +168,17 @@ class AppShell extends StatelessWidget {
             icon: const Icon(Icons.phone_outlined),
           ),
           IconButton(
-            tooltip: 'Book appointment',
+            tooltip: NavLabels.bookAppointmentShort.forLang(code),
             onPressed: () => context.push('/more/book-appointment'),
             icon: const Icon(Icons.calendar_month_outlined),
           ),
         ],
         IconButton(
-          tooltip: lang.isSpanish ? 'English' : 'Español',
-          onPressed: () => lang.toggle(),
+          tooltip: lang.isSpanish ? NavLabels.english.forLang(code) : NavLabels.spanish.forLang(code),
+          onPressed: () {
+            // Defer so mouse-tracker is not mid-update when the tree rebuilds.
+            WidgetsBinding.instance.addPostFrameCallback((_) => lang.toggle());
+          },
           icon: Text(
             lang.isSpanish ? 'EN' : 'ES',
             style: const TextStyle(
@@ -168,7 +189,7 @@ class AppShell extends StatelessWidget {
         ),
         if (navigationShell.currentIndex == 2 || cartCount > 0)
           IconButton(
-            tooltip: 'Cart',
+            tooltip: NavLabels.cart.forLang(code),
             onPressed: () => context.push('/shop/cart'),
             icon: Badge(
               isLabelVisible: cartCount > 0,
@@ -186,6 +207,7 @@ class AppShell extends StatelessWidget {
     final lang = context.watch<LanguageProvider>();
     final useRail = context.useNavigationRail;
     final currentPath = GoRouterState.of(context).uri.path;
+    final localeKey = lang.locale.languageCode;
 
     if (useRail) {
       return Scaffold(
@@ -207,7 +229,7 @@ class AppShell extends StatelessWidget {
                     ? NavigationRailLabelType.none
                     : NavigationRailLabelType.selected,
                 minExtendedWidth: 88,
-                destinations: _railDestinations(cartCount),
+                destinations: _railDestinations(cartCount, localeKey),
               ),
             ),
             const VerticalDivider(width: 1, thickness: 1),
@@ -232,6 +254,7 @@ class AppShell extends StatelessWidget {
           QuickActionBar(
             onBook: () => context.push('/more/book-appointment'),
             compact: context.isCompactPhone,
+            lang: localeKey,
           ),
           SafeArea(
             top: false,
@@ -240,7 +263,7 @@ class AppShell extends StatelessWidget {
               onDestinationSelected: _onTab,
               labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
               height: context.isCompactPhone ? 60 : 64,
-              destinations: _phoneDestinations(cartCount),
+              destinations: _phoneDestinations(cartCount, localeKey),
             ),
           ),
         ],

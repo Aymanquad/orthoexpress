@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../config/app_config.dart';
 import '../../config/theme.dart';
 import '../../core/widgets/content_page_scaffold.dart';
 import '../../data/clinic.dart';
 import '../../data/content_repository.dart';
+import '../../data/nav_labels.dart';
 import '../../providers/language_provider.dart';
 
 IconData _stepIcon(String key) {
@@ -341,10 +343,29 @@ class PatientPortalScreen extends StatelessWidget {
                         if (await canLaunchUrl(uri)) await launchUrl(uri, mode: LaunchMode.externalApplication);
                       }
                     },
-                    child: Text(lang == 'es' ? 'Abrir' : 'Open'),
+                    child: Text(NavLabels.open.forLang(lang)),
                   ),
           );
         }),
+        if (AppConfig.hasPatientPortal) ...[
+          const SizedBox(height: 12),
+          FilledButton.icon(
+            onPressed: () async {
+              final uri = Uri.parse(AppConfig.patientPortalUrl);
+              if (await canLaunchUrl(uri)) {
+                await launchUrl(uri, mode: LaunchMode.externalApplication);
+              }
+            },
+            style: FilledButton.styleFrom(backgroundColor: AppColors.accent),
+            icon: const Icon(Icons.login),
+            label: Text(ContentRepository.patientLabel('portal', 'signIn', lang)),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            ContentRepository.patientLabel('portal', 'signInHelp', lang),
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ],
         const SizedBox(height: 8),
         OutlinedButton.icon(
           onPressed: () async {
@@ -445,8 +466,8 @@ class LegalScreen extends StatelessWidget {
 
     return ContentPageScaffold(
       title: isPrivacy
-          ? (lang == 'es' ? 'Política de privacidad' : 'Privacy Policy')
-          : (lang == 'es' ? 'Términos de servicio' : 'Terms of Service'),
+          ? NavLabels.privacyPolicy.forLang(lang)
+          : NavLabels.termsOfService.forLang(lang),
       lead: ContentRepository.label(
         'legal',
         isPrivacy ? 'privacySubtitle' : 'termsSubtitle',

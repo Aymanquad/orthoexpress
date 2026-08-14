@@ -64,18 +64,28 @@ class AppTheme {
     );
   }
 
-  static ThemeData light() {
+  static ThemeData light({bool highContrast = false, bool highlightLinks = false}) {
     final base = ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
-      scaffoldBackgroundColor: AppColors.bgWhite,
+      scaffoldBackgroundColor: highContrast ? Colors.white : AppColors.bgWhite,
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.primary,
         primary: AppColors.primary,
         secondary: AppColors.accent,
-        surface: AppColors.bgWhite,
-        onSurface: AppColors.textDark,
+        surface: highContrast ? Colors.white : AppColors.bgWhite,
+        onSurface: highContrast ? Colors.black : AppColors.textDark,
       ),
+    );
+
+    final borderColor = highContrast ? Colors.black : AppColors.border.withValues(alpha: 0.6);
+    final linkColor = highContrast ? Colors.black : AppColors.accent;
+    final linkStyle = GoogleFonts.manrope(
+      fontWeight: FontWeight.w700,
+      color: linkColor,
+      decoration: highlightLinks ? TextDecoration.underline : TextDecoration.none,
+      decorationColor: linkColor,
+      decorationThickness: highlightLinks ? 2 : null,
     );
 
     return base.copyWith(
@@ -94,10 +104,10 @@ class AppTheme {
       ),
       cardTheme: CardThemeData(
         elevation: 0,
-        color: AppColors.bgWhite,
+        color: highContrast ? Colors.white : AppColors.bgWhite,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          side: BorderSide(color: AppColors.border.withValues(alpha: 0.6)),
+          side: BorderSide(color: borderColor, width: highContrast ? 2 : 1),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
@@ -139,6 +149,17 @@ class AppTheme {
         }),
       ),
       dividerTheme: const DividerThemeData(color: AppColors.border, thickness: 1),
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor: WidgetStateProperty.all(linkColor),
+          textStyle: WidgetStateProperty.all(linkStyle),
+        ),
+      ),
+      iconButtonTheme: IconButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor: WidgetStateProperty.all(linkColor),
+        ),
+      ),
     );
   }
 }

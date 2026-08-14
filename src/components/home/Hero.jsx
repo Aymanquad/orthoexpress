@@ -42,38 +42,11 @@ const Hero = () => {
               <FaPhone aria-hidden="true" /> {headquarters.phone}
             </a>
           </div>
-        </div>
-      </div>
-
-      <div className="hero-features">
-        <div className="container">
-          <div className="hero-feature-card emergency-care">
-            <h3>{t('hero.urgentTitle')}</h3>
-            <p>{t('hero.urgentText')}</p>
-            <a href={toTelLink(headquarters.phone)} className="feature-phone">
-              {headquarters.phone}
-            </a>
-            <br />
-            <Link to="/locations" className="btn-feature">
-              {t('hero.findCenter')}
-            </Link>
-          </div>
-
-          <div className="hero-feature-card instant-answers">
-            <h3>{t('hero.answersTitle')}</h3>
-            <p>{t('hero.answersText')}</p>
-            <a href={toTelLink(headquarters.phone)} className="feature-phone">
-              {headquarters.phone}
-            </a>
-          </div>
-
-          <div className="hero-feature-card total-care">
-            <h3>{t('hero.totalTitle')}</h3>
-            <p>{t('hero.totalText')}</p>
-            <Link to="/about" className="btn-feature">
-              {t('hero.aboutUs')}
-            </Link>
-          </div>
+          <ul className="hero-trust">
+            <li>{t('hero.trustWalkIn')}</li>
+            <li>{t('hero.trustSameDay')}</li>
+            <li>{t('hero.trustInsurance')}</li>
+          </ul>
         </div>
       </div>
     </section>

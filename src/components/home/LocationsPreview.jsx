@@ -1,123 +1,91 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { FaPhone, FaMapMarkerAlt, FaClock, FaDirections, FaCheckCircle } from 'react-icons/fa'
-import { CLINIC, LOCATIONS, toTelLink, getMapsDirectionsUrl } from '../../data'
+import { FaPhone, FaMapMarkerAlt, FaClock, FaDirections, FaArrowRight } from 'react-icons/fa'
+import { LOCATIONS, toTelLink, getMapsDirectionsUrl } from '../../data'
 import { useLanguage } from '../../context/LanguageContext'
 import { getLocalizedLocation } from '../../i18n/locations'
 import './LocationsPreview.css'
 
 const LocationsPreview = () => {
   const { t, lang } = useLanguage()
-  const [hoveredIndex, setHoveredIndex] = useState(null)
-  const { headquarters } = CLINIC
 
   return (
-    <section className="locations-preview section">
-      <div className="locations-background-pattern"></div>
+    <section className="locations-preview">
       <div className="container">
         <div className="locations-header">
-          <div className="locations-header-content">
+          <div>
             <span className="locations-label">{t('home.locationsPreview.label')}</span>
-            <h2 className="section-title">
-              {t('home.locationsPreview.title').includes('Locations') ? (
-                <>
-                  Our <span className="highlight-text">Locations</span>
-                </>
-              ) : (
-                <>
-                  Nuestras <span className="highlight-text">ubicaciones</span>
-                </>
-              )}
-            </h2>
-            <p className="section-subtitle">{t('home.locationsPreview.subtitle')}</p>
-            <div className="locations-phone-cta">
-              <a href={toTelLink(headquarters.phone)} className="locations-phone-link">
-                <FaPhone /> {t('home.locationsPreview.call')} {headquarters.phone} →
-              </a>
-            </div>
+            <h2 className="locations-title">{t('home.locationsPreview.title')}</h2>
+            <p className="locations-subtitle">{t('home.locationsPreview.subtitle')}</p>
           </div>
+          <Link to="/locations" className="locations-all">
+            {t('home.locationsPreview.viewAll')} <FaArrowRight aria-hidden="true" />
+          </Link>
         </div>
 
-        <div className="locations-creative-grid">
-          {LOCATIONS.map((location, index) => {
+        <div className="locations-grid">
+          {LOCATIONS.map((location) => {
             const localized = getLocalizedLocation(location.slug, lang)
+            const features = (localized.cardFeatures || []).slice(0, 2)
+
             return (
-            <div
-              key={location.slug}
-              className={`location-card-creative ${index % 2 === 0 ? 'card-left' : 'card-right'} ${hoveredIndex === index ? 'hovered' : ''}`}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              <div className="location-card-inner">
-                <div className="location-image-wrapper">
+              <article key={location.slug} className="location-card">
+                <Link
+                  to={`/locations/${location.slug}`}
+                  className="location-card-media"
+                  aria-label={location.name}
+                >
                   <img
                     src={location.image}
                     alt={`${location.name} ${t('home.locationsPreview.clinicAlt')}`}
                     className="location-image"
                     loading="lazy"
                   />
-                  <div className="location-gradient-overlay"></div>
-                  <div className="location-number-badge">
-                    <span>{index + 1}</span>
-                  </div>
-                  <div className="location-name-overlay">
-                    <h3>{location.name}</h3>
-                  </div>
-                </div>
+                </Link>
 
-                <div className="location-card-content">
-                  <div className="location-main-info">
-                    <div className="location-address-section">
-                      <FaMapMarkerAlt className="content-icon address-icon" />
-                      <div>
-                        <p className="location-address">{location.address}</p>
-                        <p className="location-city">{location.city}</p>
-                      </div>
+                <div className="location-card-body">
+                  <h3 className="location-name">{location.name}</h3>
+                  <p className="location-address">
+                    <FaMapMarkerAlt aria-hidden="true" />
+                    <span>
+                      {location.address}
+                      <br />
+                      {location.city}
+                    </span>
+                  </p>
+                  <p className="location-meta">
+                    <a href={toTelLink(location.phone)} className="location-phone">
+                      <FaPhone aria-hidden="true" /> {location.phone}
+                    </a>
+                    <span className="location-hours">
+                      <FaClock aria-hidden="true" /> {localized.hoursShort}
+                    </span>
+                  </p>
+
+                  {features.length > 0 && (
+                    <div className="location-pills">
+                      {features.map((feature) => (
+                        <span key={feature} className="location-pill">{feature}</span>
+                      ))}
                     </div>
+                  )}
 
-                    <div className="location-contact-section">
-                      <div className="location-phone-section">
-                        <FaPhone className="content-icon phone-icon" />
-                        <a href={toTelLink(location.phone)} className="location-phone">
-                          {location.phone}
-                        </a>
-                      </div>
-
-                      <div className="location-hours-section">
-                        <FaClock className="content-icon clock-icon" />
-                        <span className="location-hours">
-                          {localized.hoursShort}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="location-features">
-                    {localized.cardFeatures.map((feature, fIndex) => (
-                      <div key={fIndex} className="location-feature-item">
-                        <FaCheckCircle className="feature-check" />
-                        <span>{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="location-action-buttons">
-                    <Link to={`/locations/${location.slug}`} className="location-action-btn">
+                  <div className="location-actions">
+                    <Link to={`/locations/${location.slug}`} className="location-btn location-btn-primary">
                       {t('home.locationsPreview.viewLocation')}
                     </Link>
                     <a
                       href={getMapsDirectionsUrl(location)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="location-directions-btn"
+                      className="location-btn location-btn-outline"
                     >
-                      <FaDirections className="btn-icon" />
-                      <span>{t('home.locationsPreview.getDirections')}</span>
+                      <FaDirections aria-hidden="true" />
+                      {t('home.locationsPreview.getDirections')}
                     </a>
                   </div>
                 </div>
-              </div>
-            </div>
+              </article>
             )
           })}
         </div>

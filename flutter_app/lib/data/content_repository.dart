@@ -20,6 +20,10 @@ class ContentRepository {
 
   static Future<void> ensureLoaded() async {
     if (_pages != null && _labels != null) return;
+    await reload();
+  }
+
+  static Future<void> reload() async {
     final pagesRaw = await rootBundle.loadString('assets/data/content_pages.json');
     final labelsRaw = await rootBundle.loadString('assets/data/content_labels.json');
     _pages = jsonDecode(pagesRaw) as Map<String, dynamic>;
@@ -147,6 +151,17 @@ class ContentRepository {
         );
       }).toList();
 
+  static List<PatientReview> get patientReviews =>
+      (_p['patientReviews'] as List<dynamic>?)?.map((e) {
+        final m = e as Map<String, dynamic>;
+        return PatientReview(
+          name: m['name'] as String,
+          when: _l10n(m['when'] as Map<String, dynamic>?),
+          text: _l10n(m['text'] as Map<String, dynamic>?),
+        );
+      }).toList() ??
+      const [];
+
   static List<TitledBlock> get telehealthWhen => _blocks('telehealthWhen');
   static List<TitledBlock> get telehealthSteps => _blocks('telehealthSteps');
   static List<TitledBlock> get technologyFeatures => _blocks('technologyFeatures');
@@ -262,6 +277,18 @@ class NewsItem {
   });
 }
 
+class PatientReview {
+  final String name;
+  final L10nString when;
+  final L10nString text;
+
+  const PatientReview({
+    required this.name,
+    required this.when,
+    required this.text,
+  });
+}
+
 class PricedItem {
   final String id;
   final L10nString name;
@@ -325,9 +352,10 @@ class PortalFeature {
 /// Maps web paths to Flutter shell routes.
 String mapAppPath(String? path) {
   if (path == null || path.isEmpty) return '/home';
-  if (path.startsWith('/services/')) return path;
-  if (path.startsWith('/locations/')) return path;
-  if (path.startsWith('/blogs/')) return '/more$path';
+  final clean = path.split('#').first;
+  if (clean.startsWith('/services/')) return clean;
+  if (clean.startsWith('/locations/')) return clean;
+  if (clean.startsWith('/blogs/')) return '/more$clean';
   const redirects = {
     '/contact-us': '/more/contact-us',
     '/book-appointment': '/more/book-appointment',
@@ -342,6 +370,12 @@ String mapAppPath(String? path) {
     '/about': '/more/about',
     '/shop': '/shop',
     '/privacy-policy': '/more/privacy-policy',
+    '/terms': '/more/terms',
+    '/accessibility': '/more/accessibility',
+    '/workers-comp': '/more/workers-comp',
+    '/cart': '/shop/cart',
+    '/checkout': '/shop/checkout',
+    '/orders': '/shop/orders',
   };
-  return redirects[path] ?? path;
+  return redirects[clean] ?? clean;
 }

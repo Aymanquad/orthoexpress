@@ -6,7 +6,9 @@ import '../../core/utils/responsive.dart';
 import '../../core/widgets/asset_image.dart';
 import '../../core/widgets/responsive_page.dart';
 import '../../data/products.dart';
+import '../../data/shop_labels.dart';
 import '../../providers/cart_provider.dart';
+import '../../providers/language_provider.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -14,6 +16,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = context.watch<CartProvider>();
+    final lang = context.watch<LanguageProvider>().locale.languageCode;
     final lines = cart.cartLines;
     final useSideSummary = context.isTablet;
 
@@ -31,7 +34,7 @@ class CartScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Your cart is empty',
+                      ShopLabels.cartEmptyTitle(lang),
                       style: Theme.of(context).textTheme.titleLarge,
                       textAlign: TextAlign.center,
                     ),
@@ -39,7 +42,7 @@ class CartScreen extends StatelessWidget {
                     FilledButton(
                       onPressed: () => context.go('/shop'),
                       style: FilledButton.styleFrom(backgroundColor: AppColors.accent),
-                      child: const Text('Continue Shopping'),
+                      child: Text(ShopLabels.continueShopping(lang)),
                     ),
                   ],
                 ),
@@ -55,14 +58,14 @@ class CartScreen extends StatelessWidget {
                     ),
                     SizedBox(
                       width: context.isLargeTablet ? 360 : 300,
-                      child: _CartSummary(cart: cart),
+                      child: _CartSummary(cart: cart, lang: lang),
                     ),
                   ],
                 )
               : Column(
                   children: [
                     Expanded(child: _CartList(lines: lines, cart: cart)),
-                    _CartSummary(cart: cart),
+                    _CartSummary(cart: cart, lang: lang),
                   ],
                 );
   }
@@ -165,8 +168,9 @@ class _CartLineCard extends StatelessWidget {
 
 class _CartSummary extends StatelessWidget {
   final CartProvider cart;
+  final String lang;
 
-  const _CartSummary({required this.cart});
+  const _CartSummary({required this.cart, required this.lang});
 
   @override
   Widget build(BuildContext context) {
@@ -184,12 +188,12 @@ class _CartSummary extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (context.isTablet)
-            Text('Order summary', style: Theme.of(context).textTheme.titleLarge),
+            Text(ShopLabels.orderSummary(lang), style: Theme.of(context).textTheme.titleLarge),
           if (context.isTablet) const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Subtotal'),
+              Text(ShopLabels.subtotal(lang)),
               Text(formatPrice(cart.subtotal)),
             ],
           ),
@@ -200,7 +204,7 @@ class _CartSummary extends StatelessWidget {
               backgroundColor: AppColors.accent,
               minimumSize: const Size.fromHeight(48),
             ),
-            child: const Text('Proceed to Checkout'),
+            child: Text(ShopLabels.proceedCheckout(lang)),
           ),
         ],
       ),

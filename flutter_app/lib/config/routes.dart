@@ -18,6 +18,7 @@ import '../features/shop/order_failure_screen.dart';
 import '../features/shop/order_success_screen.dart';
 import '../features/shop/orders_screen.dart';
 import '../features/shop/shop_screen.dart';
+import '../features/shared/not_found_screen.dart';
 import '../features/workers_comp/workers_comp_screen.dart';
 import 'route_titles.dart';
 
@@ -27,6 +28,7 @@ GoRouter createRouter() {
   return GoRouter(
     navigatorKey: rootNavigatorKey,
     initialLocation: '/home',
+    errorBuilder: (context, state) => const NotFoundScreen(),
     routes: [
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {

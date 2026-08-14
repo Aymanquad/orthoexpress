@@ -2,13 +2,9 @@ import React from 'react'
 import WhatWeTreat from '../components/home/WhatWeTreat'
 import PageMeta from '../components/PageMeta'
 import Hero from '../components/home/Hero'
-import ServicesSnapshot from '../components/home/ServicesSnapshot'
-import ClinicServices from '../components/home/ClinicServices'
+import HowWeCare from '../components/home/HowWeCare'
 import LocationsPreview from '../components/home/LocationsPreview'
-import TreatmentAreas from '../components/home/TreatmentAreas'
 import ReviewsBar from '../components/home/ReviewsBar'
-import Testimonials from '../components/home/Testimonials'
-import Stats from '../components/home/Stats'
 import InsuranceBar from '../components/home/InsuranceBar'
 import BlogPreview from '../components/home/BlogPreview'
 import { useLanguage } from '../context/LanguageContext'
@@ -25,13 +21,9 @@ const Home = () => {
       />
       <Hero />
       <WhatWeTreat />
-      <ServicesSnapshot />
-      <ClinicServices />
+      <HowWeCare />
       <LocationsPreview />
-      <TreatmentAreas />
       <ReviewsBar />
-      <Testimonials />
-      <Stats />
       <InsuranceBar />
       <BlogPreview />
     </div>

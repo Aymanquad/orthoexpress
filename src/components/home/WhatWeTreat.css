@@ -1,7 +1,7 @@
 .what-we-treat {
   background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-  padding-top: 64px;
-  padding-bottom: 64px;
+  padding-top: 56px;
+  padding-bottom: 56px;
 }
 
 .what-we-treat-title {
@@ -25,33 +25,69 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .what-we-treat-card {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 22px 24px;
-  background: #eef4ff;
+  flex-direction: column;
+  background: white;
   border-radius: var(--radius-md);
-  color: var(--primary-color);
-  font-size: 1.15rem;
-  font-weight: 700;
+  overflow: hidden;
   text-decoration: none;
-  transition: transform 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
-}
-
-.what-we-treat-card svg {
-  flex-shrink: 0;
-  opacity: 0.75;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .what-we-treat-card:hover {
-  background: #e0ebff;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(26, 35, 126, 0.1);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.what-we-treat-card-media {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--bg-soft);
+}
+
+.what-we-treat-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s var(--ease-out);
+}
+
+.what-we-treat-card:hover .what-we-treat-card-img {
+  transform: scale(1.05);
+}
+
+.what-we-treat-card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  background: #eef4ff;
+}
+
+.what-we-treat-card-label {
+  color: var(--primary-color);
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.what-we-treat-card-arrow {
+  flex-shrink: 0;
+  color: var(--primary-color);
+  opacity: 0.7;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.what-we-treat-card:hover .what-we-treat-card-arrow {
+  opacity: 1;
+  transform: translateX(3px);
 }
 
 .what-we-treat-all {
@@ -68,7 +104,13 @@
   border-color: var(--accent-pink);
 }
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
+  .what-we-treat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
   .what-we-treat-grid {
     grid-template-columns: 1fr;
   }

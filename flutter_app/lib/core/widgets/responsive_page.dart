@@ -40,18 +40,22 @@ class ResponsiveScrollPage extends StatelessWidget {
   final List<Widget> children;
   final EdgeInsetsGeometry? padding;
   final ScrollPhysics? physics;
+  final Future<void> Function()? onRefresh;
 
   const ResponsiveScrollPage({
     super.key,
     required this.children,
     this.padding,
     this.physics,
+    this.onRefresh,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: physics,
+    final scrollView = SingleChildScrollView(
+      physics: onRefresh != null
+          ? const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics())
+          : physics,
       child: ResponsivePage(
         padding: padding,
         child: Column(
@@ -59,6 +63,14 @@ class ResponsiveScrollPage extends StatelessWidget {
           children: children,
         ),
       ),
+    );
+
+    if (onRefresh == null) return scrollView;
+
+    return RefreshIndicator(
+      onRefresh: onRefresh!,
+      color: Theme.of(context).colorScheme.primary,
+      child: scrollView,
     );
   }
 }

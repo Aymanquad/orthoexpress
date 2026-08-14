@@ -13,7 +13,7 @@
   --accent-pink: #e91e63;
   --accent-pink-dark: #c2185b;
   --text-dark: #1e293b;
-  --text-light: #64748b;
+  --text-light: #475569;
   --text-muted: #94a3b8;
   --bg-light: #f4f6fb;
   --bg-white: #ffffff;
@@ -80,7 +80,7 @@ img {
 }
 
 .section {
-  padding: 96px 0;
+  padding: 72px 0;
 }
 
 .section-title {
@@ -190,7 +190,7 @@ img {
 
 @media (max-width: 768px) {
   .section {
-    padding: 64px 0;
+    padding: 48px 0;
   }
 
   .container {

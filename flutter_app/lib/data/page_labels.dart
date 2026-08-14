@@ -162,3 +162,86 @@ class WorkersCompLabels {
     (heading: section4, text: section4Text),
   ];
 }
+
+/// Services list page — from src/i18n/pages.js `pages.services`
+class ServicesLabels {
+  static const eyebrow = L10nString(en: 'COMPREHENSIVE CARE', es: 'ATENCIÓN INTEGRAL');
+  static const title = L10nString(en: 'Our Services', es: 'Nuestros servicios');
+  static const intro = L10nString(
+    en:
+        'Walk-in orthopedic care for injuries, chronic conditions, and recovery — same-day appointments available at clinics near you.',
+    es:
+        'Atención ortopédica sin cita para lesiones, condiciones crónicas y recuperación — citas el mismo día disponibles en clínicas cerca de usted.',
+  );
+  static const coreHeading = L10nString(en: 'Core Services', es: 'Servicios principales');
+  static const coreLead = L10nString(
+    en:
+        'Our primary walk-in orthopedic services — the same options available in the navigation menu.',
+    es:
+        'Nuestros servicios ortopédicos principales sin cita — las mismas opciones disponibles en el menú de navegación.',
+  );
+  static const specialtyHeading = L10nString(
+    en: 'Specialty & Regional Care',
+    es: 'Atención especializada y regional',
+  );
+  static const specialtyLead = L10nString(
+    en:
+        'Focused care for specific joints and body regions — each with its own dedicated treatment page.',
+    es:
+        'Atención enfocada en articulaciones y regiones específicas del cuerpo — cada una con su propia página de tratamiento.',
+  );
+  static const workersHeading = L10nString(
+    en: "Workers' Compensation",
+    es: 'Compensación laboral',
+  );
+  static const ctaPrompt = L10nString(
+    en: 'Not sure which service you need?',
+    es: '¿No está seguro de qué servicio necesita?',
+  );
+}
+
+/// Locations list page — from src/i18n/pages.js `pages.locations`
+class LocationsLabels {
+  static const label = L10nString(en: 'CONTACT US', es: 'CONTÁCTENOS');
+  static const title = L10nString(en: 'Locations', es: 'Ubicaciones');
+  static const viewDetails = L10nString(en: 'View Details', es: 'Ver detalles');
+  static const directions = L10nString(en: 'Directions', es: 'Indicaciones');
+  static const headquarters = L10nString(en: 'Headquarters', es: 'Sede central');
+}
+
+/// Service detail page — from src/i18n/pages.js `pages.serviceDetail`
+class ServiceDetailLabels {
+  static const backLink = L10nString(en: '← All Services', es: '← Todos los servicios');
+  static const about = L10nString(en: 'About This Service', es: 'Sobre este servicio');
+  static const conditions = L10nString(
+    en: 'Common Conditions We Treat',
+    es: 'Condiciones comunes que tratamos',
+  );
+  static const treatments = L10nString(
+    en: 'Treatment Options',
+    es: 'Opciones de tratamiento',
+  );
+  static const whyChoose = L10nString(
+    en: 'Why Choose Our Care',
+    es: 'Por qué elegir nuestra atención',
+  );
+  static const bookAppointment = L10nString(en: 'Book Appointment', es: 'Reservar cita');
+}
+
+/// Location detail page — from src/i18n/pages.js `pages.locationDetail`
+class LocationDetailLabels {
+  static const locationFeatures = L10nString(
+    en: 'Location Features',
+    es: 'Características de la ubicación',
+  );
+  static const getDirections = L10nString(en: 'Get Directions', es: 'Cómo llegar');
+  static const call = L10nString(en: 'Call', es: 'Llamar');
+  static const book = L10nString(en: 'Book', es: 'Reservar');
+  static const bookAppointment = L10nString(en: 'Book Appointment', es: 'Reservar cita');
+}
+
+/// Shared UI chrome — from src/i18n/translations.js `common`
+class CommonLabels {
+  static const contactUs = L10nString(en: 'Contact Us', es: 'Contáctenos');
+  static const bookAppointment = L10nString(en: 'Book an Appointment', es: 'Reservar una cita');
+}

@@ -1,6 +1,8 @@
 import '../data/clinic.dart';
 import '../data/content_repository.dart';
+import '../data/form_labels.dart';
 import '../data/locations.dart';
+import '../data/nav_labels.dart';
 import '../data/page_labels.dart';
 import '../data/service_labels.dart';
 import '../data/shop_labels.dart';
@@ -30,13 +32,13 @@ class RouteTitles {
         if (segments.length > 1) {
           return ServiceLabels.name(segments[1], lang);
         }
-        return 'Services';
+        return ServicesLabels.title.forLang(lang);
       case 'locations':
         if (segments.length > 1) {
           final loc = getLocationBySlug(segments[1]);
-          return loc?.name ?? 'Location';
+          return loc?.name ?? LocationsLabels.title.forLang(lang);
         }
-        return 'Locations';
+        return LocationsLabels.title.forLang(lang);
       case 'shop':
         return _shopTitle(segments, lang);
       default:
@@ -45,64 +47,64 @@ class RouteTitles {
   }
 
   static String _moreTitle(List<String> segments, String lang) {
-    if (segments.length < 2) return 'More';
+    if (segments.length < 2) return NavLabels.more.forLang(lang);
     switch (segments[1]) {
       case 'about':
         return AboutLabels.title.forLang(lang);
       case 'workers-comp':
         return ServiceLabels.name('workers-comp', lang);
       case 'book-appointment':
-        return lang == 'es' ? 'Cita' : 'Appointment';
+        return BookLabels.title(lang);
       case 'blogs':
         if (segments.length > 2) {
           final blog = ContentRepository.blogBySlug(segments[2]);
-          return blog?.title.forLang(lang) ?? (lang == 'es' ? 'Blog' : 'Blog');
+          return blog?.title.forLang(lang) ?? NavLabels.blogs.forLang(lang);
         }
-        return lang == 'es' ? 'Blogs' : 'Blogs';
+        return ContentRepository.label('blogs', 'title', lang);
       case 'contact-us':
-        return lang == 'es' ? 'Contáctenos' : 'Contact Us';
+        return ContactLabels.title(lang);
       case 'payment':
-        return lang == 'es' ? 'Pagos y seguros' : 'Payment & Insurance';
+        return ContentRepository.label('info', 'paymentTitle', lang);
       case 'telehealth':
-        return lang == 'es' ? 'Telesalud' : 'Telehealth';
+        return ContentRepository.patientLabel('telehealth', 'title', lang);
       case 'after-your-visit':
-        return lang == 'es' ? 'Después de su visita' : 'After Your Visit';
+        return ContentRepository.patientLabel('afterVisit', 'title', lang);
       case 'patient-portal':
-        return lang == 'es' ? 'Portal del paciente' : 'Patient Portal';
+        return ContentRepository.patientLabel('portal', 'title', lang);
       case 'technology':
-        return lang == 'es' ? 'Tecnología' : 'Technology';
+        return ContentRepository.patientLabel('technology', 'title', lang);
       case 'faqs':
-        return lang == 'es' ? 'Preguntas frecuentes' : 'FAQs';
+        return ContentRepository.label('info', 'faqsTitle', lang);
       case 'careers':
-        return lang == 'es' ? 'Carreras' : 'Careers';
+        return ContentRepository.label('info', 'careersTitle', lang);
       case 'news':
-        return lang == 'es' ? 'Noticias' : 'News';
+        return ContentRepository.label('info', 'newsTitle', lang);
       case 'privacy-policy':
-        return lang == 'es' ? 'Política de privacidad' : 'Privacy Policy';
+        return NavLabels.privacyPolicy.forLang(lang);
       case 'terms':
-        return lang == 'es' ? 'Términos de servicio' : 'Terms of Service';
+        return NavLabels.termsOfService.forLang(lang);
       case 'accessibility':
-        return lang == 'es' ? 'Accesibilidad' : 'Accessibility';
+        return ContentRepository.label('info', 'accessibilityTitle', lang);
       default:
-        return 'More';
+        return NavLabels.more.forLang(lang);
     }
   }
 
   static String _shopTitle(List<String> segments, String lang) {
-    if (segments.length < 2) return lang == 'es' ? 'Tienda' : 'Shop';
+    if (segments.length < 2) return NavLabels.shop.forLang(lang);
     switch (segments[1]) {
       case 'cart':
-        return lang == 'es' ? 'Carrito' : 'Cart';
+        return NavLabels.cart.forLang(lang);
       case 'checkout':
-        return lang == 'es' ? 'Pago' : 'Checkout';
+        return NavLabels.checkout.forLang(lang);
       case 'orders':
         return ShopLabels.myOrders(lang);
       case 'order-success':
         return ShopLabels.orderConfirmed(lang);
       case 'order-failure':
-        return lang == 'es' ? 'Pago' : 'Payment';
+        return NavLabels.paymentTitle.forLang(lang);
       default:
-        return lang == 'es' ? 'Tienda' : 'Shop';
+        return NavLabels.shop.forLang(lang);
     }
   }
 }

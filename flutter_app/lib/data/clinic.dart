@@ -20,4 +20,8 @@ class ClinicData {
   static String telLink(String phone) {
     return 'tel:${phone.replaceAll(RegExp(r'[^\d+]+'), '')}';
   }
+
+  static String mapsSearchUrl(String query) {
+    return 'https://www.google.com/maps/search/?api=1&query=${Uri.encodeComponent(query)}';
+  }
 }

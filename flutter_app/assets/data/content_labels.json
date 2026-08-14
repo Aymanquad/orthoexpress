@@ -39,7 +39,7 @@
       "accessibilityLead": "OrthoExpress is committed to ensuring digital accessibility for people with disabilities.",
       "accessibilityCommitment": "Our Commitment",
       "accessibilityTools": "Accessibility Tools",
-      "accessibilityToolsText": "Use the accessibility toolbar (bottom-right) to adjust font size, enable high contrast, and highlight links.",
+      "accessibilityToolsText": "This app follows the same large-text and contrast settings as your device. For extra help, call the clinic or use the Contact Us page.",
       "accessibilityContact": "Feedback",
       "accessibilityContactText": "If you encounter accessibility barriers on our website, please contact us and we will work to address them promptly."
     },
@@ -66,7 +66,7 @@
       "accessibilityLead": "OrthoExpress está comprometido a garantizar la accesibilidad digital para personas con discapacidades.",
       "accessibilityCommitment": "Nuestro compromiso",
       "accessibilityTools": "Herramientas de accesibilidad",
-      "accessibilityToolsText": "Use la barra de accesibilidad (abajo a la derecha) para ajustar el tamaño de fuente, activar alto contraste y resaltar enlaces.",
+      "accessibilityToolsText": "Esta app sigue el tamaño de texto y contraste de su dispositivo. Para más ayuda, llame a la clínica o use la página Contáctenos.",
       "accessibilityContact": "Comentarios",
       "accessibilityContactText": "Si encuentra barreras de accesibilidad en nuestro sitio web, contáctenos y trabajaremos para resolverlas rápidamente."
     }

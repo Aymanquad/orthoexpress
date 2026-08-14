@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../features/shared/not_found_screen.dart';
 import '../../config/theme.dart';
 import '../../core/utils/responsive.dart';
 import '../../core/widgets/asset_image.dart';
 import '../../core/widgets/responsive_page.dart';
 import '../../data/clinic.dart';
 import '../../data/locations.dart';
+import '../../data/page_labels.dart';
+import '../../providers/language_provider.dart';
 
 class LocationDetailScreen extends StatelessWidget {
   final String slug;
@@ -15,9 +19,10 @@ class LocationDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lang = context.watch<LanguageProvider>().locale.languageCode;
     final location = getLocationBySlug(slug);
     if (location == null) {
-      return const Center(child: Text('Location not found'));
+      return const NotFoundScreen();
     }
 
     final heroHeight = context.isTablet ? 280.0 : 200.0;
@@ -43,7 +48,10 @@ class LocationDetailScreen extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(location.hours, style: Theme.of(context).textTheme.bodyMedium),
                 const SizedBox(height: 20),
-                Text('Specialties', style: Theme.of(context).textTheme.titleLarge),
+                Text(
+                  LocationDetailLabels.locationFeatures.forLang(lang),
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
                 const SizedBox(height: 8),
                 ...location.features.map(
                   (f) => Padding(
@@ -68,7 +76,7 @@ class LocationDetailScreen extends StatelessWidget {
                             if (await canLaunchUrl(uri)) await launchUrl(uri);
                           },
                           icon: const Icon(Icons.phone),
-                          label: const Text('Call'),
+                          label: Text(LocationDetailLabels.call.forLang(lang)),
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -77,7 +85,7 @@ class LocationDetailScreen extends StatelessWidget {
                           onPressed: () => context.push('/more/book-appointment'),
                           style: FilledButton.styleFrom(backgroundColor: AppColors.accent),
                           icon: const Icon(Icons.calendar_month),
-                          label: const Text('Book'),
+                          label: Text(LocationDetailLabels.book.forLang(lang)),
                         ),
                       ),
                     ],
@@ -92,17 +100,30 @@ class LocationDetailScreen extends StatelessWidget {
                           if (await canLaunchUrl(uri)) await launchUrl(uri);
                         },
                         icon: const Icon(Icons.phone),
-                        label: const Text('Call'),
+                        label: Text(LocationDetailLabels.call.forLang(lang)),
                       ),
                       const SizedBox(height: 10),
                       FilledButton.icon(
                         onPressed: () => context.push('/more/book-appointment'),
                         style: FilledButton.styleFrom(backgroundColor: AppColors.accent),
                         icon: const Icon(Icons.calendar_month),
-                        label: const Text('Book Appointment'),
+                        label: Text(LocationDetailLabels.bookAppointment.forLang(lang)),
                       ),
                     ],
                   ),
+                const SizedBox(height: 12),
+                OutlinedButton.icon(
+                  onPressed: () async {
+                    final uri = Uri.parse(
+                      ClinicData.mapsSearchUrl('${location.address}, ${location.city}'),
+                    );
+                    if (await canLaunchUrl(uri)) {
+                      await launchUrl(uri, mode: LaunchMode.externalApplication);
+                    }
+                  },
+                  icon: const Icon(Icons.directions_outlined),
+                  label: Text(LocationDetailLabels.getDirections.forLang(lang)),
+                ),
                 const SizedBox(height: 16),
               ],
             ),

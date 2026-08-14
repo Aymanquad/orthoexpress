@@ -20,46 +20,48 @@ const GoogleReviewsWidget = () => {
 
   return (
     <div className="google-reviews-widget">
-      <div className="google-reviews-badge">
-        <GoogleLogo />
-        <div>
-          <p className="google-reviews-brand">{t('reviews.googleReviews')}</p>
-          <div className="google-reviews-rating" aria-label={`${rating} ${t('reviews.ratingLabel')}`}>
-            <div className="google-reviews-stars" aria-hidden="true">
-              {[1, 2, 3, 4, 5].map((n) => (
-                <FaStar key={n} />
-              ))}
+      <div className="google-reviews-top">
+        <div className="google-reviews-badge">
+          <GoogleLogo />
+          <div>
+            <p className="google-reviews-brand">{t('reviews.googleReviews')}</p>
+            <div className="google-reviews-rating" aria-label={`${rating} ${t('reviews.ratingLabel')}`}>
+              <div className="google-reviews-stars" aria-hidden="true">
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <FaStar key={n} />
+                ))}
+              </div>
+              <strong>{rating}</strong>
+              <span>{t('reviews.ratingLabel')}</span>
             </div>
-            <strong>{rating}</strong>
-            <span>{t('reviews.ratingLabel')}</span>
+            <p className="google-reviews-count">{reviewCountLabel}</p>
           </div>
-          <p className="google-reviews-count">{reviewCountLabel}</p>
         </div>
-      </div>
 
-      <div className="google-reviews-actions">
-        <a
-          href={mapsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="google-reviews-link"
-        >
-          {t('reviews.viewOnGoogle')}
-        </a>
-        <a
-          href={mapsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="google-reviews-link google-reviews-link--write"
-        >
-          {t('reviews.writeOnGoogle')}
-        </a>
+        <div className="google-reviews-actions">
+          <a
+            href={mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="google-reviews-link"
+          >
+            {t('reviews.viewOnGoogle')}
+          </a>
+          <a
+            href={mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="google-reviews-link google-reviews-link--write"
+          >
+            {t('reviews.writeOnGoogle')}
+          </a>
+        </div>
       </div>
 
       <p className="google-reviews-source">{t('reviews.poweredByGoogle')}</p>
 
       <div className="google-reviews-grid">
-        {PATIENT_REVIEWS.map((review) => (
+        {PATIENT_REVIEWS.slice(0, 3).map((review) => (
           <article key={review.name} className="google-review-card">
             <div className="google-review-card-header">
               <div className="google-review-avatar" aria-hidden="true">

@@ -49,6 +49,7 @@ const out = {
   faqs: content.FAQS,
   careers: content.CAREERS,
   newsItems: content.NEWS_ITEMS,
+  patientReviews: content.PATIENT_REVIEWS,
   telehealthWhen: patientCare.TELEHEALTH_WHEN,
   telehealthSteps: patientCare.TELEHEALTH_STEPS,
   afterVisitSteps: patientCare.AFTER_VISIT_STEPS,

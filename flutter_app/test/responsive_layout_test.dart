@@ -6,6 +6,7 @@ import 'package:orthoexpress_app/data/service_details_repository.dart';
 import 'package:orthoexpress_app/providers/orders_provider.dart';
 import 'package:orthoexpress_app/app.dart';
 import 'package:orthoexpress_app/features/shop/shop_screen.dart';
+import 'package:orthoexpress_app/providers/accessibility_provider.dart';
 import 'package:orthoexpress_app/providers/cart_provider.dart';
 import 'package:orthoexpress_app/providers/language_provider.dart';
 
@@ -26,11 +27,13 @@ Widget _appWrapper() {
   final lang = LanguageProvider();
   final cart = CartProvider();
   final orders = OrdersProvider();
+  final a11y = AccessibilityProvider();
   return MultiProvider(
     providers: [
       ChangeNotifierProvider.value(value: lang),
       ChangeNotifierProvider.value(value: cart),
       ChangeNotifierProvider.value(value: orders),
+      ChangeNotifierProvider.value(value: a11y),
     ],
     child: const OrthoExpressApp(),
   );
@@ -60,7 +63,7 @@ void main() {
       await tester.pumpWidget(_appWrapper());
       await tester.pumpAndSettle();
 
-      expect(find.text('Walk-In Orthopedic Care'), findsOneWidget);
+      expect(find.textContaining('Expert Orthopedic Care'), findsOneWidget);
       expect(tester.takeException(), isNull, reason: 'Overflow at ${size.width}x${size.height}');
     }
   });
@@ -87,10 +90,11 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Ortho Shop'), findsOneWidget);
+      expect(find.text('Recovery & Wellness Products'), findsOneWidget);
       expect(
-        find.text('Add to Cart').evaluate().isNotEmpty ||
-            find.text('Add').evaluate().isNotEmpty,
+        find.text('Add to cart').evaluate().isNotEmpty ||
+            find.text('Add').evaluate().isNotEmpty ||
+            find.text('Agregar al carrito').evaluate().isNotEmpty,
         isTrue,
       );
       expect(tester.takeException(), isNull, reason: 'Shop overflow at ${size.width}');

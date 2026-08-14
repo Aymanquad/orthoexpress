@@ -16,6 +16,9 @@ import {
   FaStore,
   FaBoxOpen,
   FaMapMarkerAlt,
+  FaNewspaper,
+  FaQuestionCircle,
+  FaBriefcase,
 } from 'react-icons/fa'
 import { CLINIC, getLocationNavItems } from '../data'
 import {
@@ -50,12 +53,16 @@ const Header = () => {
     pathname.startsWith('/checkout') ||
     pathname.startsWith('/orders') ||
     pathname.startsWith('/order-success')
-  const isPaymentActive = pathname.startsWith('/payment')
   const isPatientsActive =
     pathname.startsWith('/telehealth') ||
     pathname.startsWith('/after-your-visit') ||
     pathname.startsWith('/patient-portal') ||
-    pathname.startsWith('/technology')
+    pathname.startsWith('/technology') ||
+    pathname.startsWith('/payment') ||
+    pathname.startsWith('/faqs') ||
+    pathname.startsWith('/blogs') ||
+    pathname.startsWith('/news') ||
+    pathname.startsWith('/careers')
   const { headquarters } = CLINIC
 
   const isActive = (path, { exact = false, prefix = false } = {}) => {
@@ -135,7 +142,6 @@ const Header = () => {
   const isServicesOpen = openDropdown === 'services'
   const isLocationsOpen = openDropdown === 'locations'
   const isShopOpen = openDropdown === 'shop'
-  const isPaymentOpen = openDropdown === 'payment'
   const isPatientsOpen = openDropdown === 'patients'
 
   return (
@@ -156,7 +162,6 @@ const Header = () => {
                 <span className="location-name-top">{headquarters.label}</span>
                 <div className="phone-info">
                   <a href={toTelLink(headquarters.phone)}>{headquarters.phone}</a>
-                  <span className="fax">{t('pages.clinic.fax')} {headquarters.fax}</span>
                 </div>
               </div>
             </div>
@@ -261,49 +266,6 @@ const Header = () => {
             </li>
 
             <li
-              className={`nav-item-dropdown${isPaymentOpen ? ' is-open' : ''}`}
-              onMouseEnter={() => openDropdownMenu('payment')}
-              onMouseLeave={scheduleCloseDropdown}
-            >
-              <span
-                className={isPaymentActive ? 'nav-link-active' : ''}
-                onClick={handleDropdownTriggerClick('payment')}
-                onKeyDown={(e) => e.key === 'Enter' && handleDropdownTriggerClick('payment')(e)}
-                role="button"
-                tabIndex={0}
-                aria-expanded={isPaymentOpen}
-                aria-haspopup="true"
-              >
-                {t('nav.payment')}
-                <FaChevronDown className="nav-caret" aria-hidden="true" />
-              </span>
-              {isPaymentOpen && (
-                <ul
-                  className="dropdown-menu dropdown-menu-compact"
-                  onMouseEnter={() => openDropdownMenu('payment')}
-                  onMouseLeave={scheduleCloseDropdown}
-                >
-                  <li>
-                    <Link
-                      to="/payment#insurance"
-                      className={pathname === '/payment' ? 'nav-link-active' : ''}
-                      onClick={closeMenu}
-                    >
-                      <FaIdCard className="dropdown-ico" aria-hidden="true" />
-                      {t('nav.insuranceProviders')}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/payment#self-pay" onClick={closeMenu}>
-                      <FaDollarSign className="dropdown-ico" aria-hidden="true" />
-                      {t('nav.selfPay')}
-                    </Link>
-                  </li>
-                </ul>
-              )}
-            </li>
-
-            <li
               className={`nav-item-dropdown${isPatientsOpen ? ' is-open' : ''}`}
               onMouseEnter={() => openDropdownMenu('patients')}
               onMouseLeave={scheduleCloseDropdown}
@@ -321,63 +283,129 @@ const Header = () => {
                 <FaChevronDown className="nav-caret" aria-hidden="true" />
               </span>
               {isPatientsOpen && (
-                <ul
-                  className="dropdown-menu dropdown-menu-compact"
+                <div
+                  className="dropdown-menu dropdown-patients"
                   onMouseEnter={() => openDropdownMenu('patients')}
                   onMouseLeave={scheduleCloseDropdown}
                 >
-                  <li>
-                    <Link
-                      to="/telehealth"
-                      className={pathname === '/telehealth' ? 'nav-link-active' : ''}
-                      onClick={closeMenu}
-                    >
-                      <FaVideo className="dropdown-ico" aria-hidden="true" />
-                      {t('nav.telehealth')}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/after-your-visit"
-                      className={pathname === '/after-your-visit' ? 'nav-link-active' : ''}
-                      onClick={closeMenu}
-                    >
-                      <FaClipboardList className="dropdown-ico" aria-hidden="true" />
-                      {t('nav.afterVisit')}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/patient-portal"
-                      className={pathname === '/patient-portal' ? 'nav-link-active' : ''}
-                      onClick={closeMenu}
-                    >
-                      <FaUserCircle className="dropdown-ico" aria-hidden="true" />
-                      {t('nav.patientPortal')}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/technology"
-                      className={pathname === '/technology' ? 'nav-link-active' : ''}
-                      onClick={closeMenu}
-                    >
-                      <FaLaptop className="dropdown-ico" aria-hidden="true" />
-                      {t('nav.technology')}
-                    </Link>
-                  </li>
-                </ul>
+                  <div className="dropdown-mega-grid">
+                    <div className="dropdown-col">
+                      <p className="dropdown-label">{t('nav.yourCare')}</p>
+                      <ul>
+                        <li>
+                          <Link
+                            to="/telehealth"
+                            className={pathname === '/telehealth' ? 'nav-link-active' : ''}
+                            onClick={closeMenu}
+                          >
+                            <FaVideo className="dropdown-ico" aria-hidden="true" />
+                            {t('nav.telehealth')}
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            to="/after-your-visit"
+                            className={pathname === '/after-your-visit' ? 'nav-link-active' : ''}
+                            onClick={closeMenu}
+                          >
+                            <FaClipboardList className="dropdown-ico" aria-hidden="true" />
+                            {t('nav.afterVisit')}
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            to="/patient-portal"
+                            className={pathname === '/patient-portal' ? 'nav-link-active' : ''}
+                            onClick={closeMenu}
+                          >
+                            <FaUserCircle className="dropdown-ico" aria-hidden="true" />
+                            {t('nav.patientPortal')}
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            to="/technology"
+                            className={pathname === '/technology' ? 'nav-link-active' : ''}
+                            onClick={closeMenu}
+                          >
+                            <FaLaptop className="dropdown-ico" aria-hidden="true" />
+                            {t('nav.technology')}
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="dropdown-col">
+                      <p className="dropdown-label">{t('nav.billingHelp')}</p>
+                      <ul>
+                        <li>
+                          <Link
+                            to="/payment#insurance"
+                            className={pathname === '/payment' ? 'nav-link-active' : ''}
+                            onClick={closeMenu}
+                          >
+                            <FaIdCard className="dropdown-ico" aria-hidden="true" />
+                            {t('nav.insuranceProviders')}
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to="/payment#self-pay" onClick={closeMenu}>
+                            <FaDollarSign className="dropdown-ico" aria-hidden="true" />
+                            {t('nav.selfPay')}
+                          </Link>
+                        </li>
+                      </ul>
+                      <p className="dropdown-label">{t('nav.resources')}</p>
+                      <ul>
+                        <li>
+                          <Link
+                            to="/faqs"
+                            className={pathname === '/faqs' ? 'nav-link-active' : ''}
+                            onClick={closeMenu}
+                          >
+                            <FaQuestionCircle className="dropdown-ico" aria-hidden="true" />
+                            {t('nav.faqs')}
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            to="/blogs"
+                            className={pathname.startsWith('/blogs') ? 'nav-link-active' : ''}
+                            onClick={closeMenu}
+                          >
+                            <FaNewspaper className="dropdown-ico" aria-hidden="true" />
+                            {t('nav.blogs')}
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            to="/news"
+                            className={pathname === '/news' ? 'nav-link-active' : ''}
+                            onClick={closeMenu}
+                          >
+                            <FaNewspaper className="dropdown-ico" aria-hidden="true" />
+                            {t('nav.news')}
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            to="/careers"
+                            className={pathname === '/careers' ? 'nav-link-active' : ''}
+                            onClick={closeMenu}
+                          >
+                            <FaBriefcase className="dropdown-ico" aria-hidden="true" />
+                            {t('nav.careers')}
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               )}
             </li>
 
             <li>
               <Link to="/about" className={navClass('/about')} onClick={closeMenu}>
                 {t('nav.about')}
-              </Link>
-            </li>
-            <li>
-              <Link to="/workers-comp" className={navClass('/workers-comp')} onClick={closeMenu}>
-                {t('nav.workersComp')}
               </Link>
             </li>
 
@@ -492,21 +520,6 @@ const Header = () => {
               )}
             </li>
 
-            <li>
-              <Link to="/faqs" className={navClass('/faqs')} onClick={closeMenu}>
-                {t('nav.faqs')}
-              </Link>
-            </li>
-            <li>
-              <Link to="/blogs" className={navClass('/blogs', { prefix: true })} onClick={closeMenu}>
-                {t('nav.blogs')}
-              </Link>
-            </li>
-            <li>
-              <Link to="/news" className={navClass('/news')} onClick={closeMenu}>
-                {t('nav.news')}
-              </Link>
-            </li>
             <li>
               <Link to="/contact-us" className={navClass('/contact-us')} onClick={closeMenu}>
                 {t('nav.contact')}

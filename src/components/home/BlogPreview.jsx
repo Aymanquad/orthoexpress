@@ -34,10 +34,7 @@ const BlogPreview = () => {
                 <div className="blog-category-badge">{getBlogField(blog, 'category', lang)}</div>
               </div>
               <div className="blog-content">
-                <div className="blog-meta-preview">
-                  <span className="blog-category-preview">{getBlogField(blog, 'category', lang)}</span>
-                  <span className="blog-date-preview">{getBlogField(blog, 'date', lang)}</span>
-                </div>
+                <span className="blog-date-preview">{getBlogField(blog, 'date', lang)}</span>
                 <h3 className="blog-title">{getBlogField(blog, 'title', lang)}</h3>
                 <p className="blog-excerpt">{getBlogField(blog, 'excerpt', lang)}</p>
                 <span className="blog-read-more">{t('home.blogPreview.readMore')}</span>
