@@ -13,7 +13,7 @@ const LanguageToggle = () => {
         onClick={() => setLang('en')}
         aria-pressed={lang === 'en'}
       >
-        EN
+        English
       </button>
       <button
         type="button"
@@ -21,7 +21,7 @@ const LanguageToggle = () => {
         onClick={() => setLang('es')}
         aria-pressed={lang === 'es'}
       >
-        ES
+        Spanish
       </button>
     </div>
   )

@@ -106,7 +106,7 @@ export const LOCATIONS = [
       'Pain Management & Injections',
       'Physical Therapy',
       'Sports Medicine',
-      'Pediatric Orthopedics',
+      'Auto Accident Care',
       'Geriatric Orthopedic Care',
     ],
     locationFeatures: [

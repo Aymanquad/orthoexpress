@@ -8,7 +8,7 @@ import './WhatWeTreat.css'
 
 const CARDS = [
   { key: 'injured', image: IMAGES.home.snapshotInjured, to: '/services/injuries-fractures-sprains' },
-  { key: 'pain', slug: 'arthritis', to: '/services/pain-inflammation' },
+  { key: 'pain', image: IMAGES.home.snapshotPain, to: '/services/pain-inflammation' },
   { key: 'scan', slug: 'mri-digital-imaging', to: '/services/mri-digital-imaging' },
   { key: 'sports', image: IMAGES.home.snapshotSports, to: '/services/sports-medicine' },
   { key: 'spine', slug: 'lumbar-cervical-spine', to: '/services/lumbar-cervical-spine' },

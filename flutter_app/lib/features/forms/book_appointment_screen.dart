@@ -155,11 +155,6 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              BookLabels.title(lang),
-              style: Theme.of(context).textTheme.displaySmall,
-            ),
-            const SizedBox(height: 8),
-            Text(
               BookLabels.subtitle(lang),
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: AppColors.textLight,
@@ -321,6 +316,11 @@ class _FormSection extends StatelessWidget {
               style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
             ),
             const SizedBox(height: 20),
+            Text(
+              BookLabels.yourDetails(lang),
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 12),
             TextField(
               controller: nameController,
               decoration: InputDecoration(
@@ -351,6 +351,11 @@ class _FormSection extends StatelessWidget {
                 border: const OutlineInputBorder(),
               ),
               onChanged: (_) => onFieldChanged('email'),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              BookLabels.visitDetails(lang),
+              style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 12),
             DropdownButtonFormField<String>(
@@ -499,10 +504,6 @@ class _FormSection extends StatelessWidget {
             const SizedBox(height: 16),
             FilledButton(
               onPressed: submitting ? null : onSubmit,
-              style: FilledButton.styleFrom(
-                backgroundColor: AppColors.accent,
-                minimumSize: const Size.fromHeight(48),
-              ),
               child: Text(submitting ? BookLabels.submitting(lang) : BookLabels.submit(lang)),
             ),
           ],

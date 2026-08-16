@@ -41,11 +41,6 @@ class ServiceDetailScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextButton.icon(
-                  onPressed: () => context.go('/services'),
-                  icon: const Icon(Icons.arrow_back, size: 18),
-                  label: Text(ServiceDetailLabels.backLink.forLang(lang)),
-                ),
                 Text(service.title, style: Theme.of(context).textTheme.displayMedium),
                 const SizedBox(height: 8),
                 Text(service.description, style: Theme.of(context).textTheme.bodyMedium),
@@ -129,10 +124,6 @@ class ServiceDetailScreen extends StatelessWidget {
                 const SizedBox(height: 24),
                 FilledButton(
                   onPressed: () => context.push('/more/book-appointment'),
-                  style: FilledButton.styleFrom(
-                    backgroundColor: AppColors.accent,
-                    minimumSize: const Size.fromHeight(48),
-                  ),
                   child: Text(ServiceDetailLabels.bookAppointment.forLang(lang)),
                 ),
                 const SizedBox(height: 16),

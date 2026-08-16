@@ -155,7 +155,6 @@ const Header = () => {
             <span className="top-tagline">{t('pages.clinic.tagline')}</span>
           </div>
           <div className="header-top-right">
-            <LanguageToggle />
             <div className="top-location">
               <FaPhone className="phone-icon-top" aria-hidden="true" />
               <div>
@@ -168,6 +167,7 @@ const Header = () => {
             <Link to="/book-appointment" className="btn-book-top">
               {t('nav.bookAppointment')}
             </Link>
+            <LanguageToggle />
           </div>
         </div>
       </div>

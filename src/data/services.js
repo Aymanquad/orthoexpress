@@ -9,7 +9,7 @@ export const NAV_SERVICES = [
   { slug: 'sports-medicine' },
   { slug: 'mri-digital-imaging' },
   { slug: 'prp-orthobiologics' },
-  { slug: 'pediatric-care' },
+  { slug: 'car-motor-vehicle-accident-care' },
 ]
 
 /** Regional / specialty services — separate pages, not in header dropdown */

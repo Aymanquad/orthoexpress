@@ -48,8 +48,8 @@ export const TELEHEALTH_STEPS = [
     id: 'connect',
     title: { en: 'Connect with your clinician', es: 'Conéctese con su clínico' },
     text: {
-      en: 'Join your secure OrthoNOW Live session. Your provider evaluates symptoms, answers questions, and orders next steps.',
-      es: 'Únase a su sesión segura OrthoNOW Live. Su proveedor evalúa síntomas, responde preguntas y ordena los siguientes pasos.',
+      en: 'Join your secure OrthoExpress Live session. Your provider evaluates symptoms, answers questions, and orders next steps.',
+      es: 'Únase a su sesión segura OrthoExpress Live. Su proveedor evalúa síntomas, responde preguntas y ordena los siguientes pasos.',
     },
   },
 ]
@@ -115,11 +115,11 @@ export const AFTER_VISIT_STEPS = [
     icon: 'video',
     title: { en: 'Virtual follow-ups', es: 'Seguimientos virtuales' },
     text: {
-      en: 'Eligible patients can continue recovery with OrthoNOW Live teleorthopedics between in-clinic visits.',
-      es: 'Pacientes elegibles pueden continuar la recuperación con teleortopedia OrthoNOW Live entre visitas presenciales.',
+      en: 'Eligible patients can continue recovery with OrthoExpress Live teleorthopedics between in-clinic visits.',
+      es: 'Pacientes elegibles pueden continuar la recuperación con teleortopedia OrthoExpress Live entre visitas presenciales.',
     },
     link: '/telehealth',
-    linkLabel: { en: 'OrthoNOW Live', es: 'OrthoNOW Live' },
+    linkLabel: { en: 'OrthoExpress Live', es: 'OrthoExpress Live' },
   },
 ]
 
@@ -226,7 +226,7 @@ export const FAQ_SPECIALTIES = [
   { id: 'sports-medicine', label: { en: 'Sports Medicine', es: 'Medicina deportiva' } },
   { id: 'workers-comp', label: { en: "Workers' Comp", es: 'Compensación laboral' } },
   { id: 'mri-digital-imaging', label: { en: 'Imaging', es: 'Imágenes' } },
-  { id: 'pediatric-care', label: { en: 'Pediatric', es: 'Pediátrico' } },
+  { id: 'car-motor-vehicle-accident-care', label: { en: 'Auto Accident', es: 'Accidente de auto' } },
   { id: 'lumbar-cervical-spine', label: { en: 'Spine', es: 'Columna' } },
   { id: 'chiropractic-surgery', label: { en: 'Chiropractic', es: 'Quiropráctica' } },
   { id: 'spine-surgery', label: { en: 'Spine Surgery', es: 'Cirugía de columna' } },

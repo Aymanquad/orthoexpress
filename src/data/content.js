@@ -114,16 +114,16 @@ export const FAQS = [
     },
   },
   {
-    id: 'kids',
-    specialty: 'pediatric-care',
-    category: { en: 'Pediatric Care', es: 'Atención pediátrica' },
+    id: 'auto-accident',
+    specialty: 'car-motor-vehicle-accident-care',
+    category: { en: 'Auto Accident Care', es: 'Atención por accidente de auto' },
     q: {
-      en: 'Do you treat children?',
-      es: '¿Atienden a niños?',
+      en: 'Do you treat injuries from car or motor vehicle accidents?',
+      es: '¿Atienden lesiones por accidentes de auto o de vehículo?',
     },
     a: {
-      en: 'Yes. We provide pediatric orthopedic care for injuries and growth-related concerns in children and teens.',
-      es: 'Sí. Ofrecemos atención ortopédica pediátrica para lesiones y preocupaciones relacionadas con el crecimiento en niños y adolescentes.',
+      en: 'Yes. We provide same-day evaluation and treatment for car and motor vehicle accident injuries, including documentation support for insurance claims.',
+      es: 'Sí. Ofrecemos evaluación y tratamiento el mismo día para lesiones por accidentes de auto o de vehículo, incluyendo apoyo con documentación para reclamaciones de seguros.',
     },
   },
   {
@@ -174,8 +174,8 @@ export const FAQS = [
       es: '¿Ofrecen teleortopedia?',
     },
     a: {
-      en: 'Yes. OrthoNOW Live offers secure virtual follow-ups for eligible patients. Visit our Telehealth page or call your center to schedule.',
-      es: 'Sí. OrthoNOW Live ofrece seguimientos virtuales seguros para pacientes elegibles. Visite nuestra página de Telemedicina o llame a su centro para programar.',
+      en: 'Yes. OrthoExpress Live offers secure virtual follow-ups for eligible patients. Visit our Telehealth page or call your center to schedule.',
+      es: 'Sí. OrthoExpress Live ofrece seguimientos virtuales seguros para pacientes elegibles. Visite nuestra página de Telemedicina o llame a su centro para programar.',
     },
   },
   {
@@ -296,29 +296,29 @@ export const FAQS = [
     },
   },
   {
-    id: 'peds-fracture',
-    specialty: 'pediatric-care',
-    category: { en: 'Pediatric Care', es: 'Atención pediátrica' },
+    id: 'auto-whiplash',
+    specialty: 'car-motor-vehicle-accident-care',
+    category: { en: 'Auto Accident Care', es: 'Atención por accidente de auto' },
     q: {
-      en: 'Do you cast or splint children’s fractures?',
-      es: '¿Colocan yeso o férula en fracturas de niños?',
+      en: 'Can I walk in after a car accident for whiplash or neck pain?',
+      es: '¿Puedo llegar sin cita después de un accidente de auto por latigazo cervical o dolor de cuello?',
     },
     a: {
-      en: 'Yes. We provide pediatric casting and splinting with growth-plate considerations and family-friendly discharge instructions.',
-      es: 'Sí. Ofrecemos yeso y férulas pediátricas considerando las placas de crecimiento e instrucciones al alta adaptadas a la familia.',
+      en: 'Yes. Walk-ins are welcome for same-day evaluation of whiplash, neck, back, and other collision-related injuries.',
+      es: 'Sí. Recibimos pacientes sin cita para evaluación el mismo día de latigazo cervical, cuello, espalda y otras lesiones relacionadas con colisiones.',
     },
   },
   {
-    id: 'peds-sports',
-    specialty: 'pediatric-care',
-    category: { en: 'Pediatric Care', es: 'Atención pediátrica' },
+    id: 'auto-docs',
+    specialty: 'car-motor-vehicle-accident-care',
+    category: { en: 'Auto Accident Care', es: 'Atención por accidente de auto' },
     q: {
-      en: 'Can teens be seen for sports injuries without a pediatrician referral?',
-      es: '¿Pueden atender a adolescentes por lesiones deportivas sin referencia de pediatra?',
+      en: 'Do you help with insurance documentation after a motor vehicle accident?',
+      es: '¿Ayudan con la documentación del seguro después de un accidente de vehículo?',
     },
     a: {
-      en: 'Yes. No referral is needed. We treat teen athletes for sprains, overuse injuries, and growth-related concerns.',
-      es: 'Sí. No se necesita referencia. Tratamos a adolescentes deportistas por esguinces, lesiones por uso excesivo y preocupaciones relacionadas con el crecimiento.',
+      en: 'Yes. We provide thorough clinical documentation to support insurance and claims needs while you focus on recovery.',
+      es: 'Sí. Proporcionamos documentación clínica completa para apoyar necesidades de seguros y reclamaciones mientras usted se enfoca en recuperarse.',
     },
   },
   {
@@ -350,7 +350,7 @@ export const FAQS = [
   {
     id: 'chiro-same-day',
     specialty: 'chiropractic-surgery',
-    category: { en: 'Chiropractic Surgery', es: 'Cirugía quiropráctica' },
+    category: { en: 'Chiropractic', es: 'Quiropráctica' },
     q: {
       en: 'Can I get a same-day chiropractic or spine evaluation?',
       es: '¿Puedo obtener una evaluación quiropráctica o de columna el mismo día?',
@@ -363,7 +363,7 @@ export const FAQS = [
   {
     id: 'chiro-vs-surgery',
     specialty: 'chiropractic-surgery',
-    category: { en: 'Chiropractic Surgery', es: 'Cirugía quiropráctica' },
+    category: { en: 'Chiropractic', es: 'Quiropráctica' },
     q: {
       en: 'What is the difference between chiropractic care and spine surgery?',
       es: '¿Cuál es la diferencia entre atención quiropráctica y cirugía de columna?',
@@ -508,8 +508,8 @@ export const FAQS = [
     specialty: 'telehealth',
     category: { en: 'Telehealth', es: 'Telemedicina' },
     q: {
-      en: 'Who is eligible for OrthoNOW Live virtual visits?',
-      es: '¿Quién es elegible para visitas virtuales OrthoNOW Live?',
+      en: 'Who is eligible for OrthoExpress Live virtual visits?',
+      es: '¿Quién es elegible para visitas virtuales OrthoExpress Live?',
     },
     a: {
       en: 'Established patients with follow-up needs, post-procedure check-ins, and some consultation types qualify. Acute injuries may still need an in-person exam.',

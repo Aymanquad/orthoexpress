@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../../config/theme.dart';
 import '../../core/utils/responsive.dart';
 import '../../core/widgets/asset_image.dart';
-import '../../core/widgets/responsive_page.dart';
+import '../../core/widgets/empty_state.dart';
 import '../../data/products.dart';
 import '../../data/shop_labels.dart';
 import '../../providers/cart_provider.dart';
@@ -21,33 +21,12 @@ class CartScreen extends StatelessWidget {
     final useSideSummary = context.isTablet;
 
     return lines.isEmpty
-          ? Center(
-              child: ResponsivePage(
-                alignTop: false,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(
-                      Icons.shopping_cart_outlined,
-                      size: 56,
-                      color: AppColors.textMuted,
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      ShopLabels.cartEmptyTitle(lang),
-                      style: Theme.of(context).textTheme.titleLarge,
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 16),
-                    FilledButton(
-                      onPressed: () => context.go('/shop'),
-                      style: FilledButton.styleFrom(backgroundColor: AppColors.accent),
-                      child: Text(ShopLabels.continueShopping(lang)),
-                    ),
-                  ],
-                ),
-              ),
-            )
+        ? EmptyState(
+            icon: Icons.shopping_cart_outlined,
+            title: ShopLabels.cartEmptyTitle(lang),
+            actionLabel: ShopLabels.continueShopping(lang),
+            onAction: () => context.go('/shop'),
+          )
           : useSideSummary
               ? Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -200,10 +179,6 @@ class _CartSummary extends StatelessWidget {
           const SizedBox(height: 16),
           FilledButton(
             onPressed: () => context.push('/shop/checkout'),
-            style: FilledButton.styleFrom(
-              backgroundColor: AppColors.accent,
-              minimumSize: const Size.fromHeight(48),
-            ),
             child: Text(ShopLabels.proceedCheckout(lang)),
           ),
         ],

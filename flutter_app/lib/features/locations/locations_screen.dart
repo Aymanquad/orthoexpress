@@ -121,27 +121,17 @@ class _LocationCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: [
-                      OutlinedButton(
-                        onPressed: () => context.push('/locations/${location.slug}'),
-                        child: Text(LocationsLabels.viewDetails.forLang(lang)),
-                      ),
-                      OutlinedButton.icon(
-                        onPressed: () async {
-                          final uri = Uri.parse(
-                            ClinicData.mapsSearchUrl('${location.address}, ${location.city}'),
-                          );
-                          if (await canLaunchUrl(uri)) {
-                            await launchUrl(uri, mode: LaunchMode.externalApplication);
-                          }
-                        },
-                        icon: const Icon(Icons.directions_outlined, size: 18),
-                        label: Text(LocationsLabels.directions.forLang(lang)),
-                      ),
-                    ],
+                  TextButton.icon(
+                    onPressed: () async {
+                      final uri = Uri.parse(
+                        ClinicData.mapsSearchUrl('${location.address}, ${location.city}'),
+                      );
+                      if (await canLaunchUrl(uri)) {
+                        await launchUrl(uri, mode: LaunchMode.externalApplication);
+                      }
+                    },
+                    icon: const Icon(Icons.directions_outlined, size: 18),
+                    label: Text(LocationsLabels.directions.forLang(lang)),
                   ),
                 ],
               ),

@@ -131,8 +131,12 @@ export const home = {
     },
     howWeCare: {
       title: 'How we care for you',
-      subtitle: 'Four clear steps from walk-in to recovery.',
+      subtitle: 'From legal support to recovery — clear steps when you need care.',
       tiles: {
+        lawyers: {
+          title: 'Demographics / Lawyers',
+          desc: "Don't have one? We work with lawyers as well.",
+        },
         diagnose: {
           title: 'Diagnose',
           desc: 'On-site X-rays, imaging, and expert evaluation — often same day.',
@@ -283,8 +287,12 @@ export const home = {
     },
     howWeCare: {
       title: 'Cómo cuidamos de usted',
-      subtitle: 'Cuatro pasos claros desde la visita hasta la recuperación.',
+      subtitle: 'Desde apoyo legal hasta la recuperación — pasos claros cuando necesita atención.',
       tiles: {
+        lawyers: {
+          title: 'Demografía / Abogados',
+          desc: '¿No tiene uno? También trabajamos con abogados.',
+        },
         diagnose: {
           title: 'Diagnosticar',
           desc: 'Rayos X, imágenes y evaluación experta en el sitio — a menudo el mismo día.',

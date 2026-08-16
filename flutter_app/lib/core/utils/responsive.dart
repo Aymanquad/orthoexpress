@@ -38,10 +38,10 @@ extension ResponsiveContext on BuildContext {
   }
 
   double get heroHeight {
-    if (isLargeTablet) return 380;
-    if (isTablet) return 320;
-    if (screenHeight < 640) return 220;
-    return 280;
+    if (isLargeTablet) return 340;
+    if (isTablet) return 300;
+    if (screenHeight < 640) return 260;
+    return 300;
   }
 
   int get shopGridColumns {
@@ -55,11 +55,11 @@ extension ResponsiveContext on BuildContext {
   double get shopGridAspectRatio {
     switch (shopGridColumns) {
       case 2:
-        return isCompactPhone ? 0.68 : 0.72;
+        return isCompactPhone ? 0.58 : 0.62;
       case 3:
-        return 0.76;
+        return 0.68;
       default:
-        return 0.8;
+        return 0.72;
     }
   }
 

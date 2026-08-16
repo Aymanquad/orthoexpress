@@ -11,7 +11,8 @@ export const CLINIC = {
   },
   social: {
     facebook: 'https://www.facebook.com/',
-    twitter: 'https://twitter.com/',
+    x: 'https://x.com/',
+    tiktok: 'https://www.tiktok.com/',
     linkedin: 'https://www.linkedin.com/',
     instagram: 'https://www.instagram.com/',
   },

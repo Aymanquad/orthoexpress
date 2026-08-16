@@ -16,27 +16,36 @@ import PageMeta from '../components/PageMeta'
 import './Services.css'
 
 function ServiceCard({ service }) {
-  const { lang } = useLanguage()
+  const { lang, t } = useLanguage()
   const img = getServiceImage(service.slug)
+  const path = getServicePath(service)
 
   return (
-    <Link to={getServicePath(service)} className="services-card">
-      <div className="services-card-thumb">
-        <ImageWithFallback
-          src={img.src}
-          fallback={img.fallback}
-          alt=""
-          className="services-card-img"
-        />
+    <article className="services-card">
+      <Link to={path} className="services-card-link" aria-label={getServiceLabel(service, lang)}>
+        <div className="services-card-thumb">
+          <ImageWithFallback
+            src={img.src}
+            fallback={img.fallback}
+            alt=""
+            className="services-card-img"
+          />
+        </div>
+        <div className="services-card-body">
+          <span className="services-card-arrow" aria-hidden="true">
+            <FaArrowRight />
+          </span>
+          <h2 className="services-card-title">{getServiceLabel(service, lang)}</h2>
+          <p className="services-card-summary">{getServiceCardSummary(service, lang)}</p>
+        </div>
+      </Link>
+      <div className="services-card-actions">
+        <Link to="/book-appointment" className="services-card-book">
+          {t('common.bookAppointment')}
+          <FaArrowRight aria-hidden="true" />
+        </Link>
       </div>
-      <div className="services-card-body">
-        <span className="services-card-arrow" aria-hidden="true">
-          <FaArrowRight />
-        </span>
-        <h2 className="services-card-title">{getServiceLabel(service, lang)}</h2>
-        <p className="services-card-summary">{getServiceCardSummary(service, lang)}</p>
-      </div>
-    </Link>
+    </article>
   )
 }
 
@@ -84,18 +93,6 @@ const Services = () => {
             <h2 className="services-section-heading">{t('pages.services.workersHeading')}</h2>
             <div className="services-grid services-grid--single">
               <ServiceCard service={WORKERS_COMP_SERVICE} />
-            </div>
-          </div>
-
-          <div className="services-cta">
-            <p>{t('pages.services.ctaPrompt')}</p>
-            <div className="services-cta-actions">
-              <Link to="/book-appointment" className="btn btn-primary">
-                {t('common.bookAppointment')}
-              </Link>
-              <Link to="/contact-us" className="btn btn-outline">
-                {t('common.contactUs')}
-              </Link>
             </div>
           </div>
         </div>

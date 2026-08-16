@@ -24,7 +24,7 @@ class ShopLabels {
   static String processing(String lang) => lang == 'es' ? 'Procesando...' : 'Processing...';
 
   static String completeDemoOrder(String lang, String price) =>
-      lang == 'es' ? 'Completar pedido demo — $price' : 'Complete Demo Order — $price';
+      lang == 'es' ? 'Pagar demo — $price' : 'Complete Demo Order — $price';
 
   static String cartEmptyCheckout(String lang) =>
       lang == 'es'
@@ -151,7 +151,7 @@ class ShopLabels {
       'braces-supports': 'Braces & Supports',
     };
     const es = {
-      'all': 'Todos los productos',
+      'all': 'Todos',
       'cbd-wellness': 'CBD y bienestar',
       'pain-relief': 'Alivio del dolor',
       'braces-supports': 'Férulas y soportes',

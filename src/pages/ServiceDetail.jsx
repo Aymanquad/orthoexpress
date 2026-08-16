@@ -1,5 +1,6 @@
 import React from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { FaArrowRight } from 'react-icons/fa'
 import { getServiceDetail } from '../data/serviceDetails'
 import { useLanguage } from '../context/LanguageContext'
 import NotFound from './NotFound'
@@ -19,7 +20,7 @@ const ServiceDetail = () => {
   }
 
   const heroSrc = service.heroSrc
-  const bodySrc = service.placement !== 'photo' ? service.image : null
+  const bodySrc = service.bodySrc
   const bodyLayout = service.bodyLayout || 'square'
 
   return (
@@ -31,6 +32,7 @@ const ServiceDetail = () => {
             src={heroSrc}
             fallback={service.imageFallback}
             layout="photo"
+            objectPosition={service.heroObjectPosition}
           />
         )}
         <div className="container page-hero__content">
@@ -38,6 +40,10 @@ const ServiceDetail = () => {
           <h1 className="page-title">{service.title}</h1>
           <p className="page-subtitle">{service.description}</p>
         </div>
+        <Link to="/book-appointment" className="service-hero-book">
+          {t('common.bookAppointment')}
+          <FaArrowRight aria-hidden="true" />
+        </Link>
       </section>
 
       <section className="service-content">

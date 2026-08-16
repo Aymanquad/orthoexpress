@@ -1,7 +1,7 @@
 /// Home + hero + treat + reviews strings — from src/i18n/home.js & translations.js
 class HomeLabels {
   static String heroEyebrow(String lang) =>
-      lang == 'es' ? 'Sin cita · Mismo día · Sin remisión' : 'Walk-in · Same-day · No referral needed';
+      lang == 'es' ? 'Sin cita · Mismo día' : 'Walk-in · Same-day · No referral';
 
   static String heroTitle(String lang) =>
       lang == 'es' ? 'Cuidado ortopédico experto' : 'Expert Orthopedic Care';
@@ -27,7 +27,7 @@ class HomeLabels {
       lang == 'es' ? 'Mismo día' : 'Same-day visits';
 
   static String heroTrustInsurance(String lang) =>
-      lang == 'es' ? 'Aceptamos la mayoría de seguros' : 'Most insurance accepted';
+      lang == 'es' ? 'Aceptamos seguros' : 'Most insurance accepted';
 
   static String treatTitle(String lang) =>
       lang == 'es' ? 'Lo que tratamos' : 'What We Treat';
@@ -42,10 +42,10 @@ class HomeLabels {
         ? {
             'injured': 'Estoy lesionado',
             'pain': 'Tengo dolor',
-            'scan': 'Necesito una prueba o escaneo',
+            'scan': 'Necesito un escaneo',
             'sports': 'Lesiones deportivas',
-            'spine': 'Dolor de espalda y cuello',
-            'workers': 'Compensación laboral',
+            'spine': 'Espalda y cuello',
+            'workers': 'Comp. laboral',
           }
         : {
             'injured': "I'm Injured",
@@ -178,7 +178,7 @@ class HomeLabels {
       lang == 'es' ? 'Verificar cobertura' : 'Verify coverage';
 
   static String insuranceViewPricing(String lang) =>
-      lang == 'es' ? 'Ver precios y seguros →' : 'View pricing & insurance →';
+      lang == 'es' ? 'Ver precios y seguros' : 'View pricing & insurance';
 
   static String insuranceAndMore(String lang) =>
       lang == 'es' ? '+ muchos más' : '+ many more';

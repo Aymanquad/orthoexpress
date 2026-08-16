@@ -215,8 +215,8 @@
         "es": "¿Ofrecen teleortopedia?"
       },
       "a": {
-        "en": "Yes. OrthoNOW Live offers secure virtual follow-ups for eligible patients. Visit our Telehealth page or call your center to schedule.",
-        "es": "Sí. OrthoNOW Live ofrece seguimientos virtuales seguros para pacientes elegibles. Visite nuestra página de Telemedicina o llame a su centro para programar."
+        "en": "Yes. OrthoExpress Live offers secure virtual follow-ups for eligible patients. Visit our Telehealth page or call your center to schedule.",
+        "es": "Sí. OrthoExpress Live ofrece seguimientos virtuales seguros para pacientes elegibles. Visite nuestra página de Telemedicina o llame a su centro para programar."
       }
     },
     {
@@ -627,8 +627,8 @@
         "es": "Telemedicina"
       },
       "q": {
-        "en": "Who is eligible for OrthoNOW Live virtual visits?",
-        "es": "¿Quién es elegible para visitas virtuales OrthoNOW Live?"
+        "en": "Who is eligible for OrthoExpress Live virtual visits?",
+        "es": "¿Quién es elegible para visitas virtuales OrthoExpress Live?"
       },
       "a": {
         "en": "Established patients with follow-up needs, post-procedure check-ins, and some consultation types qualify. Acute injuries may still need an in-person exam.",
@@ -872,8 +872,8 @@
         "es": "Conéctese con su clínico"
       },
       "text": {
-        "en": "Join your secure OrthoNOW Live session. Your provider evaluates symptoms, answers questions, and orders next steps.",
-        "es": "Únase a su sesión segura OrthoNOW Live. Su proveedor evalúa síntomas, responde preguntas y ordena los siguientes pasos."
+        "en": "Join your secure OrthoExpress Live session. Your provider evaluates symptoms, answers questions, and orders next steps.",
+        "es": "Únase a su sesión segura OrthoExpress Live. Su proveedor evalúa síntomas, responde preguntas y ordena los siguientes pasos."
       }
     }
   ],
@@ -971,13 +971,13 @@
         "es": "Seguimientos virtuales"
       },
       "text": {
-        "en": "Eligible patients can continue recovery with OrthoNOW Live teleorthopedics between in-clinic visits.",
-        "es": "Pacientes elegibles pueden continuar la recuperación con teleortopedia OrthoNOW Live entre visitas presenciales."
+        "en": "Eligible patients can continue recovery with OrthoExpress Live teleorthopedics between in-clinic visits.",
+        "es": "Pacientes elegibles pueden continuar la recuperación con teleortopedia OrthoExpress Live entre visitas presenciales."
       },
       "link": "/telehealth",
       "linkLabel": {
-        "en": "OrthoNOW Live",
-        "es": "OrthoNOW Live"
+        "en": "OrthoExpress Live",
+        "es": "OrthoExpress Live"
       }
     }
   ],

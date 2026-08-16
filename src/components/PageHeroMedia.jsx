@@ -6,7 +6,7 @@ import './PageHeroMedia.css'
  * Smart hero background — layout adapts to image aspect ratio:
  * photo (landscape cover), product (square/contain right), portrait, compact (low-res)
  */
-const PageHeroMedia = ({ src, fallback, alt = '', layout = 'photo' }) => {
+const PageHeroMedia = ({ src, fallback, alt = '', layout = 'photo', objectPosition }) => {
   if (!src) return null
 
   return (
@@ -16,6 +16,7 @@ const PageHeroMedia = ({ src, fallback, alt = '', layout = 'photo' }) => {
         fallback={fallback}
         alt={alt}
         className="page-hero__image"
+        style={objectPosition ? { objectPosition } : undefined}
       />
       <div className="page-hero__overlay" aria-hidden="true" />
     </div>

@@ -9,11 +9,11 @@ export const services = {
       'sports-medicine': 'Sports Medicine (Physicals)',
       'mri-digital-imaging': 'MRI & Digital Imaging',
       'prp-orthobiologics': 'PRP Therapy & Orthobiologics',
-      'pediatric-care': 'Pediatric Care',
+      'car-motor-vehicle-accident-care': 'Auto Accident Care',
       'hand-wrist-care': 'Hand & Wrist Care',
       'shoulder-elbow': 'Shoulder & Elbow Care',
       'lumbar-cervical-spine': 'Lumbar & Cervical Spine Care',
-      'chiropractic-surgery': 'Chiropractic Surgery',
+      'chiropractic-surgery': 'Chiropractic',
       'spine-surgery': 'Spine Surgery',
       'hip-knee-care': 'Hip & Knee Care',
       'foot-ankle-care': 'Foot & Ankle Care',
@@ -24,7 +24,7 @@ export const services = {
       'pain-inflammation':
         'We diagnose and treat acute and chronic musculoskeletal pain caused by injuries, overuse, or degenerative conditions.',
       'injuries-fractures-sprains':
-        'Expert care for fractures, sprains, sports injuries, workplace trauma, and auto accident injuries — with same-day walk-in availability.',
+        'Expert care for fractures, sprains, sports injuries, and workplace trauma — with same-day walk-in availability.',
       arthritis:
         'Comprehensive arthritis care to reduce pain, stiffness, and swelling with conservative treatments and advanced options when needed.',
       'casting-splinting':
@@ -35,8 +35,8 @@ export const services = {
         'State-of-the-art imaging services provide fast, accurate diagnostics for bone and soft tissue injuries.',
       'prp-orthobiologics':
         'Regenerative treatment options that support natural healing for tendon, ligament, and joint conditions.',
-      'pediatric-care':
-        'Specialized orthopedic evaluation and treatment for children and adolescents with family-centered care.',
+      'car-motor-vehicle-accident-care':
+        'Same-day evaluation and treatment for car and motor vehicle accident injuries, with imaging and insurance documentation support.',
       'hand-wrist-care':
         'Expert treatment for carpal tunnel, wrist fractures, tendon injuries, and conditions affecting hand function.',
       'shoulder-elbow':
@@ -66,11 +66,11 @@ export const services = {
       'sports-medicine': 'Medicina deportiva (exámenes físicos)',
       'mri-digital-imaging': 'Resonancia magnética e imágenes digitales',
       'prp-orthobiologics': 'Terapia PRP y ortobiología',
-      'pediatric-care': 'Atención pediátrica',
+      'car-motor-vehicle-accident-care': 'Atención por accidente de auto',
       'hand-wrist-care': 'Atención de mano y muñeca',
       'shoulder-elbow': 'Atención de hombro y codo',
       'lumbar-cervical-spine': 'Atención de columna lumbar y cervical',
-      'chiropractic-surgery': 'Cirugía quiropráctica',
+      'chiropractic-surgery': 'Quiropráctica',
       'spine-surgery': 'Cirugía de columna',
       'hip-knee-care': 'Atención de cadera y rodilla',
       'foot-ankle-care': 'Atención de pie y tobillo',
@@ -81,7 +81,7 @@ export const services = {
       'pain-inflammation':
         'Diagnosticamos y tratamos el dolor musculoesquelético agudo y crónico causado por lesiones, sobreuso o condiciones degenerativas.',
       'injuries-fractures-sprains':
-        'Atención experta para fracturas, esguinces, lesiones deportivas, trauma laboral y lesiones por accidentes automovilísticos — con disponibilidad sin cita el mismo día.',
+        'Atención experta para fracturas, esguinces, lesiones deportivas y trauma laboral — con disponibilidad sin cita el mismo día.',
       arthritis:
         'Atención integral de artritis para reducir dolor, rigidez e hinchazón con tratamientos conservadores y opciones avanzadas cuando sea necesario.',
       'casting-splinting':
@@ -92,8 +92,8 @@ export const services = {
         'Servicios de imágenes de última generación proporcionan diagnósticos rápidos y precisos para lesiones óseas y de tejidos blandos.',
       'prp-orthobiologics':
         'Opciones de tratamiento regenerativo que apoyan la sanación natural para condiciones de tendones, ligamentos y articulaciones.',
-      'pediatric-care':
-        'Evaluación y tratamiento ortopédico especializado para niños y adolescentes con atención centrada en la familia.',
+      'car-motor-vehicle-accident-care':
+        'Evaluación y tratamiento el mismo día para lesiones por accidentes de auto o vehículo, con imagenología y apoyo en documentación de seguros.',
       'hand-wrist-care':
         'Tratamiento experto para túnel carpiano, fracturas de muñeca, lesiones de tendones y condiciones que afectan la función de la mano.',
       'shoulder-elbow':

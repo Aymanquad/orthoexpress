@@ -47,6 +47,11 @@ export const pages = {
         description:
           "OrthoExpress workers' compensation and workplace injury care — convenient, high-quality orthopedic treatment for employees.",
       },
+      lawyers: {
+        title: 'Demographics / Lawyers',
+        description:
+          'OrthoExpress works with personal injury lawyers. Browse a current Los Angeles attorney directory and get care documentation support.',
+      },
       privacy: { title: 'Privacy Policy', description: 'OrthoExpress privacy policy and how we protect your information.' },
       terms: { title: 'Terms of Service', description: 'OrthoExpress terms of service and website usage guidelines.' },
       faqs: {
@@ -64,9 +69,9 @@ export const pages = {
         description: 'OrthoExpress commitment to digital accessibility and available accommodations.',
       },
       telehealth: {
-        title: 'OrthoNOW Live Telehealth',
+        title: 'OrthoExpress Live Telehealth',
         description:
-          'Virtual orthopedic follow-ups and teleorthopedics with OrthoExpress — secure OrthoNOW Live visits from home.',
+          'Virtual orthopedic follow-ups and teleorthopedics with OrthoExpress — secure OrthoExpress Live visits from home.',
       },
       afterVisit: {
         title: 'After Your Visit',
@@ -157,6 +162,9 @@ export const pages = {
         'Over the years, we have built a reputation for excellence, compassion, and innovation in orthopedic medicine. Our team of dedicated professionals works tirelessly to provide the highest standard of care while maintaining the personal touch that makes all the difference in your healing process.',
     },
     workersComp: {
+      eyebrow: 'WORKPLACE INJURY CARE',
+      title: "Workers' Compensation",
+      lead: 'Convenient, high-quality orthopedic care for workplace injuries — better outcomes for employees and smarter costs for employers.',
       intro1:
         "With our workers' compensation and injury care services, your employees get convenient access to high-quality care at a lower cost and in an appropriate setting.",
       intro2:
@@ -174,6 +182,29 @@ export const pages = {
         'The clinic can provide you with educational resources on your specific work-related injury or illness, including tips on preventing future injuries and how to manage your condition effectively.',
       locationsTitle: 'OrthoExpress Locations',
       bookLink: "Book Workers' Comp Visit →",
+    },
+    lawyers: {
+      eyebrow: 'LEGAL SUPPORT',
+      title: 'Demographics / Lawyers',
+      lead: "Don't have one? We work with lawyers as well — and can help you connect with trusted Los Angeles counsel.",
+      aboutHeading: 'Injury care that works with your legal team',
+      aboutP1:
+        'After an auto accident or serious injury, medical care and legal representation often go hand in hand. OrthoExpress provides same-day evaluation, treatment, and clear clinical documentation so your attorney can focus on your claim while you focus on healing.',
+      aboutP2:
+        'Already have a lawyer? We coordinate with your firm. Need a referral starting point? Below is a current directory of well-known personal injury practices serving Los Angeles, USA.',
+      helpTitle: 'How we help',
+      helpText:
+        'Walk-in injury evaluation, imaging coordination, recovery plans, and thorough records for insurance and legal needs.',
+      listHeading: 'Los Angeles lawyers & firms',
+      listLead:
+        'A current reference list of personal injury practices commonly serving Los Angeles and Southern California.',
+      listed: 'listed',
+      visitSite: 'Visit website',
+      disclaimer:
+        'This directory is provided as a convenience for patients exploring legal options. OrthoExpress does not endorse a specific firm, receive fees for listings, or provide legal advice. Always verify credentials and choose counsel independently.',
+      ctaTitle: 'Need care today?',
+      ctaText: 'Start with a same-day injury visit — we will support your recovery and documentation either way.',
+      ctaAccident: 'Auto accident care',
     },
     contact: {
       title: 'Contact Us',
@@ -422,6 +453,11 @@ export const pages = {
         description:
           'Atención ortopédica de compensación laboral y lesiones en el trabajo de OrthoExpress — tratamiento conveniente y de alta calidad para empleados.',
       },
+      lawyers: {
+        title: 'Demografía / Abogados',
+        description:
+          'OrthoExpress trabaja con abogados de lesiones personales. Consulte un directorio actual de abogados en Los Ángeles y obtenga apoyo con documentación clínica.',
+      },
       privacy: {
         title: 'Política de privacidad',
         description: 'Política de privacidad de OrthoExpress y cómo protegemos su información.',
@@ -452,9 +488,9 @@ export const pages = {
         description: 'Compromiso de OrthoExpress con la accesibilidad digital y adaptaciones disponibles.',
       },
       telehealth: {
-        title: 'Telemedicina OrthoNOW Live',
+        title: 'Telemedicina OrthoExpress Live',
         description:
-          'Seguimientos ortopédicos virtuales y teleortopedia con OrthoExpress — visitas seguras OrthoNOW Live desde casa.',
+          'Seguimientos ortopédicos virtuales y teleortopedia con OrthoExpress — visitas seguras OrthoExpress Live desde casa.',
       },
       afterVisit: {
         title: 'Después de su visita',
@@ -546,6 +582,9 @@ export const pages = {
         'A lo largo de los años, hemos construido una reputación de excelencia, compasión e innovación en medicina ortopédica. Nuestro equipo de profesionales dedicados trabaja incansablemente para brindar el más alto estándar de atención.',
     },
     workersComp: {
+      eyebrow: 'ATENCIÓN DE LESIONES LABORALES',
+      title: 'Compensación laboral',
+      lead: 'Atención ortopédica conveniente y de alta calidad para lesiones laborales — mejores resultados para empleados y costos más inteligentes para empleadores.',
       intro1:
         'Con nuestros servicios de compensación laboral y atención de lesiones, sus empleados obtienen acceso conveniente a atención de alta calidad a menor costo y en el entorno adecuado.',
       intro2:
@@ -563,6 +602,29 @@ export const pages = {
         'La clínica puede proporcionarle recursos educativos sobre su lesión o enfermedad laboral específica, incluyendo consejos para prevenir futuras lesiones y cómo manejar su condición de manera efectiva.',
       locationsTitle: 'Ubicaciones OrthoExpress',
       bookLink: 'Reservar visita de compensación laboral →',
+    },
+    lawyers: {
+      eyebrow: 'APOYO LEGAL',
+      title: 'Demografía / Abogados',
+      lead: '¿No tiene uno? También trabajamos con abogados — y podemos ayudarle a conectar con representantes de confianza en Los Ángeles.',
+      aboutHeading: 'Atención de lesiones que colabora con su equipo legal',
+      aboutP1:
+        'Después de un accidente de auto o una lesión grave, la atención médica y la representación legal suelen ir de la mano. OrthoExpress ofrece evaluación el mismo día, tratamiento y documentación clínica clara para que su abogado pueda enfocarse en su reclamación mientras usted se recupera.',
+      aboutP2:
+        '¿Ya tiene abogado? Coordinamos con su firma. ¿Necesita un punto de partida? A continuación encontrará un directorio actual de prácticas conocidas de lesiones personales que atienden en Los Ángeles, EE. UU.',
+      helpTitle: 'Cómo ayudamos',
+      helpText:
+        'Evaluación de lesiones sin cita, coordinación de imágenes, planes de recuperación y registros completos para seguros y necesidades legales.',
+      listHeading: 'Abogados y firmas en Los Ángeles',
+      listLead:
+        'Una lista de referencia actual de prácticas de lesiones personales que suelen atender en Los Ángeles y el Sur de California.',
+      listed: 'listados',
+      visitSite: 'Visitar sitio',
+      disclaimer:
+        'Este directorio se ofrece como una ayuda para pacientes que exploran opciones legales. OrthoExpress no respalda una firma específica, no recibe honorarios por listados y no brinda asesoría legal. Verifique siempre las credenciales y elija su representante de forma independiente.',
+      ctaTitle: '¿Necesita atención hoy?',
+      ctaText: 'Comience con una visita de lesiones el mismo día — apoyaremos su recuperación y documentación de cualquier manera.',
+      ctaAccident: 'Atención por accidente de auto',
     },
     contact: {
       title: 'Contáctenos',

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../config/theme.dart';
 
 class PrimaryButton extends StatelessWidget {
   final String label;
@@ -17,19 +16,14 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _GradientButton(
-      expanded: expanded,
-      onPressed: onPressed,
-      gradient: const LinearGradient(
-        colors: [AppColors.accent, AppColors.accentLight],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ),
-      shadowColor: AppColors.accent.withValues(alpha: 0.3),
+    final child = _LabeledButton(
+      filled: true,
       label: label,
       icon: icon,
-      textStyle: Theme.of(context).textTheme.labelLarge,
+      onPressed: onPressed,
     );
+    if (expanded) return SizedBox(width: double.infinity, child: child);
+    return child;
   }
 }
 
@@ -49,19 +43,14 @@ class SecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _GradientButton(
-      expanded: expanded,
-      onPressed: onPressed,
-      gradient: const LinearGradient(
-        colors: [AppColors.primary, Color(0xFF283593)],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ),
-      shadowColor: AppColors.primary.withValues(alpha: 0.25),
+    final child = _LabeledButton(
+      filled: false,
       label: label,
       icon: icon,
-      textStyle: Theme.of(context).textTheme.labelLarge,
+      onPressed: onPressed,
     );
+    if (expanded) return SizedBox(width: double.infinity, child: child);
+    return child;
   }
 }
 
@@ -75,97 +64,93 @@ class OutlineButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlinedButton(
       onPressed: onPressed,
-      style: OutlinedButton.styleFrom(
-        foregroundColor: AppColors.primary,
-        side: const BorderSide(color: AppColors.primary, width: 2),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      ),
       child: Text(
         label,
+        maxLines: 2,
         overflow: TextOverflow.ellipsis,
-        maxLines: 1,
       ),
     );
   }
 }
 
-class _GradientButton extends StatelessWidget {
+class GhostCallButton extends StatelessWidget {
   final String label;
   final VoidCallback? onPressed;
-  final IconData? icon;
-  final LinearGradient gradient;
-  final Color shadowColor;
-  final TextStyle? textStyle;
   final bool expanded;
 
-  const _GradientButton({
+  const GhostCallButton({
+    super.key,
     required this.label,
-    required this.onPressed,
-    required this.gradient,
-    required this.shadowColor,
-    this.icon,
-    this.textStyle,
+    this.onPressed,
     this.expanded = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    final child = LayoutBuilder(
-      builder: (context, constraints) {
-        final maxWidth = constraints.maxWidth;
-        final compact = maxWidth.isFinite && maxWidth < 220;
-        final horizontal = compact ? 12.0 : 20.0;
-        final vertical = compact ? 12.0 : 14.0;
-
-        return DecoratedBox(
-          decoration: BoxDecoration(
-            gradient: gradient,
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: [
-              BoxShadow(
-                color: shadowColor,
-                blurRadius: 14,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: onPressed,
-              borderRadius: BorderRadius.circular(8),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical),
-                child: Row(
-                  mainAxisSize: expanded ? MainAxisSize.max : MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (icon != null) ...[
-                      Icon(icon, color: Colors.white, size: compact ? 16 : 18),
-                      SizedBox(width: compact ? 6 : 8),
-                    ],
-                    Flexible(
-                      child: Text(
-                        label,
-                        style: textStyle,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
+    final child = OutlinedButton(
+      onPressed: onPressed,
+      style: OutlinedButton.styleFrom(
+        foregroundColor: Colors.white,
+        side: BorderSide(color: Colors.white.withValues(alpha: 0.65)),
+        backgroundColor: Colors.white.withValues(alpha: 0.08),
+        overlayColor: Colors.white.withValues(alpha: 0.12),
+      ),
+      child: _ButtonBody(
+        icon: Icons.phone_outlined,
+        label: label,
+      ),
     );
-
-    if (expanded) {
-      return SizedBox(width: double.infinity, child: child);
-    }
+    if (expanded) return SizedBox(width: double.infinity, child: child);
     return child;
+  }
+}
+
+class _LabeledButton extends StatelessWidget {
+  final bool filled;
+  final String label;
+  final IconData? icon;
+  final VoidCallback? onPressed;
+
+  const _LabeledButton({
+    required this.filled,
+    required this.label,
+    required this.icon,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final body = _ButtonBody(icon: icon, label: label);
+    if (filled) {
+      return FilledButton(onPressed: onPressed, child: body);
+    }
+    return OutlinedButton(onPressed: onPressed, child: body);
+  }
+}
+
+class _ButtonBody extends StatelessWidget {
+  final IconData? icon;
+  final String label;
+
+  const _ButtonBody({this.icon, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    final text = Text(
+      label,
+      maxLines: 2,
+      textAlign: TextAlign.center,
+      overflow: TextOverflow.ellipsis,
+    );
+    if (icon == null) return text;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(icon, size: 17),
+        const SizedBox(width: 8),
+        Flexible(child: text),
+      ],
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../config/app_config.dart';
@@ -22,111 +23,118 @@ class HomeHeroSection extends StatelessWidget {
     final lang = context.watch<LanguageProvider>().locale.languageCode;
     final heroHeight = context.heroHeight;
 
-    return SizedBox(
-      height: heroHeight,
+    return ConstrainedBox(
+      constraints: BoxConstraints(minHeight: heroHeight),
       child: Stack(
-        fit: StackFit.expand,
+        alignment: Alignment.bottomLeft,
         children: [
-          HeroImage(
-            assetPath: 'assets/images/home/hero.jpg',
-            fallbackPath: 'assets/images/recovery-after-orthopedicsurgery.jpg',
-            height: heroHeight,
+          Positioned.fill(
+            child: HeroImage(
+              assetPath: 'assets/images/home/hero.jpg',
+              fallbackPath: 'assets/images/recovery-after-orthopedicsurgery.jpg',
+              height: heroHeight,
+            ),
           ),
-          DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.black.withValues(alpha: 0.15),
-                  Colors.black.withValues(alpha: 0.72),
-                ],
+          Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withValues(alpha: 0.35),
+                    Colors.black.withValues(alpha: 0.15),
+                    Colors.black.withValues(alpha: 0.55),
+                    Colors.black.withValues(alpha: 0.88),
+                  ],
+                  stops: const [0.0, 0.35, 0.72, 1.0],
+                ),
               ),
             ),
           ),
-          Positioned(
-            left: context.pagePadding.left,
-            right: context.pagePadding.right,
-            bottom: 20,
+          Padding(
+            padding: EdgeInsets.fromLTRB(
+              context.pagePadding.left,
+              20,
+              context.pagePadding.right,
+              18,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  HomeLabels.heroEyebrow(lang),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: Colors.white.withValues(alpha: 0.92),
-                        fontWeight: FontWeight.w700,
-                      ),
+                Container(
+                  constraints: BoxConstraints(
+                    maxWidth: context.screenWidth - context.pagePadding.horizontal,
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: AppColors.accent.withValues(alpha: 0.92),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    HomeLabels.heroEyebrow(lang),
+                    maxLines: 2,
+                    softWrap: true,
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0.3,
+                        ),
+                  ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 10),
                 Text(
                   HomeLabels.heroTitle(lang),
                   maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                        color: Colors.white,
-                        fontSize: context.isCompactPhone ? 24 : null,
-                      ),
+                  style: GoogleFonts.sourceSerif4(
+                    fontSize: context.isCompactPhone ? 22 : 26,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                    height: 1.15,
+                    letterSpacing: -0.3,
+                  ),
                 ),
+                const SizedBox(height: 4),
                 Text(
                   HomeLabels.heroTitleAccent(lang),
                   maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: AppColors.accentLight,
-                        fontWeight: FontWeight.w600,
-                        fontSize: context.isCompactPhone ? 16 : null,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Colors.white.withValues(alpha: 0.95),
+                        fontWeight: FontWeight.w500,
                       ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   HomeLabels.heroLead(lang),
                   maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.white.withValues(alpha: 0.9),
+                        color: Colors.white.withValues(alpha: 0.88),
+                        fontSize: 13,
+                        height: 1.45,
                       ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 14),
                 if (context.isPhone)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       PrimaryButton(
-                        label: context.isCompactPhone
-                            ? (lang == 'es' ? 'Cita' : 'Book')
-                            : HomeLabels.heroBook(lang),
+                        label: HomeLabels.heroBook(lang),
+                        icon: Icons.calendar_month_rounded,
                         expanded: true,
                         onPressed: () => context.push('/more/book-appointment'),
                       ),
                       const SizedBox(height: 8),
-                      SecondaryButton(
-                        label: HomeLabels.heroFindCenter(lang),
-                        icon: Icons.location_on,
+                      GhostCallButton(
+                        label: lang == 'es' ? 'Llamar' : ClinicData.headquartersPhone,
                         expanded: true,
-                        onPressed: () => context.go('/locations'),
-                      ),
-                      const SizedBox(height: 8),
-                      OutlinedButton.icon(
                         onPressed: () async {
                           final uri = Uri.parse(
                             ClinicData.telLink(ClinicData.headquartersPhone),
                           );
                           if (await canLaunchUrl(uri)) await launchUrl(uri);
                         },
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          side: const BorderSide(color: Colors.white70),
-                        ),
-                        icon: const Icon(Icons.phone, size: 18),
-                        label: Text(
-                          context.isCompactPhone
-                              ? (lang == 'es' ? 'Llamar' : 'Call')
-                              : ClinicData.headquartersPhone,
-                          overflow: TextOverflow.ellipsis,
-                        ),
                       ),
                     ],
                   )
@@ -137,49 +145,30 @@ class HomeHeroSection extends StatelessWidget {
                     children: [
                       PrimaryButton(
                         label: HomeLabels.heroBook(lang),
+                        icon: Icons.calendar_month_rounded,
                         onPressed: () => context.push('/more/book-appointment'),
                       ),
-                      SecondaryButton(
-                        label: HomeLabels.heroFindCenter(lang),
-                        icon: Icons.location_on,
-                        onPressed: () => context.go('/locations'),
-                      ),
-                      OutlinedButton.icon(
+                      GhostCallButton(
+                        label: ClinicData.headquartersPhone,
                         onPressed: () async {
                           final uri = Uri.parse(
                             ClinicData.telLink(ClinicData.headquartersPhone),
                           );
                           if (await canLaunchUrl(uri)) await launchUrl(uri);
                         },
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          side: const BorderSide(color: Colors.white70),
-                        ),
-                        icon: const Icon(Icons.phone, size: 18),
-                        label: Text(ClinicData.headquartersPhone),
                       ),
                     ],
                   ),
-                const SizedBox(height: 12),
-                if (context.isPhone)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _TrustChip(HomeLabels.heroTrustWalkIn(lang), fullWidth: true),
-                      _TrustChip(HomeLabels.heroTrustSameDay(lang), fullWidth: true),
-                      _TrustChip(HomeLabels.heroTrustInsurance(lang), fullWidth: true),
-                    ],
-                  )
-                else
-                  Wrap(
-                    spacing: 12,
-                    runSpacing: 6,
-                    children: [
-                      _TrustChip(HomeLabels.heroTrustWalkIn(lang)),
-                      _TrustChip(HomeLabels.heroTrustSameDay(lang)),
-                      _TrustChip(HomeLabels.heroTrustInsurance(lang)),
-                    ],
-                  ),
+                const SizedBox(height: 10),
+                Wrap(
+                  spacing: 6,
+                  runSpacing: 6,
+                  children: [
+                    _TrustChip(HomeLabels.heroTrustWalkIn(lang)),
+                    _TrustChip(HomeLabels.heroTrustSameDay(lang)),
+                    _TrustChip(HomeLabels.heroTrustInsurance(lang)),
+                  ],
+                ),
               ],
             ),
           ),
@@ -191,26 +180,30 @@ class HomeHeroSection extends StatelessWidget {
 
 class _TrustChip extends StatelessWidget {
   final String label;
-  final bool fullWidth;
-  const _TrustChip(this.label, {this.fullWidth = false});
+  const _TrustChip(this.label);
 
   @override
   Widget build(BuildContext context) {
-    final text = Text(
-      label,
-      overflow: TextOverflow.ellipsis,
-      maxLines: 2,
-      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-            color: Colors.white.withValues(alpha: 0.92),
-          ),
-    );
-  return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.18)),
+      ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.check_circle, color: AppColors.accentLight, size: 16),
+          Icon(Icons.check_circle_rounded, color: AppColors.accentLight, size: 14),
           const SizedBox(width: 4),
-          if (fullWidth) Expanded(child: text) else Flexible(child: text),
+          Text(
+            label,
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  color: Colors.white.withValues(alpha: 0.92),
+                  fontWeight: FontWeight.w500,
+                  fontSize: context.isCompactPhone ? 10 : 11,
+                ),
+          ),
         ],
       ),
     );
@@ -373,61 +366,39 @@ class LocationsPreviewSection extends StatelessWidget {
           return Card(
             margin: const EdgeInsets.only(bottom: 12),
             clipBehavior: Clip.antiAlias,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                InkWell(
-                  onTap: () => context.push('/locations/${loc.slug}'),
-                  child: AssetImageWithFallback(
+            child: InkWell(
+              onTap: () => context.push('/locations/${loc.slug}'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  AssetImageWithFallback(
                     assetPath: loc.imagePath,
                     height: 140,
                     fit: BoxFit.cover,
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(loc.name, style: Theme.of(context).textTheme.titleLarge),
-                      const SizedBox(height: 4),
-                      Text('${loc.address}\n${loc.city}'),
-                      const SizedBox(height: 8),
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: [
-                          OutlinedButton.icon(
-                            onPressed: () async {
-                              final uri = Uri.parse(ClinicData.telLink(loc.phone));
-                              if (await canLaunchUrl(uri)) await launchUrl(uri);
-                            },
-                            icon: const Icon(Icons.phone_outlined, size: 18),
-                            label: Text(HomeLabels.locationsCall(lang)),
-                          ),
-                          OutlinedButton.icon(
-                            onPressed: () => context.push('/locations/${loc.slug}'),
-                            icon: const Icon(Icons.store_outlined, size: 18),
-                            label: Text(HomeLabels.locationsViewClinic(lang)),
-                          ),
-                          OutlinedButton.icon(
-                            onPressed: () async {
-                              final uri = Uri.parse(
-                                ClinicData.mapsSearchUrl('${loc.address}, ${loc.city}'),
-                              );
-                              if (await canLaunchUrl(uri)) {
-                                await launchUrl(uri, mode: LaunchMode.externalApplication);
-                              }
-                            },
-                            icon: const Icon(Icons.directions_outlined, size: 18),
-                            label: Text(HomeLabels.locationsDirections(lang)),
-                          ),
-                        ],
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(loc.name, style: Theme.of(context).textTheme.titleLarge),
+                        const SizedBox(height: 4),
+                        Text('${loc.address}\n${loc.city}'),
+                        const SizedBox(height: 12),
+                        SecondaryButton(
+                          label: HomeLabels.locationsCall(lang),
+                          icon: Icons.phone_outlined,
+                          expanded: true,
+                          onPressed: () async {
+                            final uri = Uri.parse(ClinicData.telLink(loc.phone));
+                            if (await canLaunchUrl(uri)) await launchUrl(uri);
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         }).toList(),
@@ -442,7 +413,9 @@ class ReviewsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final lang = context.watch<LanguageProvider>().locale.languageCode;
-    final reviews = ContentRepository.patientReviews.take(3).toList();
+    final review = ContentRepository.patientReviews.isEmpty
+        ? null
+        : ContentRepository.patientReviews.first;
 
     return _HomeSection(
       title: HomeLabels.reviewsTitle(lang),
@@ -493,51 +466,29 @@ class ReviewsSection extends StatelessWidget {
                         ),
                   ),
                   const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: [
-                      OutlinedButton(
-                        onPressed: () async {
-                          final url = AppConfig.googleReviewsUrl.isNotEmpty
-                              ? AppConfig.googleReviewsUrl
-                              : ClinicData.googleMapsUrl;
-                          final uri = Uri.parse(url);
-                          if (await canLaunchUrl(uri)) {
-                            await launchUrl(uri, mode: LaunchMode.externalApplication);
-                          }
-                        },
-                        child: Text(HomeLabels.reviewsViewOnGoogle(lang)),
-                      ),
-                      OutlinedButton(
-                        onPressed: () async {
-                          final url = AppConfig.googleReviewsUrl.isNotEmpty
-                              ? AppConfig.googleReviewsUrl
-                              : ClinicData.googleMapsUrl;
-                          final uri = Uri.parse(url);
-                          if (await canLaunchUrl(uri)) {
-                            await launchUrl(uri, mode: LaunchMode.externalApplication);
-                          }
-                        },
-                        child: Text(HomeLabels.reviewsWriteOnGoogle(lang)),
-                      ),
-                    ],
+                  SecondaryButton(
+                    label: HomeLabels.reviewsViewOnGoogle(lang),
+                    icon: Icons.open_in_new_rounded,
+                    expanded: context.isPhone,
+                    onPressed: () async {
+                      final url = AppConfig.googleReviewsUrl.isNotEmpty
+                          ? AppConfig.googleReviewsUrl
+                          : ClinicData.googleMapsUrl;
+                      final uri = Uri.parse(url);
+                      if (await canLaunchUrl(uri)) {
+                        await launchUrl(uri, mode: LaunchMode.externalApplication);
+                      }
+                    },
                   ),
                 ],
               ),
             ),
           ),
-          const SizedBox(height: 8),
-          Text(
-            HomeLabels.reviewsPowered(lang),
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
-          ),
-          const SizedBox(height: 12),
-          ...reviews.map(
-            (r) => Card(
-              margin: const EdgeInsets.only(bottom: 8),
+          if (review != null) ...[
+            const SizedBox(height: 12),
+            Card(
               child: Padding(
-                padding: const EdgeInsets.all(14),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -546,7 +497,7 @@ class ReviewsSection extends StatelessWidget {
                         CircleAvatar(
                           backgroundColor: AppColors.primarySoft,
                           child: Text(
-                            r.name.isNotEmpty ? r.name[0] : '?',
+                            review.name.isNotEmpty ? review.name[0] : '?',
                             style: const TextStyle(color: AppColors.primary),
                           ),
                         ),
@@ -555,9 +506,9 @@ class ReviewsSection extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(r.name, style: Theme.of(context).textTheme.titleSmall),
+                              Text(review.name, style: Theme.of(context).textTheme.titleSmall),
                               Text(
-                                r.when.forLang(lang),
+                                review.when.forLang(lang),
                                 style: Theme.of(context).textTheme.bodySmall,
                               ),
                             ],
@@ -565,13 +516,13 @@ class ReviewsSection extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
-                    Text('"${r.text.forLang(lang)}"'),
+                    const SizedBox(height: 10),
+                    Text('"${review.text.forLang(lang)}"'),
                   ],
                 ),
               ),
             ),
-          ),
+          ],
         ],
       ),
     );
@@ -624,28 +575,21 @@ class InsuranceSection extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              OutlinedButton.icon(
-                onPressed: () async {
-                  final uri = Uri.parse(ClinicData.telLink(ClinicData.headquartersPhone));
-                  if (await canLaunchUrl(uri)) await launchUrl(uri);
-                },
-                icon: const Icon(Icons.phone_outlined),
-                label: Text(
-                  context.isCompactPhone
-                      ? HomeLabels.insuranceVerify(lang)
-                      : '${HomeLabels.insuranceVerify(lang)} · ${ClinicData.headquartersPhone}',
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              TextButton(
-                onPressed: () => context.push('/more/payment'),
-                child: Text(HomeLabels.insuranceViewPricing(lang)),
-              ),
-            ],
+          SecondaryButton(
+            label: HomeLabels.insuranceVerify(lang),
+            icon: Icons.phone_outlined,
+            expanded: true,
+            onPressed: () async {
+              final uri = Uri.parse(ClinicData.telLink(ClinicData.headquartersPhone));
+              if (await canLaunchUrl(uri)) await launchUrl(uri);
+            },
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TextButton(
+              onPressed: () => context.push('/more/payment'),
+              child: Text(HomeLabels.insuranceViewPricing(lang)),
+            ),
           ),
         ],
       ),
@@ -741,22 +685,22 @@ class _HomeSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 28),
+      padding: const EdgeInsets.only(bottom: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (eyebrow != null) ...[
             Text(
               eyebrow!,
-              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(
                     color: AppColors.accent,
                     fontWeight: FontWeight.w800,
-                    letterSpacing: 1.1,
+                    letterSpacing: 0.8,
                   ),
             ),
             const SizedBox(height: 6),
           ],
-          if (context.isCompactPhone)
+          if (context.isPhone)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

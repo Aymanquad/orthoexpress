@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/widgets/empty_state.dart';
 import '../../data/content_repository.dart';
 import '../../data/locations.dart';
 import '../../data/service_labels.dart';
@@ -119,10 +120,12 @@ class SiteSearchDelegate extends SearchDelegate<void> {
   Widget _results(BuildContext context) {
     final q = query.trim().toLowerCase();
     if (q.isEmpty) {
-      return Center(
-        child: Text(
-          lang == 'es' ? 'Escriba para buscar' : 'Type to search',
-        ),
+      return EmptyState(
+        icon: Icons.search_rounded,
+        title: lang == 'es' ? 'Escriba para buscar' : 'Type to search',
+        message: lang == 'es'
+            ? 'Servicios, clínicas, artículos y más.'
+            : 'Services, clinics, articles, and more.',
       );
     }
 
@@ -132,8 +135,12 @@ class SiteSearchDelegate extends SearchDelegate<void> {
         .toList();
 
     if (results.isEmpty) {
-      return Center(
-        child: Text(lang == 'es' ? 'Sin resultados' : 'No results'),
+      return EmptyState(
+        icon: Icons.search_off_rounded,
+        title: lang == 'es' ? 'Sin resultados' : 'No results',
+        message: lang == 'es'
+            ? 'Pruebe con otro término o explore Servicios.'
+            : 'Try a different term, or browse Services.',
       );
     }
 

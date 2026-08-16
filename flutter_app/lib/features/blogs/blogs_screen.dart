@@ -114,26 +114,18 @@ class BlogDetailScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextButton.icon(
-                        onPressed: () => context.pop(),
-                        icon: const Icon(Icons.arrow_back),
-                        label: Text(ContentRepository.label('blogs', 'backToBlogs', lang)),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    tooltip: NavLabels.share.forLang(lang),
+                    onPressed: () => SharePlus.instance.share(
+                      ShareParams(
+                        text: '$title\n\n$excerpt',
+                        subject: title,
                       ),
                     ),
-                    IconButton(
-                      tooltip: NavLabels.share.forLang(lang),
-                      onPressed: () => SharePlus.instance.share(
-                        ShareParams(
-                          text: '$title\n\n$excerpt',
-                          subject: title,
-                        ),
-                      ),
-                      icon: const Icon(Icons.share_outlined),
-                    ),
-                  ],
+                    icon: const Icon(Icons.share_outlined),
+                  ),
                 ),
                 Text(
                   '${blog.category.forLang(lang)} · ${blog.date.forLang(lang)}',

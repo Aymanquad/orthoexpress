@@ -91,12 +91,19 @@ class ServicesScreen extends StatelessWidget {
           children: [
             FilledButton(
               onPressed: () => context.push('/more/book-appointment'),
-              style: FilledButton.styleFrom(backgroundColor: AppColors.accent),
-              child: Text(CommonLabels.bookAppointment.forLang(lang)),
+              child: Text(
+                CommonLabels.bookAppointment.forLang(lang),
+                maxLines: 2,
+                textAlign: TextAlign.center,
+              ),
             ),
             OutlinedButton(
               onPressed: () => context.push('/more/contact-us'),
-              child: Text(CommonLabels.contactUs.forLang(lang)),
+              child: Text(
+                CommonLabels.contactUs.forLang(lang),
+                maxLines: 2,
+                textAlign: TextAlign.center,
+              ),
             ),
           ],
         ),

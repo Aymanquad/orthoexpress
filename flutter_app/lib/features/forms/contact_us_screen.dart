@@ -140,11 +140,6 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              ContactLabels.title(lang),
-              style: Theme.of(context).textTheme.displaySmall,
-            ),
-            const SizedBox(height: 8),
-            Text(
               ContactLabels.subtitle(lang),
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: AppColors.textLight,
@@ -335,6 +330,11 @@ class _ContactForm extends StatelessWidget {
               style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
             ),
             const SizedBox(height: 20),
+            Text(
+              ContactLabels.yourDetails(lang),
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 12),
             TextField(
               controller: nameController,
               decoration: InputDecoration(
@@ -365,6 +365,11 @@ class _ContactForm extends StatelessWidget {
                 border: const OutlineInputBorder(),
               ),
               onChanged: (_) => onFieldChanged('phone'),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              ContactLabels.message(lang),
+              style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 12),
             TextField(
@@ -407,10 +412,6 @@ class _ContactForm extends StatelessWidget {
             const SizedBox(height: 16),
             FilledButton(
               onPressed: submitting ? null : onSubmit,
-              style: FilledButton.styleFrom(
-                backgroundColor: AppColors.accent,
-                minimumSize: const Size.fromHeight(48),
-              ),
               child: Text(submitting ? ContactLabels.sending(lang) : ContactLabels.send(lang)),
             ),
           ],

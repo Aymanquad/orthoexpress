@@ -7,6 +7,14 @@ class NavLabels {
   static const shop = L10nString(en: 'Shop', es: 'Tienda');
   static const locations = L10nString(en: 'Locations', es: 'Ubicaciones');
   static const more = L10nString(en: 'More', es: 'Más');
+
+  /// Compact labels for the 5-tab bar — Spanish stays one line.
+  static const tabHome = L10nString(en: 'Home', es: 'Inicio');
+  static const tabServices = L10nString(en: 'Services', es: 'Servicios');
+  static const tabShop = L10nString(en: 'Shop', es: 'Tienda');
+  static const tabLocations = L10nString(en: 'Locations', es: 'Sedes');
+  static const tabMore = L10nString(en: 'More', es: 'Más');
+  static const contactShort = L10nString(en: 'Contact', es: 'Contacto');
   static const about = L10nString(en: 'About', es: 'Nosotros');
   static const workersComp = L10nString(en: "Workers' Comp", es: 'Compensación laboral');
   static const blogs = L10nString(en: 'Blogs', es: 'Blogs');

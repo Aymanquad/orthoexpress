@@ -13,7 +13,7 @@
 const SHARED = {
   clinicalLandscape: '/assets/knee-injury.webp',
   recovery: '/assets/recovery-after-orthopedicsurgery.jpg',
-  sports: '/assets/services/sports-medicine.jpg',
+  sports: '/assets/services/sports-medicine.avif',
   facility: '/assets/about/facility.jpg',
   jointWide: '/assets/joint-img.jpg',
 }
@@ -26,18 +26,28 @@ export const IMAGES = {
       placement: 'photo',
     },
     snapshotInjured: {
-      src: '/assets/home/snapshot-injured.jpg',
+      src: '/assets/home/snapshot-injured.png',
       fallback: SHARED.clinicalLandscape,
       placement: 'square',
     },
+    snapshotPain: {
+      src: '/assets/home/snapshot-pain.jpg',
+      fallback: SHARED.jointWide,
+      placement: 'square',
+    },
     snapshotSports: {
-      src: '/assets/home/snapshot-sports.jpg',
+      src: '/assets/home/snapshot-sports.avif',
       fallback: SHARED.clinicalLandscape,
       placement: 'photo',
     },
     snapshotWorkers: {
-      src: '/assets/home/snapshot-workers.jpg',
+      src: '/assets/home/snapshot-workers.png',
       fallback: SHARED.recovery,
+      placement: 'square',
+    },
+    lawyers: {
+      src: '/assets/home/lawyers.avif',
+      fallback: SHARED.facility,
       placement: 'photo',
     },
   },
@@ -70,9 +80,10 @@ export const IMAGES = {
   },
   workersComp: {
     hero: {
-      src: '/assets/workers-comp/hero.jpg',
+      src: '/assets/workers-comp/hero.webp',
       fallback: SHARED.recovery,
       placement: 'photo',
+      objectPosition: 'center 40%',
     },
   },
   services: {
@@ -81,54 +92,59 @@ export const IMAGES = {
       src: '/assets/blogs/chronic-pain.webp',
       fallback: '/assets/services/arthritis.webp',
       placement: 'square',
-      heroSrc: SHARED.clinicalLandscape,
+      heroSrc: '/assets/services/pain-inflammation-long.jpg',
     },
-    // 2560×1616 landscape
+    // 2560×1616 landscape hero; common-injuries in page body
     'injuries-fractures-sprains': {
       src: '/assets/services/injuries-fractures.webp',
       fallback: SHARED.clinicalLandscape,
       placement: 'photo',
+      bodySrc: '/assets/services/common-injuries.webp',
+      bodyLayout: 'wide',
     },
-    // 612×408 landscape
+    // 612×408 landscape — car / motor vehicle accident care
+    'car-motor-vehicle-accident-care': {
+      src: '/assets/services/auto-accident.jpg',
+      fallback: SHARED.clinicalLandscape,
+      placement: 'photo',
+      heroSrc: '/assets/services/accident-long.jpg',
+      objectPosition: 'center 42%',
+    },
+    // Kept for shared references (same asset as accident care)
     'auto-accident': {
       src: '/assets/services/auto-accident.jpg',
       fallback: SHARED.clinicalLandscape,
       placement: 'photo',
+      heroSrc: '/assets/services/accident-long.jpg',
+      objectPosition: 'center 42%',
     },
     // 600×484 near-square
     arthritis: {
       src: '/assets/services/arthritis.webp',
       fallback: SHARED.jointWide,
       placement: 'square',
-      heroSrc: SHARED.clinicalLandscape,
+      heroSrc: '/assets/services/arthritis-long.jpg',
     },
     // 800×600 mild landscape
     'casting-splinting': {
       src: '/assets/services/casting-splinting.webp',
       fallback: SHARED.recovery,
       placement: 'wide',
-      heroSrc: SHARED.facility,
+      heroSrc: '/assets/services/casting-splinting-long.jpg',
     },
     // 612×612 square
     'mri-digital-imaging': {
-      src: '/assets/services/mri-imaging.jpg',
+      src: '/assets/services/x-ray.jpeg',
       fallback: SHARED.clinicalLandscape,
-      placement: 'square',
-      heroSrc: SHARED.facility,
+      placement: 'wide',
+      heroSrc: '/assets/services/mri-digital-imaging-long.avif',
     },
     // 400×400 square clinical
     'prp-orthobiologics': {
-      src: '/assets/services/prp-orthobiologics.webp',
+      src: '/assets/services/prp-injection.webp',
       fallback: SHARED.jointWide,
       placement: 'square',
-      heroSrc: SHARED.clinicalLandscape,
-    },
-    // 800×572 landscape-ish
-    'pediatric-care': {
-      src: '/assets/services/pediatric-care.webp',
-      fallback: SHARED.recovery,
-      placement: 'wide',
-      heroSrc: SHARED.facility,
+      heroSrc: '/assets/services/prp-orthobiologics-long.jpg',
     },
     // 2478×2478 packshot — show full brace
     'hand-wrist-care': {
@@ -142,32 +158,34 @@ export const IMAGES = {
       src: '/assets/services/shoulder-elbow.webp',
       fallback: SHARED.recovery,
       placement: 'square',
-      heroSrc: SHARED.sports,
+      heroSrc: '/assets/services/shoulder-elbow-long.webp',
     },
     // 800×800 square (was wrongly photo)
     'lumbar-cervical-spine': {
-      src: '/assets/services/spine.webp',
+      src: '/assets/services/spine-back.webp',
       fallback: SHARED.jointWide,
       placement: 'square',
-      heroSrc: SHARED.clinicalLandscape,
+      heroSrc: '/assets/services/lumbar-cervical-spine-long.webp',
     },
     // 2400×2000 landscape
     'chiropractic-surgery': {
-      src: '/assets/services/chiropractic.png',
+      src: '/assets/services/chiropractic.jpeg',
       fallback: SHARED.clinicalLandscape,
       placement: 'photo',
+      objectPosition: 'center 38%',
     },
     // 419×298 — body figure + shared clinical hero
     'spine-surgery': {
       src: '/assets/services/spine-surgery.png',
       fallback: '/assets/services/spine.webp',
       placement: 'wide',
-      heroSrc: SHARED.clinicalLandscape,
+      heroSrc: '/assets/services/spine-surgery-long.jpg',
     },
     'hip-knee-care': {
-      src: '/assets/services/hip-knee.avif',
+      src: '/assets/services/hip-knee-care.jpg',
       fallback: SHARED.clinicalLandscape,
       placement: 'photo',
+      objectPosition: 'center 40%',
     },
     // 527×581 near-portrait
     'foot-ankle-care': {
@@ -181,18 +199,20 @@ export const IMAGES = {
       src: '/assets/services/joint-replacement.jpg',
       fallback: SHARED.jointWide,
       placement: 'square',
-      heroSrc: SHARED.clinicalLandscape,
+      heroSrc: '/assets/services/total-joint-replacement-long.png',
     },
     // 612×408 landscape
     'sports-medicine': {
-      src: '/assets/services/sports-medicine.jpg',
+      src: '/assets/services/sports-medicine.avif',
       fallback: SHARED.recovery,
       placement: 'photo',
+      objectPosition: 'center 42%',
     },
     'workers-comp': {
-      src: '/assets/workers-comp/hero.jpg',
+      src: '/assets/workers-comp/hero.webp',
       fallback: SHARED.recovery,
       placement: 'photo',
+      objectPosition: 'center 40%',
     },
   },
   blogs: {
@@ -250,7 +270,8 @@ function normalizeImage(img) {
     ...img,
     placement,
     heroLayout: toHeroLayout(placement),
-    bodyLayout: placement === 'photo' ? null : placement,
+    bodySrc: img.bodySrc || null,
+    bodyLayout: img.bodyLayout || (placement === 'photo' ? null : placement),
   }
 }
 

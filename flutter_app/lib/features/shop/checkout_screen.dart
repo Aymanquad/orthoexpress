@@ -6,6 +6,7 @@ import '../../config/theme.dart';
 import '../../data/models/order.dart';
 import '../../core/shop/checkout_logic.dart';
 import '../../core/utils/responsive.dart';
+import '../../core/widgets/empty_state.dart';
 import '../../core/widgets/responsive_page.dart';
 import '../../data/products.dart';
 import '../../data/shop_labels.dart';
@@ -78,22 +79,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     final totals = calculateOrderTotals(cart.subtotal);
 
     if (lines.isEmpty) {
-      return Center(
-        child: ResponsivePage(
-          alignTop: false,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(ShopLabels.cartEmptyCheckout(lang)),
-              const SizedBox(height: 16),
-              FilledButton(
-                onPressed: () => context.go('/shop'),
-                style: FilledButton.styleFrom(backgroundColor: AppColors.accent),
-                child: Text(ShopLabels.goToShop(lang)),
-              ),
-            ],
-          ),
-        ),
+      return EmptyState(
+        icon: Icons.shopping_bag_outlined,
+        title: ShopLabels.cartEmptyCheckout(lang),
+        actionLabel: ShopLabels.goToShop(lang),
+        onAction: () => context.go('/shop'),
       );
     }
 
@@ -101,29 +91,25 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     final summary = OrderSummaryPanel(lines: lines, totals: totals, lang: lang);
     final submitButton = FilledButton(
       onPressed: _processing ? null : () => _submit(lang, cart, totals),
-      style: FilledButton.styleFrom(
-        backgroundColor: AppColors.accent,
-        minimumSize: const Size.fromHeight(48),
-      ),
       child: _processing
           ? Text(ShopLabels.processing(lang))
           : Text(ShopLabels.completeDemoOrder(lang, formatPrice(totals.total))),
     );
 
-    return SingleChildScrollView(
-      child: ResponsivePage(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              ShopLabels.demoNote(lang),
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w600,
-                  ),
-            ),
-            const SizedBox(height: 20),
-            if (context.isTablet)
+    if (context.isTablet) {
+      return SingleChildScrollView(
+        child: ResponsivePage(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                ShopLabels.demoNote(lang),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+              const SizedBox(height: 20),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -136,22 +122,51 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ),
                   ),
                 ],
-              )
-            else
-              Column(
+              ),
+              const SizedBox(height: 24),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            child: ResponsivePage(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  Text(
+                    ShopLabels.demoNote(lang),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                  const SizedBox(height: 20),
                   formSection,
                   const SizedBox(height: 20),
                   summary,
-                  const SizedBox(height: 16),
-                  submitButton,
+                  const SizedBox(height: 88),
                 ],
               ),
-            const SizedBox(height: 24),
-          ],
+            ),
+          ),
         ),
-      ),
+        Material(
+          color: AppColors.bgWhite,
+          elevation: 8,
+          child: SafeArea(
+            top: false,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+              child: submitButton,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -161,16 +176,21 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       children: [
         Text(ShopLabels.shippingInfo(lang), style: Theme.of(context).textTheme.titleLarge),
         const SizedBox(height: 12),
-        _fieldGrid([
-          _field('firstName', lang),
-          _field('lastName', lang),
-          _field('email', lang, keyboard: TextInputType.emailAddress),
-          _field('phone', lang, keyboard: TextInputType.phone),
-          _field('address', lang, fullWidth: true),
-          _field('city', lang),
-          _field('state', lang),
-          _field('zip', lang),
-        ]),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: _fieldGrid([
+              _field('firstName', lang),
+              _field('lastName', lang),
+              _field('email', lang, keyboard: TextInputType.emailAddress),
+              _field('phone', lang, keyboard: TextInputType.phone),
+              _field('address', lang, fullWidth: true),
+              _field('city', lang),
+              _field('state', lang),
+              _field('zip', lang),
+            ]),
+          ),
+        ),
         const SizedBox(height: 24),
         Text(ShopLabels.paymentInfo(lang), style: Theme.of(context).textTheme.titleLarge),
         const SizedBox(height: 8),
@@ -179,12 +199,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
         ),
         const SizedBox(height: 12),
-        _fieldGrid([
-          _field('cardNumber', lang, onChanged: _onCardChanged),
-          _field('cardName', lang),
-          _field('expiry', lang, onChanged: _onExpiryChanged),
-          _field('cvv', lang, obscure: true, digitsOnly: true),
-        ]),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: _fieldGrid([
+              _field('cardNumber', lang, onChanged: _onCardChanged),
+              _field('cardName', lang),
+              _field('expiry', lang, onChanged: _onExpiryChanged),
+              _field('cvv', lang, obscure: true, digitsOnly: true),
+            ]),
+          ),
+        ),
       ],
     );
   }
@@ -197,11 +222,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             .toList(),
       );
     }
-    final width = (MediaQuery.sizeOf(context).width - 48 - 12) / 2;
-    return Wrap(
-      spacing: 12,
-      runSpacing: 12,
-      children: fields.map((f) => SizedBox(width: width, child: f)).toList(),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = (constraints.maxWidth - 12) / 2;
+        return Wrap(
+          spacing: 12,
+          runSpacing: 12,
+          children: fields.map((f) => SizedBox(width: width, child: f)).toList(),
+        );
+      },
     );
   }
 

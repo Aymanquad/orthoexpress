@@ -32,6 +32,9 @@ class ContactLabels {
       lang == 'es'
           ? 'No incluya detalles médicos sensibles. Para asuntos urgentes, llámenos.'
           : 'Please do not include sensitive medical details. For urgent matters, call us directly.';
+
+  static String yourDetails(String lang) =>
+      lang == 'es' ? 'Sus datos' : 'Your details';
   static String message(String lang) => lang == 'es' ? 'Mensaje' : 'Message';
   static String consent(String lang) =>
       lang == 'es'
@@ -78,6 +81,12 @@ class BookLabels {
       lang == 'es'
           ? 'Complete el formulario y nuestro equipo confirmará su cita.'
           : 'Fill out the form below and our team will confirm your appointment.';
+
+  static String yourDetails(String lang) =>
+      lang == 'es' ? 'Sus datos' : 'Your details';
+
+  static String visitDetails(String lang) =>
+      lang == 'es' ? 'Su visita' : 'Your visit';
 
   static String fullName(String lang) => lang == 'es' ? 'Nombre completo' : 'Full Name';
   static String phone(String lang) =>

@@ -5,8 +5,6 @@ const SERVICE_IMAGES = Object.fromEntries(
   Object.entries(IMAGES.services).map(([slug, img]) => [slug, img.src])
 )
 
-const AUTO_ACCIDENT_IMAGE = IMAGES.services['auto-accident'].src
-
 const SERVICE_DETAILS = {
   'pain-inflammation': {
     title: {
@@ -63,13 +61,13 @@ const SERVICE_DETAILS = {
       es: 'Lesiones, fracturas y esguinces',
     },
     description: {
-      en: 'Urgent orthopedic care for traumatic injuries, fractures, sprains, and auto accident trauma.',
-      es: 'Atención ortopédica urgente para lesiones traumáticas, fracturas, esguinces y traumatismos por accidentes automovilísticos.',
+      en: 'Urgent orthopedic care for traumatic injuries, fractures, sprains, and soft tissue trauma.',
+      es: 'Atención ortopédica urgente para lesiones traumáticas, fracturas, esguinces y traumatismos de tejidos blandos.',
     },
     image: SERVICE_IMAGES['injuries-fractures-sprains'],
     overview: {
-      en: 'From sports injuries and workplace accidents to automobile collisions, we provide prompt diagnosis and treatment for fractures, sprains, strains, and soft tissue injuries. On-site imaging helps us determine the right course of care quickly, and we coordinate insurance documentation for auto accident cases when needed.',
-      es: 'Desde lesiones deportivas y accidentes laborales hasta colisiones automovilísticas, ofrecemos diagnóstico y tratamiento oportunos para fracturas, esguinces, distensiones y lesiones de tejidos blandos. La imagenología en el sitio nos permite determinar rápidamente el plan de atención adecuado, y coordinamos la documentación del seguro en casos de accidentes automovilísticos cuando sea necesario.',
+      en: 'From sports injuries and workplace accidents to falls and sudden trauma, we provide prompt diagnosis and treatment for fractures, sprains, strains, and soft tissue injuries. On-site imaging helps us determine the right course of care quickly so you can start recovering the same day.',
+      es: 'Desde lesiones deportivas y accidentes laborales hasta caídas y traumatismos repentinos, ofrecemos diagnóstico y tratamiento oportunos para fracturas, esguinces, distensiones y lesiones de tejidos blandos. La imagenología en el sitio nos permite determinar rápidamente el plan de atención adecuado para que pueda comenzar a recuperarse el mismo día.',
     },
     conditions: {
       en: [
@@ -78,9 +76,6 @@ const SERVICE_DETAILS = {
         'Ligament tears',
         'Muscle strains',
         'Dislocations',
-        'Whiplash and neck injuries',
-        'Auto accident trauma',
-        'Back injuries from collisions',
         'Soft tissue injuries from impacts',
       ],
       es: [
@@ -89,9 +84,6 @@ const SERVICE_DETAILS = {
         'Desgarros ligamentarios',
         'Distensiones musculares',
         'Luxaciones',
-        'Latigazo cervical y lesiones de cuello',
-        'Traumatismos por accidente automovilístico',
-        'Lesiones de espalda por colisiones',
         'Lesiones de tejidos blandos por impactos',
       ],
     },
@@ -100,9 +92,7 @@ const SERVICE_DETAILS = {
         'Splinting and bracing',
         'Fracture reduction and casting',
         'Pain management',
-        'Immediate accident injury evaluation',
         'Physical therapy coordination',
-        'Insurance and claims documentation',
         'Surgical intervention when needed',
         'Follow-up recovery planning',
       ],
@@ -110,48 +100,15 @@ const SERVICE_DETAILS = {
         'Inmovilización con férulas y ortesis',
         'Reducción de fracturas y enyesado',
         'Manejo del dolor',
-        'Evaluación inmediata de lesiones por accidente',
         'Coordinación de fisioterapia',
-        'Documentación para seguros y reclamaciones',
         'Intervención quirúrgica cuando sea necesaria',
         'Planificación de seguimiento y recuperación',
       ],
     },
     additionalInfo: {
-      en: 'Walk-in appointments are available for acute injuries. Early evaluation helps prevent complications and supports faster recovery — whether your injury happened on the field, at work, or on the road.',
-      es: 'Hay citas sin cita previa disponibles para lesiones agudas. La evaluación temprana ayuda a prevenir complicaciones y favorece una recuperación más rápida, ya sea que su lesión ocurriera en el campo, en el trabajo o en la carretera.',
+      en: 'Walk-in appointments are available for acute injuries. Early evaluation helps prevent complications and supports faster recovery.',
+      es: 'Hay citas sin cita previa disponibles para lesiones agudas. La evaluación temprana ayuda a prevenir complicaciones y favorece una recuperación más rápida.',
     },
-    featureSections: [
-      {
-        title: {
-          en: 'Auto Accident Injury Care',
-          es: 'Atención de lesiones por accidentes automovilísticos',
-        },
-        image: AUTO_ACCIDENT_IMAGE,
-        overview: {
-          en: 'Auto accidents can cause a wide range of orthopedic injuries, from minor sprains to serious fractures and spinal trauma. Our team specializes in evaluating and treating accident-related injuries, working closely with insurance companies and legal representatives when necessary.',
-          es: 'Los accidentes automovilísticos pueden causar una amplia variedad de lesiones ortopédicas, desde esguinces leves hasta fracturas graves y traumatismos espinales. Nuestro equipo se especializa en evaluar y tratar lesiones relacionadas con accidentes, trabajando en estrecha colaboración con compañías de seguros y representantes legales cuando sea necesario.',
-        },
-        highlights: {
-          en: [
-            'Same-day walk-in evaluation after a collision',
-            'Thorough documentation for insurance and legal claims',
-            'Care for whiplash, back, neck, and soft tissue injuries',
-            'Coordinated imaging and follow-up recovery plans',
-          ],
-          es: [
-            'Evaluación sin cita previa el mismo día después de una colisión',
-            'Documentación exhaustiva para reclamaciones de seguros y legales',
-            'Atención de latigazo cervical, lesiones de espalda, cuello y tejidos blandos',
-            'Imagenología coordinada y planes de seguimiento y recuperación',
-          ],
-        },
-        note: {
-          en: 'Motor vehicle accident injuries often require immediate attention and careful documentation. We ensure proper diagnosis, effective treatment, and thorough records so you can focus on healing.',
-          es: 'Las lesiones por accidentes de tránsito a menudo requieren atención inmediata y documentación cuidadosa. Garantizamos un diagnóstico adecuado, tratamiento eficaz y registros completos para que usted pueda concentrarse en su recuperación.',
-        },
-      },
-    ],
   },
   arthritis: {
     title: {
@@ -349,53 +306,59 @@ const SERVICE_DETAILS = {
       es: 'Las terapias regenerativas pueden considerarse cuando el tratamiento conservador no ha proporcionado alivio suficiente. Discutimos los beneficios, las expectativas y los plazos de recuperación con cada paciente.',
     },
   },
-  'pediatric-care': {
+  'car-motor-vehicle-accident-care': {
     title: {
-      en: 'Pediatric Orthopedic Care',
-      es: 'Atención ortopédica pediátrica',
+      en: 'Auto Accident Care',
+      es: 'Atención por accidente de auto',
     },
     description: {
-      en: 'Specialized orthopedic evaluation and treatment for children and adolescents.',
-      es: 'Evaluación y tratamiento ortopédico especializado para niños y adolescentes.',
+      en: 'Same-day injury evaluation after a car or motor vehicle accident.',
+      es: 'Evaluación de lesiones el mismo día después de un accidente de auto o vehículo.',
     },
-    image: SERVICE_IMAGES['pediatric-care'],
+    image: SERVICE_IMAGES['car-motor-vehicle-accident-care'],
     overview: {
-      en: 'Growing bones and joints require specialized attention. Our pediatric orthopedic services address injuries, growth-related conditions, and activity-related concerns in children and teens with family-centered care.',
-      es: 'Los huesos y articulaciones en crecimiento requieren atención especializada. Nuestros servicios ortopédicos pediátricos abordan lesiones, afecciones relacionadas con el crecimiento y problemas asociados a la actividad en niños y adolescentes, con atención centrada en la familia.',
+      en: 'Car and motor vehicle accidents can cause a wide range of orthopedic injuries — from whiplash and soft tissue trauma to fractures and spinal injuries. Our team provides prompt walk-in evaluation, on-site imaging when needed, and clear treatment plans so you can start healing right away. We also help with thorough documentation for insurance and claims.',
+      es: 'Los accidentes de auto y de vehículos pueden causar una amplia variedad de lesiones ortopédicas, desde latigazo cervical y traumatismos de tejidos blandos hasta fracturas y lesiones de columna. Nuestro equipo ofrece evaluación sin cita previa, imagenología en el sitio cuando sea necesario y planes de tratamiento claros para que pueda comenzar a recuperarse de inmediato. También ayudamos con documentación completa para seguros y reclamaciones.',
     },
     conditions: {
       en: [
-        'Growth plate injuries',
-        'Sports injuries in youth athletes',
-        'Scoliosis screening concerns',
-        'Limb pain in active children',
-        'Congenital musculoskeletal conditions',
+        'Whiplash and neck injuries',
+        'Back and spinal trauma from collisions',
+        'Fractures and dislocations',
+        'Shoulder, knee, and joint injuries',
+        'Soft tissue and ligament injuries',
+        'Seatbelt and impact-related trauma',
       ],
       es: [
-        'Lesiones de la placa de crecimiento',
-        'Lesiones deportivas en jóvenes atletas',
-        'Preocupaciones de detección de escoliosis',
-        'Dolor en extremidades en niños activos',
-        'Afecciones musculoesqueléticas congénitas',
+        'Latigazo cervical y lesiones de cuello',
+        'Traumatismos de espalda y columna por colisiones',
+        'Fracturas y luxaciones',
+        'Lesiones de hombro, rodilla y articulaciones',
+        'Lesiones de tejidos blandos y ligamentos',
+        'Traumatismos por cinturón de seguridad e impacto',
       ],
     },
     treatments: {
       en: [
-        'Conservative injury management',
-        'Bracing and activity guidance',
-        'Referrals for advanced pediatric care',
-        'Return-to-sport recommendations',
+        'Same-day accident injury evaluation',
+        'Digital imaging and diagnostic coordination',
+        'Splinting, bracing, and fracture care',
+        'Pain management and rehabilitation planning',
+        'Insurance and claims documentation',
+        'Follow-up recovery and specialist referrals',
       ],
       es: [
-        'Manejo conservador de lesiones',
-        'Ortesis y orientación sobre actividad',
-        'Referencias para atención pediátrica avanzada',
-        'Recomendaciones para el retorno al deporte',
+        'Evaluación de lesiones por accidente el mismo día',
+        'Imagenología digital y coordinación diagnóstica',
+        'Férulas, ortesis y atención de fracturas',
+        'Manejo del dolor y planificación de rehabilitación',
+        'Documentación para seguros y reclamaciones',
+        'Seguimiento de recuperación y referencias a especialistas',
       ],
     },
     additionalInfo: {
-      en: 'We work closely with families to ensure young patients receive safe, age-appropriate orthopedic care and clear recovery plans.',
-      es: 'Trabajamos en estrecha colaboración con las familias para garantizar que los pacientes jóvenes reciban atención ortopédica segura y apropiada para su edad, con planes de recuperación claros.',
+      en: 'If you were in a car or motor vehicle accident, early evaluation matters. Walk in today for expert injury care and documentation support — no referral required.',
+      es: 'Si estuvo en un accidente de auto o de vehículo, la evaluación temprana importa. Entre hoy mismo para atención experta de lesiones y apoyo con documentación — sin necesidad de remisión.',
     },
   },
   'hand-wrist-care': {
@@ -553,8 +516,8 @@ const SERVICE_DETAILS = {
   },
   'chiropractic-surgery': {
     title: {
-      en: 'Chiropractic Surgery',
-      es: 'Cirugía quiropráctica',
+      en: 'Chiropractic',
+      es: 'Quiropráctica',
     },
     description: {
       en: 'Integrated spinal care combining chiropractic evaluation, manual therapy, and surgical coordination.',
@@ -877,9 +840,11 @@ export function getServiceDetail(slug, lang = 'en') {
     image: img.src,
     imageFallback: img.fallback,
     placement,
+    bodySrc: img.bodySrc || (placement !== 'photo' ? img.src : null),
     bodyLayout: img.bodyLayout,
     heroSrc: img.heroSrc || (placement === 'photo' ? img.src : null),
     heroLayout: img.heroLayout || 'photo',
+    heroObjectPosition: img.objectPosition,
     featureSections: detail.featureSections?.map((section) => ({
       ...section,
       title: localize(section.title, lang),

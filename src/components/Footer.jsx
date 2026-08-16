@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa'
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaFacebook, FaLinkedin, FaInstagram } from 'react-icons/fa'
+import { FaXTwitter, FaTiktok } from 'react-icons/fa6'
 import { CLINIC } from '../data'
 import { toTelLink } from '../data/utils'
 import { useLanguage } from '../context/LanguageContext'
@@ -12,7 +13,8 @@ const Footer = () => {
 
   const socialLinks = [
     { key: 'facebook', icon: FaFacebook, label: 'Facebook', url: social.facebook },
-    { key: 'twitter', icon: FaTwitter, label: 'Twitter', url: social.twitter },
+    { key: 'x', icon: FaXTwitter, label: 'X', url: social.x || social.twitter },
+    { key: 'tiktok', icon: FaTiktok, label: 'TikTok', url: social.tiktok },
     { key: 'linkedin', icon: FaLinkedin, label: 'LinkedIn', url: social.linkedin },
     { key: 'instagram', icon: FaInstagram, label: 'Instagram', url: social.instagram },
   ].filter((item) => item.url)

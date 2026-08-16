@@ -10,6 +10,7 @@ import AccessibilityToolbar from './components/AccessibilityToolbar'
 import Home from './pages/Home'
 import About from './pages/About'
 import WorkersComp from './pages/WorkersComp'
+import Lawyers from './pages/Lawyers'
 import Locations from './pages/Locations'
 import LocationDetail from './pages/LocationDetail'
 import Blogs from './pages/Blogs'
@@ -50,6 +51,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/workers-comp" element={<WorkersComp />} />
+            <Route path="/lawyers" element={<Lawyers />} />
             <Route path="/locations" element={<Locations />} />
             <Route path="/locations/:locationName" element={<LocationDetail />} />
             <Route path="/blogs" element={<Blogs />} />
@@ -59,7 +61,11 @@ function App() {
             <Route path="/services" element={<Services />} />
             <Route
               path="/services/auto-injury"
-              element={<Navigate to="/services/injuries-fractures-sprains" replace />}
+              element={<Navigate to="/services/car-motor-vehicle-accident-care" replace />}
+            />
+            <Route
+              path="/services/pediatric-care"
+              element={<Navigate to="/services" replace />}
             />
             <Route path="/services/:serviceName" element={<ServiceDetail />} />
             <Route path="/shop" element={<Shop />} />

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../config/theme.dart';
 import '../../core/utils/responsive.dart';
@@ -58,20 +57,9 @@ class _ShopScreenState extends State<ShopScreen> {
                       ),
                 ),
                 const SizedBox(height: 6),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        ShopLabels.shopTitle(lang),
-                        style: Theme.of(context).textTheme.displayMedium,
-                      ),
-                    ),
-                    TextButton.icon(
-                      onPressed: () => context.push('/shop/orders'),
-                      icon: const Icon(Icons.receipt_long_outlined, size: 18),
-                      label: Text(ShopLabels.myOrders(lang)),
-                    ),
-                  ],
+                Text(
+                  ShopLabels.shopTitle(lang),
+                  style: Theme.of(context).textTheme.displayMedium,
                 ),
                 const SizedBox(height: 8),
                 Text(
@@ -205,12 +193,6 @@ class _ProductCard extends StatelessWidget {
                       );
                     });
                   },
-                  style: FilledButton.styleFrom(
-                    backgroundColor: AppColors.accent,
-                    padding: EdgeInsets.symmetric(vertical: compact ? 8 : 10),
-                    visualDensity:
-                        compact ? VisualDensity.compact : VisualDensity.standard,
-                  ),
                   child: Text(
                     compact
                         ? ShopLabels.addToCartShort(lang)

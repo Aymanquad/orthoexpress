@@ -20,7 +20,20 @@ class RouteTitles {
   static bool isTabRoot(String path) => tabRoots.contains(path);
 
   static String forPath(String path, String lang) {
-    if (isTabRoot(path)) return ClinicData.name;
+    if (isTabRoot(path)) {
+      switch (path) {
+        case '/home':
+          return NavLabels.home.forLang(lang);
+        case '/services':
+          return NavLabels.services.forLang(lang);
+        case '/shop':
+          return NavLabels.shop.forLang(lang);
+        case '/locations':
+          return NavLabels.locations.forLang(lang);
+        case '/more':
+          return NavLabels.more.forLang(lang);
+      }
+    }
 
     final segments = path.split('/').where((s) => s.isNotEmpty).toList();
     if (segments.isEmpty) return ClinicData.name;

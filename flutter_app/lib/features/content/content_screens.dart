@@ -50,22 +50,17 @@ class _FaqsScreenState extends State<FaqsScreen> {
       title: ContentRepository.label('info', 'faqsTitle', lang),
       lead: ContentRepository.label('info', 'faqsLead', lang),
       children: [
-        SizedBox(
-          height: 40,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: ContentRepository.faqSpecialties.map((s) {
-              final selected = s.id == _specialty;
-              return Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: ChoiceChip(
-                  label: Text(s.label.forLang(lang)),
-                  selected: selected,
-                  onSelected: (_) => setState(() => _specialty = s.id),
-                ),
-              );
-            }).toList(),
-          ),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: ContentRepository.faqSpecialties.map((s) {
+            final selected = s.id == _specialty;
+            return ChoiceChip(
+              label: Text(s.label.forLang(lang)),
+              selected: selected,
+              onSelected: (_) => setState(() => _specialty = s.id),
+            );
+          }).toList(),
         ),
         const SizedBox(height: 16),
         ...faqs.map(

@@ -46,9 +46,9 @@ const base = {
     },
     hero: {
       eyebrow: 'Walk-in · Same-day · No referral needed',
-      title: 'Expert Orthopedic Care',
+      title: 'Expert Injury Care',
       titleAccent: 'On-demand for all ages',
-      lead: 'Walk-ins welcome. Same-day orthopedic care for sprains, fractures, sports injuries, and joint pain.',
+      lead: 'Same-day injury appointments available — treatment ready for sprains, fractures, sports injuries, and joint pain.',
       book: 'Book an Appointment',
       findCenter: 'Find a Center',
       trustWalkIn: 'Walk-ins welcome',
@@ -172,9 +172,9 @@ const base = {
     },
     hero: {
       eyebrow: 'Sin cita · Mismo día · Sin remisión',
-      title: 'Cuidado ortopédico experto',
+      title: 'Cuidado experto de lesiones',
       titleAccent: 'Disponible para todas las edades',
-      lead: 'Sin cita. Atención ortopédica el mismo día para esguinces, fracturas, lesiones deportivas y dolor articular.',
+      lead: 'Citas el mismo día para lesiones disponibles — tratamiento listo para esguinces, fracturas, lesiones deportivas y dolor articular.',
       book: 'Reservar cita',
       findCenter: 'Buscar un centro',
       trustWalkIn: 'Sin cita previa',

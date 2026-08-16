@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:orthoexpress_app/data/content_repository.dart';
 import 'package:orthoexpress_app/data/service_details_repository.dart';
 import 'package:orthoexpress_app/providers/orders_provider.dart';
@@ -108,6 +109,35 @@ void main() {
 
     expect(find.byType(NavigationRail), findsOneWidget);
     expect(find.byType(NavigationBar), findsNothing);
+  });
+
+  testWidgets('Spanish home and nav stay on one line at compact width', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    await _setViewport(tester, const Size(360, 780));
+    final lang = LanguageProvider();
+    await lang.setLocale(const Locale('es'));
+    final cart = CartProvider();
+    final orders = OrdersProvider();
+    final a11y = AccessibilityProvider();
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(value: lang),
+          ChangeNotifierProvider.value(value: cart),
+          ChangeNotifierProvider.value(value: orders),
+          ChangeNotifierProvider.value(value: a11y),
+        ],
+        child: const OrthoExpressApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Inicio'), findsWidgets);
+    expect(find.text('Sedes'), findsOneWidget);
+    expect(find.text('Servicios'), findsOneWidget);
+    expect(find.textContaining('Cuidado ortopédico'), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('Phone uses bottom navigation bar', (tester) async {

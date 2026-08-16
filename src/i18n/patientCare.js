@@ -3,7 +3,7 @@ export const patientCare = {
   en: {
     telehealth: {
       eyebrow: 'VIRTUAL CARE',
-      title: 'OrthoNOW Live Telehealth',
+      title: 'OrthoExpress Live Telehealth',
       lead: 'Secure virtual orthopedic follow-ups and consultations — convenient care from home when an in-clinic visit is not required.',
       whenHeading: 'When telehealth makes sense',
       stepsHeading: 'How it works',
@@ -42,7 +42,7 @@ export const patientCare = {
         'Secure messaging between OrthoExpress providers for referrals, imaging review, and complex case coordination — so you get answers faster.',
       privacyNote:
         'All systems are designed with HIPAA-aligned safeguards. Your information is only shared with authorized care team members.',
-      ctaTelehealth: 'OrthoNOW Live telehealth',
+      ctaTelehealth: 'OrthoExpress Live telehealth',
     },
     faqs: {
       filterLabel: 'Filter by specialty',
@@ -53,7 +53,7 @@ export const patientCare = {
   es: {
     telehealth: {
       eyebrow: 'ATENCIÓN VIRTUAL',
-      title: 'Telemedicina OrthoNOW Live',
+      title: 'Telemedicina OrthoExpress Live',
       lead: 'Seguimientos y consultas ortopédicas virtuales seguras — atención conveniente desde casa cuando no se requiere visita presencial.',
       whenHeading: 'Cuándo tiene sentido la telemedicina',
       stepsHeading: 'Cómo funciona',
@@ -92,7 +92,7 @@ export const patientCare = {
         'Mensajería segura entre proveedores de OrthoExpress para referencias, revisión de imágenes y coordinación de casos complejos — para respuestas más rápidas.',
       privacyNote:
         'Todos los sistemas están diseñados con salvaguardas alineadas con HIPAA. Su información solo se comparte con miembros autorizados del equipo de atención.',
-      ctaTelehealth: 'Telemedicina OrthoNOW Live',
+      ctaTelehealth: 'Telemedicina OrthoExpress Live',
     },
     faqs: {
       filterLabel: 'Filtrar por especialidad',

@@ -22,7 +22,17 @@ const WorkersComp = () => {
           src={IMAGES.workersComp.hero.src}
           fallback={IMAGES.workersComp.hero.fallback}
           layout="photo"
+          objectPosition={IMAGES.workersComp.hero.objectPosition || 'center 40%'}
         />
+        <div className="container page-hero__content">
+          <span className="workers-comp-eyebrow">{t('pages.workersComp.eyebrow')}</span>
+          <h1 className="page-title">{t('pages.workersComp.title')}</h1>
+          <p className="page-subtitle">{t('pages.workersComp.lead')}</p>
+        </div>
+        <Link to="/book-appointment" className="workers-comp-hero-book">
+          {t('common.bookAppointment')}
+          <FaArrowRight aria-hidden="true" />
+        </Link>
       </section>
 
       <section className="workers-comp-content section">
