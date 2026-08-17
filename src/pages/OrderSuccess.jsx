@@ -1,16 +1,39 @@
-import React from 'react'
+import React, { useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { FaCheckCircle } from 'react-icons/fa'
-import { getOrderById } from '../context/CartContext'
+import { getOrderById, updateOrderInStorage } from '../context/CartContext'
 import { useLanguage } from '../context/LanguageContext'
+import { useAuth } from '../context/AuthContext'
 import { formatPrice } from '../data/products'
+import { syncOrderToServer } from '../utils/orderSync'
 import PageMeta from '../components/PageMeta'
 import './OrderStatus.css'
 
+function formatPhoneInput(value) {
+  const digits = value.replace(/\D/g, '').slice(0, 10)
+  if (digits.length <= 3) return digits
+  if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`
+}
+
 const OrderSuccess = () => {
   const { t, lang } = useLanguage()
+  const { isAuthenticated } = useAuth()
   const { orderId } = useParams()
-  const order = getOrderById(orderId)
+  const [order, setOrder] = useState(() => getOrderById(orderId))
+  const [phoneInput, setPhoneInput] = useState(() => {
+    const raw = order?.customer?.phone?.replace(/\D/g, '') || ''
+    const national = raw.length === 11 && raw.startsWith('1') ? raw.slice(1) : raw.slice(-10)
+    return national ? formatPhoneInput(national) : ''
+  })
+  const [saved, setSaved] = useState(false)
+  const [linking, setLinking] = useState(false)
+  const [error, setError] = useState('')
+
+  const thankYouMessage = useMemo(() => {
+    if (!order) return ''
+    return t('shop.orderThankYou').replace('{name}', order.customer.firstName)
+  }, [order, t])
 
   if (!order) {
     return (
@@ -29,8 +52,38 @@ const OrderSuccess = () => {
     )
   }
 
-  const thankYouMessage = t('shop.orderThankYou').replace('{name}', order.customer.firstName)
   const confirmationEmail = t('shop.confirmationEmail').replace('{email}', order.customer.email)
+
+  const handleSavePhone = async (e) => {
+    e.preventDefault()
+    const digits = phoneInput.replace(/\D/g, '')
+    if (digits.length !== 10) {
+      setError(t('shop.orderPhoneInvalid'))
+      return
+    }
+
+    setError('')
+    setLinking(true)
+    try {
+      const updated = updateOrderInStorage(order.id, {
+        customer: { ...order.customer, phone: phoneInput },
+      })
+      if (!updated) {
+        setError(t('shop.orderPhoneSaveFailed'))
+        return
+      }
+      setOrder(updated)
+      const sync = await syncOrderToServer(updated)
+      setSaved(true)
+      if (!sync.synced) {
+        setError(t('shop.orderPhoneLocalOnly'))
+      }
+    } catch (err) {
+      setError(err.message || t('portal.errors.generic'))
+    } finally {
+      setLinking(false)
+    }
+  }
 
   return (
     <div className="order-status-page">
@@ -71,6 +124,44 @@ const OrderSuccess = () => {
                 {t('shop.paymentInfo')}:{' '}
                 {order.payment.provider === 'demo' ? t('shop.paymentDemo') : t('shop.paymentStripe')}
                 {order.payment.last4 ? ` •••• ${order.payment.last4}` : ''}
+              </p>
+            )}
+          </div>
+
+          <div className="order-phone-link">
+            <h2>{t('shop.orderPhoneTitle')}</h2>
+            <p>{t('shop.orderPhoneHelp')}</p>
+
+            <form className="order-phone-form" onSubmit={handleSavePhone}>
+              <label htmlFor="order-link-phone">{t('shop.phone')} *</label>
+              <input
+                id="order-link-phone"
+                type="tel"
+                inputMode="tel"
+                autoComplete="tel"
+                placeholder="(213) 555-0100"
+                value={phoneInput}
+                onChange={(e) => {
+                  setPhoneInput(formatPhoneInput(e.target.value))
+                  setSaved(false)
+                }}
+                required
+              />
+              {error && <p className="field-error">{error}</p>}
+              {saved && <p className="order-phone-synced">{t('shop.orderPhoneSynced')}</p>}
+              <button type="submit" className="btn btn-primary" disabled={linking}>
+                {linking ? t('shop.orderPhoneSaving') : t('shop.orderPhoneSave')}
+              </button>
+            </form>
+
+            {!isAuthenticated && (
+              <p className="order-phone-portal">
+                <Link to="/portal/login">{t('shop.orderPhonePortalCta')}</Link>
+              </p>
+            )}
+            {isAuthenticated && (
+              <p className="order-phone-portal">
+                <Link to="/portal">{t('portal.goToDashboard')}</Link>
               </p>
             )}
           </div>

@@ -86,8 +86,28 @@ export const shop = {
     viewAllOrders: 'View All Orders',
     viewReceipt: 'View receipt',
     noOrdersYet: 'No orders yet',
-    ordersSavedLocally: 'Track your shop purchases. Demo orders are saved locally in your browser.',
-    ordersEmptyText: 'When you complete checkout, your orders will appear here with live status.',
+    ordersSavedLocally:
+      'Your shop orders are saved on this device and linked to your phone so you can find them in the patient portal.',
+    ordersForYourAccount: 'Orders linked to your signed-in phone number.',
+    ordersLoginRequiredSubtitle: 'Sign in with your phone to view your orders.',
+    ordersLoginTitle: 'Sign in to see your orders',
+    ordersLoginText:
+      'For your privacy, order history is only shown after you sign in with the same phone number used at checkout.',
+    ordersLoading: 'Loading your orders…',
+    ordersEmptyText:
+      'No orders are linked to this phone yet. Complete a purchase and link your number to see them here.',
+    orderPhoneTitle: 'Link this order to your phone',
+    orderPhoneHelp:
+      'Confirm your mobile number so this purchase is saved with your patient account. You can sign in later with the same number.',
+    orderPhoneSave: 'Save & link order',
+    orderPhoneSaving: 'Saving…',
+    orderPhoneSynced: 'Order linked to your phone successfully.',
+    orderPhoneInvalid: 'Please enter a valid 10-digit US phone number.',
+    orderPhonePortalCta: 'Sign in to the patient portal to view all linked orders →',
+    orderPhoneSaveFailed: 'Could not update the order on this device. Your existing order was not changed.',
+    orderPhoneLocalOnly: 'Saved on this device. Server sync failed — sign in later and we will retry.',
+    orderSaveFailed:
+      'Payment succeeded but we could not save the order on this device. Your cart was kept — please try again or contact us with your payment details.',
     browseShop: 'Browse Shop',
     orderHelp: 'Your cart items are still saved. You can review your order and try again.',
     paymentFailedDefault: 'Your payment could not be processed. Please try again.',
@@ -196,8 +216,28 @@ export const shop = {
     viewAllOrders: 'Ver todos los pedidos',
     viewReceipt: 'Ver recibo',
     noOrdersYet: 'Aún no hay pedidos',
-    ordersSavedLocally: 'Rastree sus compras. Los pedidos de demostración se guardan localmente en su navegador.',
-    ordersEmptyText: 'Cuando complete el pago, sus pedidos aparecerán aquí con estado en vivo.',
+    ordersSavedLocally:
+      'Sus pedidos se guardan en este dispositivo y se vinculan a su teléfono para verlos en el portal del paciente.',
+    ordersForYourAccount: 'Pedidos vinculados al número con el que inició sesión.',
+    ordersLoginRequiredSubtitle: 'Inicie sesión con su teléfono para ver sus pedidos.',
+    ordersLoginTitle: 'Inicie sesión para ver sus pedidos',
+    ordersLoginText:
+      'Por su privacidad, el historial de pedidos solo se muestra después de iniciar sesión con el mismo número usado en el pago.',
+    ordersLoading: 'Cargando sus pedidos…',
+    ordersEmptyText:
+      'Aún no hay pedidos vinculados a este teléfono. Complete una compra y vincule su número para verlos aquí.',
+    orderPhoneTitle: 'Vincule este pedido a su teléfono',
+    orderPhoneHelp:
+      'Confirme su número móvil para guardar esta compra con su cuenta de paciente. Puede iniciar sesión después con el mismo número.',
+    orderPhoneSave: 'Guardar y vincular pedido',
+    orderPhoneSaving: 'Guardando…',
+    orderPhoneSynced: 'Pedido vinculado a su teléfono correctamente.',
+    orderPhoneInvalid: 'Ingrese un número de teléfono de EE. UU. de 10 dígitos válido.',
+    orderPhonePortalCta: 'Inicie sesión en el portal del paciente para ver todos los pedidos vinculados →',
+    orderPhoneSaveFailed: 'No se pudo actualizar el pedido en este dispositivo. Su pedido existente no se modificó.',
+    orderPhoneLocalOnly: 'Guardado en este dispositivo. Falló la sincronización — inicie sesión más tarde y reintentaremos.',
+    orderSaveFailed:
+      'El pago se realizó, pero no se pudo guardar el pedido en este dispositivo. Su carrito se mantuvo — intente de nuevo o contáctenos.',
     browseShop: 'Explorar tienda',
     orderHelp: 'Los artículos de su carrito aún están guardados. Puede revisar su pedido e intentar de nuevo.',
     paymentFailedDefault: 'No se pudo procesar su pago. Por favor intente de nuevo.',

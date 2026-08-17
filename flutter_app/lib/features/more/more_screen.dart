@@ -51,6 +51,7 @@ class MoreScreen extends StatelessWidget {
           items: [
             _LinkItem(NavLabels.aboutUs.forLang(lang), '/more/about', Icons.info_outline_rounded),
             _LinkItem(NavLabels.workersComp.forLang(lang), '/more/workers-comp', Icons.work_outline_rounded),
+            _LinkItem(NavLabels.lawyers.forLang(lang), '/more/lawyers', Icons.balance_rounded),
             _LinkItem(NavLabels.careers.forLang(lang), '/more/careers', Icons.groups_outlined),
             _LinkItem(NavLabels.news.forLang(lang), '/more/news', Icons.newspaper_outlined),
           ],

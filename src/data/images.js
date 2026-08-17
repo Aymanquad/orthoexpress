@@ -21,9 +21,10 @@ const SHARED = {
 export const IMAGES = {
   home: {
     hero: {
-      src: '/assets/home/hero.jpg',
+      src: '/assets/home/home-page.jpg?v=3',
       fallback: SHARED.recovery,
       placement: 'photo',
+      objectPosition: 'center 30%',
     },
     snapshotInjured: {
       src: '/assets/home/snapshot-injured.png',

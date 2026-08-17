@@ -241,6 +241,18 @@ class _ContactInfo extends StatelessWidget {
           title: ContactLabels.hours(lang),
           child: Text(ClinicData.hoursWeekday),
         ),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            _SocialChip(label: 'Facebook', url: ClinicData.facebookUrl),
+            _SocialChip(label: 'X', url: ClinicData.xUrl),
+            _SocialChip(label: 'TikTok', url: ClinicData.tiktokUrl),
+            _SocialChip(label: 'Instagram', url: ClinicData.instagramUrl),
+            _SocialChip(label: 'LinkedIn', url: ClinicData.linkedinUrl),
+          ],
+        ),
       ],
     );
   }
@@ -417,6 +429,26 @@ class _ContactForm extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _SocialChip extends StatelessWidget {
+  final String label;
+  final String url;
+
+  const _SocialChip({required this.label, required this.url});
+
+  @override
+  Widget build(BuildContext context) {
+    return ActionChip(
+      label: Text(label),
+      onPressed: () async {
+        final uri = Uri.parse(url);
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri, mode: LaunchMode.externalApplication);
+        }
+      },
     );
   }
 }

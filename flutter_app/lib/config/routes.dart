@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '../core/widgets/app_shell.dart';
 import '../features/about/about_screen.dart';
 import '../features/blogs/blogs_screen.dart';
@@ -7,9 +8,13 @@ import '../features/content/content_screens.dart';
 import '../features/forms/book_appointment_screen.dart';
 import '../features/forms/contact_us_screen.dart';
 import '../features/home/home_screen.dart';
+import '../features/lawyers/lawyers_screen.dart';
 import '../features/locations/location_detail_screen.dart';
 import '../features/locations/locations_screen.dart';
 import '../features/more/more_screen.dart';
+import '../features/portal/portal_appointments_screen.dart';
+import '../features/portal/portal_dashboard_screen.dart';
+import '../features/portal/portal_login_screen.dart';
 import '../features/services/service_detail_screen.dart';
 import '../features/services/services_screen.dart';
 import '../features/shop/cart_screen.dart';
@@ -20,6 +25,7 @@ import '../features/shop/orders_screen.dart';
 import '../features/shop/shop_screen.dart';
 import '../features/shared/not_found_screen.dart';
 import '../features/workers_comp/workers_comp_screen.dart';
+import '../providers/portal_auth_provider.dart';
 import 'route_titles.dart';
 
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -139,9 +145,27 @@ GoRouter createRouter() {
       }
       final legacy = legacyRouteRedirects[path];
       if (legacy != null) return legacy;
-      return null;
+      return _portalAuthRedirect(context, path);
     },
   );
+}
+
+String? _portalAuthRedirect(BuildContext context, String path) {
+  final isLogin = path == '/more/portal/login';
+  final isProtected = path == '/more/portal' || path == '/more/portal/appointments';
+  if (!isLogin && !isProtected) return null;
+
+  late final PortalAuthProvider auth;
+  try {
+    auth = Provider.of<PortalAuthProvider>(context, listen: false);
+  } catch (_) {
+    return isProtected ? '/more/portal/login' : null;
+  }
+
+  if (auth.loading) return null;
+  if (isProtected && !auth.isAuthenticated) return '/more/portal/login';
+  if (isLogin && auth.isAuthenticated) return '/more/portal';
+  return null;
 }
 
 final List<RouteBase> _moreBranchRoutes = [
@@ -152,6 +176,10 @@ final List<RouteBase> _moreBranchRoutes = [
   GoRoute(
     path: 'workers-comp',
     builder: (context, state) => const WorkersCompScreen(),
+  ),
+  GoRoute(
+    path: 'lawyers',
+    builder: (context, state) => const LawyersScreen(),
   ),
   GoRoute(
     path: 'book-appointment',
@@ -188,6 +216,20 @@ final List<RouteBase> _moreBranchRoutes = [
   GoRoute(
     path: 'patient-portal',
     builder: (context, state) => const PatientPortalScreen(),
+  ),
+  GoRoute(
+    path: 'portal',
+    builder: (context, state) => const PortalDashboardScreen(),
+    routes: [
+      GoRoute(
+        path: 'login',
+        builder: (context, state) => const PortalLoginScreen(),
+      ),
+      GoRoute(
+        path: 'appointments',
+        builder: (context, state) => const PortalAppointmentsScreen(),
+      ),
+    ],
   ),
   GoRoute(
     path: 'technology',

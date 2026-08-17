@@ -340,53 +340,59 @@
       "es": "Las terapias regenerativas pueden considerarse cuando el tratamiento conservador no ha proporcionado alivio suficiente. Discutimos los beneficios, las expectativas y los plazos de recuperación con cada paciente."
     }
   },
-  "pediatric-care": {
+  "car-motor-vehicle-accident-care": {
     "title": {
-      "en": "Pediatric Orthopedic Care",
-      "es": "Atención ortopédica pediátrica"
+      "en": "Auto Accident Care",
+      "es": "Atención por accidente de auto"
     },
     "description": {
-      "en": "Specialized orthopedic evaluation and treatment for children and adolescents.",
-      "es": "Evaluación y tratamiento ortopédico especializado para niños y adolescentes."
+      "en": "Same-day injury evaluation after a car or motor vehicle accident.",
+      "es": "Evaluación de lesiones el mismo día después de un accidente de auto o vehículo."
     },
-    "image": "/img/pediatric-care",
+    "image": "/img/car-motor-vehicle-accident-care",
     "overview": {
-      "en": "Growing bones and joints require specialized attention. Our pediatric orthopedic services address injuries, growth-related conditions, and activity-related concerns in children and teens with family-centered care.",
-      "es": "Los huesos y articulaciones en crecimiento requieren atención especializada. Nuestros servicios ortopédicos pediátricos abordan lesiones, afecciones relacionadas con el crecimiento y problemas asociados a la actividad en niños y adolescentes, con atención centrada en la familia."
+      "en": "Car and motor vehicle accidents can cause a wide range of orthopedic injuries — from whiplash and soft tissue trauma to fractures and spinal injuries. Our team provides prompt walk-in evaluation, on-site imaging when needed, and clear treatment plans so you can start healing right away. We also help with thorough documentation for insurance and claims.",
+      "es": "Los accidentes de auto y de vehículos pueden causar una amplia variedad de lesiones ortopédicas, desde latigazo cervical y traumatismos de tejidos blandos hasta fracturas y lesiones de columna. Nuestro equipo ofrece evaluación sin cita previa, imagenología en el sitio cuando sea necesario y planes de tratamiento claros para que pueda comenzar a recuperarse de inmediato. También ayudamos con documentación completa para seguros y reclamaciones."
     },
     "conditions": {
       "en": [
-        "Growth plate injuries",
-        "Sports injuries in youth athletes",
-        "Scoliosis screening concerns",
-        "Limb pain in active children",
-        "Congenital musculoskeletal conditions"
+        "Whiplash and neck injuries",
+        "Back and spinal trauma from collisions",
+        "Fractures and dislocations",
+        "Shoulder, knee, and joint injuries",
+        "Soft tissue and ligament injuries",
+        "Seatbelt and impact-related trauma"
       ],
       "es": [
-        "Lesiones de la placa de crecimiento",
-        "Lesiones deportivas en jóvenes atletas",
-        "Preocupaciones de detección de escoliosis",
-        "Dolor en extremidades en niños activos",
-        "Afecciones musculoesqueléticas congénitas"
+        "Latigazo cervical y lesiones de cuello",
+        "Traumatismos de espalda y columna por colisiones",
+        "Fracturas y luxaciones",
+        "Lesiones de hombro, rodilla y articulaciones",
+        "Lesiones de tejidos blandos y ligamentos",
+        "Traumatismos por cinturón de seguridad e impacto"
       ]
     },
     "treatments": {
       "en": [
-        "Conservative injury management",
-        "Bracing and activity guidance",
-        "Referrals for advanced pediatric care",
-        "Return-to-sport recommendations"
+        "Same-day accident injury evaluation",
+        "Digital imaging and diagnostic coordination",
+        "Splinting, bracing, and fracture care",
+        "Pain management and rehabilitation planning",
+        "Insurance and claims documentation",
+        "Follow-up recovery and specialist referrals"
       ],
       "es": [
-        "Manejo conservador de lesiones",
-        "Ortesis y orientación sobre actividad",
-        "Referencias para atención pediátrica avanzada",
-        "Recomendaciones para el retorno al deporte"
+        "Evaluación de lesiones por accidente el mismo día",
+        "Imagenología digital y coordinación diagnóstica",
+        "Férulas, ortesis y atención de fracturas",
+        "Manejo del dolor y planificación de rehabilitación",
+        "Documentación para seguros y reclamaciones",
+        "Seguimiento de recuperación y referencias a especialistas"
       ]
     },
     "additionalInfo": {
-      "en": "We work closely with families to ensure young patients receive safe, age-appropriate orthopedic care and clear recovery plans.",
-      "es": "Trabajamos en estrecha colaboración con las familias para garantizar que los pacientes jóvenes reciban atención ortopédica segura y apropiada para su edad, con planes de recuperación claros."
+      "en": "If you were in a car or motor vehicle accident, early evaluation matters. Walk in today for expert injury care and documentation support — no referral required.",
+      "es": "Si estuvo en un accidente de auto o de vehículo, la evaluación temprana importa. Entre hoy mismo para atención experta de lesiones y apoyo con documentación — sin necesidad de remisión."
     }
   },
   "hand-wrist-care": {
@@ -544,8 +550,8 @@
   },
   "chiropractic-surgery": {
     "title": {
-      "en": "Chiropractic Surgery",
-      "es": "Cirugía quiropráctica"
+      "en": "Chiropractic",
+      "es": "Quiropráctica"
     },
     "description": {
       "en": "Integrated spinal care combining chiropractic evaluation, manual therapy, and surgical coordination.",

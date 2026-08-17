@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../config/app_config.dart';
 import '../../config/theme.dart';
 import '../../core/widgets/content_page_scaffold.dart';
 import '../../data/clinic.dart';
 import '../../data/content_repository.dart';
+import '../../data/home_labels.dart';
 import '../../data/nav_labels.dart';
+import '../../data/portal_labels.dart';
 import '../../providers/language_provider.dart';
+import '../../providers/portal_auth_provider.dart';
 
 IconData _stepIcon(String key) {
   switch (key) {
@@ -316,12 +318,56 @@ class PatientPortalScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final lang = context.watch<LanguageProvider>().locale.languageCode;
+    final signedIn = context.watch<PortalAuthProvider>().isAuthenticated;
 
     return ContentPageScaffold(
       eyebrow: ContentRepository.patientLabel('portal', 'eyebrow', lang),
       title: ContentRepository.patientLabel('portal', 'title', lang),
       lead: ContentRepository.patientLabel('portal', 'lead', lang),
       children: [
+        Card(
+          color: AppColors.primarySoft,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  ContentRepository.patientLabel('portal', 'signIn', lang),
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: 6),
+                Text(ContentRepository.patientLabel('portal', 'signInHelp', lang)),
+                const SizedBox(height: 12),
+                FilledButton.icon(
+                  onPressed: () {
+                    context.push(signedIn ? '/more/portal' : '/more/portal/login');
+                  },
+                  style: FilledButton.styleFrom(backgroundColor: AppColors.accent),
+                  icon: Icon(signedIn ? Icons.dashboard_outlined : Icons.login),
+                  label: Text(
+                    signedIn
+                        ? PortalLabels.goToDashboard.forLang(lang)
+                        : PortalLabels.signInWithPhone.forLang(lang),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  ContentRepository.patientLabel('portal', 'demoNote', lang),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppColors.textLight,
+                      ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 20),
+        Text(
+          ContentRepository.patientLabel('portal', 'featuresHeading', lang),
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        const SizedBox(height: 8),
         ...ContentRepository.portalFeatures.map((f) {
           return FeatureTile(
             title: f.title.forLang(lang),
@@ -335,32 +381,42 @@ class PatientPortalScreen extends StatelessWidget {
                         context.push(mapAppPath(path));
                       } else {
                         final uri = Uri.parse(path);
-                        if (await canLaunchUrl(uri)) await launchUrl(uri, mode: LaunchMode.externalApplication);
+                        if (await canLaunchUrl(uri)) {
+                          await launchUrl(uri, mode: LaunchMode.externalApplication);
+                        }
                       }
                     },
-                    child: Text(NavLabels.open.forLang(lang)),
+                    child: Text(HomeLabels.learnMore(lang)),
                   ),
           );
         }),
-        if (AppConfig.hasPatientPortal) ...[
-          const SizedBox(height: 12),
-          FilledButton.icon(
-            onPressed: () async {
-              final uri = Uri.parse(AppConfig.patientPortalUrl);
-              if (await canLaunchUrl(uri)) {
-                await launchUrl(uri, mode: LaunchMode.externalApplication);
-              }
-            },
-            style: FilledButton.styleFrom(backgroundColor: AppColors.accent),
-            icon: const Icon(Icons.login),
-            label: Text(ContentRepository.patientLabel('portal', 'signIn', lang)),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            ContentRepository.patientLabel('portal', 'signInHelp', lang),
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-        ],
+        const SizedBox(height: 8),
+        Text(
+          ContentRepository.patientLabel('portal', 'noPortalTitle', lang),
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        const SizedBox(height: 6),
+        Text(ContentRepository.patientLabel('portal', 'noPortalText', lang)),
+        const SizedBox(height: 12),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            FilledButton(
+              onPressed: () => context.push('/more/contact-us'),
+              style: FilledButton.styleFrom(backgroundColor: AppColors.accent),
+              child: Text(NavLabels.contact.forLang(lang)),
+            ),
+            OutlinedButton(
+              onPressed: () => context.push('/more/book-appointment'),
+              child: Text(NavLabels.bookAppointmentShort.forLang(lang)),
+            ),
+            OutlinedButton(
+              onPressed: () => context.push('/more/payment'),
+              child: Text(NavLabels.payment.forLang(lang)),
+            ),
+          ],
+        ),
         const SizedBox(height: 8),
         OutlinedButton.icon(
           onPressed: () async {

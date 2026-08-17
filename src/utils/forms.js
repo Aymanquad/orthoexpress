@@ -1,5 +1,6 @@
 import { CLINIC } from '../data/clinic'
 import { getLocationBySlug } from '../data/locations'
+import { appointmentsApi } from '../api/client'
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const PHONE_PATTERN = /^[\d\s\-+().]{7,}$/
@@ -123,6 +124,29 @@ export async function submitContactForm(data) {
 export async function submitAppointmentForm(data) {
   const location = getLocationBySlug(data.location)
   const locationLabel = location ? `${location.name} — ${location.city}` : data.location
+
+  const preferredAt = [
+    data.preferredDate,
+    data.preferredTime || null,
+  ].filter(Boolean).join(' ')
+
+  const apiPayload = {
+    name: data.name,
+    phone: data.phone,
+    email: data.email,
+    locationName: locationLabel,
+    serviceName: 'General visit',
+    preferredAt: preferredAt || undefined,
+    reason: data.reason || undefined,
+    consent: data.consent,
+  }
+
+  try {
+    const result = await appointmentsApi.request(apiPayload)
+    return { success: true, viaApi: true, appointmentId: result.appointmentId }
+  } catch (apiError) {
+    console.warn('Appointment API failed, falling back to Formspree:', apiError.message)
+  }
 
   const payload = {
     _subject: `Appointment request — ${data.name}`,

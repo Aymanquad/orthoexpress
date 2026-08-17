@@ -32,6 +32,10 @@ import News from './pages/News'
 import Telehealth from './pages/Telehealth'
 import AfterVisit from './pages/AfterVisit'
 import PatientPortal from './pages/PatientPortal'
+import PortalLogin from './pages/portal/PortalLogin'
+import PortalDashboard from './pages/portal/PortalDashboard'
+import PortalAppointments from './pages/portal/PortalAppointments'
+import PrivateRoute from './components/PrivateRoute'
 import Technology from './pages/Technology'
 import AccessibilityStatement from './pages/AccessibilityStatement'
 import PrivacyPolicy from './pages/PrivacyPolicy'
@@ -79,6 +83,23 @@ function App() {
             <Route path="/telehealth" element={<Telehealth />} />
             <Route path="/after-your-visit" element={<AfterVisit />} />
             <Route path="/patient-portal" element={<PatientPortal />} />
+            <Route path="/portal/login" element={<PortalLogin />} />
+            <Route
+              path="/portal"
+              element={
+                <PrivateRoute>
+                  <PortalDashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/portal/appointments"
+              element={
+                <PrivateRoute>
+                  <PortalAppointments />
+                </PrivateRoute>
+              }
+            />
             <Route path="/technology" element={<Technology />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/news" element={<News />} />

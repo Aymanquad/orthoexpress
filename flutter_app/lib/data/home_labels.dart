@@ -1,18 +1,18 @@
 /// Home + hero + treat + reviews strings — from src/i18n/home.js & translations.js
 class HomeLabels {
   static String heroEyebrow(String lang) =>
-      lang == 'es' ? 'Sin cita · Mismo día' : 'Walk-in · Same-day · No referral';
+      lang == 'es' ? 'Sin cita · Mismo día · Sin remisión' : 'Walk-in · Same-day · No referral needed';
 
   static String heroTitle(String lang) =>
-      lang == 'es' ? 'Cuidado ortopédico experto' : 'Expert Orthopedic Care';
+      lang == 'es' ? 'Cuidado experto de lesiones' : 'Expert Injury Care';
 
   static String heroTitleAccent(String lang) =>
       lang == 'es' ? 'Disponible para todas las edades' : 'On-demand for all ages';
 
   static String heroLead(String lang) =>
       lang == 'es'
-          ? 'Sin cita. Atención ortopédica el mismo día para esguinces, fracturas, lesiones deportivas y dolor articular.'
-          : 'Walk-ins welcome. Same-day orthopedic care for sprains, fractures, sports injuries, and joint pain.';
+          ? 'Citas el mismo día para lesiones disponibles — tratamiento listo para esguinces, fracturas, lesiones deportivas y dolor articular.'
+          : 'Same-day injury appointments available — treatment ready for sprains, fractures, sports injuries, and joint pain.';
 
   static String heroBook(String lang) =>
       lang == 'es' ? 'Reservar cita' : 'Book an Appointment';
@@ -66,18 +66,20 @@ class HomeLabels {
 
   static String howWeCareSubtitle(String lang) =>
       lang == 'es'
-          ? 'Cuatro pasos claros desde la visita hasta la recuperación.'
-          : 'Four clear steps from walk-in to recovery.';
+          ? 'Desde apoyo legal hasta la recuperación — pasos claros cuando necesita atención.'
+          : 'From legal support to recovery — clear steps when you need care.';
 
   static String howWeCareTileTitle(String key, String lang) {
     final map = lang == 'es'
         ? {
+            'lawyers': 'Demografía / Abogados',
             'diagnose': 'Diagnosticar',
             'treat': 'Tratar',
             'surgery': 'Cirugía cuando se necesita',
             'recover': 'Recuperar',
           }
         : {
+            'lawyers': 'Demographics / Lawyers',
             'diagnose': 'Diagnose',
             'treat': 'Treat',
             'surgery': 'Surgery when needed',
@@ -89,12 +91,14 @@ class HomeLabels {
   static String howWeCareTileDesc(String key, String lang) {
     final map = lang == 'es'
         ? {
+            'lawyers': '¿No tiene uno? También trabajamos con abogados.',
             'diagnose': 'Rayos X, imágenes y evaluación experta en el sitio — a menudo el mismo día.',
             'treat': 'Cuidado no quirúrgico, inyecciones, férulas y manejo del dolor.',
             'surgery': 'Reemplazo articular y procedimientos avanzados de cirujanos experimentados.',
             'recover': 'Planes de rehabilitación y medicina deportiva para volver a moverse.',
           }
         : {
+            'lawyers': "Don't have one? We work with lawyers as well.",
             'diagnose': 'On-site X-rays, imaging, and expert evaluation — often same day.',
             'treat': 'Non-surgical care, injections, bracing, and pain management.',
             'surgery': 'Joint replacement and advanced procedures from experienced surgeons.',

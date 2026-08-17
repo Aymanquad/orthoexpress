@@ -31,14 +31,14 @@ class OrderCustomer {
       };
 
   factory OrderCustomer.fromJson(Map<String, dynamic> json) => OrderCustomer(
-        firstName: json['firstName'] as String,
-        lastName: json['lastName'] as String,
-        email: json['email'] as String,
-        phone: json['phone'] as String,
-        address: json['address'] as String,
-        city: json['city'] as String,
-        state: json['state'] as String,
-        zip: json['zip'] as String,
+        firstName: _asString(json['firstName']),
+        lastName: _asString(json['lastName']),
+        email: _asString(json['email']),
+        phone: _asString(json['phone']),
+        address: _asString(json['address']),
+        city: _asString(json['city']),
+        state: _asString(json['state']),
+        zip: _asString(json['zip']),
       );
 }
 
@@ -63,10 +63,10 @@ class OrderTotals {
       };
 
   factory OrderTotals.fromJson(Map<String, dynamic> json) => OrderTotals(
-        subtotal: (json['subtotal'] as num).toDouble(),
-        shipping: (json['shipping'] as num).toDouble(),
-        tax: (json['tax'] as num).toDouble(),
-        total: (json['total'] as num).toDouble(),
+        subtotal: _asDouble(json['subtotal']),
+        shipping: _asDouble(json['shipping']),
+        tax: _asDouble(json['tax']),
+        total: _asDouble(json['total']),
       );
 }
 
@@ -97,12 +97,12 @@ class OrderLineItem {
       };
 
   factory OrderLineItem.fromJson(Map<String, dynamic> json) => OrderLineItem(
-        productId: json['productId'] as String,
-        name: json['name'] as String,
-        price: (json['price'] as num).toDouble(),
-        quantity: (json['quantity'] as num).toInt(),
-        lineTotal: (json['lineTotal'] as num).toDouble(),
-        imagePath: json['image'] as String? ?? '',
+        productId: _asString(json['productId']),
+        name: _asString(json['name']),
+        price: _asDouble(json['price']),
+        quantity: _asInt(json['quantity']),
+        lineTotal: _asDouble(json['lineTotal']),
+        imagePath: _asString(json['image'] ?? json['imagePath']),
       );
 }
 
@@ -127,8 +127,8 @@ class OrderPayment {
       };
 
   factory OrderPayment.fromJson(Map<String, dynamic> json) => OrderPayment(
-        provider: json['provider'] as String,
-        status: json['status'] as String,
+        provider: _asString(json['provider'], 'demo'),
+        status: _asString(json['status'], 'confirmed'),
         last4: json['last4'] as String?,
         brand: json['brand'] as String?,
       );
@@ -168,18 +168,63 @@ class Order {
         'lang': lang,
       };
 
-  factory Order.fromJson(Map<String, dynamic> json) => Order(
-        id: json['id'] as String,
-        createdAt: json['createdAt'] as String,
-        status: json['status'] as String? ?? 'confirmed',
-        customer: OrderCustomer.fromJson(json['customer'] as Map<String, dynamic>),
-        items: (json['items'] as List)
-            .map((e) => OrderLineItem.fromJson(e as Map<String, dynamic>))
-            .toList(),
-        totals: OrderTotals.fromJson(json['totals'] as Map<String, dynamic>),
-        payment: json['payment'] != null
-            ? OrderPayment.fromJson(json['payment'] as Map<String, dynamic>)
-            : null,
-        lang: json['lang'] as String? ?? 'en',
-      );
+  factory Order.fromJson(Map<String, dynamic> json) {
+    final customerRaw = json['customer'];
+    final customerMap = customerRaw is Map<String, dynamic>
+        ? customerRaw
+        : <String, dynamic>{
+            if (json['phone'] != null) 'phone': json['phone'],
+          };
+    final itemsRaw = json['items'];
+    final totalsRaw = json['totals'];
+    final paymentRaw = json['payment'];
+
+    return Order(
+      id: _asString(json['id']),
+      createdAt: _asString(json['createdAt']),
+      status: _asString(json['status'], 'confirmed'),
+      customer: OrderCustomer.fromJson(customerMap),
+      items: itemsRaw is List
+          ? itemsRaw
+              .whereType<Map<String, dynamic>>()
+              .map(OrderLineItem.fromJson)
+              .toList()
+          : const [],
+      totals: OrderTotals.fromJson(
+        totalsRaw is Map<String, dynamic> ? totalsRaw : const {'total': 0},
+      ),
+      payment: paymentRaw is Map<String, dynamic>
+          ? OrderPayment.fromJson(paymentRaw)
+          : null,
+      lang: _asString(json['lang'], 'en'),
+    );
+  }
+
+  static Order? tryFromJson(Map<String, dynamic> json) {
+    try {
+      final order = Order.fromJson(json);
+      if (order.id.isEmpty) return null;
+      return order;
+    } catch (_) {
+      return null;
+    }
+  }
+}
+
+String _asString(dynamic value, [String fallback = '']) {
+  if (value == null) return fallback;
+  final text = value.toString();
+  return text.isEmpty ? fallback : text;
+}
+
+double _asDouble(dynamic value, [double fallback = 0]) {
+  if (value is num) return value.toDouble();
+  if (value is String) return double.tryParse(value) ?? fallback;
+  return fallback;
+}
+
+int _asInt(dynamic value, [int fallback = 0]) {
+  if (value is num) return value.toInt();
+  if (value is String) return int.tryParse(value) ?? fallback;
+  return fallback;
 }

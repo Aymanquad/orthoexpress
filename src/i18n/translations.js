@@ -4,6 +4,7 @@ import { shop } from './shop'
 import { forms } from './forms'
 import { services } from './services'
 import { patientCare } from './patientCare'
+import { portal } from './portal'
 
 const base = {
   en: {
@@ -269,6 +270,7 @@ export const translations = {
     forms: forms.en,
     services: services.en,
     patientCare: patientCare.en,
+    portal: portal.en,
   },
   es: {
     ...base.es,
@@ -278,5 +280,6 @@ export const translations = {
     forms: forms.es,
     services: services.es,
     patientCare: patientCare.es,
+    portal: portal.es,
   },
 }

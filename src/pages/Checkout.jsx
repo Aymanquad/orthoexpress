@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useCart, saveOrderToStorage } from '../context/CartContext'
+import { useCart, saveOrderToStorage, orderExistsInStorage } from '../context/CartContext'
 import { useLanguage } from '../context/LanguageContext'
+import { useAuth } from '../context/AuthContext'
 import { formatPrice } from '../data/products'
 import { getProductField } from '../i18n/products'
 import { isDemoPaymentMode } from '../config/payment'
 import { calculateOrderTotals } from '../utils/checkout'
 import { processCheckoutPayment } from '../utils/payment'
+import { syncOrderToServer } from '../utils/orderSync'
 import PaymentFields from '../components/shop/PaymentFields'
 import PageMeta from '../components/PageMeta'
 import '../components/FormFeedback.css'
@@ -31,8 +33,17 @@ const initialFormState = {
 const Checkout = () => {
   const navigate = useNavigate()
   const { t, lang } = useLanguage()
+  const { patient } = useAuth()
   const { cartItems, cartCount, subtotal, clearCart } = useCart()
-  const [formData, setFormData] = useState(initialFormState)
+  const [formData, setFormData] = useState(() => ({
+    ...initialFormState,
+    phone: patient?.phone
+      ? patient.phone.replace(/^\+1/, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3')
+      : '',
+    firstName: patient?.firstName || '',
+    lastName: patient?.lastName || '',
+    email: patient?.email || '',
+  }))
   const [errors, setErrors] = useState({})
   const [isProcessing, setIsProcessing] = useState(false)
   const totals = calculateOrderTotals(subtotal)
@@ -79,7 +90,20 @@ const Checkout = () => {
         return
       }
 
-      saveOrderToStorage(result.order)
+      const saved = saveOrderToStorage(result.order)
+      if (!saved.ok || !orderExistsInStorage(result.order.id)) {
+        // Do NOT clear cart — payment succeeded but local persist failed
+        navigate('/order-failure', {
+          state: {
+            message: t('shop.orderSaveFailed'),
+            keepCart: true,
+          },
+        })
+        return
+      }
+
+      // Server link is best-effort; local order is already safe
+      await syncOrderToServer(saved.order || result.order)
       clearCart()
       navigate(`/order-success/${result.order.id}`, { replace: true })
     } catch (error) {

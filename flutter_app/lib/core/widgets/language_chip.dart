@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../config/theme.dart';
+import '../../core/utils/responsive.dart';
 import '../../providers/language_provider.dart';
 
-/// Compact EN | ES language chip in the app bar.
+/// Compact English | Spanish language chip — matches the web header toggle.
 class LanguageChip extends StatelessWidget {
   const LanguageChip({super.key});
 
@@ -11,13 +12,14 @@ class LanguageChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final lang = context.watch<LanguageProvider>();
     final isEs = lang.isSpanish;
+    final compact = context.isPhone;
 
     return Padding(
       padding: const EdgeInsets.only(right: 2),
       child: Semantics(
         button: true,
         label: isEs
-            ? 'Idioma: español. Cambiar a inglés'
+            ? 'Idioma: Spanish. Cambiar a English'
             : 'Language: English. Switch to Spanish',
         child: Material(
           color: AppColors.primarySoft.withValues(alpha: 0.65),
@@ -32,8 +34,8 @@ class LanguageChip extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  _Seg(label: 'EN', active: !isEs),
-                  _Seg(label: 'ES', active: isEs),
+                  _Seg(label: compact ? 'EN' : 'English', active: !isEs),
+                  _Seg(label: compact ? 'ES' : 'Spanish', active: isEs),
                 ],
               ),
             ),
@@ -55,7 +57,7 @@ class _Seg extends StatelessWidget {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 180),
       curve: Curves.easeOut,
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
       decoration: BoxDecoration(
         color: active ? AppColors.primary : Colors.transparent,
         borderRadius: BorderRadius.circular(12),
@@ -63,7 +65,7 @@ class _Seg extends StatelessWidget {
       child: Text(
         label,
         style: TextStyle(
-          fontSize: 11,
+          fontSize: 10,
           fontWeight: FontWeight.w700,
           color: active ? Colors.white : AppColors.primary,
         ),

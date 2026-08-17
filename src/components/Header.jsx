@@ -19,6 +19,7 @@ import {
   FaNewspaper,
   FaQuestionCircle,
   FaBriefcase,
+  FaCalendarAlt,
 } from 'react-icons/fa'
 import { CLINIC, getLocationNavItems } from '../data'
 import {
@@ -30,6 +31,7 @@ import {
 } from '../data/services'
 import { useCart } from '../context/CartContext'
 import { useLanguage } from '../context/LanguageContext'
+import { useAuth } from '../context/AuthContext'
 import { toTelLink } from '../data/utils'
 import SiteSearch from './SiteSearch'
 import LanguageToggle from './LanguageToggle'
@@ -41,6 +43,7 @@ const Header = () => {
   const { pathname } = useLocation()
   const { cartCount } = useCart()
   const { t, lang } = useLanguage()
+  const { isAuthenticated } = useAuth()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState(null)
   const closeTimerRef = useRef(null)
@@ -57,6 +60,7 @@ const Header = () => {
     pathname.startsWith('/telehealth') ||
     pathname.startsWith('/after-your-visit') ||
     pathname.startsWith('/patient-portal') ||
+    pathname.startsWith('/portal') ||
     pathname.startsWith('/technology') ||
     pathname.startsWith('/payment') ||
     pathname.startsWith('/faqs') ||
@@ -167,6 +171,15 @@ const Header = () => {
             <Link to="/book-appointment" className="btn-book-top">
               {t('nav.bookAppointment')}
             </Link>
+            {isAuthenticated ? (
+              <Link to="/portal" className="portal-header-portal">
+                {t('portal.myPortal')}
+              </Link>
+            ) : (
+              <Link to="/portal/login" className="portal-header-signin">
+                {t('portal.signIn')}
+              </Link>
+            )}
             <LanguageToggle />
           </div>
         </div>
@@ -312,6 +325,18 @@ const Header = () => {
                             {t('nav.afterVisit')}
                           </Link>
                         </li>
+                        {isAuthenticated && (
+                          <li>
+                            <Link
+                              to="/portal/appointments"
+                              className={pathname === '/portal/appointments' ? 'nav-link-active' : ''}
+                              onClick={closeMenu}
+                            >
+                              <FaCalendarAlt className="dropdown-ico" aria-hidden="true" />
+                              {t('portal.myAppointments')}
+                            </Link>
+                          </li>
+                        )}
                         <li>
                           <Link
                             to="/patient-portal"

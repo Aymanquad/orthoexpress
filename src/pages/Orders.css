@@ -49,6 +49,13 @@
   color: var(--text-light);
 }
 
+.orders-empty-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
 .orders-list {
   display: flex;
   flex-direction: column;

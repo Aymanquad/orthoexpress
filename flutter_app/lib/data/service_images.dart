@@ -1,26 +1,32 @@
 // Service image rules — mirrors src/data/images.js + ServiceDetail.jsx
 
+import 'package:flutter/material.dart';
+
 class ServiceImageEntry {
   final String src;
   final String fallback;
   final String placement;
   final String? heroSrc;
+  final String? bodySrc;
+  final Alignment alignment;
 
   const ServiceImageEntry({
     required this.src,
     required this.fallback,
     this.placement = 'photo',
     this.heroSrc,
+    this.bodySrc,
+    this.alignment = Alignment.center,
   });
 
   /// Hero banner — never duplicates [bodyImage] on the same page.
   String? get heroImage {
-    final hero = heroSrc ?? (placement == 'photo' ? src : null);
-    return hero;
+    return heroSrc ?? (placement == 'photo' ? src : null);
   }
 
-  /// Inline body figure — omitted for full-bleed photo services.
+  /// Inline body figure — omitted for full-bleed photo services unless [bodySrc] is set.
   String? get bodyImage {
+    if (bodySrc != null) return bodySrc;
     if (placement == 'photo') return null;
     final hero = heroImage;
     if (hero != null && hero == src) return null;
@@ -31,48 +37,50 @@ class ServiceImageEntry {
 class ServiceImages {
   static const _clinical = 'assets/images/knee-injury.webp';
   static const _recovery = 'assets/images/recovery-after-orthopedicsurgery.jpg';
-  static const _sports = 'assets/images/services/sports-medicine.jpg';
-  static const _facility = 'assets/images/about/facility.jpg';
+  static const _sports = 'assets/images/services/sports-medicine.avif';
   static const _jointWide = 'assets/images/joint-img.jpg';
 
   static const _entries = <String, ServiceImageEntry>{
     'pain-inflammation': ServiceImageEntry(
-      src: 'assets/images/services/pain-inflammation.jpg',
-      fallback: _jointWide,
+      src: 'assets/images/blogs/chronic-pain.webp',
+      fallback: 'assets/images/services/arthritis.webp',
+      placement: 'square',
+      heroSrc: 'assets/images/services/pain-inflammation-long.jpg',
     ),
     'injuries-fractures-sprains': ServiceImageEntry(
       src: 'assets/images/services/injuries-fractures.webp',
       fallback: _jointWide,
+      bodySrc: 'assets/images/services/common-injuries.webp',
+    ),
+    'car-motor-vehicle-accident-care': ServiceImageEntry(
+      src: 'assets/images/services/auto-accident.jpg',
+      fallback: _clinical,
+      heroSrc: 'assets/images/services/accident-long.jpg',
+      alignment: Alignment(0, -0.16),
     ),
     'arthritis': ServiceImageEntry(
       src: 'assets/images/services/arthritis.webp',
       fallback: _jointWide,
       placement: 'square',
-      heroSrc: _clinical,
+      heroSrc: 'assets/images/services/arthritis-long.jpg',
     ),
     'casting-splinting': ServiceImageEntry(
       src: 'assets/images/services/casting-splinting.webp',
       fallback: _recovery,
       placement: 'wide',
-      heroSrc: _facility,
+      heroSrc: 'assets/images/services/casting-splinting-long.jpg',
     ),
     'mri-digital-imaging': ServiceImageEntry(
-      src: 'assets/images/services/mri-imaging.jpg',
+      src: 'assets/images/services/x-ray.jpeg',
       fallback: _clinical,
-      placement: 'square',
-      heroSrc: _facility,
+      placement: 'wide',
+      heroSrc: 'assets/images/services/mri-digital-imaging-long.avif',
     ),
     'prp-orthobiologics': ServiceImageEntry(
-      src: 'assets/images/services/prp-orthobiologics.webp',
+      src: 'assets/images/services/prp-injection.webp',
       fallback: _jointWide,
       placement: 'square',
-      heroSrc: _clinical,
-    ),
-    'pediatric-care': ServiceImageEntry(
-      src: 'assets/images/services/pediatric-care.webp',
-      fallback: _recovery,
-      placement: 'wide',
-      heroSrc: _facility,
+      heroSrc: 'assets/images/services/prp-orthobiologics-long.jpg',
     ),
     'hand-wrist-care': ServiceImageEntry(
       src: 'assets/images/services/hand-wrist.jpg',
@@ -84,27 +92,29 @@ class ServiceImages {
       src: 'assets/images/services/shoulder-elbow.webp',
       fallback: _recovery,
       placement: 'square',
-      heroSrc: _sports,
+      heroSrc: 'assets/images/services/shoulder-elbow-long.webp',
     ),
     'lumbar-cervical-spine': ServiceImageEntry(
-      src: 'assets/images/services/spine.webp',
+      src: 'assets/images/services/spine-back.webp',
       fallback: _jointWide,
       placement: 'square',
-      heroSrc: _clinical,
+      heroSrc: 'assets/images/services/lumbar-cervical-spine-long.webp',
     ),
     'chiropractic-surgery': ServiceImageEntry(
-      src: 'assets/images/services/chiropractic.png',
+      src: 'assets/images/services/chiropractic.jpeg',
       fallback: _clinical,
+      alignment: Alignment(0, -0.24),
     ),
     'spine-surgery': ServiceImageEntry(
       src: 'assets/images/services/spine-surgery.png',
       fallback: 'assets/images/services/spine.webp',
       placement: 'wide',
-      heroSrc: _clinical,
+      heroSrc: 'assets/images/services/spine-surgery-long.jpg',
     ),
     'hip-knee-care': ServiceImageEntry(
-      src: 'assets/images/services/hip-knee.avif',
+      src: 'assets/images/services/hip-knee-care.jpg',
       fallback: _clinical,
+      alignment: Alignment(0, -0.2),
     ),
     'foot-ankle-care': ServiceImageEntry(
       src: 'assets/images/services/foot-ankle.jpg',
@@ -116,18 +126,24 @@ class ServiceImages {
       src: 'assets/images/services/joint-replacement.jpg',
       fallback: _jointWide,
       placement: 'square',
-      heroSrc: _clinical,
+      heroSrc: 'assets/images/services/total-joint-replacement-long.png',
     ),
     'sports-medicine': ServiceImageEntry(
-      src: 'assets/images/services/sports-medicine.jpg',
+      src: 'assets/images/services/sports-medicine.avif',
       fallback: _recovery,
+      alignment: Alignment(0, -0.16),
+    ),
+    'workers-comp': ServiceImageEntry(
+      src: 'assets/images/workers-comp/hero.webp',
+      fallback: _recovery,
+      alignment: Alignment(0, -0.2),
     ),
   };
 
   static ServiceImageEntry forSlug(String slug) {
     return _entries[slug] ??
         ServiceImageEntry(
-          src: 'assets/images/services/pain-inflammation.jpg',
+          src: 'assets/images/blogs/chronic-pain.webp',
           fallback: _clinical,
         );
   }
@@ -180,4 +196,14 @@ class AboutImageSlot {
   final String fallback;
 
   const AboutImageSlot({required this.src, required this.fallback});
+}
+
+class HomeImages {
+  static const hero = 'assets/images/home/home-page.jpg';
+  static const heroFallback = 'assets/images/recovery-after-orthopedicsurgery.jpg';
+  static const lawyers = 'assets/images/home/lawyers.avif';
+  static const lawyersFallback = 'assets/images/about/facility.jpg';
+  static const injured = 'assets/images/home/snapshot-injured.png';
+  static const pain = 'assets/images/home/snapshot-pain.jpg';
+  static const workers = 'assets/images/home/snapshot-workers.png';
 }

@@ -105,6 +105,20 @@ class AboutLabels {
 
 /// Workers' compensation page — from src/i18n/pages.js
 class WorkersCompLabels {
+  static const eyebrow = L10nString(
+    en: 'WORKPLACE INJURY CARE',
+    es: 'ATENCIÓN DE LESIONES LABORALES',
+  );
+  static const title = L10nString(
+    en: "Workers' Compensation",
+    es: 'Compensación laboral',
+  );
+  static const lead = L10nString(
+    en:
+        'Convenient, high-quality orthopedic care for workplace injuries — better outcomes for employees and smarter costs for employers.',
+    es:
+        'Atención ortopédica conveniente y de alta calidad para lesiones laborales — mejores resultados para empleados y costos más inteligentes para empleadores.',
+  );
   static const intro1 = L10nString(
     en:
         "With our workers' compensation and injury care services, your employees get convenient access to high-quality care at a lower cost and in an appropriate setting.",
@@ -161,6 +175,71 @@ class WorkersCompLabels {
     (heading: section3, text: section3Text),
     (heading: section4, text: section4Text),
   ];
+}
+
+/// Lawyers directory page — from src/i18n/pages.js `pages.lawyers`
+class LawyersLabels {
+  static const eyebrow = L10nString(en: 'LEGAL SUPPORT', es: 'APOYO LEGAL');
+  static const title = L10nString(
+    en: 'Demographics / Lawyers',
+    es: 'Demografía / Abogados',
+  );
+  static const lead = L10nString(
+    en:
+        "Don't have one? We work with lawyers as well — and can help you connect with trusted Los Angeles counsel.",
+    es:
+        '¿No tiene uno? También trabajamos con abogados — y podemos ayudarle a conectar con representantes de confianza en Los Ángeles.',
+  );
+  static const aboutHeading = L10nString(
+    en: 'Injury care that works with your legal team',
+    es: 'Atención de lesiones que colabora con su equipo legal',
+  );
+  static const aboutP1 = L10nString(
+    en:
+        'After an auto accident or serious injury, medical care and legal representation often go hand in hand. OrthoExpress provides same-day evaluation, treatment, and clear clinical documentation so your attorney can focus on your claim while you focus on healing.',
+    es:
+        'Después de un accidente de auto o una lesión grave, la atención médica y la representación legal suelen ir de la mano. OrthoExpress ofrece evaluación el mismo día, tratamiento y documentación clínica clara para que su abogado pueda enfocarse en su reclamación mientras usted se recupera.',
+  );
+  static const aboutP2 = L10nString(
+    en:
+        'Already have a lawyer? We coordinate with your firm. Need a referral starting point? Below is a current directory of well-known personal injury practices serving Los Angeles, USA.',
+    es:
+        '¿Ya tiene abogado? Coordinamos con su firma. ¿Necesita un punto de partida? A continuación encontrará un directorio actual de prácticas conocidas de lesiones personales que atienden en Los Ángeles, EE. UU.',
+  );
+  static const helpTitle = L10nString(en: 'How we help', es: 'Cómo ayudamos');
+  static const helpText = L10nString(
+    en:
+        'Walk-in injury evaluation, imaging coordination, recovery plans, and thorough records for insurance and legal needs.',
+    es:
+        'Evaluación de lesiones sin cita, coordinación de imágenes, planes de recuperación y registros completos para seguros y necesidades legales.',
+  );
+  static const listHeading = L10nString(
+    en: 'Los Angeles lawyers & firms',
+    es: 'Abogados y firmas en Los Ángeles',
+  );
+  static const listLead = L10nString(
+    en:
+        'A current reference list of personal injury practices commonly serving Los Angeles and Southern California.',
+    es:
+        'Una lista de referencia actual de prácticas de lesiones personales que suelen atender en Los Ángeles y el Sur de California.',
+  );
+  static const listed = L10nString(en: 'listed', es: 'listados');
+  static const disclaimer = L10nString(
+    en:
+        'This directory is provided as a convenience for patients exploring legal options. OrthoExpress does not endorse a specific firm, receive fees for listings, or provide legal advice. Always verify credentials and choose counsel independently.',
+    es:
+        'Este directorio se ofrece como una ayuda para pacientes que exploran opciones legales. OrthoExpress no respalda una firma específica, no recibe honorarios por listados y no brinda asesoría legal. Verifique siempre las credenciales y elija su representante de forma independiente.',
+  );
+  static const ctaTitle = L10nString(en: 'Need care today?', es: '¿Necesita atención hoy?');
+  static const ctaText = L10nString(
+    en: 'Start with a same-day injury visit — we will support your recovery and documentation either way.',
+    es:
+        'Comience con una visita de lesiones el mismo día — apoyaremos su recuperación y documentación de cualquier manera.',
+  );
+  static const ctaAccident = L10nString(
+    en: 'Auto accident care',
+    es: 'Atención por accidente de auto',
+  );
 }
 
 /// Services list page — from src/i18n/pages.js `pages.services`

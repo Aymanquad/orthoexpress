@@ -58,7 +58,11 @@ const BookAppointment = () => {
       setFormData(initialFormState)
       showSuccess(
         t('pages.book.successTitle'),
-        result.viaMailto ? t('pages.book.successMailto') : t('pages.book.successForm')
+        result.viaApi
+          ? t('pages.book.successApi')
+          : result.viaMailto
+            ? t('pages.book.successMailto')
+            : t('pages.book.successForm')
       )
     } catch (error) {
       showError(

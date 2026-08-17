@@ -30,25 +30,20 @@ class HomeHeroSection extends StatelessWidget {
         children: [
           Positioned.fill(
             child: HeroImage(
-              assetPath: 'assets/images/home/hero.jpg',
-              fallbackPath: 'assets/images/recovery-after-orthopedicsurgery.jpg',
+              assetPath: HomeImages.hero,
+              fallbackPath: HomeImages.heroFallback,
               height: heroHeight,
-            ),
-          ),
-          Positioned.fill(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.black.withValues(alpha: 0.35),
-                    Colors.black.withValues(alpha: 0.15),
-                    Colors.black.withValues(alpha: 0.55),
-                    Colors.black.withValues(alpha: 0.88),
-                  ],
-                  stops: const [0.0, 0.35, 0.72, 1.0],
-                ),
+              alignment: const Alignment(0, -0.4),
+              overlay: const LinearGradient(
+                begin: Alignment(-0.85, -0.2),
+                end: Alignment(0.95, 0.4),
+                colors: [
+                  Color(0xD10A164E),
+                  Color(0x9E0D1B6B),
+                  Color(0x470D1B6B),
+                  Color(0x1F0D1B6B),
+                ],
+                stops: [0.0, 0.38, 0.68, 1.0],
               ),
             ),
           ),
@@ -60,7 +55,8 @@ class HomeHeroSection extends StatelessWidget {
               18,
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment:
+                  context.isPhone ? CrossAxisAlignment.center : CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
@@ -69,17 +65,19 @@ class HomeHeroSection extends StatelessWidget {
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
-                    color: AppColors.accent.withValues(alpha: 0.92),
+                    color: Colors.white.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
                   ),
                   child: Text(
                     HomeLabels.heroEyebrow(lang),
                     maxLines: 2,
+                    textAlign: context.isPhone ? TextAlign.center : TextAlign.start,
                     softWrap: true,
                     style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: Colors.white,
+                          color: Colors.white.withValues(alpha: 0.9),
                           fontWeight: FontWeight.w700,
-                          letterSpacing: 0.3,
+                          letterSpacing: 0.8,
                         ),
                   ),
                 ),
@@ -87,6 +85,7 @@ class HomeHeroSection extends StatelessWidget {
                 Text(
                   HomeLabels.heroTitle(lang),
                   maxLines: 2,
+                  textAlign: context.isPhone ? TextAlign.center : TextAlign.start,
                   style: GoogleFonts.sourceSerif4(
                     fontSize: context.isCompactPhone ? 22 : 26,
                     fontWeight: FontWeight.w600,
@@ -99,6 +98,7 @@ class HomeHeroSection extends StatelessWidget {
                 Text(
                   HomeLabels.heroTitleAccent(lang),
                   maxLines: 2,
+                  textAlign: context.isPhone ? TextAlign.center : TextAlign.start,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: Colors.white.withValues(alpha: 0.95),
                         fontWeight: FontWeight.w500,
@@ -108,6 +108,7 @@ class HomeHeroSection extends StatelessWidget {
                 Text(
                   HomeLabels.heroLead(lang),
                   maxLines: 3,
+                  textAlign: context.isPhone ? TextAlign.center : TextAlign.start,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: Colors.white.withValues(alpha: 0.88),
                         fontSize: 13,
@@ -163,6 +164,7 @@ class HomeHeroSection extends StatelessWidget {
                 Wrap(
                   spacing: 6,
                   runSpacing: 6,
+                  alignment: context.isPhone ? WrapAlignment.center : WrapAlignment.start,
                   children: [
                     _TrustChip(HomeLabels.heroTrustWalkIn(lang)),
                     _TrustChip(HomeLabels.heroTrustSameDay(lang)),
@@ -214,12 +216,12 @@ class WhatWeTreatSection extends StatelessWidget {
   const WhatWeTreatSection({super.key});
 
   static const _cards = [
-    _TreatCard('injured', 'assets/images/home/snapshot-injured.jpg', '/services/injuries-fractures-sprains'),
-    _TreatCard('pain', null, '/services/pain-inflammation', slug: 'arthritis'),
+    _TreatCard('injured', HomeImages.injured, '/services/injuries-fractures-sprains'),
+    _TreatCard('pain', HomeImages.pain, '/services/pain-inflammation'),
     _TreatCard('scan', null, '/services/mri-digital-imaging', slug: 'mri-digital-imaging'),
     _TreatCard('sports', 'assets/images/home/snapshot-sports.jpg', '/services/sports-medicine'),
     _TreatCard('spine', null, '/services/lumbar-cervical-spine', slug: 'lumbar-cervical-spine'),
-    _TreatCard('workers', 'assets/images/home/snapshot-workers.jpg', '/more/workers-comp'),
+    _TreatCard('workers', HomeImages.workers, '/more/workers-comp'),
   ];
 
   @override
@@ -271,10 +273,18 @@ class HowWeCareSection extends StatelessWidget {
   const HowWeCareSection({super.key});
 
   static final _tiles = [
-    _CareTile('diagnose', 'mri-digital-imaging', '/services/mri-digital-imaging'),
-    _CareTile('treat', 'pain-inflammation', '/services/pain-inflammation'),
-    _CareTile('surgery', 'total-joint-replacement', '/services/total-joint-replacement'),
-    _CareTile('recover', 'sports-medicine', '/services/sports-medicine'),
+    _CareTile(
+      'lawyers',
+      '/more/lawyers',
+      step: '00',
+      imagePath: HomeImages.lawyers,
+      fallbackPath: HomeImages.lawyersFallback,
+      imageAlignment: const Alignment(0, -0.6),
+    ),
+    _CareTile('diagnose', '/services/mri-digital-imaging', step: '01', slug: 'mri-digital-imaging'),
+    _CareTile('treat', '/services/pain-inflammation', step: '02', slug: 'pain-inflammation'),
+    _CareTile('surgery', '/services/total-joint-replacement', step: '03', slug: 'total-joint-replacement'),
+    _CareTile('recover', '/services/sports-medicine', step: '04', slug: 'sports-medicine'),
   ];
 
   @override
@@ -287,7 +297,9 @@ class HowWeCareSection extends StatelessWidget {
       child: Column(
         children: List.generate(_tiles.length, (index) {
           final tile = _tiles[index];
-          final images = ServiceImages.forSlug(tile.slug);
+          final images = tile.slug != null ? ServiceImages.forSlug(tile.slug!) : null;
+          final imagePath = tile.imagePath ?? images!.src;
+          final fallbackPath = tile.fallbackPath ?? images?.fallback;
           return Card(
             margin: const EdgeInsets.only(bottom: 12),
             clipBehavior: Clip.antiAlias,
@@ -300,9 +312,10 @@ class HowWeCareSection extends StatelessWidget {
                     width: context.isPhone ? 100 : 120,
                     height: context.isPhone ? 100 : 120,
                     child: AssetImageWithFallback(
-                      assetPath: images.src,
-                      fallbackPath: images.fallback,
+                      assetPath: imagePath,
+                      fallbackPath: fallbackPath,
                       fit: BoxFit.cover,
+                      alignment: tile.imageAlignment,
                     ),
                   ),
                   Expanded(
@@ -312,7 +325,7 @@ class HowWeCareSection extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${(index + 1).toString().padLeft(2, '0')}',
+                            tile.step,
                             style: Theme.of(context).textTheme.labelLarge?.copyWith(
                                   color: AppColors.accent,
                                   fontWeight: FontWeight.w800,
@@ -832,8 +845,20 @@ class _TreatCard {
 
 class _CareTile {
   final String key;
-  final String slug;
   final String path;
+  final String step;
+  final String? slug;
+  final String? imagePath;
+  final String? fallbackPath;
+  final Alignment imageAlignment;
 
-  const _CareTile(this.key, this.slug, this.path);
+  const _CareTile(
+    this.key,
+    this.path, {
+    required this.step,
+    this.slug,
+    this.imagePath,
+    this.fallbackPath,
+    this.imageAlignment = Alignment.center,
+  });
 }

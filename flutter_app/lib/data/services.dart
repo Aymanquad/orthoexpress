@@ -20,7 +20,7 @@ const primaryServices = <ServiceItem>[
   ServiceItem(slug: 'sports-medicine'),
   ServiceItem(slug: 'mri-digital-imaging'),
   ServiceItem(slug: 'prp-orthobiologics'),
-  ServiceItem(slug: 'pediatric-care'),
+  ServiceItem(slug: 'car-motor-vehicle-accident-care'),
 ];
 
 const specialtyServices = <ServiceItem>[

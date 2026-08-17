@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:orthoexpress_app/data/content_repository.dart';
 import 'package:orthoexpress_app/data/service_details_repository.dart';
 import 'package:orthoexpress_app/providers/orders_provider.dart';
+import 'package:orthoexpress_app/providers/portal_auth_provider.dart';
 import 'package:orthoexpress_app/app.dart';
 import 'package:orthoexpress_app/features/shop/shop_screen.dart';
 import 'package:orthoexpress_app/providers/accessibility_provider.dart';
@@ -29,12 +30,14 @@ Widget _appWrapper() {
   final cart = CartProvider();
   final orders = OrdersProvider();
   final a11y = AccessibilityProvider();
+  final portalAuth = PortalAuthProvider(orders: orders);
   return MultiProvider(
     providers: [
       ChangeNotifierProvider.value(value: lang),
       ChangeNotifierProvider.value(value: cart),
       ChangeNotifierProvider.value(value: orders),
       ChangeNotifierProvider.value(value: a11y),
+      ChangeNotifierProvider.value(value: portalAuth),
     ],
     child: const OrthoExpressApp(),
   );
@@ -64,7 +67,7 @@ void main() {
       await tester.pumpWidget(_appWrapper());
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('Expert Orthopedic Care'), findsOneWidget);
+      expect(find.textContaining('Expert Injury Care'), findsOneWidget);
       expect(tester.takeException(), isNull, reason: 'Overflow at ${size.width}x${size.height}');
     }
   });
@@ -119,6 +122,7 @@ void main() {
     final cart = CartProvider();
     final orders = OrdersProvider();
     final a11y = AccessibilityProvider();
+    final portalAuth = PortalAuthProvider(orders: orders);
 
     await tester.pumpWidget(
       MultiProvider(
@@ -127,6 +131,7 @@ void main() {
           ChangeNotifierProvider.value(value: cart),
           ChangeNotifierProvider.value(value: orders),
           ChangeNotifierProvider.value(value: a11y),
+          ChangeNotifierProvider.value(value: portalAuth),
         ],
         child: const OrthoExpressApp(),
       ),
@@ -136,7 +141,7 @@ void main() {
     expect(find.text('Inicio'), findsWidgets);
     expect(find.text('Sedes'), findsOneWidget);
     expect(find.text('Servicios'), findsOneWidget);
-    expect(find.textContaining('Cuidado ortopédico'), findsOneWidget);
+    expect(find.textContaining('Cuidado experto de lesiones'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 

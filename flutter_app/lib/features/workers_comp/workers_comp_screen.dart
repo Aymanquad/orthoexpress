@@ -7,6 +7,7 @@ import '../../core/widgets/asset_image.dart';
 import '../../core/widgets/responsive_page.dart';
 import '../../data/locations.dart';
 import '../../data/page_labels.dart';
+import '../../data/service_images.dart';
 import '../../providers/language_provider.dart';
 
 class WorkersCompScreen extends StatelessWidget {
@@ -15,15 +16,50 @@ class WorkersCompScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final lang = context.watch<LanguageProvider>().locale.languageCode;
+    final images = ServiceImages.forSlug('workers-comp');
 
     return SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const HeroImage(
-              assetPath: 'assets/images/workers-comp/hero.jpg',
-              fallbackPath: 'assets/images/knee-injury.webp',
-              height: 200,
+            PageHeroBanner(
+              assetPath: images.src,
+              fallbackPath: images.fallback,
+              minHeight: context.isTablet ? 320 : 300,
+              alignment: images.alignment,
+              bookLabel: ServiceDetailLabels.bookAppointment.forLang(lang),
+              onBook: () => context.push('/more/book-appointment'),
+              content: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    WorkersCompLabels.eyebrow.forLang(lang),
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: Colors.white.withValues(alpha: 0.88),
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 1.1,
+                        ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    WorkersCompLabels.title.forLang(lang),
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          height: 1.2,
+                        ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    WorkersCompLabels.lead.forLang(lang),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Colors.white.withValues(alpha: 0.95),
+                          height: 1.45,
+                        ),
+                  ),
+                ],
+              ),
             ),
             ResponsivePage(
               child: context.isTablet

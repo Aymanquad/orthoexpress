@@ -8,7 +8,7 @@ class ServiceLabels {
       en: 'Injuries, Fractures & Sprains',
       es: 'Lesiones, fracturas y esguinces',
     ),
-    'arthritis': L10nString(en: 'Arthritis Care', es: 'Atención de artritis'),
+    'arthritis': L10nString(en: 'Arthritis', es: 'Artritis'),
     'casting-splinting': L10nString(en: 'Casting & Splinting', es: 'Yesos y férulas'),
     'sports-medicine': L10nString(
       en: 'Sports Medicine (Physicals)',
@@ -22,7 +22,10 @@ class ServiceLabels {
       en: 'PRP Therapy & Orthobiologics',
       es: 'Terapia con PRP y ortobiología',
     ),
-    'pediatric-care': L10nString(en: 'Pediatric Care', es: 'Atención pediátrica'),
+    'car-motor-vehicle-accident-care': L10nString(
+      en: 'Auto Accident Care',
+      es: 'Atención por accidente de auto',
+    ),
     'hand-wrist-care': L10nString(en: 'Hand & Wrist Care', es: 'Atención de mano y muñeca'),
     'shoulder-elbow': L10nString(en: 'Shoulder & Elbow Care', es: 'Atención de hombro y codo'),
     'lumbar-cervical-spine': L10nString(
@@ -30,8 +33,8 @@ class ServiceLabels {
       es: 'Atención de columna lumbar y cervical',
     ),
     'chiropractic-surgery': L10nString(
-      en: 'Chiropractic Surgery',
-      es: 'Cirugía quiropráctica',
+      en: 'Chiropractic',
+      es: 'Quiropráctica',
     ),
     'spine-surgery': L10nString(en: 'Spine Surgery', es: 'Cirugía de columna'),
     'hip-knee-care': L10nString(en: 'Hip & Knee Care', es: 'Atención de cadera y rodilla'),
@@ -49,8 +52,8 @@ class ServiceLabels {
       es: 'Diagnosticamos y tratamos el dolor musculoesquelético agudo y crónico causado por lesiones, sobreuso o condiciones degenerativas.',
     ),
     'injuries-fractures-sprains': L10nString(
-      en: 'Expert care for fractures, sprains, sports injuries, workplace trauma, and auto accident injuries — with same-day walk-in availability.',
-      es: 'Atención experta para fracturas, esguinces, lesiones deportivas, trauma laboral y lesiones por accidentes automovilísticos — con disponibilidad sin cita el mismo día.',
+      en: 'Expert care for fractures, sprains, sports injuries, and workplace trauma — with same-day walk-in availability.',
+      es: 'Atención experta para fracturas, esguinces, lesiones deportivas y trauma laboral — con disponibilidad sin cita el mismo día.',
     ),
     'arthritis': L10nString(
       en: 'Comprehensive arthritis care to reduce pain, stiffness, and swelling with conservative treatments and advanced options when needed.',
@@ -72,9 +75,9 @@ class ServiceLabels {
       en: 'Regenerative treatment options that support natural healing for tendon, ligament, and joint conditions.',
       es: 'Opciones de tratamiento regenerativo que apoyan la sanación natural para condiciones de tendones, ligamentos y articulaciones.',
     ),
-    'pediatric-care': L10nString(
-      en: 'Specialized orthopedic evaluation and treatment for children and adolescents with family-centered care.',
-      es: 'Evaluación y tratamiento ortopédico especializado para niños y adolescentes con atención centrada en la familia.',
+    'car-motor-vehicle-accident-care': L10nString(
+      en: 'Same-day evaluation and treatment for car and motor vehicle accident injuries, with imaging and insurance documentation support.',
+      es: 'Evaluación y tratamiento el mismo día para lesiones por accidentes de auto o vehículo, con imagenología y apoyo en documentación de seguros.',
     ),
     'hand-wrist-care': L10nString(
       en: 'Expert treatment for carpal tunnel, wrist fractures, tendon injuries, and conditions affecting hand function.',

@@ -69,6 +69,7 @@ List<SearchHit> buildSearchIndex(String lang) {
     ('Shop', 'Tienda', '/shop'),
     ('Contact Us', 'Contáctenos', '/more/contact-us'),
     ('About Us', 'Sobre nosotros', '/more/about'),
+    ('Demographics / Lawyers', 'Demografía / Abogados', '/more/lawyers'),
     ('Book Appointment', 'Reservar cita', '/more/book-appointment'),
   ];
 

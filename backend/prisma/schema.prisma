@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Patient {
+  id           String        @id @default(cuid())
+  phone        String        @unique
+  firstName    String?
+  lastName     String?
+  email        String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  appointments Appointment[]
+  shopOrders   ShopOrder[]
+}
+
+model OtpChallenge {
+  id         String    @id @default(cuid())
+  phone      String
+  codeHash   String
+  expiresAt  DateTime
+  attempts   Int       @default(0)
+  consumedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  @@index([phone, createdAt])
+}
+
+enum AppointmentStatus {
+  REQUESTED
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+model Appointment {
+  id           String            @id @default(cuid())
+  patientId    String
+  patient      Patient           @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  locationName String
+  serviceName  String            @default("General visit")
+  providerName String?
+  scheduledAt  DateTime?
+  preferredAt  String?
+  reason       String?
+  status       AppointmentStatus @default(REQUESTED)
+  source       String            @default("portal")
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  @@index([patientId, scheduledAt])
+}
+
+/// Shop orders linked to a patient by phone (JSON payload mirrors localStorage order shape)
+model ShopOrder {
+  id          String   @id // same as client order id (OE-...)
+  patientId   String
+  patient     Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  phone       String
+  payloadJson String
+  totalCents  Int      @default(0)
+  status      String   @default("confirmed")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([patientId, createdAt])
+  @@index([phone])
+}

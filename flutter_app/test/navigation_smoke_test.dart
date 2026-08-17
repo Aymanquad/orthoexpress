@@ -12,14 +12,17 @@ import 'package:orthoexpress_app/providers/accessibility_provider.dart';
 import 'package:orthoexpress_app/providers/cart_provider.dart';
 import 'package:orthoexpress_app/providers/language_provider.dart';
 import 'package:orthoexpress_app/providers/orders_provider.dart';
+import 'package:orthoexpress_app/providers/portal_auth_provider.dart';
 
 Widget _app() {
+  final orders = OrdersProvider();
   return MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => LanguageProvider()),
       ChangeNotifierProvider(create: (_) => CartProvider()),
-      ChangeNotifierProvider(create: (_) => OrdersProvider()),
+      ChangeNotifierProvider.value(value: orders),
       ChangeNotifierProvider(create: (_) => AccessibilityProvider()),
+      ChangeNotifierProvider(create: (_) => PortalAuthProvider(orders: orders)),
     ],
     child: const OrthoExpressApp(),
   );
@@ -69,6 +72,7 @@ void main() {
       '/more',
       '/more/about',
       '/more/workers-comp',
+      '/more/lawyers',
       '/more/book-appointment',
       '/more/blogs',
       ...ContentRepository.blogs.map((b) => '/more/blogs/${b.slug}'),
@@ -77,6 +81,9 @@ void main() {
       '/more/telehealth',
       '/more/after-your-visit',
       '/more/patient-portal',
+      '/more/portal/login',
+      '/more/portal',
+      '/more/portal/appointments',
       '/more/technology',
       '/more/faqs',
       '/more/careers',
@@ -100,6 +107,11 @@ void main() {
 
   test('mapAppPath sends web links into Flutter shell routes', () {
     expect(mapAppPath('/workers-comp'), '/more/workers-comp');
+    expect(mapAppPath('/patient-portal'), '/more/patient-portal');
+    expect(mapAppPath('/portal'), '/more/portal');
+    expect(mapAppPath('/portal/login'), '/more/portal/login');
+    expect(mapAppPath('/portal/appointments'), '/more/portal/appointments');
+    expect(mapAppPath('/lawyers'), '/more/lawyers');
     expect(mapAppPath('/book-appointment'), '/more/book-appointment');
     expect(mapAppPath('/contact-us'), '/more/contact-us');
     expect(mapAppPath('/technology#orthochat'), '/more/technology');

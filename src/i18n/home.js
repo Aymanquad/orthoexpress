@@ -155,6 +155,67 @@ export const home = {
         },
       },
     },
+    skeletonViewer: {
+      eyebrow: 'Interactive anatomy',
+      title: 'See the injury. See how we treat it.',
+      subtitle:
+        'Hover a joint, then click to zoom in. Each region shows the injuries we see most — and the care path from imaging to recovery.',
+      canvasLabel: 'Interactive 3D skeleton. Drag to rotate. Click a joint for injury and treatment details.',
+      loading: 'Loading anatomy model',
+      error: 'The 3D model could not load. Use the joint list below to browse treatments.',
+      hint: 'Drag to rotate · Click a joint to explore',
+      idle: 'Hover a highlighted joint on the model.',
+      clickHint: 'Click to see how we treat this.',
+      navLabel: 'Jump to a joint',
+      panelKicker: 'How we treat this',
+      injuriesLabel: 'Common injuries',
+      treatmentLabel: 'Our approach',
+      credit: '3D model: Male Skeleton by projectkaizen, CC BY 4.0.',
+      labels: {
+        shoulder_l: 'Left shoulder',
+        shoulder_r: 'Right shoulder',
+        elbow_l: 'Left elbow',
+        elbow_r: 'Right elbow',
+        wrist_l: 'Left wrist',
+        wrist_r: 'Right wrist',
+        hip_l: 'Left hip',
+        hip_r: 'Right hip',
+        knee_l: 'Left knee',
+        knee_r: 'Right knee',
+        ankle_l: 'Left ankle',
+        ankle_r: 'Right ankle',
+        spine: 'Spine',
+        skull: 'Neck & skull',
+      },
+      injuries: {
+        shoulder: ['Rotator cuff tears', 'Dislocations', 'Frozen shoulder'],
+        elbow: ['Tennis elbow', 'Fractures', 'Bursitis'],
+        wrist: ['Carpal tunnel', 'Wrist fractures', 'Tendon injuries'],
+        hip: ['Arthritis', 'Bursitis', 'Labral tears'],
+        knee: ['ACL tears', 'Meniscus injuries', 'Arthritis'],
+        ankle: ['Sprains', 'Achilles injuries', 'Fractures'],
+        spine: ['Herniated discs', 'Sciatica', 'Neck & back pain'],
+        skull: ['Cervical strain', 'Whiplash', 'Head & neck trauma'],
+      },
+      treatments: {
+        shoulder:
+          'Same-day exam and imaging, then a plan that may include bracing, injections, physical therapy, or surgical repair when a tear will not heal on its own.',
+        elbow:
+          'We calm inflammation, protect the joint, and restore motion with targeted therapy — surgery only when conservative care is not enough.',
+        wrist:
+          'Stabilization, splinting, and precise diagnosis for nerve and tendon injuries, with a clear path back to grip strength and daily use.',
+        hip:
+          'From arthritis care and joint preservation to replacement when needed — focused on walking comfortably again.',
+        knee:
+          'Sports and wear-and-tear injuries are treated with imaging, bracing, therapy, and ligament or joint procedures when required.',
+        ankle:
+          'Walk-in evaluation for sprains and fractures, with boot or cast support, guided rehab, and specialist follow-up.',
+        spine:
+          'We evaluate disc, nerve, and alignment issues with on-site imaging, then coordinate therapy, pain care, or spine procedures as needed.',
+        skull:
+          'Cervical and trauma-related neck pain is assessed promptly, with imaging and a plan to reduce strain and restore safe motion.',
+      },
+    },
   },
   es: {
     servicesSnapshot: {
@@ -309,6 +370,68 @@ export const home = {
           title: 'Recuperar',
           desc: 'Planes de rehabilitación y medicina deportiva para volver a moverse.',
         },
+      },
+    },
+    skeletonViewer: {
+      eyebrow: 'Anatomía interactiva',
+      title: 'Vea la lesión. Vea cómo la tratamos.',
+      subtitle:
+        'Pase el cursor sobre una articulación y haga clic para acercar. Cada región muestra las lesiones más frecuentes y el camino de atención, desde las imágenes hasta la recuperación.',
+      canvasLabel:
+        'Esqueleto 3D interactivo. Arrastre para girar. Haga clic en una articulación para ver lesiones y tratamiento.',
+      loading: 'Cargando modelo anatómico',
+      error: 'No se pudo cargar el modelo 3D. Use la lista de articulaciones para ver los tratamientos.',
+      hint: 'Arrastre para girar · Haga clic en una articulación',
+      idle: 'Pase el cursor sobre una articulación resaltada en el modelo.',
+      clickHint: 'Haga clic para ver cómo lo tratamos.',
+      navLabel: 'Ir a una articulación',
+      panelKicker: 'Cómo lo tratamos',
+      injuriesLabel: 'Lesiones comunes',
+      treatmentLabel: 'Nuestro enfoque',
+      credit: 'Modelo 3D: Male Skeleton de projectkaizen, CC BY 4.0.',
+      labels: {
+        shoulder_l: 'Hombro izquierdo',
+        shoulder_r: 'Hombro derecho',
+        elbow_l: 'Codo izquierdo',
+        elbow_r: 'Codo derecho',
+        wrist_l: 'Muñeca izquierda',
+        wrist_r: 'Muñeca derecha',
+        hip_l: 'Cadera izquierda',
+        hip_r: 'Cadera derecha',
+        knee_l: 'Rodilla izquierda',
+        knee_r: 'Rodilla derecha',
+        ankle_l: 'Tobillo izquierdo',
+        ankle_r: 'Tobillo derecho',
+        spine: 'Columna',
+        skull: 'Cuello y cráneo',
+      },
+      injuries: {
+        shoulder: ['Desgarro del manguito rotador', 'Luxaciones', 'Hombro congelado'],
+        elbow: ['Codo de tenista', 'Fracturas', 'Bursitis'],
+        wrist: ['Túnel carpiano', 'Fracturas de muñeca', 'Lesiones de tendón'],
+        hip: ['Artritis', 'Bursitis', 'Desgarros del labrum'],
+        knee: ['Desgarro de LCA', 'Lesiones de menisco', 'Artritis'],
+        ankle: ['Esguinces', 'Lesiones de Aquiles', 'Fracturas'],
+        spine: ['Hernias de disco', 'Ciática', 'Dolor de cuello y espalda'],
+        skull: ['Contractura cervical', 'Latigazo', 'Trauma de cabeza y cuello'],
+      },
+      treatments: {
+        shoulder:
+          'Evaluación e imágenes el mismo día, luego un plan que puede incluir férula, inyecciones, terapia física o reparación quirúrgica si el desgarro no sana solo.',
+        elbow:
+          'Calmamos la inflamación, protegemos la articulación y recuperamos el movimiento con terapia dirigida — cirugía solo cuando el cuidado conservador no basta.',
+        wrist:
+          'Estabilización, férulas y diagnóstico preciso de nervios y tendones, con un camino claro para recuperar fuerza de agarre y uso diario.',
+        hip:
+          'Desde el cuidado de la artritis y la preservación articular hasta el reemplazo cuando hace falta — con el objetivo de volver a caminar con comodidad.',
+        knee:
+          'Lesiones deportivas y por desgaste se tratan con imágenes, férulas, terapia y procedimientos de ligamentos o articulación cuando se necesitan.',
+        ankle:
+          'Evaluación sin cita para esguinces y fracturas, con bota o yeso, rehabilitación guiada y seguimiento especializado.',
+        spine:
+          'Evaluamos discos, nervios y alineación con imágenes en el sitio, y coordinamos terapia, manejo del dolor o procedimientos de columna según sea necesario.',
+        skull:
+          'El dolor cervical y por trauma se evalúa de inmediato, con imágenes y un plan para reducir la tensión y recuperar un movimiento seguro.',
       },
     },
   },

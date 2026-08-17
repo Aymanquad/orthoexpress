@@ -17,6 +17,12 @@ class ClinicData {
   static const googleMapsUrl =
       'https://www.google.com/maps/search/?api=1&query=OrthoExpress+Midland+TX';
 
+  static const facebookUrl = 'https://www.facebook.com/';
+  static const xUrl = 'https://x.com/';
+  static const tiktokUrl = 'https://www.tiktok.com/';
+  static const linkedinUrl = 'https://www.linkedin.com/';
+  static const instagramUrl = 'https://www.instagram.com/';
+
   static String telLink(String phone) {
     return 'tel:${phone.replaceAll(RegExp(r'[^\d+]+'), '')}';
   }

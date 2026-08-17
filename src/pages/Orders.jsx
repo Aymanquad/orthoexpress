@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { FaBoxOpen, FaShoppingBag } from 'react-icons/fa'
+import { FaBoxOpen, FaShoppingBag, FaSignInAlt } from 'react-icons/fa'
 import { useLanguage } from '../context/LanguageContext'
 import { useOrders } from '../hooks/useOrders'
 import { formatPrice } from '../data/products'
@@ -14,7 +14,7 @@ import './Orders.css'
 
 const Orders = () => {
   const { t, lang } = useLanguage()
-  const { orders } = useOrders()
+  const { orders, requiresLogin, loading } = useOrders()
 
   return (
     <div className="orders-page">
@@ -23,13 +23,33 @@ const Orders = () => {
       <section className="orders-hero section">
         <div className="container">
           <h1 className="page-title">{t('pages.orders.title')}</h1>
-          <p className="orders-subtitle">{t('shop.ordersSavedLocally')}</p>
+          <p className="orders-subtitle">
+            {requiresLogin ? t('shop.ordersLoginRequiredSubtitle') : t('shop.ordersForYourAccount')}
+          </p>
         </div>
       </section>
 
       <section className="orders-content section">
         <div className="container">
-          {orders.length === 0 ? (
+          {requiresLogin ? (
+            <div className="orders-empty">
+              <FaSignInAlt className="orders-empty-icon" aria-hidden="true" />
+              <h2>{t('shop.ordersLoginTitle')}</h2>
+              <p>{t('shop.ordersLoginText')}</p>
+              <div className="orders-empty-actions">
+                <Link to="/portal/login" state={{ from: '/orders' }} className="btn btn-primary">
+                  {t('portal.signIn')}
+                </Link>
+                <Link to="/shop" className="btn btn-outline">
+                  {t('shop.browseShop')}
+                </Link>
+              </div>
+            </div>
+          ) : loading ? (
+            <div className="orders-empty">
+              <p>{t('shop.ordersLoading')}</p>
+            </div>
+          ) : orders.length === 0 ? (
             <div className="orders-empty">
               <FaShoppingBag className="orders-empty-icon" aria-hidden="true" />
               <h2>{t('shop.noOrdersYet')}</h2>
@@ -60,11 +80,11 @@ const Orders = () => {
                     </div>
 
                     <p className="orders-card-meta">
-                      {itemCount} {itemLabel} · {order.customer.firstName} {order.customer.lastName}
+                      {itemCount} {itemLabel} · {order.customer?.firstName} {order.customer?.lastName}
                     </p>
 
                     <ul className="orders-card-items">
-                      {order.items.map((item) => (
+                      {(order.items || []).map((item) => (
                         <li key={`${order.id}-${item.productId}`} className="orders-card-item">
                           <img src={item.image} alt="" className="orders-card-item-image" />
                           <div className="orders-card-item-details">
@@ -81,7 +101,7 @@ const Orders = () => {
                     <div className="orders-card-footer">
                       <div>
                         <p className="orders-card-total-label">{t('shop.totalPaid')}</p>
-                        <p className="orders-card-total">{formatPrice(order.totals.total, lang)}</p>
+                        <p className="orders-card-total">{formatPrice(order.totals?.total || 0, lang)}</p>
                         <p className="orders-card-status-note">{status.description}</p>
                       </div>
                       <Link to={`/order-success/${order.id}`} className="btn btn-outline orders-view-btn">

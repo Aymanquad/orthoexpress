@@ -17,6 +17,7 @@ class NavLabels {
   static const contactShort = L10nString(en: 'Contact', es: 'Contacto');
   static const about = L10nString(en: 'About', es: 'Nosotros');
   static const workersComp = L10nString(en: "Workers' Comp", es: 'Compensación laboral');
+  static const lawyers = L10nString(en: 'Demographics / Lawyers', es: 'Demografía / Abogados');
   static const blogs = L10nString(en: 'Blogs', es: 'Blogs');
   static const contact = L10nString(en: 'Contact Us', es: 'Contáctenos');
   static const payment = L10nString(en: 'Payment', es: 'Pagos');

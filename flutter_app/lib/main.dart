@@ -8,6 +8,7 @@ import 'providers/accessibility_provider.dart';
 import 'providers/cart_provider.dart';
 import 'providers/language_provider.dart';
 import 'providers/orders_provider.dart';
+import 'providers/portal_auth_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,10 +19,12 @@ Future<void> main() async {
   final cart = CartProvider();
   final orders = OrdersProvider();
   final a11y = AccessibilityProvider();
+  final portalAuth = PortalAuthProvider(orders: orders);
   await lang.load();
   await cart.load();
   await orders.load();
   await a11y.load();
+  await portalAuth.restore();
   await ServiceDetailRepository.ensureLoaded();
   await ContentRepository.ensureLoaded();
 
@@ -32,6 +35,7 @@ Future<void> main() async {
         ChangeNotifierProvider.value(value: cart),
         ChangeNotifierProvider.value(value: orders),
         ChangeNotifierProvider.value(value: a11y),
+        ChangeNotifierProvider.value(value: portalAuth),
       ],
       child: const OrthoExpressApp(),
     ),

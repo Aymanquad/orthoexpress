@@ -20,6 +20,11 @@ const Hero = () => {
           fallback={IMAGES.home.hero.fallback}
           alt=""
           className="hero-background-img"
+          style={
+            IMAGES.home.hero.objectPosition
+              ? { objectPosition: IMAGES.home.hero.objectPosition }
+              : undefined
+          }
         />
         <div className="hero-overlay"></div>
       </div>

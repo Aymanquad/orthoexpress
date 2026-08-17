@@ -8,6 +8,7 @@ import '../../core/widgets/asset_image.dart';
 import '../../core/widgets/responsive_page.dart';
 import '../../data/page_labels.dart';
 import '../../data/service_details_repository.dart';
+import '../../data/service_images.dart';
 import '../../providers/language_provider.dart';
 
 class ServiceDetailScreen extends StatelessWidget {
@@ -24,7 +25,8 @@ class ServiceDetailScreen extends StatelessWidget {
       return const NotFoundScreen();
     }
 
-    final heroHeight = context.isTablet ? 260.0 : 200.0;
+    final heroHeight = context.isTablet ? 300.0 : 280.0;
+    final images = ServiceImages.forSlug(slug);
     final showBody = service.bodyImagePath != null &&
         service.bodyImagePath != service.heroImagePath;
 
@@ -32,19 +34,40 @@ class ServiceDetailScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          HeroImage(
+          PageHeroBanner(
             assetPath: service.heroImagePath,
             fallbackPath: service.imageFallback,
-            height: heroHeight,
+            minHeight: heroHeight,
+            alignment: images.alignment,
+            bookLabel: ServiceDetailLabels.bookAppointment.forLang(lang),
+            onBook: () => context.push('/more/book-appointment'),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  service.title,
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        height: 1.2,
+                      ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  service.description,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Colors.white.withValues(alpha: 0.95),
+                        height: 1.45,
+                      ),
+                ),
+              ],
+            ),
           ),
           ResponsivePage(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(service.title, style: Theme.of(context).textTheme.displayMedium),
-                const SizedBox(height: 8),
-                Text(service.description, style: Theme.of(context).textTheme.bodyMedium),
-                const SizedBox(height: 24),
                 Text(
                   ServiceDetailLabels.about.forLang(lang),
                   style: Theme.of(context).textTheme.titleLarge,
@@ -124,6 +147,7 @@ class ServiceDetailScreen extends StatelessWidget {
                 const SizedBox(height: 24),
                 FilledButton(
                   onPressed: () => context.push('/more/book-appointment'),
+                  style: FilledButton.styleFrom(backgroundColor: AppColors.accent),
                   child: Text(ServiceDetailLabels.bookAppointment.forLang(lang)),
                 ),
                 const SizedBox(height: 16),

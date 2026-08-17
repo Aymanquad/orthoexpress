@@ -4,6 +4,7 @@ import '../data/form_labels.dart';
 import '../data/locations.dart';
 import '../data/nav_labels.dart';
 import '../data/page_labels.dart';
+import '../data/portal_labels.dart';
 import '../data/service_labels.dart';
 import '../data/shop_labels.dart';
 
@@ -66,6 +67,8 @@ class RouteTitles {
         return AboutLabels.title.forLang(lang);
       case 'workers-comp':
         return ServiceLabels.name('workers-comp', lang);
+      case 'lawyers':
+        return LawyersLabels.title.forLang(lang);
       case 'book-appointment':
         return BookLabels.title(lang);
       case 'blogs':
@@ -84,6 +87,16 @@ class RouteTitles {
         return ContentRepository.patientLabel('afterVisit', 'title', lang);
       case 'patient-portal':
         return ContentRepository.patientLabel('portal', 'title', lang);
+      case 'portal':
+        if (segments.length > 2) {
+          switch (segments[2]) {
+            case 'login':
+              return PortalLabels.loginTitle.forLang(lang);
+            case 'appointments':
+              return PortalLabels.appointmentsTitle.forLang(lang);
+          }
+        }
+        return PortalLabels.dashboardTitle.forLang(lang);
       case 'technology':
         return ContentRepository.patientLabel('technology', 'title', lang);
       case 'faqs':
@@ -126,6 +139,7 @@ class RouteTitles {
 const legacyRouteRedirects = <String, String>{
   '/about': '/more/about',
   '/workers-comp': '/more/workers-comp',
+  '/lawyers': '/more/lawyers',
   '/book-appointment': '/more/book-appointment',
   '/blogs': '/more/blogs',
   '/contact-us': '/more/contact-us',
@@ -133,6 +147,9 @@ const legacyRouteRedirects = <String, String>{
   '/telehealth': '/more/telehealth',
   '/after-your-visit': '/more/after-your-visit',
   '/patient-portal': '/more/patient-portal',
+  '/portal': '/more/portal',
+  '/portal/login': '/more/portal/login',
+  '/portal/appointments': '/more/portal/appointments',
   '/technology': '/more/technology',
   '/faqs': '/more/faqs',
   '/careers': '/more/careers',
@@ -143,4 +160,6 @@ const legacyRouteRedirects = <String, String>{
   '/cart': '/shop/cart',
   '/checkout': '/shop/checkout',
   '/orders': '/shop/orders',
+  '/services/pediatric-care': '/services',
+  '/services/auto-injury': '/services/car-motor-vehicle-accident-care',
 };

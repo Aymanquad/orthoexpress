@@ -46,8 +46,8 @@ const AfterVisit = () => {
             <Link to="/faqs" className="btn btn-outline">
               {t('nav.faqs')}
             </Link>
-            <Link to="/patient-portal" className="btn btn-outline">
-              {t('nav.patientPortal')}
+            <Link to="/portal/login" className="btn btn-outline">
+              {t('portal.signIn')}
             </Link>
           </div>
         </div>

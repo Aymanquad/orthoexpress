@@ -7,6 +7,7 @@ import 'package:orthoexpress_app/providers/accessibility_provider.dart';
 import 'package:orthoexpress_app/providers/cart_provider.dart';
 import 'package:orthoexpress_app/providers/language_provider.dart';
 import 'package:orthoexpress_app/providers/orders_provider.dart';
+import 'package:orthoexpress_app/providers/portal_auth_provider.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +22,7 @@ void main() {
     final cart = CartProvider();
     final orders = OrdersProvider();
     final a11y = AccessibilityProvider();
+    final portalAuth = PortalAuthProvider(orders: orders);
 
     await tester.pumpWidget(
       MultiProvider(
@@ -29,6 +31,7 @@ void main() {
           ChangeNotifierProvider.value(value: cart),
           ChangeNotifierProvider.value(value: orders),
           ChangeNotifierProvider.value(value: a11y),
+          ChangeNotifierProvider.value(value: portalAuth),
         ],
         child: const OrthoExpressApp(),
       ),
@@ -36,6 +39,6 @@ void main() {
 
     await tester.pumpAndSettle();
     expect(find.text('Walk-In Orthopedic Care'), findsNothing);
-    expect(find.textContaining('Expert Orthopedic Care'), findsOneWidget);
+    expect(find.textContaining('Expert Injury Care'), findsOneWidget);
   });
 }

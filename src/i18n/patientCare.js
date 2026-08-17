@@ -25,12 +25,12 @@ export const patientCare = {
       lead: 'Manage appointments, billing, records, and secure messaging — all in one place when your portal is active.',
       featuresHeading: 'What you can do',
       signIn: 'Sign in to portal',
-      signInHelp: 'Use your clinic-provided credentials to access the secure patient portal.',
-      noPortalTitle: 'Need portal access?',
+      signInHelp: 'Sign in with your mobile number — we will text you a one-time verification code.',
+      noPortalTitle: 'Need help?',
       noPortalText:
-        'Portal sign-in is rolling out by center. Call your clinic or contact us — we can help with billing, records requests, and follow-up scheduling today.',
+        'Call your clinic or contact us — we can help with billing, records requests, and follow-up scheduling today.',
       demoNote:
-        'This site does not store medical credentials. Portal login opens your clinic’s secure external system when configured.',
+        'Secure sign-in uses a one-time code sent to your phone. No password required.',
     },
     technology: {
       eyebrow: 'CLINICAL TECHNOLOGY',
@@ -75,12 +75,12 @@ export const patientCare = {
       lead: 'Gestione citas, facturación, historial y mensajería segura — todo en un solo lugar cuando su portal esté activo.',
       featuresHeading: 'Qué puede hacer',
       signIn: 'Iniciar sesión en el portal',
-      signInHelp: 'Use las credenciales proporcionadas por su clínica para acceder al portal seguro.',
-      noPortalTitle: '¿Necesita acceso al portal?',
+      signInHelp: 'Inicie sesión con su número móvil — le enviaremos un código de verificación.',
+      noPortalTitle: '¿Necesita ayuda?',
       noPortalText:
-        'El acceso al portal se implementa por centro. Llame a su clínica o contáctenos — podemos ayudarle hoy con facturación, solicitudes de historial y programación de seguimiento.',
+        'Llame a su clínica o contáctenos — podemos ayudarle hoy con facturación, solicitudes de historial y programación de seguimiento.',
       demoNote:
-        'Este sitio no almacena credenciales médicas. El inicio de sesión abre el sistema externo seguro de su clínica cuando está configurado.',
+        'El inicio de sesión seguro usa un código de un solo uso enviado a su teléfono. No se requiere contraseña.',
     },
     technology: {
       eyebrow: 'TECNOLOGÍA CLÍNICA',

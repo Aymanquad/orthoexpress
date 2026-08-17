@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../config/theme.dart';
 import '../../data/models/order.dart';
+import '../../data/portal_api.dart';
 import '../../core/shop/checkout_logic.dart';
 import '../../core/utils/responsive.dart';
 import '../../core/widgets/empty_state.dart';
@@ -315,6 +316,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
     final order = result.order!;
     await context.read<OrdersProvider>().saveOrder(order);
+    try {
+      await PortalApi.saveOrder(order);
+    } catch (_) {
+      // Local order remains the source of truth if the API is down.
+    }
     await cart.clearCart();
     if (!mounted) return;
     context.go('/shop/order-success/${order.id}');

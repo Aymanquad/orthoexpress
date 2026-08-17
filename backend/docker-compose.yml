@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: orthoexpress-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: orthoexpress
+      POSTGRES_PASSWORD: orthoexpress
+      POSTGRES_DB: orthoexpress
+    ports:
+      - "5432:5432"
+    volumes:
+      - orthoexpress_pgdata:/var/lib/postgresql/data
+
+volumes:
+  orthoexpress_pgdata:

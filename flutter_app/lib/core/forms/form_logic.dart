@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 import '../../data/clinic.dart';
 import '../../data/locations.dart';
+import '../../data/portal_api.dart';
 
 String todayDateString() {
   final today = DateTime.now();
@@ -195,6 +196,27 @@ String contactMailtoBody(ContactFormData data) =>
 Future<FormSubmitResult> submitAppointmentForm(AppointmentFormData data) async {
   final loc = getLocationBySlug(data.location);
   final locationLabel = loc != null ? '${loc.name} — ${loc.city}' : data.location;
+
+  final preferredParts = [
+    if (data.preferredDate.isNotEmpty) data.preferredDate,
+    if (data.preferredTime.isNotEmpty) data.preferredTime,
+  ];
+  final preferredAt = preferredParts.join(' ');
+
+  try {
+    await PortalApi.requestAppointment(
+      name: data.name,
+      phone: data.phone,
+      email: data.email,
+      locationName: locationLabel,
+      preferredAt: preferredAt.isEmpty ? null : preferredAt,
+      reason: data.reason.isEmpty ? null : data.reason,
+      consent: data.consent,
+    );
+    return const FormSubmitResult(success: true);
+  } catch (_) {
+    // Fall through to Formspree / mailto, same as the website.
+  }
 
   final payload = {
     '_subject': 'Appointment request — ${data.name}',

@@ -253,6 +253,7 @@ export const pages = {
       successTitle: 'Request received!',
       successMailto: 'Your email app should open with your request. We will confirm shortly.',
       successForm: 'Thank you! Our team will contact you within one business day to confirm your appointment.',
+      successApi: 'Your request is saved. Sign in with your phone to track your appointment status.',
       errorTitle: 'Unable to submit request',
       morning: 'Morning (9 AM – 12 PM)',
       afternoon: 'Afternoon (12 PM – 3 PM)',
@@ -675,6 +676,7 @@ export const pages = {
       successMailto: 'Su aplicación de correo debería abrirse con su solicitud. Confirmaremos pronto.',
       successForm:
         '¡Gracias! Nuestro equipo le contactará dentro de un día hábil para confirmar su cita.',
+      successApi: 'Su solicitud está guardada. Inicie sesión con su teléfono para seguir el estado de su cita.',
       errorTitle: 'No se pudo enviar la solicitud',
       morning: 'Mañana (9 AM – 12 PM)',
       afternoon: 'Tarde (12 PM – 3 PM)',

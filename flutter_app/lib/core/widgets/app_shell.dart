@@ -114,6 +114,7 @@ class AppShell extends StatelessWidget {
       automaticallyImplyLeading: false,
       leading: showBack
           ? IconButton(
+              visualDensity: VisualDensity.compact,
               icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 16),
               tooltip: NavLabels.back.forLang(code),
               onPressed: () {
@@ -139,6 +140,7 @@ class AppShell extends StatelessWidget {
       title: AppBarTitle(title),
       actions: [
         IconButton(
+          visualDensity: VisualDensity.compact,
           tooltip: NavLabels.search.forLang(code),
           onPressed: () {
             showSearch(
@@ -150,12 +152,14 @@ class AppShell extends StatelessWidget {
         ),
         if (onShop)
           IconButton(
+            visualDensity: VisualDensity.compact,
             tooltip: NavLabels.orders.forLang(code),
             onPressed: () => context.push('/shop/orders'),
             icon: const Icon(Icons.receipt_long_outlined, size: 22),
           ),
         const LanguageChip(),
         IconButton(
+          visualDensity: VisualDensity.compact,
           tooltip: NavLabels.cart.forLang(code),
           onPressed: () => context.push('/shop/cart'),
           icon: Badge(
