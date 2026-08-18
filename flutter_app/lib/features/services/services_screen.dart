@@ -54,6 +54,21 @@ class ServicesScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 24),
+        Text(ServicesLabels.accidentHeading.forLang(lang), style: Theme.of(context).textTheme.titleLarge),
+        const SizedBox(height: 6),
+        Text(
+          ServicesLabels.accidentLead.forLang(lang),
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+        const SizedBox(height: 12),
+        ResponsiveCardGrid(
+          itemCount: accidentInjuryServices.length,
+          itemBuilder: (context, i) => _ServiceTile(
+            service: accidentInjuryServices[i],
+            lang: lang,
+          ),
+        ),
+        const SizedBox(height: 24),
         Text(ServicesLabels.specialtyHeading.forLang(lang), style: Theme.of(context).textTheme.titleLarge),
         const SizedBox(height: 6),
         Text(

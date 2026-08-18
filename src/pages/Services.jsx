@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { FaArrowRight } from 'react-icons/fa'
 import {
   PRIMARY_SERVICE_CARDS,
+  ACCIDENT_INJURY_SERVICE_CARDS,
   SPECIALTY_SERVICE_CARDS,
   WORKERS_COMP_SERVICE,
   getServicePath,
@@ -74,6 +75,16 @@ const Services = () => {
             <p className="services-section-lead">{t('pages.services.coreLead')}</p>
             <div className="services-grid">
               {PRIMARY_SERVICE_CARDS.map((service) => (
+                <ServiceCard key={getServicePath(service)} service={service} />
+              ))}
+            </div>
+          </div>
+
+          <div className="services-section-block services-section-block--accident">
+            <h2 className="services-section-heading">{t('pages.services.accidentHeading')}</h2>
+            <p className="services-section-lead">{t('pages.services.accidentLead')}</p>
+            <div className="services-grid services-grid--accident">
+              {ACCIDENT_INJURY_SERVICE_CARDS.map((service) => (
                 <ServiceCard key={getServicePath(service)} service={service} />
               ))}
             </div>

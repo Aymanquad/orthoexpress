@@ -20,7 +20,14 @@ const primaryServices = <ServiceItem>[
   ServiceItem(slug: 'sports-medicine'),
   ServiceItem(slug: 'mri-digital-imaging'),
   ServiceItem(slug: 'prp-orthobiologics'),
+];
+
+const accidentInjuryServices = <ServiceItem>[
   ServiceItem(slug: 'car-motor-vehicle-accident-care'),
+  ServiceItem(slug: 'motorcycle-accident-care'),
+  ServiceItem(slug: 'pedestrian-injury-care'),
+  ServiceItem(slug: 'truck-accident-care'),
+  ServiceItem(slug: 'work-injury-care'),
 ];
 
 const specialtyServices = <ServiceItem>[
@@ -40,10 +47,17 @@ ServiceItem? getServiceBySlug(String slug) {
   for (final s in primaryServices) {
     if (s.slug == slug) return s;
   }
+  for (final s in accidentInjuryServices) {
+    if (s.slug == slug) return s;
+  }
   for (final s in specialtyServices) {
     if (s.slug == slug) return s;
   }
   return null;
 }
 
-List<ServiceItem> get allServices => [...primaryServices, ...specialtyServices];
+List<ServiceItem> get allServices => [
+  ...primaryServices,
+  ...accidentInjuryServices,
+  ...specialtyServices,
+];

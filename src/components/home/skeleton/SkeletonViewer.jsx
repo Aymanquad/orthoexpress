@@ -1,20 +1,22 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useLanguage } from '../../../context/LanguageContext'
-import { JOINT_HOTSPOTS, getHotspot } from './jointHotspots'
+import { BODY_TOPICS, getHotspot, getPrimaryHotspotId, isTopicActive } from './jointHotspots'
 import './SkeletonViewer.css'
 
 function prefersReducedMotion() {
   return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
-function setLeaderLine(line, dot, from, to, key, animate) {
+function setLeaderLine(line, glow, dot, ring, from, to, key, animate) {
   if (!line || !from || !to) {
     if (line) {
       line.style.display = 'none'
       line.dataset.key = ''
     }
+    if (glow) glow.style.display = 'none'
     if (dot) dot.style.display = 'none'
+    if (ring) ring.style.display = 'none'
     return
   }
 
@@ -31,10 +33,25 @@ function setLeaderLine(line, dot, from, to, key, animate) {
   line.setAttribute('y2', String(y2))
   line.setAttribute('stroke-dasharray', String(length))
 
+  if (glow) {
+    glow.style.display = 'block'
+    glow.setAttribute('x1', String(x1))
+    glow.setAttribute('y1', String(y1))
+    glow.setAttribute('x2', String(x2))
+    glow.setAttribute('y2', String(y2))
+    glow.setAttribute('stroke-dasharray', String(length))
+  }
+
   if (dot) {
     dot.style.display = 'block'
     dot.setAttribute('cx', String(x1))
     dot.setAttribute('cy', String(y1))
+  }
+
+  if (ring) {
+    ring.style.display = 'block'
+    ring.setAttribute('cx', String(x1))
+    ring.setAttribute('cy', String(y1))
   }
 
   const keyChanged = line.dataset.key !== key
@@ -44,27 +61,64 @@ function setLeaderLine(line, dot, from, to, key, animate) {
     line.style.opacity = '0'
     line.style.transition = 'none'
     line.setAttribute('stroke-dashoffset', String(length))
+    if (glow) {
+      glow.style.opacity = '0'
+      glow.style.transition = 'none'
+      glow.setAttribute('stroke-dashoffset', String(length))
+    }
     if (dot) {
       dot.style.opacity = '0'
       dot.style.transition = 'none'
     }
+    if (ring) {
+      ring.style.opacity = '0'
+      ring.style.transition = 'none'
+      ring.classList.remove('is-live')
+    }
     line.getBoundingClientRect()
     line.style.transition =
-      'stroke-dashoffset 0.52s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.28s ease-out'
+      'stroke-dashoffset 0.62s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.32s ease-out'
     line.setAttribute('stroke-dashoffset', '0')
     line.style.opacity = '1'
+    if (glow) {
+      glow.style.transition =
+        'stroke-dashoffset 0.72s cubic-bezier(0.22, 1, 0.36, 1) 0.04s, opacity 0.38s ease-out 0.04s'
+      glow.setAttribute('stroke-dashoffset', '0')
+      glow.style.opacity = '1'
+    }
     if (dot) {
-      dot.style.transition = 'opacity 0.3s ease-out 0.14s'
+      dot.style.transition = 'opacity 0.28s ease-out 0.36s'
       dot.style.opacity = '1'
+    }
+    if (ring) {
+      ring.style.transition = 'opacity 0.32s ease-out 0.42s'
+      ring.style.opacity = '1'
+      ring.classList.add('is-live')
     }
   } else if (keyChanged) {
     line.setAttribute('stroke-dashoffset', '0')
     line.style.opacity = '1'
+    if (glow) {
+      glow.setAttribute('stroke-dashoffset', '0')
+      glow.style.opacity = '1'
+    }
     if (dot) dot.style.opacity = '1'
+    if (ring) {
+      ring.style.opacity = '1'
+      ring.classList.add('is-live')
+    }
   } else {
     line.setAttribute('stroke-dashoffset', '0')
     line.style.opacity = '1'
+    if (glow) {
+      glow.setAttribute('stroke-dashoffset', '0')
+      glow.style.opacity = '1'
+    }
     if (dot) dot.style.opacity = '1'
+    if (ring) {
+      ring.style.opacity = '1'
+      ring.classList.add('is-live')
+    }
   }
 }
 
@@ -80,7 +134,9 @@ const SkeletonViewer = () => {
   const panelAnchorRef = useRef(null)
   const viewerRef = useRef(null)
   const leaderRef = useRef(null)
+  const leaderGlowRef = useRef(null)
   const leaderDotRef = useRef(null)
+  const leaderRingRef = useRef(null)
   const selectedIdRef = useRef(null)
 
   const [active, setActive] = useState(false)
@@ -93,17 +149,18 @@ const SkeletonViewer = () => {
   const activeId = selectedId || hoveredId
   const activeHotspot = activeId ? getHotspot(activeId) : null
   const labels = t('home.skeletonViewer.labels')
+  const topics = t('home.skeletonViewer.topics')
   const injuries = activeHotspot && selectedId ? t(`home.skeletonViewer.injuries.${activeHotspot.region}`) : []
   const treatment = activeHotspot && selectedId ? t(`home.skeletonViewer.treatments.${activeHotspot.region}`) : ''
   selectedIdRef.current = selectedId
 
-  const jointButtons = useMemo(
+  const topicButtons = useMemo(
     () =>
-      JOINT_HOTSPOTS.map((joint) => ({
-        ...joint,
-        label: labels?.[joint.id] || joint.id,
+      BODY_TOPICS.map((topic) => ({
+        ...topic,
+        label: topics?.[topic.id] || topic.id,
       })),
-    [labels]
+    [topics]
   )
 
   useEffect(() => {
@@ -175,7 +232,16 @@ const SkeletonViewer = () => {
             const from = toLayoutPoint(source)
             const to = getCalloutPoint()
             const key = currentSelected || hover?.id || ''
-            setLeaderLine(leaderRef.current, leaderDotRef.current, from, to, key, animateLine)
+            setLeaderLine(
+              leaderRef.current,
+              leaderGlowRef.current,
+              leaderDotRef.current,
+              leaderRingRef.current,
+              from,
+              to,
+              key,
+              animateLine
+            )
           },
         })
         if (cancelled) {
@@ -212,8 +278,9 @@ const SkeletonViewer = () => {
     viewerRef.current?.select(null)
   }
 
-  const selectJoint = (id) => {
-    viewerRef.current?.select(id)
+  const selectTopic = (topicId) => {
+    const hotspotId = getPrimaryHotspotId(topicId)
+    if (hotspotId) viewerRef.current?.select(hotspotId)
   }
 
   return (
@@ -227,9 +294,14 @@ const SkeletonViewer = () => {
           <p className="skeleton-viewer-subtitle">{t('home.skeletonViewer.subtitle')}</p>
         </header>
 
-        <div className={`skeleton-layout ${selectedId ? 'is-open' : ''} ${hoveredId ? 'is-hover' : ''}`} ref={layoutRef}>
+        <div
+          className={`skeleton-layout ${selectedId ? 'is-open' : ''} ${hoveredId ? 'is-hover' : ''} ${ready ? 'is-ready' : ''}`}
+          ref={layoutRef}
+        >
           <svg className="skeleton-leaders" aria-hidden="true">
+            <line ref={leaderGlowRef} className="skeleton-leader-glow" x1="0" y1="0" x2="0" y2="0" />
             <line ref={leaderRef} className="skeleton-leader-line" x1="0" y1="0" x2="0" y2="0" />
+            <circle ref={leaderRingRef} className="skeleton-leader-ring" cx="0" cy="0" r="9" />
             <circle ref={leaderDotRef} className="skeleton-leader-dot" cx="0" cy="0" r="3.5" />
           </svg>
 
@@ -237,7 +309,10 @@ const SkeletonViewer = () => {
             <span className="skeleton-callout-anchor" ref={panelAnchorRef} />
             {!activeHotspot && <p className="skeleton-callout-idle">{t('home.skeletonViewer.idle')}</p>}
             {activeHotspot && (
-              <>
+              <div
+                key={`${activeHotspot.id}-${selectedId ? 'open' : 'hover'}`}
+                className={`skeleton-callout-panel ${selectedId ? 'is-selected' : 'is-preview'}`}
+              >
                 <p className="skeleton-callout-kicker">{t('home.skeletonViewer.panelKicker')}</p>
                 <h3>{labels?.[activeHotspot.id]}</h3>
                 {selectedId ? (
@@ -251,8 +326,8 @@ const SkeletonViewer = () => {
                     <p className="skeleton-callout-label">{t('home.skeletonViewer.treatmentLabel')}</p>
                     <p className="skeleton-callout-copy">{treatment}</p>
                     <p className="skeleton-callout-actions">
-                      <Link to={`/services/${activeHotspot.slug}`}>{t('common.learnMore')} →</Link>
-                      <Link to="/book-appointment">{t('common.bookAppointment')} →</Link>
+                      <Link to={`/services/${activeHotspot.slug}`}>{t('common.learnMore')}</Link>
+                      <Link to="/book-appointment">{t('common.bookAppointment')}</Link>
                       <button type="button" onClick={closePanel}>
                         {t('common.close')}
                       </button>
@@ -261,11 +336,13 @@ const SkeletonViewer = () => {
                 ) : (
                   <p className="skeleton-callout-hint">{t('home.skeletonViewer.clickHint')}</p>
                 )}
-              </>
+              </div>
             )}
           </aside>
 
           <div className="skeleton-stage" ref={stageRef}>
+            <div className="skeleton-stage-aura" aria-hidden="true" />
+            <div className="skeleton-stage-grid" aria-hidden="true" />
             <canvas ref={canvasRef} className="skeleton-canvas" aria-label={t('home.skeletonViewer.canvasLabel')} />
 
             {active && !ready && !error && (
@@ -285,19 +362,18 @@ const SkeletonViewer = () => {
             <p className="skeleton-hint">{t('home.skeletonViewer.hint')}</p>
           </div>
 
-          <div className="skeleton-joint-nav" role="list" aria-label={t('home.skeletonViewer.navLabel')}>
-            {jointButtons.map((joint) => (
+          <nav className="skeleton-joint-nav" aria-label={t('home.skeletonViewer.navLabel')}>
+            {topicButtons.map((topic) => (
               <button
-                key={joint.id}
+                key={topic.id}
                 type="button"
-                role="listitem"
-                className={`skeleton-joint-chip ${selectedId === joint.id ? 'is-active' : ''}`}
-                onClick={() => selectJoint(joint.id)}
+                className={`skeleton-joint-chip ${isTopicActive(topic.id, selectedId) ? 'is-active' : ''}`}
+                onClick={() => selectTopic(topic.id)}
               >
-                {joint.label}
+                {topic.label}
               </button>
             ))}
-          </div>
+          </nav>
         </div>
 
         <p className="skeleton-credit">{t('home.skeletonViewer.credit')}</p>

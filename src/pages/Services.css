@@ -69,6 +69,26 @@
   gap: 22px;
 }
 
+.services-section-block--accident {
+  padding: 28px 28px 8px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, #fff7f8 0%, #f0f4ff 55%, #ffffff 100%);
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  box-shadow: 0 8px 28px rgba(15, 23, 42, 0.04);
+}
+
+.services-grid.services-grid--accident {
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+.services-section-block--accident .services-card {
+  border-color: rgba(226, 232, 240, 0.85);
+}
+
+.services-section-block--accident .services-card:hover {
+  border-color: rgba(236, 72, 153, 0.28);
+}
+
 .services-grid.services-grid--single {
   grid-template-columns: minmax(0, 1fr);
   max-width: min(100%, 520px);

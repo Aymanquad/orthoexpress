@@ -23,8 +23,24 @@ class ServiceLabels {
       es: 'Terapia con PRP y ortobiología',
     ),
     'car-motor-vehicle-accident-care': L10nString(
-      en: 'Auto Accident Care',
+      en: 'Car Accident Care',
       es: 'Atención por accidente de auto',
+    ),
+    'motorcycle-accident-care': L10nString(
+      en: 'Motorcycle Accident Care',
+      es: 'Atención por accidente de motocicleta',
+    ),
+    'pedestrian-injury-care': L10nString(
+      en: 'Pedestrian Injury Care',
+      es: 'Atención por lesión de peatón',
+    ),
+    'truck-accident-care': L10nString(
+      en: 'Truck Accident Care',
+      es: 'Atención por accidente de camión',
+    ),
+    'work-injury-care': L10nString(
+      en: 'Work Injury Care',
+      es: 'Atención por lesión laboral',
     ),
     'hand-wrist-care': L10nString(en: 'Hand & Wrist Care', es: 'Atención de mano y muñeca'),
     'shoulder-elbow': L10nString(en: 'Shoulder & Elbow Care', es: 'Atención de hombro y codo'),
@@ -76,8 +92,24 @@ class ServiceLabels {
       es: 'Opciones de tratamiento regenerativo que apoyan la sanación natural para condiciones de tendones, ligamentos y articulaciones.',
     ),
     'car-motor-vehicle-accident-care': L10nString(
-      en: 'Same-day evaluation and treatment for car and motor vehicle accident injuries, with imaging and insurance documentation support.',
-      es: 'Evaluación y tratamiento el mismo día para lesiones por accidentes de auto o vehículo, con imagenología y apoyo en documentación de seguros.',
+      en: 'Same-day evaluation and treatment for car accident injuries, with imaging and insurance documentation support.',
+      es: 'Evaluación y tratamiento el mismo día para lesiones por accidente de auto, con imagenología y apoyo en documentación de seguros.',
+    ),
+    'motorcycle-accident-care': L10nString(
+      en: 'Expert orthopedic care after motorcycle crashes — fractures, road rash, and impact injuries evaluated walk-in.',
+      es: 'Atención ortopédica experta después de accidentes de motocicleta — fracturas, abrasiones y lesiones por impacto sin cita.',
+    ),
+    'pedestrian-injury-care': L10nString(
+      en: 'Urgent walk-in care for pedestrians hit by vehicles — fractures, soft tissue trauma, and spinal evaluation.',
+      es: 'Atención urgente sin cita para peatones atropellados — fracturas, trauma de tejidos blandos y evaluación espinal.',
+    ),
+    'truck-accident-care': L10nString(
+      en: 'Specialized injury evaluation after truck and commercial vehicle collisions, with thorough documentation.',
+      es: 'Evaluación especializada de lesiones tras colisiones con camiones y vehículos comerciales, con documentación completa.',
+    ),
+    'work-injury-care': L10nString(
+      en: 'On-the-job injury evaluation, workers compensation documentation, and return-to-work treatment plans.',
+      es: 'Evaluación de lesiones laborales, documentación de compensación laboral y planes de tratamiento para el regreso al trabajo.',
     ),
     'hand-wrist-care': L10nString(
       en: 'Expert treatment for carpal tunnel, wrist fractures, tendon injuries, and conditions affecting hand function.',

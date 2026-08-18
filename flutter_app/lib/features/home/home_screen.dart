@@ -5,6 +5,7 @@ import '../../core/widgets/content_page_scaffold.dart';
 import '../../core/widgets/responsive_page.dart';
 import '../../providers/language_provider.dart';
 import 'widgets/home_sections.dart';
+import 'widgets/skeleton_viewer_section.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -28,6 +29,7 @@ class HomeScreen extends StatelessWidget {
               child: WhatWeTreatSection(),
             ),
             _Band(color: AppColors.bgLight, child: HowWeCareSection()),
+            SkeletonViewerSection(),
             _Band(color: AppColors.bgWhite, child: LocationsPreviewSection()),
             _Band(color: AppColors.bgSoft, child: ReviewsSection()),
             _Band(color: AppColors.bgWhite, child: InsuranceSection()),

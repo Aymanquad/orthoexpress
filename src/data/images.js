@@ -109,7 +109,35 @@ export const IMAGES = {
       fallback: SHARED.clinicalLandscape,
       placement: 'photo',
       heroSrc: '/assets/services/accident-long.jpg',
+      objectPosition: 'center 48%',
+    },
+    'motorcycle-accident-care': {
+      src: '/assets/services/motorcycle-accident.jpg',
+      fallback: SHARED.sports,
+      placement: 'photo',
+      heroSrc: '/assets/services/motorcycle-accident.jpg',
       objectPosition: 'center 42%',
+    },
+    'pedestrian-injury-care': {
+      src: '/assets/services/pedestrian-injury.webp',
+      fallback: SHARED.clinicalLandscape,
+      placement: 'photo',
+      heroSrc: '/assets/services/pedestrian-injury.webp',
+      objectPosition: 'center 32%',
+    },
+    'truck-accident-care': {
+      src: '/assets/services/truck-accident.webp',
+      fallback: SHARED.clinicalLandscape,
+      placement: 'photo',
+      heroSrc: '/assets/services/truck-accident-long.jpg',
+      objectPosition: 'center 45%',
+    },
+    'work-injury-care': {
+      src: '/assets/services/work-injury.jpg',
+      fallback: SHARED.recovery,
+      placement: 'photo',
+      heroSrc: '/assets/services/work-injury-long.jpeg',
+      objectPosition: 'center 38%',
     },
     // Kept for shared references (same asset as accident care)
     'auto-accident': {
@@ -208,6 +236,13 @@ export const IMAGES = {
       fallback: SHARED.recovery,
       placement: 'photo',
       objectPosition: 'center 42%',
+    },
+    'muscle-soft-tissue-care': {
+      src: '/assets/services/muscle-soft-tissue-long.jpg',
+      fallback: SHARED.sports,
+      placement: 'photo',
+      heroSrc: '/assets/services/muscle-soft-tissue-long.jpg',
+      objectPosition: 'center 45%',
     },
     'workers-comp': {
       src: '/assets/workers-comp/hero.webp',

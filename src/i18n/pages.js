@@ -103,6 +103,9 @@ export const pages = {
         'Walk-in orthopedic care for injuries, chronic conditions, and recovery — same-day appointments available at clinics near you.',
       coreHeading: 'Core Services',
       coreLead: 'Our primary walk-in orthopedic services — the same options available in the navigation menu.',
+      accidentHeading: 'Accident & Injury Care',
+      accidentLead:
+        'Dedicated walk-in care after car, motorcycle, truck, pedestrian, and workplace accidents — with expert evaluation and documentation.',
       specialtyHeading: 'Specialty & Regional Care',
       specialtyLead:
         'Focused care for specific joints and body regions — each with its own dedicated treatment page.',
@@ -524,6 +527,9 @@ export const pages = {
       coreHeading: 'Servicios principales',
       coreLead:
         'Nuestros servicios ortopédicos principales sin cita — las mismas opciones disponibles en el menú de navegación.',
+      accidentHeading: 'Atención por accidentes y lesiones',
+      accidentLead:
+        'Atención sin cita dedicada después de accidentes de auto, motocicleta, camión, lesiones de peatón y laborales — con evaluación experta y documentación.',
       specialtyHeading: 'Atención especializada y regional',
       specialtyLead:
         'Atención enfocada en articulaciones y regiones específicas del cuerpo — cada una con su propia página de tratamiento.',

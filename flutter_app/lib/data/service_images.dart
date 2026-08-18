@@ -56,7 +56,31 @@ class ServiceImages {
       src: 'assets/images/services/auto-accident.jpg',
       fallback: _clinical,
       heroSrc: 'assets/images/services/accident-long.jpg',
-      alignment: Alignment(0, -0.16),
+      alignment: Alignment(0, -0.12),
+    ),
+    'motorcycle-accident-care': ServiceImageEntry(
+      src: 'assets/images/services/motorcycle-accident.jpg',
+      fallback: _sports,
+      heroSrc: 'assets/images/services/motorcycle-accident.jpg',
+      alignment: Alignment(0, -0.14),
+    ),
+    'pedestrian-injury-care': ServiceImageEntry(
+      src: 'assets/images/services/pedestrian-injury.webp',
+      fallback: _clinical,
+      heroSrc: 'assets/images/services/pedestrian-injury.webp',
+      alignment: Alignment(0, -0.08),
+    ),
+    'truck-accident-care': ServiceImageEntry(
+      src: 'assets/images/services/truck-accident.webp',
+      fallback: _clinical,
+      heroSrc: 'assets/images/services/truck-accident-long.jpg',
+      alignment: Alignment(0, -0.14),
+    ),
+    'work-injury-care': ServiceImageEntry(
+      src: 'assets/images/services/work-injury.jpg',
+      fallback: _recovery,
+      heroSrc: 'assets/images/services/work-injury-long.jpeg',
+      alignment: Alignment(0, -0.1),
     ),
     'arthritis': ServiceImageEntry(
       src: 'assets/images/services/arthritis.webp',

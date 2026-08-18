@@ -1,6 +1,6 @@
 import { getServiceName, getServiceSummary } from '../i18n/services'
 
-/** Primary services — header dropdown (8 core clinical services) */
+/** Primary services — header dropdown (7 core clinical services) */
 export const NAV_SERVICES = [
   { slug: 'pain-inflammation' },
   { slug: 'injuries-fractures-sprains' },
@@ -9,11 +9,20 @@ export const NAV_SERVICES = [
   { slug: 'sports-medicine' },
   { slug: 'mri-digital-imaging' },
   { slug: 'prp-orthobiologics' },
+]
+
+/** Accident & injury care — dedicated service pages on the All Services screen */
+export const ACCIDENT_INJURY_SERVICES = [
   { slug: 'car-motor-vehicle-accident-care' },
+  { slug: 'motorcycle-accident-care' },
+  { slug: 'pedestrian-injury-care' },
+  { slug: 'truck-accident-care' },
+  { slug: 'work-injury-care' },
 ]
 
 /** Regional / specialty services — separate pages, not in header dropdown */
 export const SPECIALTY_SERVICES = [
+  { slug: 'muscle-soft-tissue-care' },
   { slug: 'hand-wrist-care' },
   { slug: 'shoulder-elbow' },
   { slug: 'lumbar-cervical-spine' },
@@ -25,7 +34,7 @@ export const SPECIALTY_SERVICES = [
 ]
 
 /** Full list for footer and site-wide links */
-export const SERVICES = [...NAV_SERVICES, ...SPECIALTY_SERVICES]
+export const SERVICES = [...NAV_SERVICES, ...ACCIDENT_INJURY_SERVICES, ...SPECIALTY_SERVICES]
 
 export const WORKERS_COMP_SERVICE = {
   slug: 'workers-comp',
@@ -38,6 +47,11 @@ export const ALL_SERVICE_LINKS = [
   ...SERVICES.map((service) => ({ ...service })),
   WORKERS_COMP_SERVICE,
 ]
+
+/** Accident & injury cards for the All Services page */
+export const ACCIDENT_INJURY_SERVICE_CARDS = ACCIDENT_INJURY_SERVICES.map((service) => ({
+  ...service,
+}))
 
 /** Core services for the All Services page */
 export const PRIMARY_SERVICE_CARDS = NAV_SERVICES.map((service) => ({

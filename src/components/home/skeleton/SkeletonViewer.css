@@ -1,8 +1,8 @@
 .skeleton-viewer {
   position: relative;
   background:
-    radial-gradient(1200px 520px at 50% -10%, rgba(46, 79, 180, 0.45), transparent 62%),
-    linear-gradient(180deg, #070b1c 0%, #0c1650 48%, #081028 100%);
+    radial-gradient(980px 460px at 50% -8%, rgba(38, 64, 140, 0.38), transparent 64%),
+    linear-gradient(180deg, #070b18 0%, #0a1240 52%, #070b18 100%);
   padding: 72px 0 64px;
   color: #eef2ff;
   overflow: hidden;
@@ -57,8 +57,8 @@
 .skeleton-layout {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr) minmax(168px, 200px);
-  gap: 8px 18px;
+  grid-template-columns: minmax(236px, 292px) minmax(0, 1fr) minmax(176px, 214px);
+  gap: 12px 28px;
   align-items: stretch;
   min-height: min(72vh, 720px);
 }
@@ -73,6 +73,15 @@
   overflow: visible;
 }
 
+.skeleton-leader-glow {
+  display: none;
+  stroke: rgba(255, 255, 255, 0.22);
+  stroke-width: 5;
+  stroke-linecap: round;
+  fill: none;
+  filter: blur(3px);
+}
+
 .skeleton-leader-line {
   display: none;
   stroke: rgba(255, 255, 255, 0.9);
@@ -80,6 +89,18 @@
   stroke-linecap: round;
   fill: none;
   filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.12));
+}
+
+.skeleton-leader-ring {
+  display: none;
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.55);
+  stroke-width: 1;
+  opacity: 0;
+}
+
+.skeleton-leader-ring.is-live {
+  animation: skeletonLeaderRing 1.8s ease-in-out infinite;
 }
 
 .skeleton-leader-dot {
@@ -95,7 +116,7 @@
   flex-direction: column;
   justify-content: center;
   min-height: 0;
-  padding: 12px 12px 12px 0;
+  padding: 8px 8px 8px 0;
   color: rgba(238, 242, 255, 0.92);
 }
 
@@ -107,11 +128,19 @@
   height: 1px;
 }
 
+.skeleton-callout-panel {
+  animation: skeletonCalloutIn 0.48s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.skeleton-callout-panel.is-selected {
+  animation-name: skeletonCalloutOpen;
+}
+
 .skeleton-callout-idle,
 .skeleton-callout-hint {
   margin: 0;
   max-width: 28ch;
-  color: rgba(226, 232, 255, 0.48);
+  color: rgba(226, 232, 255, 0.58);
   font-size: 0.92rem;
   line-height: 1.6;
 }
@@ -123,11 +152,11 @@
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #7ee0c8;
+  color: rgba(196, 210, 255, 0.72);
 }
 
 .skeleton-callout-label {
-  color: rgba(226, 232, 255, 0.45);
+  color: rgba(226, 232, 255, 0.48);
   margin-top: 16px;
 }
 
@@ -148,6 +177,22 @@
   line-height: 1.55;
 }
 
+.skeleton-callout-list li {
+  animation: skeletonListIn 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.skeleton-callout-list li:nth-child(1) {
+  animation-delay: 0.08s;
+}
+
+.skeleton-callout-list li:nth-child(2) {
+  animation-delay: 0.14s;
+}
+
+.skeleton-callout-list li:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
 .skeleton-callout-copy {
   margin: 0;
   color: rgba(226, 232, 255, 0.78);
@@ -159,47 +204,104 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
-  margin: 18px 0 0;
+  gap: 10px;
+  margin: 20px 0 0;
 }
 
 .skeleton-callout-actions a,
 .skeleton-callout-actions button {
   background: none;
   padding: 0;
+  border: 0;
   color: #fff;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 600;
   letter-spacing: 0.01em;
+  text-decoration: none;
+  box-shadow: none;
+  transition: color 0.22s var(--ease-out), opacity 0.22s var(--ease-out);
+}
+
+.skeleton-callout-actions a:hover,
+.skeleton-callout-actions a:focus-visible {
+  color: rgba(255, 255, 255, 0.78);
+  text-decoration: none;
+  transform: none;
 }
 
 .skeleton-callout-actions button {
-  color: rgba(226, 232, 255, 0.5);
-  font-weight: 600;
+  color: rgba(226, 232, 255, 0.48);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.skeleton-callout-actions button:hover,
+.skeleton-callout-actions button:focus-visible {
+  color: rgba(226, 232, 255, 0.82);
 }
 
 .skeleton-stage {
   position: relative;
   min-height: 520px;
   height: min(72vh, 720px);
-  border-radius: 28px;
+  border-radius: 24px;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 50% 78%, rgba(26, 35, 126, 0.45), transparent 58%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.28);
+    radial-gradient(ellipse at 50% 82%, rgba(18, 28, 78, 0.55), transparent 62%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012));
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: border-color 0.45s var(--ease-out), box-shadow 0.45s var(--ease-out);
+}
+
+.skeleton-layout.is-hover .skeleton-stage,
+.skeleton-layout.is-open .skeleton-stage {
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow:
+    0 28px 72px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.skeleton-stage-aura {
+  position: absolute;
+  inset: 18% 22% 10%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.07), transparent 70%);
+  opacity: 0.7;
+  pointer-events: none;
+  animation: skeletonAura 6.5s ease-in-out infinite;
+}
+
+.skeleton-stage-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at 50% 55%, black 12%, transparent 68%);
+}
+
+.skeleton-layout.is-ready .skeleton-canvas {
+  animation: skeletonCanvasIn 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .skeleton-canvas {
   display: block;
   width: 100%;
   height: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 .skeleton-status {
   position: absolute;
   inset: 0;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -236,20 +338,16 @@
   padding: 24px;
 }
 
-@keyframes skeletonSpin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .skeleton-hint {
   position: absolute;
   left: 18px;
   bottom: 14px;
+  z-index: 2;
   margin: 0;
   font-size: 0.75rem;
   color: rgba(226, 232, 255, 0.5);
   pointer-events: none;
+  transition: opacity 0.35s var(--ease-out);
 }
 
 .skeleton-layout.is-open .skeleton-hint,
@@ -260,35 +358,153 @@
 .skeleton-joint-nav {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  overflow: auto;
-  padding: 4px 0;
-  max-height: min(72vh, 720px);
+  justify-content: center;
+  gap: 2px;
+  overflow: hidden;
+  padding: 6px 0;
+  max-height: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.skeleton-joint-nav::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .skeleton-joint-chip {
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(238, 242, 255, 0.88);
-  font-size: 0.8rem;
-  font-weight: 600;
+  appearance: none;
+  position: relative;
+  width: 100%;
+  padding: 9px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(226, 232, 255, 0.68);
+  font-size: 0.84rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
   text-align: left;
-  transition: background 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
+  text-decoration: none;
+  box-shadow: none;
+  cursor: pointer;
+  transition: color 0.22s var(--ease-out), background 0.22s var(--ease-out);
+}
+
+.skeleton-joint-chip::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1.5px;
+  height: 0;
+  border-radius: 999px;
+  background: #fff;
+  transform: translateY(-50%);
+  transition: height 0.22s var(--ease-out), opacity 0.22s var(--ease-out);
+  opacity: 0;
 }
 
 .skeleton-joint-chip:hover,
-.skeleton-joint-chip.is-active {
-  background: rgba(255, 120, 120, 0.14);
-  border-color: rgba(255, 140, 140, 0.5);
+.skeleton-joint-chip:focus-visible {
   color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+  text-decoration: none;
+  transform: none;
+}
+
+.skeleton-joint-chip.is-active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.07);
+  text-decoration: none;
+  transform: none;
+  box-shadow: none;
+}
+
+.skeleton-joint-chip.is-active::before {
+  height: 42%;
+  opacity: 1;
 }
 
 .skeleton-credit {
   margin: 16px 0 0;
   font-size: 0.72rem;
   color: rgba(226, 232, 255, 0.38);
+}
+
+@keyframes skeletonSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes skeletonAura {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.72;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes skeletonCanvasIn {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes skeletonCalloutIn {
+  from {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes skeletonCalloutOpen {
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes skeletonListIn {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes skeletonLeaderRing {
+  0%,
+  100% {
+    opacity: 0.45;
+    stroke-width: 1;
+  }
+  50% {
+    opacity: 0.85;
+    stroke-width: 1.35;
+  }
 }
 
 @media (max-width: 960px) {
@@ -324,8 +540,28 @@
     order: 3;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: flex-start;
     max-height: none;
+    overflow: visible;
     margin-top: 8px;
+    gap: 6px;
+  }
+
+  .skeleton-joint-chip {
+    width: auto;
+    padding: 7px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .skeleton-joint-chip.is-active {
+    border-color: rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .skeleton-joint-chip::before {
+    display: none;
   }
 
   .skeleton-hint {
@@ -336,8 +572,18 @@
 @media (prefers-reduced-motion: reduce) {
   .skeleton-status-ring,
   .skeleton-leader-line,
-  .skeleton-leader-dot {
+  .skeleton-leader-glow,
+  .skeleton-leader-dot,
+  .skeleton-leader-ring,
+  .skeleton-stage-aura,
+  .skeleton-callout-panel,
+  .skeleton-callout-list li,
+  .skeleton-canvas {
     animation: none;
+    transition: none;
+  }
+
+  .skeleton-joint-chip {
     transition: none;
   }
 }

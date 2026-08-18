@@ -295,7 +295,7 @@
 
 .dropdown-mega,
 .dropdown-patients {
-  min-width: 520px;
+  min-width: 760px;
   padding: 10px;
   left: 0;
 }
@@ -336,7 +336,7 @@
 
 .dropdown-mega-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 4px 12px;
   padding: 4px 4px 8px;
 }

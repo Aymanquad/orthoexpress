@@ -24,6 +24,7 @@ import {
 import { CLINIC, getLocationNavItems } from '../data'
 import {
   NAV_SERVICES,
+  ACCIDENT_INJURY_SERVICES,
   SPECIALTY_SERVICES,
   WORKERS_COMP_SERVICE,
   getServicePath,
@@ -238,6 +239,22 @@ const Header = () => {
                       <p className="dropdown-label">{t('nav.coreCare')}</p>
                       <ul>
                         {NAV_SERVICES.map((service) => (
+                          <li key={service.slug}>
+                            <Link
+                              to={getServicePath(service)}
+                              className={isServiceLinkActive(service) ? 'nav-link-active' : ''}
+                              onClick={closeMenu}
+                            >
+                              {getServiceLabel(service, lang)}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="dropdown-col">
+                      <p className="dropdown-label">{t('nav.accidentCare')}</p>
+                      <ul>
+                        {ACCIDENT_INJURY_SERVICES.map((service) => (
                           <li key={service.slug}>
                             <Link
                               to={getServicePath(service)}

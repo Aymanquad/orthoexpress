@@ -9,9 +9,11 @@ import 'providers/cart_provider.dart';
 import 'providers/language_provider.dart';
 import 'providers/orders_provider.dart';
 import 'providers/portal_auth_provider.dart';
+import 'features/home/widgets/skeleton_3d.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  registerSkeleton3d();
 
   await dotenv.load(fileName: '.env', isOptional: true);
 

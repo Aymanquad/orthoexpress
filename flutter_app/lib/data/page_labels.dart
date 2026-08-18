@@ -259,6 +259,16 @@ class ServicesLabels {
     es:
         'Nuestros servicios ortopédicos principales sin cita — las mismas opciones disponibles en el menú de navegación.',
   );
+  static const accidentHeading = L10nString(
+    en: 'Accident & Injury Care',
+    es: 'Atención por accidentes y lesiones',
+  );
+  static const accidentLead = L10nString(
+    en:
+        'Dedicated walk-in care after car, motorcycle, truck, pedestrian, and workplace accidents — with expert evaluation and documentation.',
+    es:
+        'Atención sin cita dedicada después de accidentes de auto, motocicleta, camión, lesiones de peatón y laborales — con evaluación experta y documentación.',
+  );
   static const specialtyHeading = L10nString(
     en: 'Specialty & Regional Care',
     es: 'Atención especializada y regional',

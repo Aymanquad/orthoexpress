@@ -9,7 +9,12 @@ export const services = {
       'sports-medicine': 'Sports Medicine (Physicals)',
       'mri-digital-imaging': 'MRI & Digital Imaging',
       'prp-orthobiologics': 'PRP Therapy & Orthobiologics',
-      'car-motor-vehicle-accident-care': 'Auto Accident Care',
+      'car-motor-vehicle-accident-care': 'Car Accident Care',
+      'motorcycle-accident-care': 'Motorcycle Accident Care',
+      'pedestrian-injury-care': 'Pedestrian Injury Care',
+      'truck-accident-care': 'Truck Accident Care',
+      'work-injury-care': 'Work Injury Care',
+      'muscle-soft-tissue-care': 'Muscle & Soft Tissue',
       'hand-wrist-care': 'Hand & Wrist Care',
       'shoulder-elbow': 'Shoulder & Elbow Care',
       'lumbar-cervical-spine': 'Lumbar & Cervical Spine Care',
@@ -36,7 +41,17 @@ export const services = {
       'prp-orthobiologics':
         'Regenerative treatment options that support natural healing for tendon, ligament, and joint conditions.',
       'car-motor-vehicle-accident-care':
-        'Same-day evaluation and treatment for car and motor vehicle accident injuries, with imaging and insurance documentation support.',
+        'Same-day evaluation and treatment for car accident injuries, with imaging and insurance documentation support.',
+      'motorcycle-accident-care':
+        'Expert orthopedic care after motorcycle crashes — fractures, road rash, and impact injuries evaluated walk-in.',
+      'pedestrian-injury-care':
+        'Urgent walk-in care for pedestrians hit by vehicles — fractures, soft tissue trauma, and spinal evaluation.',
+      'truck-accident-care':
+        'Specialized injury evaluation after truck and commercial vehicle collisions, with thorough documentation.',
+      'work-injury-care':
+        'On-the-job injury evaluation, workers compensation documentation, and return-to-work treatment plans.',
+      'muscle-soft-tissue-care':
+        'Walk-in care for muscle strains, tendonitis, and soft-tissue injuries — rest, bracing, therapy, and sports-medicine recovery.',
       'hand-wrist-care':
         'Expert treatment for carpal tunnel, wrist fractures, tendon injuries, and conditions affecting hand function.',
       'shoulder-elbow':
@@ -67,6 +82,11 @@ export const services = {
       'mri-digital-imaging': 'Resonancia magnética e imágenes digitales',
       'prp-orthobiologics': 'Terapia PRP y ortobiología',
       'car-motor-vehicle-accident-care': 'Atención por accidente de auto',
+      'motorcycle-accident-care': 'Atención por accidente de motocicleta',
+      'pedestrian-injury-care': 'Atención por lesión de peatón',
+      'truck-accident-care': 'Atención por accidente de camión',
+      'work-injury-care': 'Atención por lesión laboral',
+      'muscle-soft-tissue-care': 'Músculo y tejidos blandos',
       'hand-wrist-care': 'Atención de mano y muñeca',
       'shoulder-elbow': 'Atención de hombro y codo',
       'lumbar-cervical-spine': 'Atención de columna lumbar y cervical',
@@ -93,7 +113,17 @@ export const services = {
       'prp-orthobiologics':
         'Opciones de tratamiento regenerativo que apoyan la sanación natural para condiciones de tendones, ligamentos y articulaciones.',
       'car-motor-vehicle-accident-care':
-        'Evaluación y tratamiento el mismo día para lesiones por accidentes de auto o vehículo, con imagenología y apoyo en documentación de seguros.',
+        'Evaluación y tratamiento el mismo día para lesiones por accidente de auto, con imagenología y apoyo en documentación de seguros.',
+      'motorcycle-accident-care':
+        'Atención ortopédica experta después de accidentes de motocicleta — fracturas, abrasiones y lesiones por impacto sin cita.',
+      'pedestrian-injury-care':
+        'Atención urgente sin cita para peatones atropellados — fracturas, trauma de tejidos blandos y evaluación espinal.',
+      'truck-accident-care':
+        'Evaluación especializada de lesiones tras colisiones con camiones y vehículos comerciales, con documentación completa.',
+      'work-injury-care':
+        'Evaluación de lesiones laborales, documentación de compensación laboral y planes de tratamiento para el regreso al trabajo.',
+      'muscle-soft-tissue-care':
+        'Atención sin cita para distensiones musculares, tendinitis y lesiones de tejidos blandos — reposo, férulas, terapia y recuperación deportiva.',
       'hand-wrist-care':
         'Tratamiento experto para túnel carpiano, fracturas de muñeca, lesiones de tendones y condiciones que afectan la función de la mano.',
       'shoulder-elbow':

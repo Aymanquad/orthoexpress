@@ -342,7 +342,7 @@
   },
   "car-motor-vehicle-accident-care": {
     "title": {
-      "en": "Auto Accident Care",
+      "en": "Car Accident Care",
       "es": "Atención por accidente de auto"
     },
     "description": {
@@ -393,6 +393,226 @@
     "additionalInfo": {
       "en": "If you were in a car or motor vehicle accident, early evaluation matters. Walk in today for expert injury care and documentation support — no referral required.",
       "es": "Si estuvo en un accidente de auto o de vehículo, la evaluación temprana importa. Entre hoy mismo para atención experta de lesiones y apoyo con documentación — sin necesidad de remisión."
+    }
+  },
+  "motorcycle-accident-care": {
+    "title": {
+      "en": "Motorcycle Accident Care",
+      "es": "Atención por accidente de motocicleta"
+    },
+    "description": {
+      "en": "Walk-in orthopedic evaluation after a motorcycle crash or collision.",
+      "es": "Evaluación ortopédica sin cita después de un choque o colisión en motocicleta."
+    },
+    "image": "/img/motorcycle-accident-care",
+    "overview": {
+      "en": "Motorcycle accidents often cause high-impact injuries to the arms, legs, shoulders, and spine — even at lower speeds. Our orthopedic team provides same-day evaluation, imaging, splinting, and a clear recovery plan. We document injuries thoroughly for insurance and legal claims so you can focus on healing.",
+      "es": "Los accidentes de motocicleta a menudo causan lesiones de alto impacto en brazos, piernas, hombros y columna, incluso a bajas velocidades. Nuestro equipo ortopédico ofrece evaluación el mismo día, imagenología, férulas y un plan de recuperación claro. Documentamos las lesiones a fondo para seguros y reclamaciones legales para que pueda concentrarse en sanar."
+    },
+    "conditions": {
+      "en": [
+        "Road rash and soft tissue trauma",
+        "Wrist, elbow, and shoulder fractures",
+        "Leg, ankle, and foot injuries",
+        "Spinal and neck trauma",
+        "Ligament and joint dislocations",
+        "Impact-related head and neck strain"
+      ],
+      "es": [
+        "Abrasiones y trauma de tejidos blandos",
+        "Fracturas de muñeca, codo y hombro",
+        "Lesiones de pierna, tobillo y pie",
+        "Trauma espinal y cervical",
+        "Luxaciones de ligamentos y articulaciones",
+        "Tensión cervical y de cabeza por impacto"
+      ]
+    },
+    "treatments": {
+      "en": [
+        "Same-day crash injury evaluation",
+        "On-site X-ray and imaging coordination",
+        "Casting, splinting, and fracture stabilization",
+        "Pain management and wound care guidance",
+        "Insurance and claim documentation",
+        "Physical therapy and specialist referrals"
+      ],
+      "es": [
+        "Evaluación de lesiones por choque el mismo día",
+        "Radiografía en el sitio y coordinación de imágenes",
+        "Yesos, férulas y estabilización de fracturas",
+        "Manejo del dolor y orientación para el cuidado de heridas",
+        "Documentación para seguros y reclamaciones",
+        "Terapia física y referencias a especialistas"
+      ]
+    },
+    "additionalInfo": {
+      "en": "After a motorcycle accident, do not wait for pain to worsen. Walk in for expert orthopedic care and complete injury documentation.",
+      "es": "Después de un accidente de motocicleta, no espere a que el dolor empeore. Visítenos para atención ortopédica experta y documentación completa de lesiones."
+    }
+  },
+  "pedestrian-injury-care": {
+    "title": {
+      "en": "Pedestrian Injury Care",
+      "es": "Atención por lesión de peatón"
+    },
+    "description": {
+      "en": "Urgent orthopedic care when you have been struck as a pedestrian.",
+      "es": "Atención ortopédica urgente cuando ha sido atropellado como peatón."
+    },
+    "image": "/img/pedestrian-injury-care",
+    "overview": {
+      "en": "Pedestrians struck by vehicles are at high risk for fractures, hip and pelvis injuries, knee trauma, and spinal damage. We provide immediate walk-in evaluation, stabilization, and imaging to identify every injury — including those that may not be obvious right away. Our team coordinates follow-up care and documents your injuries for insurance and legal needs.",
+      "es": "Los peatones atropellados por vehículos tienen alto riesgo de fracturas, lesiones de cadera y pelvis, trauma de rodilla y daño espinal. Ofrecemos evaluación inmediata sin cita, estabilización e imagenología para identificar cada lesión, incluidas las que pueden no ser evidentes de inmediato. Nuestro equipo coordina el seguimiento y documenta sus lesiones para seguros y necesidades legales."
+    },
+    "conditions": {
+      "en": [
+        "Lower extremity and hip fractures",
+        "Knee and ankle trauma",
+        "Pelvic and spinal injuries",
+        "Soft tissue and ligament damage",
+        "Head, neck, and whiplash-related strain",
+        "Multiple-impact trauma"
+      ],
+      "es": [
+        "Fracturas de extremidades inferiores y cadera",
+        "Trauma de rodilla y tobillo",
+        "Lesiones pélvicas y espinales",
+        "Daño de tejidos blandos y ligamentos",
+        "Tensión cervical y por latigazo",
+        "Trauma por múltiples impactos"
+      ]
+    },
+    "treatments": {
+      "en": [
+        "Emergency walk-in injury assessment",
+        "Digital imaging and fracture diagnosis",
+        "Immobilization and bracing",
+        "Pain and inflammation management",
+        "Coordination with ER follow-up when needed",
+        "Documentation for insurance and legal claims"
+      ],
+      "es": [
+        "Evaluación de lesiones de emergencia sin cita",
+        "Imagenología digital y diagnóstico de fracturas",
+        "Inmovilización y ortesis",
+        "Manejo del dolor y la inflamación",
+        "Coordinación con seguimiento de urgencias cuando sea necesario",
+        "Documentación para seguros y reclamaciones legales"
+      ]
+    },
+    "additionalInfo": {
+      "en": "If you were hit as a pedestrian, get evaluated even if you feel okay — some injuries appear hours later. Walk in today for a full orthopedic assessment.",
+      "es": "Si fue atropellado como peatón, evalúese aunque se sienta bien; algunas lesiones aparecen horas después. Visítenos hoy para una evaluación ortopédica completa."
+    }
+  },
+  "truck-accident-care": {
+    "title": {
+      "en": "Truck Accident Care",
+      "es": "Atención por accidente de camión"
+    },
+    "description": {
+      "en": "Specialized injury care after truck and commercial vehicle collisions.",
+      "es": "Atención especializada de lesiones tras colisiones con camiones y vehículos comerciales."
+    },
+    "image": "/img/truck-accident-care",
+    "overview": {
+      "en": "Truck and commercial vehicle accidents involve extreme force, often causing severe orthopedic trauma — spinal injuries, complex fractures, and multi-region damage. Our specialists provide comprehensive same-day evaluation, advanced imaging coordination, and detailed medical documentation for complex insurance and legal cases.",
+      "es": "Los accidentes con camiones y vehículos comerciales implican fuerza extrema, causando a menudo trauma ortopédico severo: lesiones espinales, fracturas complejas y daño en múltiples regiones. Nuestros especialistas ofrecen evaluación integral el mismo día, coordinación de imágenes avanzadas y documentación médica detallada para casos complejos de seguros y legales."
+    },
+    "conditions": {
+      "en": [
+        "High-impact spinal and neck injuries",
+        "Complex and comminuted fractures",
+        "Crush and compression injuries",
+        "Shoulder, rib, and chest wall trauma",
+        "Multi-limb joint and ligament damage",
+        "Post-collision chronic pain syndromes"
+      ],
+      "es": [
+        "Lesiones espinales y cervicales de alto impacto",
+        "Fracturas complejas y conminutas",
+        "Lesiones por aplastamiento y compresión",
+        "Trauma de hombro, costillas y pared torácica",
+        "Daño articular y de ligamentos en múltiples extremidades",
+        "Síndromes de dolor crónico postcolisión"
+      ]
+    },
+    "treatments": {
+      "en": [
+        "Comprehensive trauma injury evaluation",
+        "MRI and advanced imaging coordination",
+        "Surgical and non-surgical fracture care",
+        "Spine and joint stabilization",
+        "Detailed medical-legal documentation",
+        "Long-term rehabilitation planning"
+      ],
+      "es": [
+        "Evaluación integral de lesiones por trauma",
+        "Coordinación de resonancia magnética e imágenes avanzadas",
+        "Atención quirúrgica y no quirúrgica de fracturas",
+        "Estabilización de columna y articulaciones",
+        "Documentación médico-legal detallada",
+        "Planificación de rehabilitación a largo plazo"
+      ]
+    },
+    "additionalInfo": {
+      "en": "Truck accident injuries require expert evaluation and careful documentation. Walk in for specialized orthopedic care — we support you through recovery and claims.",
+      "es": "Las lesiones por accidente de camión requieren evaluación experta y documentación cuidadosa. Visítenos para atención ortopédica especializada: lo apoyamos en la recuperación y las reclamaciones."
+    }
+  },
+  "work-injury-care": {
+    "title": {
+      "en": "Work Injury Care",
+      "es": "Atención por lesión laboral"
+    },
+    "description": {
+      "en": "Walk-in care for on-the-job injuries with workers compensation support.",
+      "es": "Atención sin cita para lesiones laborales con apoyo de compensación laboral."
+    },
+    "image": "/img/work-injury-care",
+    "overview": {
+      "en": "Workplace injuries — from lifting strains and falls to machinery accidents — need prompt orthopedic evaluation and proper documentation for workers compensation. Our team treats sprains, fractures, repetitive stress injuries, and back trauma while coordinating paperwork, treatment plans, and return-to-work guidance with employers and adjusters.",
+      "es": "Las lesiones laborales — desde esfuerzos por levantar objetos y caídas hasta accidentes con maquinaria — requieren evaluación ortopédica rápida y documentación adecuada para compensación laboral. Nuestro equipo trata esguinces, fracturas, lesiones por esfuerzo repetitivo y trauma de espalda, coordinando papeleo, planes de tratamiento y orientación para el regreso al trabajo con empleadores y ajustadores."
+    },
+    "conditions": {
+      "en": [
+        "Lifting and overexertion injuries",
+        "Slip, trip, and fall accidents",
+        "Repetitive strain and carpal tunnel",
+        "Back and neck workplace trauma",
+        "Fractures from machinery or equipment",
+        "Knee, shoulder, and joint injuries on the job"
+      ],
+      "es": [
+        "Lesiones por levantamiento y sobreesfuerzo",
+        "Accidentes por resbalones, tropiezos y caídas",
+        "Esfuerzo repetitivo y túnel carpiano",
+        "Trauma laboral de espalda y cuello",
+        "Fracturas por maquinaria o equipo",
+        "Lesiones de rodilla, hombro y articulaciones en el trabajo"
+      ]
+    },
+    "treatments": {
+      "en": [
+        "Same-day work injury evaluation",
+        "Workers compensation documentation",
+        "Splinting, bracing, and fracture care",
+        "Pain management and physical therapy referrals",
+        "Return-to-work and modified duty planning",
+        "Employer and adjuster coordination"
+      ],
+      "es": [
+        "Evaluación de lesión laboral el mismo día",
+        "Documentación de compensación laboral",
+        "Férulas, ortesis y atención de fracturas",
+        "Manejo del dolor y referencias a terapia física",
+        "Planificación de regreso al trabajo y deberes modificadas",
+        "Coordinación con empleadores y ajustadores"
+      ]
+    },
+    "additionalInfo": {
+      "en": "Injured at work? Walk in for expert orthopedic care and complete workers compensation documentation — no appointment needed.",
+      "es": "¿Lesionado en el trabajo? Visítenos para atención ortopédica experta y documentación completa de compensación laboral — sin cita previa."
     }
   },
   "hand-wrist-care": {

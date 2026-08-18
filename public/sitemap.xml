@@ -26,6 +26,10 @@
   <url><loc>/services/mri-digital-imaging</loc></url>
   <url><loc>/services/prp-orthobiologics</loc></url>
   <url><loc>/services/car-motor-vehicle-accident-care</loc></url>
+  <url><loc>/services/motorcycle-accident-care</loc></url>
+  <url><loc>/services/pedestrian-injury-care</loc></url>
+  <url><loc>/services/truck-accident-care</loc></url>
+  <url><loc>/services/work-injury-care</loc></url>
   <url><loc>/services/hand-wrist-care</loc></url>
   <url><loc>/services/shoulder-elbow</loc></url>
   <url><loc>/services/lumbar-cervical-spine</loc></url>
