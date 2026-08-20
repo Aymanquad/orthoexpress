@@ -20,6 +20,24 @@ class SkeletonViewerSection extends StatefulWidget {
 
 class _SkeletonViewerSectionState extends State<SkeletonViewerSection> {
   String? _selectedId;
+  final _hotspotPoint = ValueNotifier<Offset?>(null);
+
+  @override
+  void dispose() {
+    _hotspotPoint.dispose();
+    super.dispose();
+  }
+
+  void _onHotspotProjected(String? id, Offset? point) {
+    if (!mounted) return;
+    if (id == null || point == null || id != _selectedId) {
+      if (_hotspotPoint.value != null) _hotspotPoint.value = null;
+      return;
+    }
+    final current = _hotspotPoint.value;
+    if (current != null && (current - point).distance < 1.5) return;
+    _hotspotPoint.value = point;
+  }
 
   double _stageHeight(BuildContext context) {
     final width = context.screenWidth;
@@ -103,7 +121,12 @@ class _SkeletonViewerSectionState extends State<SkeletonViewerSection> {
                         height: height,
                         selectedId: _selectedId,
                         selected: selected,
-                        onSelect: (id) => setState(() => _selectedId = id),
+                        hotspotPoint: _hotspotPoint,
+                        onSelect: (id) => setState(() {
+                          _selectedId = id;
+                          if (id == null) _hotspotPoint.value = null;
+                        }),
+                        onHotspotProjected: _onHotspotProjected,
                       )
                     else
                       _PhoneLayout(
@@ -111,7 +134,12 @@ class _SkeletonViewerSectionState extends State<SkeletonViewerSection> {
                         height: height,
                         selectedId: _selectedId,
                         selected: selected,
-                        onSelect: (id) => setState(() => _selectedId = id),
+                        hotspotPoint: _hotspotPoint,
+                        onSelect: (id) => setState(() {
+                          _selectedId = id;
+                          if (id == null) _hotspotPoint.value = null;
+                        }),
+                        onHotspotProjected: _onHotspotProjected,
                       ),
                     const SizedBox(height: 14),
                     Text(
@@ -137,14 +165,18 @@ class _PhoneLayout extends StatelessWidget {
   final double height;
   final String? selectedId;
   final SkeletonJoint? selected;
+  final ValueNotifier<Offset?> hotspotPoint;
   final ValueChanged<String?> onSelect;
+  final SkeletonHotspotProjected? onHotspotProjected;
 
   const _PhoneLayout({
     required this.lang,
     required this.height,
     required this.selectedId,
     required this.selected,
+    required this.hotspotPoint,
     required this.onSelect,
+    this.onHotspotProjected,
   });
 
   @override
@@ -156,7 +188,10 @@ class _PhoneLayout extends StatelessWidget {
           height: height,
           lang: lang,
           selectedId: selectedId,
+          hotspotPoint: hotspotPoint,
+          showLeaderLine: false,
           onSelect: onSelect,
+          onHotspotProjected: onHotspotProjected,
         ),
         const SizedBox(height: 16),
         _Callout(lang: lang, selected: selected, onClose: () => onSelect(null)),
@@ -172,14 +207,18 @@ class _WideLayout extends StatelessWidget {
   final double height;
   final String? selectedId;
   final SkeletonJoint? selected;
+  final ValueNotifier<Offset?> hotspotPoint;
   final ValueChanged<String?> onSelect;
+  final SkeletonHotspotProjected? onHotspotProjected;
 
   const _WideLayout({
     required this.lang,
     required this.height,
     required this.selectedId,
     required this.selected,
+    required this.hotspotPoint,
     required this.onSelect,
+    this.onHotspotProjected,
   });
 
   @override
@@ -205,7 +244,10 @@ class _WideLayout extends StatelessWidget {
               height: height,
               lang: lang,
               selectedId: selectedId,
+              hotspotPoint: hotspotPoint,
+              showLeaderLine: true,
               onSelect: onSelect,
+              onHotspotProjected: onHotspotProjected,
             ),
           ),
           const SizedBox(width: 16),
@@ -228,28 +270,42 @@ class _StageFrame extends StatelessWidget {
   final double height;
   final String lang;
   final String? selectedId;
+  final ValueNotifier<Offset?> hotspotPoint;
+  final bool showLeaderLine;
   final ValueChanged<String?> onSelect;
+  final SkeletonHotspotProjected? onHotspotProjected;
 
   const _StageFrame({
     required this.height,
     required this.lang,
     required this.selectedId,
+    required this.hotspotPoint,
+    required this.showLeaderLine,
     required this.onSelect,
+    this.onHotspotProjected,
   });
 
   @override
   Widget build(BuildContext context) {
     final radius = BorderRadius.circular(context.isPhone ? 20 : 24);
+    final selected = selectedId != null;
     return SizedBox(
       height: height,
-      child: DecoratedBox(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 320),
+        curve: Curves.easeOutCubic,
         decoration: BoxDecoration(
           borderRadius: radius,
-          border: Border.all(color: Colors.white.withValues(alpha: 0.09)),
-          gradient: const LinearGradient(
+          border: Border.all(
+            color: Colors.white.withValues(alpha: selected ? 0.16 : 0.09),
+          ),
+          gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0x0FFFFFFF), Color(0x05FFFFFF)],
+            colors: [
+              Colors.white.withValues(alpha: selected ? 0.07 : 0.06),
+              Colors.white.withValues(alpha: 0.02),
+            ],
           ),
         ),
         child: ClipRRect(
@@ -259,18 +315,45 @@ class _StageFrame extends StatelessWidget {
               final width = constraints.maxWidth.isFinite
                   ? constraints.maxWidth
                   : MediaQuery.sizeOf(context).width;
+              final embedBuilder = anatomyEmbedBuilder;
               return Stack(
                 fit: StackFit.expand,
                 children: [
-                  RepaintBoundary(
-                    child: SkeletonStage(
-                      canvasSize: Size(width, height),
-                      allowOrbit: true,
-                      selectedId: selectedId,
+                  if (embedBuilder != null)
+                    // Reuses the site's Three.js scene so the app never has to
+                    // match its lighting and materials in a second engine.
+                    embedBuilder(
                       lang: lang,
+                      selectedId: selectedId,
                       onSelect: onSelect,
+                      onNavigate: (route) => context.push(route),
+                    )
+                  else
+                    RepaintBoundary(
+                      child: SkeletonStage(
+                        canvasSize: Size(width, height),
+                        allowOrbit: true,
+                        selectedId: selectedId,
+                        lang: lang,
+                        onSelect: onSelect,
+                        onHotspotProjected: onHotspotProjected,
+                      ),
                     ),
-                  ),
+                  if (showLeaderLine && embedBuilder == null)
+                    IgnorePointer(
+                      child: ValueListenableBuilder<Offset?>(
+                        valueListenable: hotspotPoint,
+                        builder: (context, point, _) {
+                          if (point == null) return const SizedBox.shrink();
+                          return CustomPaint(
+                            painter: _LeaderLinePainter(
+                              from: point,
+                              to: Offset(0, height * 0.5),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                   if (selectedId == null)
                     Positioned(
                       left: 14,
@@ -296,6 +379,51 @@ class _StageFrame extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _LeaderLinePainter extends CustomPainter {
+  final Offset from;
+  final Offset to;
+
+  const _LeaderLinePainter({required this.from, required this.to});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final glow = Paint()
+      ..style = PaintingStyle.stroke
+      ..color = Colors.white.withValues(alpha: 0.18)
+      ..strokeWidth = 4
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+    final line = Paint()
+      ..style = PaintingStyle.stroke
+      ..color = Colors.white.withValues(alpha: 0.88)
+      ..strokeWidth = 1.4
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+    final mid = Offset(to.dx, from.dy);
+    final path = Path()
+      ..moveTo(from.dx, from.dy)
+      ..lineTo(mid.dx, mid.dy)
+      ..lineTo(to.dx, to.dy);
+    canvas.drawPath(path, glow);
+    canvas.drawPath(path, line);
+    canvas.drawCircle(
+      from,
+      4.5,
+      Paint()..color = Colors.white.withValues(alpha: 0.92),
+    );
+    canvas.drawCircle(
+      from,
+      8,
+      Paint()..color = Colors.white.withValues(alpha: 0.16),
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _LeaderLinePainter oldDelegate) {
+    return oldDelegate.from != from || oldDelegate.to != to;
   }
 }
 

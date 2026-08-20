@@ -12,6 +12,9 @@ import 'skeleton_stage.dart';
 
 const _hitRadius = 0.58;
 const _framePadding = 1.32;
+const _idleResumeSeconds = 3.0;
+
+Uint8List? _cachedSkeletonGlbBytes;
 
 void registerSkeleton3d() {
   skeletonStageBuilder =
@@ -22,6 +25,7 @@ void registerSkeleton3d() {
         required String? selectedId,
         required String lang,
         required ValueChanged<String?> onSelect,
+        SkeletonHotspotProjected? onHotspotProjected,
       }) {
         return SkeletonStage3d(
           key: key,
@@ -29,6 +33,7 @@ void registerSkeleton3d() {
           selectedId: selectedId,
           lang: lang,
           onSelect: onSelect,
+          onHotspotProjected: onHotspotProjected,
         );
       };
 }
@@ -38,6 +43,7 @@ class SkeletonStage3d extends StatefulWidget {
   final String? selectedId;
   final String lang;
   final ValueChanged<String?> onSelect;
+  final SkeletonHotspotProjected? onHotspotProjected;
 
   const SkeletonStage3d({
     super.key,
@@ -45,13 +51,15 @@ class SkeletonStage3d extends StatefulWidget {
     required this.selectedId,
     required this.lang,
     required this.onSelect,
+    this.onHotspotProjected,
   });
 
   @override
   State<SkeletonStage3d> createState() => _SkeletonStage3dState();
 }
 
-class _SkeletonStage3dState extends State<SkeletonStage3d> {
+class _SkeletonStage3dState extends State<SkeletonStage3d>
+    with WidgetsBindingObserver {
   three.ThreeJS? _three;
   three.Group? _modelRoot;
   three.OrbitControls? _controls;
@@ -68,26 +76,39 @@ class _SkeletonStage3dState extends State<SkeletonStage3d> {
   final _camStartTarget = three.Vector3();
   final _camGoalPos = three.Vector3();
   final _camGoalTarget = three.Vector3();
+  final _projectTmp = three.Vector3();
+  final _visibilityKey = UniqueKey();
 
   bool _ready = false;
   bool _failed = false;
   bool _activated = false;
   bool _reduceMotion = false;
+  bool _restartQueued = false;
   double _camT = 1;
   double _frameDistance = 12;
+  double _idleSeconds = _idleResumeSeconds;
   Offset? _pointerDown;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _activate());
+    WidgetsBinding.instance.addObserver(this);
+    // Wait for VisibilityDetector so ANGLE is not created off-screen.
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _controls?.dispose();
-    _three?.dispose();
+    _disposeEngine(_three);
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    final show = state == AppLifecycleState.resumed;
+    _three?.pause = !show;
+    _three?.isVisibleOnScreen = show;
   }
 
   @override
@@ -95,6 +116,61 @@ class _SkeletonStage3dState extends State<SkeletonStage3d> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.selectedId != widget.selectedId) {
       _syncSelection(widget.selectedId);
+    }
+    // Recreating the ANGLE context on Android after a layout pass often
+    // destroys the surface (Lost connection / black stage). Keep the first size.
+    if (!_isMobile && _sizeChanged(oldWidget.canvasSize, widget.canvasSize)) {
+      _queueEngineRestart();
+    }
+  }
+
+  bool get _isMobile =>
+      defaultTargetPlatform == TargetPlatform.android ||
+      defaultTargetPlatform == TargetPlatform.iOS;
+
+  bool _sizeChanged(Size a, Size b) {
+    return (a.width - b.width).abs() > 2 || (a.height - b.height).abs() > 2;
+  }
+
+  void _clearSceneRefs() {
+    _modelRoot = null;
+    _raycaster = null;
+    _pointer = null;
+    _hits.clear();
+    _glows.clear();
+    _bones.clear();
+    _groups.clear();
+    _camT = 1;
+    _pointerDown = null;
+  }
+
+  void _queueEngineRestart() {
+    if (!_activated || _restartQueued) return;
+    _restartQueued = true;
+    final oldThree = _three;
+    final oldControls = _controls;
+    _three = null;
+    _controls = null;
+    _clearSceneRefs();
+    _ready = false;
+    _failed = false;
+    _activated = false;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      try {
+        oldControls?.dispose();
+      } catch (_) {}
+      _disposeEngine(oldThree);
+      _restartQueued = false;
+      if (mounted) _activate();
+    });
+  }
+
+  void _disposeEngine(three.ThreeJS? engine) {
+    if (engine == null) return;
+    try {
+      engine.dispose();
+    } catch (error) {
+      debugPrint('Skeleton engine dispose skipped: $error');
     }
   }
 
@@ -104,9 +180,8 @@ class _SkeletonStage3dState extends State<SkeletonStage3d> {
     _activated = true;
     _reduceMotion = MediaQuery.disableAnimationsOf(context);
     final rawDpr = MediaQuery.devicePixelRatioOf(context);
-    final dpr = defaultTargetPlatform == TargetPlatform.windows
-        ? 1.0
-        : math.min(rawDpr, 2).toDouble();
+    final conservativeGl = _isMobile || defaultTargetPlatform == TargetPlatform.windows;
+    final dpr = conservativeGl ? 1.0 : math.min(rawDpr, 2).toDouble();
     try {
       _three = three.ThreeJS(
         size: Size(
@@ -115,7 +190,7 @@ class _SkeletonStage3dState extends State<SkeletonStage3d> {
         ),
         settings: three.Settings(
           alpha: false,
-          antialias: defaultTargetPlatform != TargetPlatform.windows,
+          antialias: !conservativeGl,
           stencil: false,
           depth: true,
           animate: true,
@@ -124,7 +199,7 @@ class _SkeletonStage3dState extends State<SkeletonStage3d> {
           clearColor: 0x070b18,
           clearAlpha: 1,
           screenResolution: dpr,
-          toneMappingExposure: 1.12,
+          toneMappingExposure: 1.02,
           renderOptions: const {
             'samples': 0,
             'depthBuffer': true,
@@ -165,15 +240,14 @@ class _SkeletonStage3dState extends State<SkeletonStage3d> {
       250,
     );
 
-    threeJs.scene.add(three.HemisphereLight(0xe8eefc, 0x1a1630, 0.32));
-    threeJs.scene.add(three.AmbientLight(0xc8d0e8, 0.48));
-    final key = three.DirectionalLight(0xfff4ea, 1.28);
+    threeJs.scene.add(three.AmbientLight(0xc8d0e8, 0.62));
+    final key = three.DirectionalLight(0xfff4ea, 1.22);
     key.position.setValues(3.8, 7.4, 6.2);
     threeJs.scene.add(key);
-    final fill = three.DirectionalLight(0x9eb0d8, 0.42);
+    final fill = three.DirectionalLight(0x9eb0d8, 0.38);
     fill.position.setValues(-6.2, 2.4, 1.6);
     threeJs.scene.add(fill);
-    final rim = three.DirectionalLight(0xdce6ff, 0.4);
+    final rim = three.DirectionalLight(0xdce6ff, 0.28);
     rim.position.setValues(0.4, 5.2, -7.4);
     threeJs.scene.add(rim);
 
@@ -233,42 +307,27 @@ class _SkeletonStage3dState extends State<SkeletonStage3d> {
     floor.position.y = fitted.min.y + 0.02;
     threeJs.scene.add(floor);
 
-    final floorRing = three.Mesh(
-      three.RingGeometry(2.55, 3.22, 80, 1),
-      three.MeshBasicMaterial.fromMap({
-        'color': 0xffffff,
-        'transparent': true,
-        'opacity': 0.08,
-        'depthWrite': false,
-        'side': three.DoubleSide,
-      }),
-    );
-    floorRing.rotation.x = -math.pi / 2;
-    floorRing.position.y = fitted.min.y + 0.018;
-    threeJs.scene.add(floorRing);
-
     _frameCamera();
 
     threeJs.addAnimationEvent((dt) {
       if (!mounted || _modelRoot == null) return;
       _syncHotspotPositions();
       _tickCamera(dt);
-      _controls?.autoRotate =
-          widget.selectedId == null && !_reduceMotion && _pointerDown == null;
+      _tickIdleRotate(dt);
       _controls?.update();
       _pulseGlows();
+      _reportHotspotProjection();
     });
+
+    _syncSelection(widget.selectedId);
   }
 
   Future<three.GLTFData?> _loadSkeletonGltf() async {
     const assetPath = 'assets/models/male_skeleton.glb';
     try {
-      final packed = await rootBundle.load(assetPath);
-      final bytes = packed.buffer.asUint8List(
-        packed.offsetInBytes,
-        packed.lengthInBytes,
-      );
-      return three.GLTFLoader().fromBytes(bytes);
+      _cachedSkeletonGlbBytes ??= await _readAssetBytes(assetPath);
+      final parsed = await three.GLTFLoader().fromBytes(_cachedSkeletonGlbBytes!);
+      if (parsed != null) return parsed;
     } catch (error) {
       debugPrint('Skeleton bytes load failed: $error');
     }
@@ -278,6 +337,14 @@ class _SkeletonStage3dState extends State<SkeletonStage3d> {
       await Future<void>.delayed(Duration(milliseconds: 140 * (attempt + 1)));
     }
     return null;
+  }
+
+  Future<Uint8List> _readAssetBytes(String assetPath) async {
+    final packed = await rootBundle.load(assetPath);
+    return packed.buffer.asUint8List(
+      packed.offsetInBytes,
+      packed.lengthInBytes,
+    );
   }
 
   void _attachHotspots(three.Object3D model) {
@@ -295,12 +362,26 @@ class _SkeletonStage3dState extends State<SkeletonStage3d> {
       group.position.y += joint.offset[1];
       group.position.z += joint.offset[2];
 
-      final glow = three.Mesh(
-        three.SphereGeometry(0.14, 16, 16),
+      final outerGlow = three.Mesh(
+        three.SphereGeometry(0.22, 16, 16),
         three.MeshBasicMaterial.fromMap({
           'color': 0xff6b6b,
           'transparent': true,
-          'opacity': 0.72,
+          'opacity': 0.16,
+          'depthWrite': false,
+          'depthTest': false,
+          'blending': three.AdditiveBlending,
+        }),
+      );
+      outerGlow.renderOrder = 3;
+      outerGlow.frustumCulled = false;
+
+      final glow = three.Mesh(
+        three.SphereGeometry(0.12, 16, 16),
+        three.MeshBasicMaterial.fromMap({
+          'color': 0xff7474,
+          'transparent': true,
+          'opacity': 0.44,
           'depthWrite': false,
           'depthTest': false,
           'blending': three.AdditiveBlending,
@@ -323,6 +404,7 @@ class _SkeletonStage3dState extends State<SkeletonStage3d> {
       hit.frustumCulled = false;
       hit.renderOrder = 5;
 
+      group.add(outerGlow);
       group.add(glow);
       group.add(hit);
       hotspotRoot.add(group);
@@ -356,12 +438,34 @@ class _SkeletonStage3dState extends State<SkeletonStage3d> {
       final selected = id == widget.selectedId;
       final mat = mesh.material;
       if (mat != null) {
-        mat.opacity = selected ? 0.95 : 0.55 * pulse;
+        mat.opacity = selected ? 0.92 : 0.44 * pulse;
         mat.needsUpdate = true;
       }
       final s = selected ? 1.35 : (0.94 + pulse * 0.08);
       mesh.scale.setValues(s, s, s);
+      final outer = mesh.parent?.children.first;
+      if (outer is three.Mesh) {
+        final outerMat = outer.material;
+        if (outerMat != null) {
+          outerMat.opacity = selected ? 0.28 : 0.14 * pulse;
+          outerMat.needsUpdate = true;
+        }
+        final os = selected ? 1.28 : (0.98 + pulse * 0.06);
+        outer.scale.setValues(os, os, os);
+      }
     });
+  }
+
+  void _tickIdleRotate(double dt) {
+    final controls = _controls;
+    if (controls == null || _reduceMotion) return;
+    if (widget.selectedId != null || _pointerDown != null) {
+      _idleSeconds = 0;
+      controls.autoRotate = false;
+      return;
+    }
+    _idleSeconds += dt;
+    controls.autoRotate = _idleSeconds >= _idleResumeSeconds;
   }
 
   void _initControls() {
@@ -379,14 +483,15 @@ class _SkeletonStage3dState extends State<SkeletonStage3d> {
       controls.enableDamping = true;
       controls.dampingFactor = 0.12;
       controls.enablePan = false;
-      controls.enableZoom = false;
+      controls.enableZoom = true;
+      controls.zoomSpeed = 0.7;
       controls.enableRotate = true;
       controls.rotateSpeed = 0.62;
-      controls.autoRotate = widget.selectedId == null && !_reduceMotion;
+      controls.autoRotate = false;
       controls.autoRotateSpeed = 1.4;
       controls.minPolarAngle = 0.85;
       controls.maxPolarAngle = math.pi / 1.78;
-      controls.minDistance = _frameDistance * 0.34;
+      controls.minDistance = _frameDistance * 0.58;
       controls.maxDistance = _frameDistance * 1.85;
       controls.target.setFrom(_defaultTarget);
       controls.update();
@@ -410,6 +515,7 @@ class _SkeletonStage3dState extends State<SkeletonStage3d> {
     final y = (event.clientY as num?)?.toDouble();
     if (x == null || y == null) return;
     _pointerDown = Offset(x, y);
+    _idleSeconds = 0;
   }
 
   void _onPointerUp(dynamic event) {
@@ -485,8 +591,6 @@ class _SkeletonStage3dState extends State<SkeletonStage3d> {
       return;
     }
     _camT = 0;
-    _applyCamera(goalPos, goalTarget);
-    _camT = 1;
   }
 
   void _tickCamera(double dt) {
@@ -540,23 +644,52 @@ class _SkeletonStage3dState extends State<SkeletonStage3d> {
       lookAt.y + oy / len * distance,
       lookAt.z + oz / len * distance,
     );
-    _controls?.minDistance = math.min(distance * 0.72, _frameDistance * 0.34);
+    _controls?.minDistance = math.min(distance * 0.72, _frameDistance * 0.58);
     _beginCameraMove(goalPos, lookAt);
   }
 
   void _resetCamera() {
-    _controls?.minDistance = _frameDistance * 0.34;
+    _controls?.minDistance = _frameDistance * 0.58;
     _beginCameraMove(_defaultCam, _defaultTarget);
   }
 
   void _syncSelection(String? id) {
+    if (!_ready && id == null) return;
     if (id != null) {
       _focusJoint(id);
     } else {
       _resetCamera();
     }
-    _controls?.autoRotate = id == null && !_reduceMotion;
-    if (mounted) setState(() {});
+    _controls?.autoRotate = id == null && !_reduceMotion && _idleSeconds >= _idleResumeSeconds;
+  }
+
+  void _reportHotspotProjection() {
+    final callback = widget.onHotspotProjected;
+    if (callback == null) return;
+    final id = widget.selectedId;
+    final threeJs = _three;
+    if (id == null || threeJs == null || !_ready) return;
+    final group = _groups[id];
+    if (group == null) {
+      callback(null, null);
+      return;
+    }
+    group.getWorldPosition(_projectTmp);
+    _projectTmp.project(threeJs.camera);
+    if (_projectTmp.z < -1 || _projectTmp.z > 1) {
+      callback(null, null);
+      return;
+    }
+    final w = threeJs.width;
+    final h = threeJs.height;
+    if (w <= 0 || h <= 0) return;
+    callback(
+      id,
+      Offset(
+        (_projectTmp.x * 0.5 + 0.5) * w,
+        (-_projectTmp.y * 0.5 + 0.5) * h,
+      ),
+    );
   }
 
   void _handleTap(Offset local) {
@@ -654,12 +787,12 @@ class _SkeletonStage3dState extends State<SkeletonStage3d> {
     }
 
     return VisibilityDetector(
-      key: const Key('skeleton-stage'),
+      key: _visibilityKey,
       onVisibilityChanged: (info) {
         final show = info.visibleFraction > 0.08;
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (!mounted) return;
-          if (show) _activate();
+          if (show && !_activated) _activate();
           _three?.pause = !show;
           _three?.isVisibleOnScreen = show;
         });

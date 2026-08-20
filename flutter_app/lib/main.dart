@@ -9,13 +9,19 @@ import 'providers/cart_provider.dart';
 import 'providers/language_provider.dart';
 import 'providers/orders_provider.dart';
 import 'providers/portal_auth_provider.dart';
-import 'features/home/widgets/skeleton_3d.dart';
+// 3D anatomy viewer temporarily disabled.
+// import 'features/home/widgets/anatomy_embed_view.dart';
+// import 'features/home/widgets/skeleton_3d.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  registerSkeleton3d();
+  // 3D anatomy viewer temporarily disabled.
+  // registerSkeleton3d();
 
   await dotenv.load(fileName: '.env', isOptional: true);
+  // Only used when VITE_SITE_URL is set. Physical phones cannot load the
+  // emulator host, so the bundled three_js viewer is the default.
+  // registerAnatomyEmbed();
 
   final lang = LanguageProvider();
   final cart = CartProvider();

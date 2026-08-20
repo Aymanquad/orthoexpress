@@ -55,6 +55,10 @@ class ServiceLabels {
     'spine-surgery': L10nString(en: 'Spine Surgery', es: 'Cirugía de columna'),
     'hip-knee-care': L10nString(en: 'Hip & Knee Care', es: 'Atención de cadera y rodilla'),
     'foot-ankle-care': L10nString(en: 'Foot & Ankle Care', es: 'Atención de pie y tobillo'),
+    'muscle-soft-tissue-care': L10nString(
+      en: 'Muscle & Soft Tissue',
+      es: 'Músculo y tejidos blandos',
+    ),
     'total-joint-replacement': L10nString(
       en: 'Total Joint Replacement',
       es: 'Reemplazo articular total',
@@ -138,6 +142,10 @@ class ServiceLabels {
     'foot-ankle-care': L10nString(
       en: 'Treatment for sprains, plantar fasciitis, Achilles injuries, and foot deformities to keep you moving.',
       es: 'Tratamiento para esguinces, fascitis plantar, lesiones de Aquiles y deformidades del pie para mantenerlo en movimiento.',
+    ),
+    'muscle-soft-tissue-care': L10nString(
+      en: 'Same-day walk-in care for muscle strains, tendonitis, and soft-tissue injuries.',
+      es: 'Atención sin cita el mismo día para distensiones musculares, tendinitis y lesiones de tejidos blandos.',
     ),
     'total-joint-replacement': L10nString(
       en: 'Advanced hip, knee, and shoulder replacement procedures to restore mobility and reduce chronic joint pain.',

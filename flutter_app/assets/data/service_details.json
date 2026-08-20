@@ -1075,5 +1075,60 @@
       "en": "Sports medicine goes beyond just treating injuries—it's about optimizing performance and preventing future problems. Our approach includes comprehensive evaluation, personalized treatment plans, and guidance on training modifications. We utilize cutting-edge techniques like platelet-rich plasma (PRP) therapy and advanced rehabilitation protocols to help athletes recover faster and stronger. Our goal is not just to treat your injury, but to help you perform better than before.",
       "es": "La medicina deportiva va más allá de tratar lesiones: se trata de optimizar el rendimiento y prevenir problemas futuros. Nuestro enfoque incluye evaluación integral, planes de tratamiento personalizados y orientación sobre modificaciones en el entrenamiento. Utilizamos técnicas de vanguardia como la terapia con plasma rico en plaquetas (PRP) y protocolos avanzados de rehabilitación para ayudar a los atletas a recuperarse más rápido y con mayor fortaleza. Nuestro objetivo no es solo tratar su lesión, sino ayudarle a rendir mejor que antes."
     }
+  },
+  "muscle-soft-tissue-care": {
+    "title": {
+      "en": "Muscle & Soft Tissue",
+      "es": "Músculo y tejidos blandos"
+    },
+    "description": {
+      "en": "Same-day walk-in care for muscle strains, tendonitis, and soft-tissue injuries.",
+      "es": "Atención sin cita el mismo día para distensiones musculares, tendinitis y lesiones de tejidos blandos."
+    },
+    "image": "/img/muscle-soft-tissue-care",
+    "overview": {
+      "en": "Muscle and soft-tissue injuries — strains, sprains, tendonitis, and contusions — are among the most common reasons people seek orthopedic care. Whether the injury came from sports, work, or everyday activity, prompt evaluation helps prevent chronic pain and long recovery times. At OrthoExpress, we assess the injury, rule out fractures or ligament damage with on-site imaging when needed, and build a clear plan to reduce inflammation and restore strength.",
+      "es": "Las lesiones de músculo y tejidos blandos — distensiones, esguinces, tendinitis y contusiones — están entre las razones más comunes por las que las personas buscan atención ortopédica. Ya sea que la lesión provenga del deporte, el trabajo o la actividad diaria, una evaluación oportuna ayuda a prevenir dolor crónico y tiempos de recuperación prolongados. En OrthoExpress evaluamos la lesión, descartamos fracturas o daño ligamentario con imágenes en el sitio cuando se necesitan, y creamos un plan claro para reducir la inflamación y restaurar la fuerza."
+    },
+    "conditions": {
+      "en": [
+        "Muscle strains and pulls",
+        "Tendonitis and tendinopathy",
+        "Contusions and bruising",
+        "Ligament sprains",
+        "Overuse and repetitive strain",
+        "Post-trauma soft-tissue pain"
+      ],
+      "es": [
+        "Distensiones y desgarros musculares",
+        "Tendinitis y tendinopatía",
+        "Contusiones y hematomas",
+        "Esguinces de ligamentos",
+        "Sobreuso y esfuerzo repetitivo",
+        "Dolor de tejidos blandos postraumático"
+      ]
+    },
+    "treatments": {
+      "en": [
+        "Same-day walk-in evaluation",
+        "Rest, ice, compression, and elevation (RICE) guidance",
+        "Bracing, splinting, and supportive taping",
+        "Anti-inflammatory and pain management",
+        "Physical therapy and sports-medicine rehab",
+        "Return-to-activity and prevention planning"
+      ],
+      "es": [
+        "Evaluación sin cita el mismo día",
+        "Orientación sobre reposo, hielo, compresión y elevación (RICE)",
+        "Férulas, ortesis y vendaje de soporte",
+        "Manejo antiinflamatorio y del dolor",
+        "Fisioterapia y rehabilitación deportiva",
+        "Planificación del regreso a la actividad y prevención"
+      ]
+    },
+    "additionalInfo": {
+      "en": "Soft-tissue injuries often respond well to conservative care when treated early. We combine hands-on assessment with imaging when indicated, then coordinate bracing, therapy, and sports-medicine recovery so you can get back to work, sport, and daily life with confidence. No appointment needed — walk in when pain or swelling starts.",
+      "es": "Las lesiones de tejidos blandos a menudo responden bien al tratamiento conservador cuando se tratan a tiempo. Combinamos evaluación clínica con imágenes cuando corresponde, y luego coordinamos férulas, terapia y recuperación deportiva para que pueda volver al trabajo, al deporte y a la vida diaria con confianza. No necesita cita — visítenos cuando comience el dolor o la hinchazón."
+    }
   }
 }

@@ -587,16 +587,7 @@ class InsuranceSection extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          SecondaryButton(
-            label: HomeLabels.insuranceVerify(lang),
-            icon: Icons.phone_outlined,
-            expanded: true,
-            onPressed: () async {
-              final uri = Uri.parse(ClinicData.telLink(ClinicData.headquartersPhone));
-              if (await canLaunchUrl(uri)) await launchUrl(uri);
-            },
-          ),
+          const SizedBox(height: 8),
           Align(
             alignment: Alignment.centerLeft,
             child: TextButton(

@@ -27,6 +27,7 @@ dependencies:
   three_js_advanced_loaders: ^0.3.0
   three_js_controls: ^0.3.0
   visibility_detector: ^0.4.0+2
+  webview_flutter: ^4.13.1
 
 dev_dependencies:
   flutter_test:

@@ -10,10 +10,26 @@ typedef SkeletonStageBuilder =
       required String? selectedId,
       required String lang,
       required ValueChanged<String?> onSelect,
+      SkeletonHotspotProjected? onHotspotProjected,
+    });
+
+typedef SkeletonHotspotProjected = void Function(String? id, Offset? point);
+
+typedef AnatomyEmbedBuilder =
+    Widget Function({
+      Key? key,
+      required String lang,
+      required String? selectedId,
+      required ValueChanged<String?> onSelect,
+      required ValueChanged<String> onNavigate,
     });
 
 /// Set from `main.dart` so widget tests never import the FFI 3D engine.
 SkeletonStageBuilder? skeletonStageBuilder;
+
+/// Set from `main.dart` only where `webview_flutter` has a platform
+/// implementation. When null the native stage is used instead.
+AnatomyEmbedBuilder? anatomyEmbedBuilder;
 
 class SkeletonStage extends StatelessWidget {
   final Size canvasSize;
@@ -21,6 +37,7 @@ class SkeletonStage extends StatelessWidget {
   final String? selectedId;
   final String lang;
   final ValueChanged<String?> onSelect;
+  final SkeletonHotspotProjected? onHotspotProjected;
 
   const SkeletonStage({
     super.key,
@@ -29,6 +46,7 @@ class SkeletonStage extends StatelessWidget {
     required this.selectedId,
     required this.lang,
     required this.onSelect,
+    this.onHotspotProjected,
   });
 
   @override
@@ -50,12 +68,12 @@ class SkeletonStage extends StatelessWidget {
       );
     }
     return builder(
-      key: key,
       canvasSize: canvasSize,
       allowOrbit: allowOrbit,
       selectedId: selectedId,
       lang: lang,
       onSelect: onSelect,
+      onHotspotProjected: onHotspotProjected,
     );
   }
 }

@@ -1,0 +1,76 @@
+/* Standalone embed shell for the native app WebView.
+   Strips page chrome so the viewer reads as part of the native screen. */
+:root:has(.anatomy-embed),
+html:has(.anatomy-embed),
+body:has(.anatomy-embed) {
+  background: #070b18;
+  overflow: hidden;
+  overscroll-behavior: none;
+  height: 100%;
+}
+
+body:has(.anatomy-embed) {
+  margin: 0;
+  /* Browser zoom/selection fights the model's own drag gesture. */
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body:has(.anatomy-embed) #root {
+  height: 100%;
+}
+
+.anatomy-embed {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #070b18;
+  overflow: hidden;
+}
+
+.anatomy-embed ::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* The section ships with marketing page padding; tighten it for the embed. */
+.anatomy-embed .skeleton-viewer {
+  padding: 18px 0 22px;
+  background: #070b18;
+}
+
+.anatomy-embed .skeleton-viewer-wrap {
+  padding-inline: 16px;
+}
+
+.anatomy-embed .skeleton-credit {
+  margin-bottom: 0;
+}
+
+/* Stage-only: the canvas fills the WebView, with no page padding or gradient
+   band, so it sits flush inside the native card. */
+.anatomy-embed.is-stage-only,
+.anatomy-embed.is-stage-only .skeleton-viewer-stage-only {
+  height: 100vh;
+  height: 100dvh;
+  padding: 0;
+  background: #070b18;
+}
+
+.anatomy-embed.is-stage-only .skeleton-viewer-stage-only::before {
+  content: none;
+}
+
+.anatomy-embed.is-stage-only .skeleton-stage {
+  height: 100%;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+/* The native card draws its own drag/tap hint, so drop the web copy. */
+.anatomy-embed.is-stage-only .skeleton-hint {
+  display: none;
+}

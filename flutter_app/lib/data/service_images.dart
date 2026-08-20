@@ -146,6 +146,12 @@ class ServiceImages {
       placement: 'portrait',
       heroSrc: _sports,
     ),
+    'muscle-soft-tissue-care': ServiceImageEntry(
+      src: 'assets/images/services/muscle-soft-tissue-long.jpg',
+      fallback: _recovery,
+      heroSrc: 'assets/images/services/muscle-soft-tissue-long.jpg',
+      alignment: Alignment(0, -0.1),
+    ),
     'total-joint-replacement': ServiceImageEntry(
       src: 'assets/images/services/joint-replacement.jpg',
       fallback: _jointWide,

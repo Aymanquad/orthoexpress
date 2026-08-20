@@ -178,9 +178,6 @@ class HomeLabels {
           ? '¿Sin seguro? No hay problema. Ofrecemos opciones asequibles de pago en efectivo.'
           : 'No insurance? No problem. We offer affordable cash pay options.';
 
-  static String insuranceVerify(String lang) =>
-      lang == 'es' ? 'Verificar cobertura' : 'Verify coverage';
-
   static String insuranceViewPricing(String lang) =>
       lang == 'es' ? 'Ver precios y seguros' : 'View pricing & insurance';
 

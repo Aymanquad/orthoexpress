@@ -8,7 +8,8 @@ plugins {
 android {
     namespace = "com.orthoexpress.orthoexpress_app"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    // flutter_angle (three_js) requires NDK 28; Flutter's default is older.
+    ndkVersion = "28.2.13676358"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -28,6 +29,11 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        // Physical phones are arm64. Skipping extra ABIs avoids downloading
+        // extra Flutter engine jars on a nearly-full C: drive.
+        ndk {
+            abiFilters += listOf("arm64-v8a")
+        }
     }
 
     buildTypes {

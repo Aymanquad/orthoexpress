@@ -4,8 +4,14 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
 import { clone as cloneSkeleton } from 'three/addons/utils/SkeletonUtils.js'
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js'
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js'
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js'
+import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js'
 import gsap from 'gsap'
 import { JOINT_HOTSPOTS } from './jointHotspots'
+import { detectViewerQuality } from './viewerQuality'
 
 const MODEL_URL = '/assets/models/male_skeleton.glb'
 const DRACO_PATH = '/draco/'
@@ -13,7 +19,14 @@ const IDLE_RESUME_MS = 3000
 const CLICK_DRAG_PX = 6
 const HIT_RADIUS = 0.58
 const GLOW_SIZE = 0.52
-const FRAME_PADDING = 1.32
+const FRAME_PADDING = 1.34
+/** Camera orbit speed on stage hover (rad/s). */
+const STAGE_SPIN_RAD_PER_SEC = 2.2
+/** Model scales up by this fraction on hover (0–1). */
+const HOVER_ZOOM_AMOUNT = 0.08
+const IDLE_ROTATE_SPEED = 0
+/** Brand teal from the section eyebrow — used as a subtle rim accent. */
+const RIM_TEAL = 0x7ee0c8
 
 let cachedGltfPromise = null
 let sharedDraco = null
@@ -82,6 +95,76 @@ function makeGlowTexture() {
   return texture
 }
 
+/** Soft radial contact shadow — reads as a shadow, not a hard disc. */
+function makeShadowTexture() {
+  const size = 256
+  const canvas = document.createElement('canvas')
+  canvas.width = size
+  canvas.height = size
+  const ctx = canvas.getContext('2d')
+  const gradient = ctx.createRadialGradient(128, 128, 8, 128, 128, 124)
+  gradient.addColorStop(0, 'rgba(4, 8, 24, 0.55)')
+  gradient.addColorStop(0.35, 'rgba(4, 8, 24, 0.28)')
+  gradient.addColorStop(0.7, 'rgba(4, 8, 24, 0.08)')
+  gradient.addColorStop(1, 'rgba(4, 8, 24, 0)')
+  ctx.fillStyle = gradient
+  ctx.fillRect(0, 0, size, size)
+  const texture = new THREE.CanvasTexture(canvas)
+  texture.colorSpace = THREE.SRGBColorSpace
+  return texture
+}
+
+const VignetteShader = {
+  uniforms: {
+    tDiffuse: { value: null },
+    offset: { value: 0.85 },
+    darkness: { value: 0.55 },
+  },
+  vertexShader: /* glsl */ `
+    varying vec2 vUv;
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `,
+  fragmentShader: /* glsl */ `
+    uniform sampler2D tDiffuse;
+    uniform float offset;
+    uniform float darkness;
+    varying vec2 vUv;
+    void main() {
+      vec4 texel = texture2D(tDiffuse, vUv);
+      vec2 uv = (vUv - 0.5) * vec2(offset);
+      float vig = clamp(1.0 - dot(uv, uv), 0.0, 1.0);
+      texel.rgb *= mix(1.0 - darkness, 1.0, vig);
+      gl_FragColor = texel;
+    }
+  `,
+}
+
+/** Slightly different camera angles per region so zoom feels directed. */
+function focusOffsetFor(hotspot, distance) {
+  const side = hotspot.side || 0
+  const region = hotspot.region || ''
+  let ox = side * 0.62 || 0.24
+  let oy = 0.2
+  let oz = 1.55
+  if (region === 'head' || region === 'neck') {
+    oy = 0.42
+    oz = 1.35
+  } else if (region === 'ankle' || region === 'knee') {
+    oy = -0.08
+    oz = 1.62
+  } else if (region === 'hip' || region === 'soft_tissue') {
+    oy = 0.12
+    oz = 1.48
+  } else if (region === 'wrist' || region === 'elbow') {
+    ox = side * 0.78 || 0.32
+    oy = 0.16
+  }
+  return new THREE.Vector3(ox, oy, oz).normalize().multiplyScalar(distance)
+}
+
 function projectToContainer(vector, camera, width, height) {
   const projected = vector.clone().project(camera)
   return {
@@ -101,44 +184,50 @@ export async function createSkeletonViewer({
   onFrame,
   onProgress,
 }) {
+  const quality = detectViewerQuality()
   const renderer = new THREE.WebGLRenderer({
     canvas,
     antialias: true,
     alpha: true,
     powerPreference: 'high-performance',
   })
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, quality.pixelRatioCap))
   renderer.outputColorSpace = THREE.SRGBColorSpace
   renderer.toneMapping = THREE.ACESFilmicToneMapping
-  renderer.toneMappingExposure = 1.02
+  renderer.toneMappingExposure = 0.88
   renderer.setClearColor(0x000000, 0)
 
   const scene = new THREE.Scene()
   const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 250)
 
   const pmrem = new THREE.PMREMGenerator(renderer)
-  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.08).texture
-  scene.environmentIntensity = 0.42
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.06).texture
+  scene.environmentIntensity = 0.38
 
-  scene.add(new THREE.AmbientLight(0xc8d0e8, 0.62))
-  const key = new THREE.DirectionalLight(0xfff4ea, 1.22)
+  scene.add(new THREE.AmbientLight(0xc8d0e8, 0.36))
+  const key = new THREE.DirectionalLight(0xfff1e6, 0.92)
   key.position.set(3.8, 7.4, 6.2)
   scene.add(key)
-  const fill = new THREE.DirectionalLight(0x9eb0d8, 0.38)
+  const fill = new THREE.DirectionalLight(0x9eb0d8, 0.3)
   fill.position.set(-6.2, 2.4, 1.6)
   scene.add(fill)
-  const rim = new THREE.DirectionalLight(0xdce6ff, 0.28)
-  rim.position.set(0.4, 5.2, -7.4)
+  // Teal rim — subtle brand accent; kept low so bones don't blow out.
+  const rim = new THREE.DirectionalLight(RIM_TEAL, 0.18)
+  rim.position.set(-0.6, 4.8, -7.2)
   scene.add(rim)
+  const rimCool = new THREE.DirectionalLight(0xdce6ff, 0.1)
+  rimCool.position.set(2.2, 3.4, -5.5)
+  scene.add(rimCool)
 
   const controls = new OrbitControls(camera, canvas)
   controls.enableDamping = true
-  controls.dampingFactor = 0.12
+  controls.dampingFactor = 0.075
   controls.enablePan = false
+  controls.enableZoom = false
   controls.rotateSpeed = 0.62
   controls.zoomSpeed = 0.7
-  controls.autoRotate = !reducedMotion
-  controls.autoRotateSpeed = 0.28
+  controls.autoRotate = false
+  controls.autoRotateSpeed = IDLE_ROTATE_SPEED
   controls.minPolarAngle = 0.85
   controls.maxPolarAngle = Math.PI / 1.78
 
@@ -150,6 +239,9 @@ export async function createSkeletonViewer({
   const markerTweens = new Map()
   const worldPos = new THREE.Vector3()
   const glowTexture = makeGlowTexture()
+  const shadowTexture = makeShadowTexture()
+  const modelMats = []
+  let markerIndex = 0
 
   let selectedId = null
   let hoveredId = null
@@ -157,9 +249,22 @@ export async function createSkeletonViewer({
   let disposed = false
   let idleTimer = 0
   let pointerDown = null
+  let hoverSpin = false
   let cameraTween = null
+  let revealTween = null
   let visible = true
   let lastSize = { w: 0, h: 0 }
+  let composer = null
+  let bloomPass = null
+  let vignettePass = null
+  let restY = 0
+  let hoverZoom = 0
+  let stageHovered = false
+  let cameraAnimating = false
+  let lastPointer = { x: -1, y: -1 }
+  let lastFrameMs = performance.now()
+  const hoverCamOffset = new THREE.Vector3()
+  const hoverCamSph = new THREE.Spherical()
 
   const gltf = await loadSkeletonGltf(onProgress)
   const model = cloneSkeleton(gltf.scene)
@@ -168,6 +273,7 @@ export async function createSkeletonViewer({
     renderer.dispose()
     pmrem.dispose()
     glowTexture.dispose()
+    shadowTexture.dispose()
     return { dispose() {} }
   }
 
@@ -179,9 +285,15 @@ export async function createSkeletonViewer({
       const materials = Array.isArray(obj.material) ? obj.material : [obj.material]
       materials.forEach((mat) => {
         if (!mat) return
-        mat.roughness = Math.min(mat.roughness ?? 0.85, 0.78)
-        mat.metalness = 0.06
-        mat.envMapIntensity = 0.28
+        // Ivory bone: matte enough to read on dark UI; slight env for depth only.
+        mat.roughness = Math.min(mat.roughness ?? 0.85, 0.76)
+        mat.metalness = 0.02
+        mat.envMapIntensity = 0.3
+        if ('transparent' in mat) {
+          mat.transparent = true
+          mat.opacity = reducedMotion ? 1 : 0
+        }
+        modelMats.push(mat)
       })
     }
   })
@@ -205,6 +317,7 @@ export async function createSkeletonViewer({
   modelRoot.position.sub(rawCenter)
   const targetScale = 10.4 / Math.max(rawSize.y, rawSize.x, 1)
   modelRoot.scale.setScalar(targetScale)
+  const modelBaseScale = targetScale
   modelRoot.updateMatrixWorld(true)
 
   const hotspotRoot = new THREE.Group()
@@ -265,7 +378,16 @@ export async function createSkeletonViewer({
     group.add(hit, halo, glow)
     hotspotRoot.add(group)
     hitTargets.push(hit)
-    markers.set(hotspot.id, { hotspot, bone, group, hit, glow, halo })
+    markers.set(hotspot.id, {
+      hotspot,
+      bone,
+      group,
+      hit,
+      glow,
+      halo,
+      phase: markerIndex * 0.73,
+    })
+    markerIndex += 1
   })
 
   function syncHotspotPositions() {
@@ -289,11 +411,11 @@ export async function createSkeletonViewer({
     if (obj.isBone) fitted.expandByPoint(obj.getWorldPosition(new THREE.Vector3()))
   })
   const floor = new THREE.Mesh(
-    new THREE.CircleGeometry(3.15, 64),
+    new THREE.PlaneGeometry(7.2, 7.2),
     new THREE.MeshBasicMaterial({
-      color: 0x10183a,
+      map: shadowTexture,
       transparent: true,
-      opacity: 0.42,
+      opacity: 0.9,
       depthWrite: false,
     })
   )
@@ -301,18 +423,19 @@ export async function createSkeletonViewer({
   floor.position.y = fitted.min.y + 0.02
   scene.add(floor)
 
-  const floorRing = new THREE.Mesh(
-    new THREE.RingGeometry(2.55, 3.22, 80),
-    new THREE.MeshBasicMaterial({
-      color: 0xffffff,
-      transparent: true,
-      opacity: 0.08,
-      depthWrite: false,
+  restY = modelRoot.position.y
+  if (!reducedMotion) {
+    modelRoot.position.y = restY - 0.22
+    revealTween = gsap.timeline({ defaults: { ease: 'power2.out' } })
+    revealTween.to(modelRoot.position, { y: restY, duration: 1.05 }, 0)
+    modelMats.forEach((mat) => {
+      revealTween.to(mat, { opacity: 1, duration: 0.9 }, 0.05)
     })
-  )
-  floorRing.rotation.x = -Math.PI / 2
-  floorRing.position.y = fitted.min.y + 0.018
-  scene.add(floorRing)
+  } else {
+    modelMats.forEach((mat) => {
+      mat.opacity = 1
+    })
+  }
 
   function getModelBox() {
     modelRoot.updateMatrixWorld(true)
@@ -332,18 +455,18 @@ export async function createSkeletonViewer({
     const box = getModelBox()
     const size = box.getSize(new THREE.Vector3())
     const center = box.getCenter(new THREE.Vector3())
-    const radius = Math.max(size.x, size.y, size.z) * 0.5
     const vFov = THREE.MathUtils.degToRad(camera.fov)
-    const fitHeight = radius / Math.tan(vFov / 2)
-    const fitWidth = fitHeight / Math.max(camera.aspect, 0.01)
-    const distance = Math.max(fitHeight, fitWidth) * FRAME_PADDING
+    // Prefer body height so a tall stage fills with the skeleton, not empty air.
+    const fitByHeight = size.y * 0.5 / Math.tan(vFov / 2)
+    const fitByWidth = size.x * 0.5 / Math.tan(vFov / 2) / Math.max(camera.aspect, 0.01)
+    const distance = Math.max(fitByHeight, fitByWidth) * FRAME_PADDING
 
     camera.near = Math.max(0.05, distance / 80)
     camera.far = distance * 24
     camera.updateProjectionMatrix()
-    camera.position.set(center.x + distance * 0.16, center.y + distance * 0.02, center.z + distance)
+    camera.position.set(center.x + distance * 0.12, center.y + distance * 0.01, center.z + distance)
     controls.target.copy(center)
-    controls.minDistance = distance * 0.58
+    controls.minDistance = distance * 0.55
     controls.maxDistance = distance * 1.85
     controls.update()
     defaultCam.position.copy(camera.position)
@@ -376,6 +499,17 @@ export async function createSkeletonViewer({
         { x: targetHaloScale, y: targetHaloScale, duration: 0.45, ease: 'power2.out' },
         0
       )
+      // One soft "sonar" ping on hover/select.
+      if (hovered && !selected) {
+        marker.halo.scale.setScalar(GLOW_SIZE * 1.2)
+        marker.halo.material.opacity = 0.28
+        tween.to(
+          marker.halo.scale,
+          { x: GLOW_SIZE * 3.1, y: GLOW_SIZE * 3.1, duration: 0.55, ease: 'power2.out' },
+          0
+        )
+        tween.to(marker.halo.material, { opacity: 0, duration: 0.55, ease: 'power2.out' }, 0)
+      }
       markerTweens.set(id, tween)
       return
     }
@@ -390,6 +524,29 @@ export async function createSkeletonViewer({
   function killCameraTween() {
     cameraTween?.kill()
     cameraTween = null
+    cameraAnimating = false
+    updateHoverSpinState()
+  }
+
+  function startCameraTween(proxy, vars, duration) {
+    killCameraTween()
+    cameraAnimating = true
+    updateHoverSpinState()
+    cameraTween = gsap.to(proxy, {
+      ...vars,
+      duration,
+      ease: 'power3.inOut',
+      onUpdate: () => {
+        camera.position.set(proxy.cx, proxy.cy, proxy.cz)
+        controls.target.set(proxy.tx, proxy.ty, proxy.tz)
+        controls.update()
+      },
+      onComplete: () => {
+        cameraTween = null
+        cameraAnimating = false
+        updateHoverSpinState()
+      },
+    })
   }
 
   function focusJoint(id) {
@@ -400,10 +557,8 @@ export async function createSkeletonViewer({
     const center = box.getCenter(new THREE.Vector3())
     const span = box.getSize(new THREE.Vector3()).length()
     const distance = Math.max(5.6, span * 0.34)
-    const side = marker.hotspot.side || 0
     const lookAt = worldPos.clone().lerp(center, 0.28)
-    const offset = new THREE.Vector3(side * 0.58 || 0.22, 0.18, 1.55).normalize().multiplyScalar(distance)
-    const nextPos = lookAt.clone().add(offset)
+    const nextPos = lookAt.clone().add(focusOffsetFor(marker.hotspot, distance))
     killCameraTween()
     if (reducedMotion) {
       camera.position.copy(nextPos)
@@ -419,21 +574,14 @@ export async function createSkeletonViewer({
       ty: controls.target.y,
       tz: controls.target.z,
     }
-    cameraTween = gsap.to(proxy, {
+    startCameraTween(proxy, {
       cx: nextPos.x,
       cy: nextPos.y,
       cz: nextPos.z,
       tx: lookAt.x,
       ty: lookAt.y,
       tz: lookAt.z,
-      duration: 0.92,
-      ease: 'power3.inOut',
-      onUpdate: () => {
-        camera.position.set(proxy.cx, proxy.cy, proxy.cz)
-        controls.target.set(proxy.tx, proxy.ty, proxy.tz)
-        controls.update()
-      },
-    })
+    }, 0.82)
   }
 
   function resetCamera() {
@@ -452,21 +600,14 @@ export async function createSkeletonViewer({
       ty: controls.target.y,
       tz: controls.target.z,
     }
-    cameraTween = gsap.to(proxy, {
+    startCameraTween(proxy, {
       cx: defaultCam.position.x,
       cy: defaultCam.position.y,
       cz: defaultCam.position.z,
       tx: defaultCam.target.x,
       ty: defaultCam.target.y,
       tz: defaultCam.target.z,
-      duration: 0.92,
-      ease: 'power3.inOut',
-      onUpdate: () => {
-        camera.position.set(proxy.cx, proxy.cy, proxy.cz)
-        controls.target.set(proxy.tx, proxy.ty, proxy.tz)
-        controls.update()
-      },
-    })
+    }, 0.92)
   }
 
   function applySelection(id) {
@@ -478,7 +619,8 @@ export async function createSkeletonViewer({
       })
     })
     if (id) {
-      controls.autoRotate = false
+      modelRoot.position.y = restY
+      updateHoverSpinState()
       focusJoint(id)
     } else {
       resetCamera()
@@ -513,20 +655,59 @@ export async function createSkeletonViewer({
     if (id) setMarkerState(id, { hovered: true, selected: id === selectedId })
     canvas.style.cursor = id ? 'pointer' : 'grab'
     onHover?.(id)
+    updateHoverSpinState()
+  }
+
+  function isPointerInStage(clientX, clientY) {
+    if (clientX < 0 || clientY < 0) return false
+    const rect = container.getBoundingClientRect()
+    return (
+      clientX >= rect.left &&
+      clientX <= rect.right &&
+      clientY >= rect.top &&
+      clientY <= rect.bottom
+    )
+  }
+
+  function syncStageHover() {
+    const over =
+      isPointerInStage(lastPointer.x, lastPointer.y) || container.matches(':hover')
+    if (over === stageHovered) return
+    stageHovered = over
+    updateHoverSpinState()
+  }
+
+  function updateHoverSpinState() {
+    const active = stageHovered && !selectedId && !hoveredId && !pointerDown && !cameraAnimating
+    hoverSpin = active
+    container.dataset.hoverSpin = active ? '1' : '0'
+    container.dataset.stageHover = stageHovered ? '1' : '0'
+    controls.autoRotate = false
+  }
+
+  function setStageHovered(next) {
+    stageHovered = Boolean(next)
+    updateHoverSpinState()
+  }
+
+  function trackPointer(event) {
+    lastPointer.x = event.clientX
+    lastPointer.y = event.clientY
+    syncStageHover()
   }
 
   function scheduleIdleRotate() {
     window.clearTimeout(idleTimer)
-    if (reducedMotion || selectedId) {
-      controls.autoRotate = false
-      return
-    }
-    idleTimer = window.setTimeout(() => {
-      if (!disposed && !selectedId) controls.autoRotate = true
-    }, IDLE_RESUME_MS)
+    updateHoverSpinState()
+  }
+
+  function onPointerEnter(event) {
+    trackPointer(event)
+    setStageHovered(true)
   }
 
   function onPointerMove(event) {
+    trackPointer(event)
     if (!setPointerFromEvent(event)) return
     if (pointerDown) {
       canvas.style.cursor = 'grabbing'
@@ -535,9 +716,40 @@ export async function createSkeletonViewer({
     applyHover(pickHotspot())
   }
 
+  function onGlobalPointerMove(event) {
+    trackPointer(event)
+  }
+
+  function onGlobalScroll() {
+    syncStageHover()
+  }
+
+  function onStageMouseEnter(event) {
+    trackPointer(event)
+    setStageHovered(true)
+  }
+
+  function onStageMouseLeave(event) {
+    trackPointer(event)
+    if (!isPointerInStage(event.clientX, event.clientY)) {
+      setStageHovered(false)
+    }
+  }
+
+  function applyStageOrbit(dt) {
+    const baseDist = defaultCam.position.distanceTo(defaultCam.target)
+    hoverCamOffset.copy(camera.position).sub(controls.target)
+    hoverCamSph.setFromVector3(hoverCamOffset)
+    hoverCamSph.theta -= STAGE_SPIN_RAD_PER_SEC * dt
+    const zoomedDist = baseDist * (1 - HOVER_ZOOM_AMOUNT * hoverZoom)
+    hoverCamSph.radius = THREE.MathUtils.lerp(hoverCamSph.radius, zoomedDist, dt * 4)
+    hoverCamOffset.setFromSpherical(hoverCamSph)
+    camera.position.copy(controls.target).add(hoverCamOffset)
+  }
+
   function onPointerDown(event) {
     pointerDown = { x: event.clientX, y: event.clientY }
-    controls.autoRotate = false
+    updateHoverSpinState()
     canvas.style.cursor = 'grabbing'
     setPointerFromEvent(event)
   }
@@ -546,27 +758,38 @@ export async function createSkeletonViewer({
     const start = pointerDown
     pointerDown = null
     canvas.style.cursor = 'grab'
-    if (!start) return
+    if (!start) {
+      updateHoverSpinState()
+      return
+    }
     const dx = event.clientX - start.x
     const dy = event.clientY - start.y
     const dragged = dx * dx + dy * dy > CLICK_DRAG_PX * CLICK_DRAG_PX
-    scheduleIdleRotate()
-    if (dragged) return
-    if (!setPointerFromEvent(event)) return
+    if (dragged) {
+      updateHoverSpinState()
+      return
+    }
+    if (!setPointerFromEvent(event)) {
+      updateHoverSpinState()
+      return
+    }
     const id = pickHotspot()
     if (id) applySelection(id)
     else if (selectedId) applySelection(null)
+    else updateHoverSpinState()
   }
 
-  function onPointerLeave() {
-    pointerDown = null
+  function onPointerLeave(event) {
+    trackPointer(event)
+    if (isPointerInStage(event.clientX, event.clientY)) return
+    setStageHovered(false)
     if (hoveredId && hoveredId !== selectedId) {
       setMarkerState(hoveredId, { hovered: false, selected: false })
     }
     hoveredId = null
     onHover?.(null)
     canvas.style.cursor = 'grab'
-    scheduleIdleRotate()
+    updateHoverSpinState()
   }
 
   function resize() {
@@ -577,7 +800,11 @@ export async function createSkeletonViewer({
     camera.aspect = width / height
     camera.updateProjectionMatrix()
     renderer.setSize(width, height, false)
-    if (changed && !selectedId && !cameraTween) frameModel()
+    if (composer) {
+      composer.setSize(width, height)
+      bloomPass?.setSize(width, height)
+    }
+    if (changed && !selectedId && !cameraAnimating) frameModel()
   }
 
   const resizeObserver = new ResizeObserver(resize)
@@ -585,35 +812,87 @@ export async function createSkeletonViewer({
   resize()
   frameModel()
 
+  // Post-processing: bloom (hotspots) + vignette. Skipped on constrained GPUs.
+  if (quality.bloom && !reducedMotion) {
+    composer = new EffectComposer(renderer)
+    composer.addPass(new RenderPass(scene, camera))
+    // Keep bloom on hotspots only — white bone mesh must stay below threshold.
+    bloomPass = new UnrealBloomPass(
+      new THREE.Vector2(lastSize.w || 1, lastSize.h || 1),
+      0.09,
+      0.35,
+      0.94
+    )
+    composer.addPass(bloomPass)
+    vignettePass = new ShaderPass(VignetteShader)
+    vignettePass.uniforms.offset.value = 0.9
+    vignettePass.uniforms.darkness.value = 0.52
+    composer.addPass(vignettePass)
+    composer.addPass(new OutputPass())
+  }
+
+  container.addEventListener('pointerenter', onPointerEnter)
+  container.addEventListener('pointerleave', onPointerLeave)
+  container.addEventListener('pointermove', onPointerMove)
+  container.addEventListener('mouseenter', onStageMouseEnter)
+  container.addEventListener('mouseleave', onStageMouseLeave)
   canvas.addEventListener('pointermove', onPointerMove)
   canvas.addEventListener('pointerdown', onPointerDown)
   canvas.addEventListener('pointerup', onPointerUp)
-  canvas.addEventListener('pointerleave', onPointerLeave)
+  document.addEventListener('pointermove', onGlobalPointerMove, { passive: true })
+  document.addEventListener('scroll', onGlobalScroll, { passive: true, capture: true })
+  window.addEventListener('pointerup', onPointerUp)
+  window.addEventListener('pointercancel', onPointerUp)
   canvas.style.cursor = 'grab'
   canvas.style.touchAction = 'none'
 
-  const clock = new THREE.Clock()
-  function tick() {
+  function tick(now) {
     if (disposed) return
     raf = requestAnimationFrame(tick)
-    const elapsed = clock.getElapsedTime()
-    const dt = clock.getDelta()
-    if (!visible) return
+    const dt = Math.min((now - lastFrameMs) / 1000, 0.05)
+    lastFrameMs = now
+    const elapsed = now / 1000
+
+    syncStageHover()
+
+    if (hoverSpin) {
+      hoverZoom = Math.min(1, hoverZoom + dt * 6)
+      controls.enableDamping = false
+      applyStageOrbit(dt)
+    } else {
+      controls.enableDamping = true
+      if (!selectedId && !cameraAnimating) {
+        hoverZoom = Math.max(0, hoverZoom - dt * 5)
+      }
+    }
+
+    const zoomScale = modelBaseScale * (1 + HOVER_ZOOM_AMOUNT * hoverZoom)
+    modelRoot.scale.setScalar(THREE.MathUtils.lerp(modelRoot.scale.x, zoomScale, dt * 5))
+
+    // Breathing bob only when idle.
+    if (!hoverSpin && !selectedId && !cameraAnimating && !reducedMotion) {
+      modelRoot.position.y = restY + Math.sin(elapsed * 0.85) * 0.028
+    } else if (selectedId || cameraAnimating) {
+      modelRoot.position.y = restY
+    }
+
     controls.update(dt)
     syncHotspotPositions()
 
     if (!debugHotspots) {
-      const pulse = 0.88 + Math.sin(elapsed * 1.55) * 0.12
-      floorRing.material.opacity = 0.06 + Math.sin(elapsed * 0.9) * 0.025
       markers.forEach((marker, id) => {
         if (id === hoveredId || id === selectedId) return
-        marker.glow.material.opacity = 0.38 * pulse
-        marker.glow.scale.setScalar(GLOW_SIZE * (0.94 + pulse * 0.08))
-        marker.halo.material.opacity = 0
+        // Staggered pulse (~2.4s) so markers don't blink in unison.
+        const pulse = 0.86 + Math.sin(elapsed * 2.4 + marker.phase) * 0.14
+        marker.glow.material.opacity = 0.36 * pulse
+        marker.glow.scale.setScalar(GLOW_SIZE * (0.92 + pulse * 0.1))
+        marker.halo.material.opacity = 0.04 * pulse
+        marker.halo.scale.setScalar(GLOW_SIZE * (1.9 + pulse * 0.2))
       })
     }
 
-    renderer.render(scene, camera)
+    if (composer) composer.render()
+    else renderer.render(scene, camera)
 
     const width = container.clientWidth
     const height = container.clientHeight
@@ -634,23 +913,34 @@ export async function createSkeletonViewer({
         : null,
     })
   }
-  tick()
+  tick(performance.now())
+  syncStageHover()
 
   function dispose() {
     disposed = true
     cancelAnimationFrame(raf)
     window.clearTimeout(idleTimer)
     killCameraTween()
+    revealTween?.kill()
     markerTweens.forEach((tween) => tween.kill())
     markerTweens.clear()
     resizeObserver.disconnect()
+    container.removeEventListener('pointerenter', onPointerEnter)
+    container.removeEventListener('pointerleave', onPointerLeave)
+    container.removeEventListener('pointermove', onPointerMove)
+    container.removeEventListener('mouseenter', onStageMouseEnter)
+    container.removeEventListener('mouseleave', onStageMouseLeave)
     canvas.removeEventListener('pointermove', onPointerMove)
     canvas.removeEventListener('pointerdown', onPointerDown)
     canvas.removeEventListener('pointerup', onPointerUp)
-    canvas.removeEventListener('pointerleave', onPointerLeave)
+    document.removeEventListener('pointermove', onGlobalPointerMove)
+    document.removeEventListener('scroll', onGlobalScroll, true)
+    window.removeEventListener('pointerup', onPointerUp)
+    window.removeEventListener('pointercancel', onPointerUp)
     controls.dispose()
     pmrem.dispose()
     glowTexture.dispose()
+    shadowTexture.dispose()
     markers.forEach((marker) => {
       marker.hit.geometry.dispose()
       marker.hit.material.dispose()
@@ -659,17 +949,17 @@ export async function createSkeletonViewer({
     })
     floor.geometry.dispose()
     floor.material.dispose()
-    floorRing.geometry.dispose()
-    floorRing.material.dispose()
+    composer?.dispose()
     renderer.dispose()
   }
 
   return {
     dispose,
     resize,
-    setVisible: (next) => {
-      visible = next
+    setVisible: () => {
+      visible = true
     },
+    setStageHovered,
     select: applySelection,
     getSelected: () => selectedId,
   }

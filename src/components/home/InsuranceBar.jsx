@@ -1,8 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { FaPhone } from 'react-icons/fa'
-import { CLINIC } from '../../data'
-import { toTelLink } from '../../data/utils'
 import { useLanguage } from '../../context/LanguageContext'
 import './InsuranceBar.css'
 
@@ -37,9 +34,6 @@ const InsuranceBar = () => {
           <span className="insurance-pill insurance-pill--more">{t('home.insurance.andMore')}</span>
         </div>
         <div className="insurance-cta-row">
-          <a href={toTelLink(CLINIC.headquarters.phone)} className="insurance-cta-call">
-            <FaPhone /> {t('home.insurance.verify')} · {CLINIC.headquarters.phone}
-          </a>
           <Link to="/payment" className="insurance-cta-link">
             {t('home.insurance.viewPricing')}
           </Link>

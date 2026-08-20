@@ -45,6 +45,7 @@ class SkeletonLabels {
     es: 'Modelo 3D: Male Skeleton de projectkaizen, CC BY 4.0.',
   );
   static const close = L10nString(en: 'Close', es: 'Cerrar');
+  static const retry = L10nString(en: 'Try again', es: 'Intentar de nuevo');
 
   static String topicName(String id, String lang) {
     const map = {

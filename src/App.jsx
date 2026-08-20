@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import MobileActionBar from './components/MobileActionBar'
@@ -41,9 +41,25 @@ import AccessibilityStatement from './pages/AccessibilityStatement'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import TermsOfService from './pages/TermsOfService'
 import NotFound from './pages/NotFound'
+import AnatomyViewerEmbed from './pages/embed/AnatomyViewerEmbed'
 import './App.css'
 
 function App() {
+  const { pathname } = useLocation()
+
+  // `/embed/*` is consumed by the native app's WebView, which supplies its own
+  // nav and chrome. Render the bare widget so nothing is duplicated.
+  if (pathname.startsWith('/embed/')) {
+    return (
+      <ErrorBoundary>
+        <Routes>
+          <Route path="/embed/anatomy-viewer" element={<AnatomyViewerEmbed />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </ErrorBoundary>
+    )
+  }
+
   return (
     <ErrorBoundary>
       <div className="App">

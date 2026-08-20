@@ -23,14 +23,41 @@
   max-width: 1400px;
 }
 
+.skeleton-layout {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(210px, 248px) minmax(0, 1fr) minmax(230px, 280px);
+  gap: 16px 24px;
+  align-items: stretch;
+  min-height: min(74vh, 760px);
+}
+
+/* Left: title + body-part buttons */
+.skeleton-sidebar {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+  min-width: 0;
+  padding: 8px 0;
+}
+
+.skeleton-layout.is-open .skeleton-sidebar {
+  justify-content: flex-start;
+  padding-top: 16px;
+}
+
 .skeleton-viewer-header {
-  max-width: 640px;
-  margin-bottom: 28px;
+  max-width: none;
+  margin: 0;
+  flex-shrink: 0;
 }
 
 .skeleton-viewer-eyebrow {
-  margin: 0 0 12px;
-  font-size: 0.78rem;
+  margin: 0 0 8px;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -39,28 +66,35 @@
 
 .skeleton-viewer-title {
   font-family: var(--font-display);
-  font-size: clamp(1.9rem, 3.6vw, 2.7rem);
+  font-size: clamp(1.4rem, 2vw, 2rem);
   font-weight: 600;
   letter-spacing: -0.02em;
   color: #ffffff;
-  margin: 0 0 12px;
-  line-height: 1.2;
+  margin: 0 0 8px;
+  line-height: 1.18;
 }
 
 .skeleton-viewer-subtitle {
   margin: 0;
-  color: rgba(226, 232, 255, 0.78);
-  font-size: 1.02rem;
-  line-height: 1.65;
+  color: rgba(226, 232, 255, 0.68);
+  font-size: 0.86rem;
+  line-height: 1.5;
 }
 
-.skeleton-layout {
+/* Right: injury detail panel */
+.skeleton-detail {
   position: relative;
-  display: grid;
-  grid-template-columns: minmax(236px, 292px) minmax(0, 1fr) minmax(176px, 214px);
-  gap: 12px 28px;
-  align-items: stretch;
-  min-height: min(72vh, 720px);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding: 8px 0 8px 4px;
+}
+
+.skeleton-layout.is-open .skeleton-detail {
+  justify-content: flex-start;
+  padding-top: 16px;
 }
 
 .skeleton-leaders {
@@ -78,6 +112,7 @@
   stroke: rgba(255, 255, 255, 0.22);
   stroke-width: 5;
   stroke-linecap: round;
+  stroke-linejoin: round;
   fill: none;
   filter: blur(3px);
 }
@@ -87,6 +122,7 @@
   stroke: rgba(255, 255, 255, 0.9);
   stroke-width: 1.2;
   stroke-linecap: round;
+  stroke-linejoin: round;
   fill: none;
   filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.12));
 }
@@ -109,31 +145,38 @@
   filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35));
 }
 
+.skeleton-leader-end {
+  display: none;
+  fill: rgba(255, 255, 255, 0.88);
+  filter: drop-shadow(0 0 5px rgba(126, 224, 200, 0.35));
+}
+
 .skeleton-callout {
   position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   min-height: 0;
-  padding: 8px 8px 8px 0;
+  padding: 0;
   color: rgba(238, 242, 255, 0.92);
 }
 
 .skeleton-callout-anchor {
   position: absolute;
-  right: 0;
+  left: 0;
   top: 50%;
   width: 1px;
   height: 1px;
 }
 
 .skeleton-callout-panel {
-  animation: skeletonCalloutIn 0.48s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: skeletonCalloutIn 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .skeleton-callout-panel.is-selected {
   animation-name: skeletonCalloutOpen;
+  animation-duration: 0.38s;
 }
 
 .skeleton-callout-idle,
@@ -242,9 +285,9 @@
 
 .skeleton-stage {
   position: relative;
-  min-height: 520px;
-  height: min(72vh, 720px);
-  border-radius: 24px;
+  min-height: 560px;
+  height: min(74vh, 740px);
+  border-radius: 22px;
   overflow: hidden;
   background:
     radial-gradient(ellipse at 50% 82%, rgba(18, 28, 78, 0.55), transparent 62%),
@@ -253,7 +296,48 @@
   box-shadow:
     0 24px 64px rgba(0, 0, 0, 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  transition: border-color 0.45s var(--ease-out), box-shadow 0.45s var(--ease-out);
+  transition: border-color 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
+}
+
+.skeleton-stage:hover,
+.skeleton-stage[data-hover-spin='1'] {
+  border-color: rgba(126, 224, 200, 0.55);
+  box-shadow:
+    0 28px 72px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 28px rgba(126, 224, 200, 0.22);
+  animation: skeletonStageHoverPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes skeletonStageHoverPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 28px 72px rgba(0, 0, 0, 0.34),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 0 22px rgba(126, 224, 200, 0.18);
+  }
+  50% {
+    box-shadow:
+      0 32px 80px rgba(0, 0, 0, 0.36),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 0 36px rgba(126, 224, 200, 0.32);
+  }
+}
+
+/* Soft vignette — pulls the eye to the model without a GPU pass. */
+.skeleton-stage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 50% 45%,
+    transparent 38%,
+    rgba(7, 11, 24, 0.52) 100%
+  );
+  z-index: 2;
 }
 
 .skeleton-layout.is-hover .skeleton-stage,
@@ -268,8 +352,8 @@
   position: absolute;
   inset: 18% 22% 10%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.07), transparent 70%);
-  opacity: 0.7;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.04), transparent 70%);
+  opacity: 0.38;
   pointer-events: none;
   animation: skeletonAura 6.5s ease-in-out infinite;
 }
@@ -358,10 +442,11 @@
 .skeleton-joint-nav {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 2px;
-  overflow: hidden;
-  padding: 6px 0;
+  justify-content: flex-start;
+  gap: 1px;
+  overflow: visible;
+  padding: 0;
+  margin: 0;
   max-height: none;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -377,12 +462,12 @@
   appearance: none;
   position: relative;
   width: 100%;
-  padding: 9px 12px;
+  padding: 8px 10px;
   border: 0;
   border-radius: 8px;
   background: transparent;
   color: rgba(226, 232, 255, 0.68);
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 500;
   letter-spacing: 0.01em;
   text-align: left;
@@ -465,7 +550,7 @@
 @keyframes skeletonCalloutIn {
   from {
     opacity: 0;
-    transform: translateX(-14px);
+    transform: translateX(14px);
   }
   to {
     opacity: 1;
@@ -476,7 +561,7 @@
 @keyframes skeletonCalloutOpen {
   from {
     opacity: 0;
-    transform: translateX(-18px);
+    transform: translateX(18px);
   }
   to {
     opacity: 1;
@@ -487,7 +572,7 @@
 @keyframes skeletonListIn {
   from {
     opacity: 0;
-    transform: translateX(-8px);
+    transform: translateX(8px);
   }
   to {
     opacity: 1;
@@ -514,26 +599,47 @@
 
   .skeleton-layout {
     grid-template-columns: 1fr;
+    gap: 16px;
     min-height: 0;
   }
 
+  /* Flatten columns so title → stage → callout → topics stacks cleanly. */
+  .skeleton-sidebar,
+  .skeleton-detail {
+    display: contents;
+  }
+
+  .skeleton-viewer-header {
+    order: 0;
+    max-width: none;
+    padding: 0 2px;
+  }
+
+  .skeleton-viewer-title {
+    font-size: clamp(1.7rem, 6vw, 2.2rem);
+  }
+
+  .skeleton-viewer-subtitle {
+    max-width: none;
+  }
+
   .skeleton-stage {
-    min-height: 560px;
-    height: 72vh;
-    border-radius: 22px;
     order: 1;
+    min-height: 540px;
+    height: min(70vh, 680px);
+    border-radius: 22px;
   }
 
   .skeleton-callout {
     order: 2;
-    padding: 18px 4px 4px;
-    min-height: 120px;
+    padding: 8px 4px 4px;
+    min-height: 100px;
   }
 
   .skeleton-callout-anchor {
     top: 0;
-    right: auto;
     left: 24px;
+    right: auto;
   }
 
   .skeleton-joint-nav {
@@ -543,7 +649,7 @@
     justify-content: flex-start;
     max-height: none;
     overflow: visible;
-    margin-top: 8px;
+    margin-top: 4px;
     gap: 6px;
   }
 
@@ -574,11 +680,13 @@
   .skeleton-leader-line,
   .skeleton-leader-glow,
   .skeleton-leader-dot,
+  .skeleton-leader-end,
   .skeleton-leader-ring,
   .skeleton-stage-aura,
   .skeleton-callout-panel,
   .skeleton-callout-list li,
-  .skeleton-canvas {
+  .skeleton-canvas,
+  .skeleton-stage[data-hover-spin='1'] {
     animation: none;
     transition: none;
   }

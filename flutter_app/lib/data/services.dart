@@ -38,6 +38,7 @@ const specialtyServices = <ServiceItem>[
   ServiceItem(slug: 'spine-surgery', isSpecialty: true),
   ServiceItem(slug: 'hip-knee-care', isSpecialty: true),
   ServiceItem(slug: 'foot-ankle-care', isSpecialty: true),
+  ServiceItem(slug: 'muscle-soft-tissue-care', isSpecialty: true),
   ServiceItem(slug: 'total-joint-replacement', isSpecialty: true),
 ];
 
