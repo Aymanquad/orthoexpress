@@ -8,6 +8,7 @@ import LocationsPreview from '../components/home/LocationsPreview'
 import ReviewsBar from '../components/home/ReviewsBar'
 import InsuranceBar from '../components/home/InsuranceBar'
 import BlogPreview from '../components/home/BlogPreview'
+import EhrIntegrations from '../components/home/EhrIntegrations'
 import { useLanguage } from '../context/LanguageContext'
 import './Home.css'
 
@@ -28,6 +29,7 @@ const Home = () => {
       <ReviewsBar />
       <InsuranceBar />
       <BlogPreview />
+      <EhrIntegrations />
     </div>
   )
 }

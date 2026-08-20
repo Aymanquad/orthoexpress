@@ -128,6 +128,14 @@ export const home = {
       viewPricing: 'View pricing & insurance →',
       andMore: '+ many more',
     },
+    ehr: {
+      eyebrow: 'Interoperability',
+      title: 'We integrate with all EHRs',
+      subtitle: 'Connected to the clinical systems your care network already uses.',
+      prev: 'Previous EHR',
+      next: 'Next EHR',
+      railLabel: 'EHR systems',
+    },
     howWeCare: {
       title: 'How we care for you',
       subtitle: 'From legal support to recovery — clear steps when you need care.',
@@ -363,6 +371,14 @@ export const home = {
       noInsurance: '¿Sin seguro? No hay problema. Ofrecemos opciones asequibles de pago en efectivo.',
       viewPricing: 'Ver precios y seguros →',
       andMore: '+ muchos más',
+    },
+    ehr: {
+      eyebrow: 'Interoperabilidad',
+      title: 'Integramos con todos los EHR',
+      subtitle: 'Conectados a los sistemas clínicos que su red de atención ya utiliza.',
+      prev: 'EHR anterior',
+      next: 'Siguiente EHR',
+      railLabel: 'Sistemas EHR',
     },
     howWeCare: {
       title: 'Cómo cuidamos de usted',

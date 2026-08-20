@@ -184,6 +184,17 @@ class HomeLabels {
   static String insuranceAndMore(String lang) =>
       lang == 'es' ? '+ muchos más' : '+ many more';
 
+  static String ehrEyebrow(String lang) =>
+      lang == 'es' ? 'Interoperabilidad' : 'Interoperability';
+
+  static String ehrTitle(String lang) =>
+      lang == 'es' ? 'Integramos con todos los EHR' : 'We integrate with all EHRs';
+
+  static String ehrSubtitle(String lang) =>
+      lang == 'es'
+          ? 'Conectados a los sistemas clínicos que su red de atención ya utiliza.'
+          : 'Connected to the clinical systems your care network already uses.';
+
   static String blogTitle(String lang) =>
       lang == 'es' ? 'De nuestro blog' : 'From our blog';
 

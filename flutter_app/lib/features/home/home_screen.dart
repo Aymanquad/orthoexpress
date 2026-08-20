@@ -5,6 +5,7 @@ import '../../core/widgets/content_page_scaffold.dart';
 import '../../core/widgets/responsive_page.dart';
 import '../../providers/language_provider.dart';
 import 'widgets/home_sections.dart';
+import 'widgets/ehr_integrations_section.dart';
 // 3D anatomy viewer temporarily disabled.
 // import 'widgets/skeleton_viewer_section.dart';
 
@@ -36,6 +37,7 @@ class HomeScreen extends StatelessWidget {
             _Band(color: AppColors.bgSoft, child: ReviewsSection()),
             _Band(color: AppColors.bgWhite, child: InsuranceSection()),
             _Band(color: AppColors.bgLight, child: BlogPreviewSection()),
+            _Band(color: AppColors.bgSoft, child: EhrIntegrationsSection()),
           ],
         ),
       ),

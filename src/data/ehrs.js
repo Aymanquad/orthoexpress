@@ -1,0 +1,223 @@
+/** EHR systems OrthoExpress integrates with (homepage showcase). */
+export const EHR_SYSTEMS = [
+  {
+    id: 'epic',
+    name: 'Epic Systems',
+    monogram: 'EP',
+    developer: 'Epic Systems Corporation',
+    country: { en: 'United States', es: 'Estados Unidos' },
+    highlight: {
+      en: 'Hospital and academic medical center focus — interoperability, analytics, and scale.',
+      es: 'Enfoque en hospitales y centros médicos académicos — interoperabilidad, analítica y escala.',
+    },
+  },
+  {
+    id: 'oracle-health',
+    name: 'Oracle Health',
+    monogram: 'OH',
+    developer: 'Oracle Health (formerly Cerner)',
+    country: { en: 'United States', es: 'Estados Unidos' },
+    highlight: {
+      en: 'Millennium platform with open APIs, global reach, and AI-assisted clinical support.',
+      es: 'Plataforma Millennium con APIs abiertas, alcance global y apoyo clínico asistido por IA.',
+    },
+  },
+  {
+    id: 'meditech',
+    name: 'MEDITECH',
+    monogram: 'MT',
+    developer: 'MEDITECH Inc.',
+    country: { en: 'United States', es: 'Estados Unidos' },
+    highlight: {
+      en: 'Acute and community hospital workflows — scalable from small facilities upward.',
+      es: 'Flujos para hospitales agudos y comunitarios — escalable desde centros pequeños.',
+    },
+  },
+  {
+    id: 'athenahealth',
+    name: 'athenahealth',
+    monogram: 'AH',
+    developer: 'Athenahealth, Inc.',
+    country: { en: 'United States', es: 'Estados Unidos' },
+    highlight: {
+      en: 'Cloud EHR with practice management, billing, telehealth, and ambulatory insights.',
+      es: 'EHR en la nube con gestión de práctica, facturación, telesalud e insights ambulatorios.',
+    },
+  },
+  {
+    id: 'nextgen',
+    name: 'NextGen Healthcare',
+    monogram: 'NG',
+    developer: 'NextGen Healthcare, Inc.',
+    country: { en: 'United States', es: 'Estados Unidos' },
+    highlight: {
+      en: 'Specialty templates, patient portal, telehealth, and revenue cycle for mid-sized practices.',
+      es: 'Plantillas por especialidad, portal del paciente, telesalud y ciclo de ingresos.',
+    },
+  },
+  {
+    id: 'eclinicalworks',
+    name: 'eClinicalWorks',
+    monogram: 'eC',
+    developer: 'eClinicalWorks',
+    country: { en: 'United States', es: 'Estados Unidos' },
+    highlight: {
+      en: 'Cloud and mobile EHR with telehealth, engagement tools, and population health.',
+      es: 'EHR en la nube y móvil con telesalud, engagement y salud poblacional.',
+    },
+  },
+  {
+    id: 'greenway',
+    name: 'Greenway Health',
+    monogram: 'GH',
+    developer: 'Greenway Health, LLC',
+    country: { en: 'United States', es: 'Estados Unidos' },
+    highlight: {
+      en: 'Ambulatory EHR with built-in RCM and customizable clinical workflows.',
+      es: 'EHR ambulatorio con RCM integrado y flujos clínicos personalizables.',
+    },
+  },
+  {
+    id: 'veradigm',
+    name: 'Veradigm',
+    monogram: 'VA',
+    developer: 'Veradigm (formerly Allscripts)',
+    country: { en: 'United States', es: 'Estados Unidos' },
+    highlight: {
+      en: 'Ambulatory solutions with open APIs, scheduling, billing, and modular specialties.',
+      es: 'Soluciones ambulatorias con APIs abiertas, citas, facturación y especialidades modulares.',
+    },
+  },
+  {
+    id: 'practice-fusion',
+    name: 'Practice Fusion',
+    monogram: 'PF',
+    developer: 'Veradigm (Practice Fusion)',
+    country: { en: 'United States', es: 'Estados Unidos' },
+    highlight: {
+      en: 'Affordable web-based EHR with e-prescribing and lab integration for small practices.',
+      es: 'EHR web asequible con e-prescripción e integración de laboratorios para clínicas pequeñas.',
+    },
+  },
+  {
+    id: 'advancedmd',
+    name: 'AdvancedMD',
+    monogram: 'AM',
+    developer: 'AdvancedMD, Inc.',
+    country: { en: 'United States', es: 'Estados Unidos' },
+    highlight: {
+      en: 'SaaS EHR with telemedicine, customizable templates, and practice analytics.',
+      es: 'EHR SaaS con telemedicina, plantillas personalizables y analítica de práctica.',
+    },
+  },
+  {
+    id: 'dedalus',
+    name: 'Dedalus',
+    monogram: 'DE',
+    developer: 'Dedalus Group',
+    country: { en: 'Italy', es: 'Italia' },
+    highlight: {
+      en: 'Europe’s largest health IT vendor — integrated EHR, lab, and imaging systems.',
+      es: 'El mayor proveedor de TI de salud en Europa — EHR, laboratorio e imagen integrados.',
+    },
+  },
+  {
+    id: 'trakcare',
+    name: 'InterSystems TrakCare',
+    monogram: 'TC',
+    developer: 'InterSystems Corporation',
+    country: { en: 'United States', es: 'Estados Unidos' },
+    highlight: {
+      en: 'Global unified patient record with analytics and strong FHIR support.',
+      es: 'Registro de paciente unificado global con analítica y sólido soporte FHIR.',
+    },
+  },
+  {
+    id: 'emis',
+    name: 'EMIS Health',
+    monogram: 'EM',
+    developer: 'EMIS Health (part of Optum)',
+    country: { en: 'United Kingdom', es: 'Reino Unido' },
+    highlight: {
+      en: 'UK primary care leader — prescribing, patient portals, and GP–pharmacy links.',
+      es: 'Líder en atención primaria del Reino Unido — recetas, portales y enlace GP–farmacia.',
+    },
+  },
+  {
+    id: 'systmone',
+    name: 'SystmOne',
+    monogram: 'S1',
+    developer: 'The Phoenix Partnership (TPP)',
+    country: { en: 'United Kingdom', es: 'Reino Unido' },
+    highlight: {
+      en: 'NHS primary and community care with real-time record sharing and mobile access.',
+      es: 'Atención primaria y comunitaria del NHS con registros en tiempo real y acceso móvil.',
+    },
+  },
+  {
+    id: 'vision',
+    name: 'Vision',
+    monogram: 'VI',
+    developer: 'Cegedim Healthcare Solutions',
+    country: { en: 'United Kingdom', es: 'Reino Unido' },
+    highlight: {
+      en: 'UK primary care EHR with intuitive prescribing and cross-practice data sharing.',
+      es: 'EHR de atención primaria del Reino Unido con recetas intuitivas e intercambio de datos.',
+    },
+  },
+  {
+    id: 'carecloud',
+    name: 'CareCloud',
+    monogram: 'CC',
+    developer: 'CareCloud, Inc.',
+    country: { en: 'United States', es: 'Estados Unidos' },
+    highlight: {
+      en: 'Cloud EHR plus practice management, RCM, billing, and telemedicine.',
+      es: 'EHR en la nube con gestión de práctica, RCM, facturación y telemedicina.',
+    },
+  },
+  {
+    id: 'drchrono',
+    name: 'DrChrono',
+    monogram: 'DC',
+    developer: 'DrChrono, Inc.',
+    country: { en: 'United States', es: 'Estados Unidos' },
+    highlight: {
+      en: 'Mobile-first EHR for iPad and iPhone — scheduling and telehealth built in.',
+      es: 'EHR móvil para iPad e iPhone — citas y telesalud integradas.',
+    },
+  },
+  {
+    id: 'kareo',
+    name: 'Kareo Clinical',
+    monogram: 'KA',
+    developer: 'Kareo, Inc.',
+    country: { en: 'United States', es: 'Estados Unidos' },
+    highlight: {
+      en: 'Cloud EHR with integrated billing, RCM, and engagement for independent practices.',
+      es: 'EHR en la nube con facturación, RCM y engagement para prácticas independientes.',
+    },
+  },
+  {
+    id: 'modmed',
+    name: 'ModMed',
+    monogram: 'MM',
+    developer: 'Modernizing Medicine, Inc.',
+    country: { en: 'United States', es: 'Estados Unidos' },
+    highlight: {
+      en: 'Specialty-specific EHRs with AI documentation, telehealth, and analytics.',
+      es: 'EHRs por especialidad con documentación IA, telesalud y analítica.',
+    },
+  },
+  {
+    id: 'ge-healthcare',
+    name: 'GE Healthcare',
+    monogram: 'GE',
+    developer: 'GE Healthcare',
+    country: { en: 'United States', es: 'Estados Unidos' },
+    highlight: {
+      en: 'Enterprise hospital deployments with imaging integration and clinical documentation.',
+      es: 'Despliegues hospitalarios empresariales con integración de imagen y documentación clínica.',
+    },
+  },
+]

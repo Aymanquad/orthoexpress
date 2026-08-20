@@ -30,4 +30,5 @@ export {
   ORTHOCHAT_FEATURES,
   FAQ_SPECIALTIES,
 } from './patientCare'
+export { EHR_SYSTEMS } from './ehrs'
 export { toTelLink, getMapsDirectionsUrl, getTodayDateString } from './utils'
