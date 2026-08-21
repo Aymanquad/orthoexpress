@@ -7,6 +7,8 @@ import 'orders_provider.dart';
 
 class PortalAuthProvider extends ChangeNotifier {
   static const _tokenKey = 'orthoexpress_portal_token';
+  static const _lastPhoneKey = 'orthoexpress_portal_last_phone';
+  static const _preferredLocationKey = 'orthoexpress_preferred_location';
 
   PortalAuthProvider({required OrdersProvider orders}) : _orders = orders;
 
@@ -14,16 +16,22 @@ class PortalAuthProvider extends ChangeNotifier {
 
   PortalPatient? _patient;
   bool _loading = false;
+  String? _lastPhone;
+  String? _preferredLocationSlug;
 
   PortalPatient? get patient => _patient;
   bool get loading => _loading;
   bool get isAuthenticated => _patient != null;
+  String? get lastPhone => _lastPhone;
+  String? get preferredLocationSlug => _preferredLocationSlug;
 
   Future<void> restore() async {
     _loading = true;
     notifyListeners();
     try {
       final prefs = await SharedPreferences.getInstance();
+      _lastPhone = prefs.getString(_lastPhoneKey);
+      _preferredLocationSlug = prefs.getString(_preferredLocationKey);
       final token = prefs.getString(_tokenKey);
       if (token == null || token.isEmpty) {
         _patient = null;
@@ -46,11 +54,50 @@ class PortalAuthProvider extends ChangeNotifier {
     final result = await PortalApi.verifyOtp(phone, code);
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_tokenKey, result.token);
+    await prefs.setString(_lastPhoneKey, phone);
     PortalApi.token = result.token;
     _patient = result.patient;
+    _lastPhone = phone;
     await _syncPatientOrders(result.patient.phone);
     notifyListeners();
     return result.patient;
+  }
+
+  Future<PortalPatient> refreshProfile() async {
+    final patient = await PortalApi.me();
+    _patient = patient;
+    notifyListeners();
+    return patient;
+  }
+
+  Future<PortalPatient> updateProfile({
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String phone,
+    String? preferredLocationSlug,
+  }) async {
+    final updated = await PortalApi.updateProfile(
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
+    );
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_lastPhoneKey, updated.phone);
+    _lastPhone = updated.phone;
+    if (preferredLocationSlug != null) {
+      if (preferredLocationSlug.isEmpty) {
+        await prefs.remove(_preferredLocationKey);
+        _preferredLocationSlug = null;
+      } else {
+        await prefs.setString(_preferredLocationKey, preferredLocationSlug);
+        _preferredLocationSlug = preferredLocationSlug;
+      }
+    }
+    _patient = updated;
+    notifyListeners();
+    return updated;
   }
 
   Future<void> logout() async {

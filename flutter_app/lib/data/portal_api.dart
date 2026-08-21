@@ -61,13 +61,17 @@ class PortalApi {
         res = await http
             .post(uri, headers: headers, body: encoded)
             .timeout(const Duration(seconds: 8));
+      } else if (method == 'PATCH') {
+        res = await http
+            .patch(uri, headers: headers, body: encoded)
+            .timeout(const Duration(seconds: 8));
       } else {
         throw const PortalApiException('Unsupported method');
       }
     } catch (e) {
       if (e is PortalApiException) rethrow;
       throw const PortalApiException(
-        'Could not reach the portal. Make sure the clinic API is running.',
+        'We could not connect right now. Check your connection and try again.',
       );
     }
 
@@ -102,6 +106,26 @@ class PortalApi {
   static Future<PortalPatient> me() async {
     final data = await _send('GET', '/auth/me', auth: true);
     return PortalPatient.fromJson(data['patient'] as Map<String, dynamic>);
+  }
+
+  static Future<PortalPatient> updateProfile({
+    String? firstName,
+    String? lastName,
+    String? email,
+    String? phone,
+  }) async {
+    final body = <String, dynamic>{
+      if (firstName != null) 'firstName': firstName,
+      if (lastName != null) 'lastName': lastName,
+      if (email != null) 'email': email,
+      if (phone != null) 'phone': phone,
+    };
+    final data = await _send('PATCH', '/auth/me', body: body, auth: true);
+    final patientMap = data['patient'] as Map<String, dynamic>?;
+    if (patientMap == null) {
+      throw const PortalApiException('Profile update failed');
+    }
+    return PortalPatient.fromJson(patientMap);
   }
 
   static Future<void> logout() async {

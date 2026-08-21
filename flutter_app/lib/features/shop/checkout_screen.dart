@@ -11,9 +11,12 @@ import '../../core/widgets/empty_state.dart';
 import '../../core/widgets/responsive_page.dart';
 import '../../data/products.dart';
 import '../../data/shop_labels.dart';
+import '../../data/portal_labels.dart';
 import '../../providers/cart_provider.dart';
 import '../../providers/language_provider.dart';
+import '../../providers/portal_auth_provider.dart';
 import '../../providers/orders_provider.dart';
+import '../portal/portal_login_screen.dart' show formatPortalPhone;
 import 'widgets/order_summary_panel.dart';
 
 class CheckoutScreen extends StatefulWidget {
@@ -47,6 +50,23 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       'expiry': TextEditingController(),
       'cvv': TextEditingController(),
     };
+    WidgetsBinding.instance.addPostFrameCallback((_) => _prefillFromProfile());
+  }
+
+  void _prefillFromProfile() {
+    if (!mounted) return;
+    final patient = context.read<PortalAuthProvider>().patient;
+    if (patient == null) return;
+
+    final first = patient.firstName?.trim() ?? '';
+    final last = patient.lastName?.trim() ?? '';
+    if (first.isNotEmpty) _controllers['firstName']!.text = first;
+    if (last.isNotEmpty) _controllers['lastName']!.text = last;
+    if (patient.phone.isNotEmpty) {
+      _controllers['phone']!.text = formatPortalPhone(patient.phone);
+    }
+    final email = patient.email?.trim() ?? '';
+    if (email.isNotEmpty) _controllers['email']!.text = email;
   }
 
   @override
@@ -172,10 +192,40 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   Widget _buildForm(String lang) {
+    final patient = context.watch<PortalAuthProvider>().patient;
+    final signedIn = patient != null;
+    final lockedPhone = signedIn && (patient.phone).isNotEmpty;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(ShopLabels.shippingInfo(lang), style: Theme.of(context).textTheme.titleLarge),
+        if (signedIn) ...[
+          const SizedBox(height: 10),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              color: AppColors.primarySoft,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.verified_user_outlined, color: AppColors.primary, size: 20),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    patient.phone.isEmpty
+                        ? PortalLabels.signedInAs.forLang(lang)
+                        : '${PortalLabels.signedInAs.forLang(lang)} · ${formatPortalPhone(patient.phone)}',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
         const SizedBox(height: 12),
         Card(
           child: Padding(
@@ -184,7 +234,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               _field('firstName', lang),
               _field('lastName', lang),
               _field('email', lang, keyboard: TextInputType.emailAddress),
-              _field('phone', lang, keyboard: TextInputType.phone),
+              _field('phone', lang, keyboard: TextInputType.phone, readOnly: lockedPhone),
               _field('address', lang, fullWidth: true),
               _field('city', lang),
               _field('state', lang),
@@ -242,11 +292,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     bool fullWidth = false,
     bool obscure = false,
     bool digitsOnly = false,
+    bool readOnly = false,
     void Function(String)? onChanged,
   }) {
     final label = ShopLabels.fieldLabels[name]?.forLang(lang) ?? name;
     return TextField(
       controller: _controllers[name],
+      readOnly: readOnly,
       decoration: InputDecoration(
         labelText: label,
         errorText: _errors[name],

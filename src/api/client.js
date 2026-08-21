@@ -31,6 +31,8 @@ export const authApi = {
     apiFetch('/auth/otp/verify', { method: 'POST', body: JSON.stringify({ phone, code }) }),
   logout: () => apiFetch('/auth/logout', { method: 'POST' }),
   me: () => apiFetch('/auth/me'),
+  updateProfile: (payload) =>
+    apiFetch('/auth/me', { method: 'PATCH', body: JSON.stringify(payload) }),
 }
 
 export const appointmentsApi = {

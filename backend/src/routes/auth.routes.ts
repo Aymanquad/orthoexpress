@@ -73,4 +73,61 @@ router.get('/me', requireAuth, async (req, res) => {
   return res.json({ patient })
 })
 
+const profileSchema = z.object({
+  firstName: z.string().trim().max(80).optional(),
+  lastName: z.string().trim().max(80).optional(),
+  email: z
+    .string()
+    .trim()
+    .email()
+    .max(120)
+    .or(z.literal(''))
+    .optional(),
+  phone: z.string().min(7).optional(),
+})
+
+router.patch('/me', requireAuth, async (req, res) => {
+  try {
+    const body = profileSchema.parse(req.body ?? {})
+    const patientId = req.patient!.patientId
+
+    const data: {
+      firstName?: string | null
+      lastName?: string | null
+      email?: string | null
+      phone?: string
+    } = {}
+
+    if (body.firstName !== undefined) {
+      data.firstName = body.firstName.length > 0 ? body.firstName : null
+    }
+    if (body.lastName !== undefined) {
+      data.lastName = body.lastName.length > 0 ? body.lastName : null
+    }
+    if (body.email !== undefined) {
+      data.email = body.email.length > 0 ? body.email : null
+    }
+
+    if (body.phone !== undefined) {
+      const normalized = normalizePhone(body.phone)
+      const existing = await prisma.patient.findUnique({ where: { phone: normalized } })
+      if (existing && existing.id !== patientId) {
+        return res.status(409).json({ error: 'That phone number is already in use.' })
+      }
+      data.phone = normalized
+    }
+
+    const patient = await prisma.patient.update({
+      where: { id: patientId },
+      data,
+      select: { id: true, phone: true, firstName: true, lastName: true, email: true },
+    })
+
+    return res.json({ patient })
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Unable to update profile'
+    return res.status(400).json({ error: message })
+  }
+})
+
 export default router

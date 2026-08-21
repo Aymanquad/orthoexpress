@@ -9,6 +9,7 @@ Future<void> showFormDialog(
   required String title,
   required String message,
   required String primaryLabel,
+  VoidCallback? onPrimary,
 }) {
   final icon = switch (type) {
     FormDialogType.success => Icons.check_circle,
@@ -30,7 +31,10 @@ Future<void> showFormDialog(
       actionsAlignment: MainAxisAlignment.center,
       actions: [
         FilledButton(
-          onPressed: () => Navigator.of(ctx).pop(),
+          onPressed: () {
+            Navigator.of(ctx).pop();
+            onPrimary?.call();
+          },
           style: FilledButton.styleFrom(backgroundColor: AppColors.accent),
           child: Text(primaryLabel),
         ),

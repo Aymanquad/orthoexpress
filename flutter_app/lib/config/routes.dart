@@ -12,9 +12,15 @@ import '../features/lawyers/lawyers_screen.dart';
 import '../features/locations/location_detail_screen.dart';
 import '../features/locations/locations_screen.dart';
 import '../features/more/more_screen.dart';
+import '../features/doctors/doctor_call_screen.dart';
+import '../features/doctors/doctor_chat_screen.dart';
+import '../features/doctors/doctor_inbox_screen.dart';
+import '../features/doctors/doctor_login_screen.dart';
+import '../features/doctors/doctors_screen.dart';
 import '../features/portal/portal_appointments_screen.dart';
 import '../features/portal/portal_dashboard_screen.dart';
 import '../features/portal/portal_login_screen.dart';
+import '../features/portal/portal_profile_screen.dart';
 import '../features/services/service_detail_screen.dart';
 import '../features/services/services_screen.dart';
 import '../features/shop/cart_screen.dart';
@@ -25,6 +31,7 @@ import '../features/shop/orders_screen.dart';
 import '../features/shop/shop_screen.dart';
 import '../features/shared/not_found_screen.dart';
 import '../features/workers_comp/workers_comp_screen.dart';
+import '../providers/doctor_auth_provider.dart';
 import '../providers/portal_auth_provider.dart';
 import 'route_titles.dart';
 
@@ -145,26 +152,62 @@ GoRouter createRouter() {
       }
       final legacy = legacyRouteRedirects[path];
       if (legacy != null) return legacy;
-      return _portalAuthRedirect(context, path);
+      return _authRedirect(context, state);
     },
   );
 }
 
-String? _portalAuthRedirect(BuildContext context, String path) {
-  final isLogin = path == '/more/portal/login';
-  final isProtected = path == '/more/portal' || path == '/more/portal/appointments';
-  if (!isLogin && !isProtected) return null;
+String? _authRedirect(BuildContext context, GoRouterState state) {
+  final path = state.uri.path;
+  final conversationId = state.uri.queryParameters['c'];
 
-  late final PortalAuthProvider auth;
+  PortalAuthProvider? patientAuth;
+  DoctorAuthProvider? doctorAuth;
   try {
-    auth = Provider.of<PortalAuthProvider>(context, listen: false);
+    patientAuth = Provider.of<PortalAuthProvider>(context, listen: false);
+    doctorAuth = Provider.of<DoctorAuthProvider>(context, listen: false);
   } catch (_) {
-    return isProtected ? '/more/portal/login' : null;
+    // Providers not ready — don't bounce navigation.
+    return null;
+  }
+  if (patientAuth.loading || doctorAuth.loading) return null;
+
+  final isPatientLogin = path == '/more/portal/login';
+  final isPatientProtected = path == '/more/portal' ||
+      path == '/more/portal/appointments' ||
+      path == '/more/portal/profile' ||
+      path == '/more/doctors' ||
+      path.startsWith('/more/doctors/call/');
+  final isPatientChat =
+      path.startsWith('/more/doctors/chat/') && conversationId == null;
+  final isDoctorLogin = path == '/more/doctors/login';
+  final isDoctorInbox = path == '/more/doctors/inbox';
+  final isDoctorChat =
+      path.startsWith('/more/doctors/chat/') && conversationId != null;
+
+  if (isPatientProtected && !patientAuth.isAuthenticated) {
+    return '/more/portal/login';
+  }
+  if (isPatientChat && !patientAuth.isAuthenticated) {
+    return '/more/portal/login';
+  }
+  // Prefer Account hub over Home so a leftover login route doesn't fight tab nav.
+  if (isPatientLogin && patientAuth.isAuthenticated) return '/more';
+
+  if (isDoctorLogin && doctorAuth.isAuthenticated) return '/more/doctors/inbox';
+  if (isDoctorInbox && !doctorAuth.isAuthenticated) return '/more/doctors/login';
+  if (isDoctorChat) {
+    if (!doctorAuth.isAuthenticated) return '/more/doctors/login';
+    final parts = path.split('/');
+    // /more/doctors/chat/:doctorId
+    final pathDoctorId = parts.length >= 5 ? parts[4] : '';
+    if (pathDoctorId.isNotEmpty &&
+        doctorAuth.doctor?.id != null &&
+        doctorAuth.doctor!.id != pathDoctorId) {
+      return '/more/doctors/inbox';
+    }
   }
 
-  if (auth.loading) return null;
-  if (isProtected && !auth.isAuthenticated) return '/more/portal/login';
-  if (isLogin && auth.isAuthenticated) return '/more/portal';
   return null;
 }
 
@@ -210,6 +253,33 @@ final List<RouteBase> _moreBranchRoutes = [
     builder: (context, state) => const TelehealthScreen(),
   ),
   GoRoute(
+    path: 'doctors',
+    builder: (context, state) => const DoctorsScreen(),
+    routes: [
+      GoRoute(
+        path: 'login',
+        builder: (context, state) => const DoctorLoginScreen(),
+      ),
+      GoRoute(
+        path: 'inbox',
+        builder: (context, state) => const DoctorInboxScreen(),
+      ),
+      GoRoute(
+        path: 'call/:doctorId',
+        builder: (context, state) => DoctorCallScreen(
+          doctorId: state.pathParameters['doctorId']!,
+        ),
+      ),
+      GoRoute(
+        path: 'chat/:doctorId',
+        builder: (context, state) => DoctorChatScreen(
+          doctorId: state.pathParameters['doctorId']!,
+          conversationId: state.uri.queryParameters['c'],
+        ),
+      ),
+    ],
+  ),
+  GoRoute(
     path: 'after-your-visit',
     builder: (context, state) => const AfterVisitScreen(),
   ),
@@ -228,6 +298,10 @@ final List<RouteBase> _moreBranchRoutes = [
       GoRoute(
         path: 'appointments',
         builder: (context, state) => const PortalAppointmentsScreen(),
+      ),
+      GoRoute(
+        path: 'profile',
+        builder: (context, state) => const PortalProfileScreen(),
       ),
     ],
   ),

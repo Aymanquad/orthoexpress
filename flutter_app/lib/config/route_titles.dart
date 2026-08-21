@@ -1,5 +1,7 @@
 import '../data/clinic.dart';
 import '../data/content_repository.dart';
+import '../data/doctor_labels.dart';
+import '../data/doctors.dart';
 import '../data/form_labels.dart';
 import '../data/locations.dart';
 import '../data/nav_labels.dart';
@@ -32,6 +34,7 @@ class RouteTitles {
         case '/locations':
           return NavLabels.locations.forLang(lang);
         case '/more':
+          // Shell overrides to Account when signed in; default stays More.
           return NavLabels.more.forLang(lang);
       }
     }
@@ -83,6 +86,32 @@ class RouteTitles {
         return ContentRepository.label('info', 'paymentTitle', lang);
       case 'telehealth':
         return ContentRepository.patientLabel('telehealth', 'title', lang);
+      case 'doctors':
+        if (segments.length > 2) {
+          switch (segments[2]) {
+            case 'login':
+              return DoctorLabels.doctorLogin.forLang(lang);
+            case 'inbox':
+              return DoctorLabels.doctorInbox.forLang(lang);
+            case 'call':
+              if (segments.length > 3) {
+                final doctor = doctorById(segments[3]);
+                if (doctor != null) {
+                  return lang == 'es' ? 'Llamada con ${doctor.name}' : 'Call ${doctor.name}';
+                }
+              }
+              return DoctorLabels.call.forLang(lang);
+            case 'chat':
+              if (segments.length > 3) {
+                final doctor = doctorById(segments[3]);
+                if (doctor != null) {
+                  return DoctorLabels.chatWith(lang, doctor.name);
+                }
+              }
+              return DoctorLabels.chat.forLang(lang);
+          }
+        }
+        return DoctorLabels.talkToDoctor.forLang(lang);
       case 'after-your-visit':
         return ContentRepository.patientLabel('afterVisit', 'title', lang);
       case 'patient-portal':
@@ -94,6 +123,8 @@ class RouteTitles {
               return PortalLabels.loginTitle.forLang(lang);
             case 'appointments':
               return PortalLabels.appointmentsTitle.forLang(lang);
+            case 'profile':
+              return PortalLabels.profileTitle.forLang(lang);
           }
         }
         return PortalLabels.dashboardTitle.forLang(lang);

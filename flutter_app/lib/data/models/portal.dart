@@ -18,6 +18,31 @@ class PortalPatient {
     return name;
   }
 
+  String get displayFullName {
+    final parts = [firstName, lastName]
+        .whereType<String>()
+        .map((s) => s.trim())
+        .where((s) => s.isNotEmpty)
+        .toList();
+    return parts.join(' ');
+  }
+
+  PortalPatient copyWith({
+    String? id,
+    String? phone,
+    String? firstName,
+    String? lastName,
+    String? email,
+  }) {
+    return PortalPatient(
+      id: id ?? this.id,
+      phone: phone ?? this.phone,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      email: email ?? this.email,
+    );
+  }
+
   factory PortalPatient.fromJson(Map<String, dynamic> json) => PortalPatient(
         id: json['id'] as String,
         phone: json['phone'] as String? ?? '',
@@ -25,6 +50,14 @@ class PortalPatient {
         lastName: json['lastName'] as String?,
         email: json['email'] as String?,
       );
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'phone': phone,
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': email,
+      };
 }
 
 class PortalAppointment {

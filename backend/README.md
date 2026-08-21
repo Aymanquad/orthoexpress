@@ -44,6 +44,7 @@ With `OTP_DEV_MODE=true`, OTP codes are printed to the API console.
 - `POST /api/auth/otp/verify` — `{ phone, code }` → sets `portal_token` cookie
 - `POST /api/auth/logout`
 - `GET /api/auth/me` — requires auth
+- `PATCH /api/auth/me` — update profile (`firstName`, `lastName`, `email`, `phone`) — requires auth
 - `GET /api/appointments?filter=upcoming|past|all` — requires auth
 - `GET /api/appointments/:id` — requires auth
 - `POST /api/appointments/request` — public book form

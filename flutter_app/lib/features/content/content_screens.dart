@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../config/theme.dart';
 import '../../core/widgets/content_page_scaffold.dart';
-import '../../data/clinic.dart';
 import '../../data/content_repository.dart';
-import '../../data/home_labels.dart';
 import '../../data/nav_labels.dart';
 import '../../data/portal_labels.dart';
 import '../../providers/language_provider.dart';
@@ -57,32 +54,67 @@ class _FaqsScreenState extends State<FaqsScreen> {
           runSpacing: 8,
           children: ContentRepository.faqSpecialties.map((s) {
             final selected = s.id == _specialty;
-            return ChoiceChip(
-              label: Text(s.label.forLang(lang)),
+            return FilterChip(
               selected: selected,
+              showCheckmark: false,
+              label: Text(s.label.forLang(lang)),
+              selectedColor: AppColors.primarySoft,
+              labelStyle: TextStyle(
+                color: selected ? AppColors.primary : AppColors.textDark,
+                fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                fontSize: 13,
+              ),
+              side: BorderSide(
+                color: selected
+                    ? AppColors.primary.withValues(alpha: 0.25)
+                    : AppColors.border,
+              ),
               onSelected: (_) => setState(() => _specialty = s.id),
             );
           }).toList(),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 14),
         ...faqs.map(
-          (faq) => Card(
+          (faq) => Container(
             margin: const EdgeInsets.only(bottom: 8),
-            child: ExpansionTile(
-              title: Text(faq.question.forLang(lang)),
-              subtitle: Text(
-                faq.category.forLang(lang),
-                style: const TextStyle(color: AppColors.accent),
-              ),
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(faq.answer.forLang(lang)),
+            decoration: BoxDecoration(
+              color: AppColors.bgWhite,
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: AppColors.border.withValues(alpha: 0.7)),
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: Theme(
+              data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+              child: ExpansionTile(
+                tilePadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
+                childrenPadding: const EdgeInsets.fromLTRB(14, 0, 14, 14),
+                title: Text(
+                  faq.question.forLang(lang),
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                subtitle: Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Text(
+                    faq.category.forLang(lang),
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: AppColors.accent,
+                          fontWeight: FontWeight.w700,
+                        ),
                   ),
                 ),
-              ],
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      faq.answer.forLang(lang),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: AppColors.textLight,
+                            height: 1.45,
+                          ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -103,46 +135,83 @@ class PaymentScreen extends StatelessWidget {
       title: ContentRepository.label('info', 'paymentTitle', lang),
       lead: ContentRepository.label('info', 'paymentLead', lang),
       children: [
+        ContentSectionTitle(ContentRepository.label('info', 'insuranceHeading', lang)),
         Text(
-          ContentRepository.label('info', 'insuranceHeading', lang),
-          style: Theme.of(context).textTheme.titleLarge,
+          ContentRepository.label('info', 'insuranceLead', lang),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: AppColors.textLight,
+                height: 1.45,
+              ),
         ),
-        const SizedBox(height: 8),
-        Text(ContentRepository.label('info', 'insuranceLead', lang)),
         const SizedBox(height: 12),
         Wrap(
           spacing: 8,
           runSpacing: 8,
           children: ContentRepository.insuranceProviders
               .map(
-                (p) => Chip(
-                  label: Text(p),
-                  backgroundColor: AppColors.primarySoft,
+                (p) => Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: AppColors.primarySoft.withValues(alpha: 0.7),
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                  child: Text(
+                    p,
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w700,
+                        ),
+                  ),
                 ),
               )
               .toList(),
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 22),
+        ContentSectionTitle(ContentRepository.label('info', 'selfPayHeading', lang)),
         Text(
-          ContentRepository.label('info', 'selfPayHeading', lang),
-          style: Theme.of(context).textTheme.titleLarge,
+          ContentRepository.label('info', 'selfPayLead', lang),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: AppColors.textLight,
+                height: 1.45,
+              ),
         ),
-        const SizedBox(height: 8),
-        Text(ContentRepository.label('info', 'selfPayLead', lang)),
         const SizedBox(height: 12),
         ...ContentRepository.selfPayPricing.map(
-          (item) => Card(
-            margin: const EdgeInsets.only(bottom: 10),
-            child: ListTile(
-              title: Text(item.name.forLang(lang)),
-              subtitle: Text(item.note.forLang(lang)),
-              trailing: Text(
-                item.price,
-                style: const TextStyle(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w800,
+          (item) => Container(
+            margin: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+            decoration: BoxDecoration(
+              color: AppColors.bgWhite,
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: AppColors.border.withValues(alpha: 0.7)),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(item.name.forLang(lang), style: Theme.of(context).textTheme.titleSmall),
+                      const SizedBox(height: 2),
+                      Text(
+                        item.note.forLang(lang),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: AppColors.textLight,
+                            ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+                const SizedBox(width: 10),
+                Text(
+                  item.price,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.w800,
+                      ),
+                ),
+              ],
             ),
           ),
         ),
@@ -236,36 +305,32 @@ class TelehealthScreen extends StatelessWidget {
       title: ContentRepository.patientLabel('telehealth', 'title', lang),
       lead: ContentRepository.patientLabel('telehealth', 'lead', lang),
       children: [
-        Text(
-          ContentRepository.patientLabel('telehealth', 'whenHeading', lang),
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        const SizedBox(height: 8),
+        ContentSectionTitle(ContentRepository.patientLabel('telehealth', 'whenHeading', lang)),
         ...ContentRepository.telehealthWhen.map(
-          (b) => FeatureTile(title: b.title.forLang(lang), text: b.text.forLang(lang)),
+          (b) => FeatureTile(
+            icon: Icons.check_circle_outline,
+            title: b.title.forLang(lang),
+            text: b.text.forLang(lang),
+          ),
         ),
         const SizedBox(height: 8),
-        Text(
-          ContentRepository.patientLabel('telehealth', 'stepsHeading', lang),
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        const SizedBox(height: 8),
+        ContentSectionTitle(ContentRepository.patientLabel('telehealth', 'stepsHeading', lang)),
         ...ContentRepository.telehealthSteps.map(
-          (b) => FeatureTile(title: b.title.forLang(lang), text: b.text.forLang(lang)),
+          (b) => FeatureTile(
+            icon: Icons.playlist_add_check_circle_outlined,
+            title: b.title.forLang(lang),
+            text: b.text.forLang(lang),
+          ),
         ),
         Text(
           ContentRepository.patientLabel('telehealth', 'walkInNote', lang),
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.textLight),
         ),
-        const SizedBox(height: 16),
-        FilledButton(
-          onPressed: () => context.push('/more/book-appointment'),
-          style: FilledButton.styleFrom(backgroundColor: AppColors.accent),
-          child: Text(ContentRepository.patientLabel('telehealth', 'ctaBook', lang)),
-        ),
-        TextButton(
-          onPressed: () => context.push('/more/after-your-visit'),
-          child: Text(ContentRepository.patientLabel('telehealth', 'ctaAfterVisit', lang)),
+        ContentCtaRow(
+          primaryLabel: ContentRepository.patientLabel('telehealth', 'ctaBook', lang),
+          onPrimary: () => context.push('/more/book-appointment'),
+          secondaryLabel: ContentRepository.patientLabel('telehealth', 'ctaAfterVisit', lang),
+          onSecondary: () => context.push('/more/after-your-visit'),
         ),
       ],
     );
@@ -284,11 +349,7 @@ class AfterVisitScreen extends StatelessWidget {
       title: ContentRepository.patientLabel('afterVisit', 'title', lang),
       lead: ContentRepository.patientLabel('afterVisit', 'lead', lang),
       children: [
-        Text(
-          ContentRepository.patientLabel('afterVisit', 'stepsHeading', lang),
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        const SizedBox(height: 8),
+        ContentSectionTitle(ContentRepository.patientLabel('afterVisit', 'stepsHeading', lang)),
         ...ContentRepository.afterVisitSteps.map((step) {
           return FeatureTile(
             icon: _stepIcon(step.icon),
@@ -296,16 +357,23 @@ class AfterVisitScreen extends StatelessWidget {
             text: step.text.forLang(lang),
             trailing: step.link == null
                 ? null
-                : TextButton(
-                    onPressed: () => context.push(mapAppPath(step.link)),
-                    child: Text(step.linkLabel.forLang(lang)),
+                : Align(
+                    alignment: Alignment.centerLeft,
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      onPressed: () => context.push(mapAppPath(step.link)),
+                      child: Text(step.linkLabel.forLang(lang)),
+                    ),
                   ),
           );
         }),
-        FilledButton(
-          onPressed: () => context.push('/more/contact-us'),
-          style: FilledButton.styleFrom(backgroundColor: AppColors.accent),
-          child: Text(ContentRepository.patientLabel('afterVisit', 'ctaContact', lang)),
+        ContentCtaRow(
+          primaryLabel: ContentRepository.patientLabel('afterVisit', 'ctaContact', lang),
+          onPrimary: () => context.push('/more/contact-us'),
         ),
       ],
     );
@@ -320,36 +388,35 @@ class PatientPortalScreen extends StatelessWidget {
     final lang = context.watch<LanguageProvider>().locale.languageCode;
     final signedIn = context.watch<PortalAuthProvider>().isAuthenticated;
 
+    if (signedIn) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (context.mounted) context.go('/more/portal');
+      });
+      return ContentPageScaffold(
+        title: PortalLabels.dashboardTitle.forLang(lang),
+        children: const [
+          Center(child: Padding(padding: EdgeInsets.all(24), child: CircularProgressIndicator())),
+        ],
+      );
+    }
+
     return ContentPageScaffold(
       eyebrow: ContentRepository.patientLabel('portal', 'eyebrow', lang),
       title: ContentRepository.patientLabel('portal', 'title', lang),
-      lead: ContentRepository.patientLabel('portal', 'lead', lang),
+      lead: ContentRepository.patientLabel('portal', 'signInHelp', lang),
       children: [
         Card(
           color: AppColors.primarySoft,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  ContentRepository.patientLabel('portal', 'signIn', lang),
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(height: 6),
-                Text(ContentRepository.patientLabel('portal', 'signInHelp', lang)),
-                const SizedBox(height: 12),
                 FilledButton.icon(
-                  onPressed: () {
-                    context.push(signedIn ? '/more/portal' : '/more/portal/login');
-                  },
+                  onPressed: () => context.push('/more/portal/login'),
                   style: FilledButton.styleFrom(backgroundColor: AppColors.accent),
-                  icon: Icon(signedIn ? Icons.dashboard_outlined : Icons.login),
-                  label: Text(
-                    signedIn
-                        ? PortalLabels.goToDashboard.forLang(lang)
-                        : PortalLabels.signInWithPhone.forLang(lang),
-                  ),
+                  icon: const Icon(Icons.login),
+                  label: Text(PortalLabels.signInWithPhone.forLang(lang)),
                 ),
                 const SizedBox(height: 8),
                 Text(
@@ -365,66 +432,31 @@ class PatientPortalScreen extends StatelessWidget {
         const SizedBox(height: 20),
         Text(
           ContentRepository.patientLabel('portal', 'featuresHeading', lang),
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        const SizedBox(height: 8),
-        ...ContentRepository.portalFeatures.map((f) {
-          return FeatureTile(
-            title: f.title.forLang(lang),
-            text: f.text.forLang(lang),
-            trailing: f.link == null
-                ? null
-                : TextButton(
-                    onPressed: () async {
-                      final path = f.link!;
-                      if (f.internal) {
-                        context.push(mapAppPath(path));
-                      } else {
-                        final uri = Uri.parse(path);
-                        if (await canLaunchUrl(uri)) {
-                          await launchUrl(uri, mode: LaunchMode.externalApplication);
-                        }
-                      }
-                    },
-                    child: Text(HomeLabels.learnMore(lang)),
-                  ),
-          );
-        }),
-        const SizedBox(height: 8),
-        Text(
-          ContentRepository.patientLabel('portal', 'noPortalTitle', lang),
           style: Theme.of(context).textTheme.titleMedium,
         ),
-        const SizedBox(height: 6),
-        Text(ContentRepository.patientLabel('portal', 'noPortalText', lang)),
+        const SizedBox(height: 8),
+        ...ContentRepository.portalFeatures.take(3).map(
+              (f) => ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.check_circle_outline, color: AppColors.accent),
+                title: Text(f.title.forLang(lang)),
+                subtitle: Text(f.text.forLang(lang)),
+              ),
+            ),
         const SizedBox(height: 12),
         Wrap(
           spacing: 8,
           runSpacing: 8,
           children: [
-            FilledButton(
-              onPressed: () => context.push('/more/contact-us'),
-              style: FilledButton.styleFrom(backgroundColor: AppColors.accent),
-              child: Text(NavLabels.contact.forLang(lang)),
-            ),
             OutlinedButton(
               onPressed: () => context.push('/more/book-appointment'),
               child: Text(NavLabels.bookAppointmentShort.forLang(lang)),
             ),
             OutlinedButton(
-              onPressed: () => context.push('/more/payment'),
-              child: Text(NavLabels.payment.forLang(lang)),
+              onPressed: () => context.push('/more/contact-us'),
+              child: Text(NavLabels.contact.forLang(lang)),
             ),
           ],
-        ),
-        const SizedBox(height: 8),
-        OutlinedButton.icon(
-          onPressed: () async {
-            final uri = Uri.parse(ClinicData.telLink(ClinicData.headquartersPhone));
-            if (await canLaunchUrl(uri)) await launchUrl(uri);
-          },
-          icon: const Icon(Icons.phone),
-          label: Text(ClinicData.headquartersPhone),
         ),
       ],
     );
@@ -444,18 +476,28 @@ class TechnologyScreen extends StatelessWidget {
       lead: ContentRepository.patientLabel('technology', 'lead', lang),
       children: [
         ...ContentRepository.technologyFeatures.map(
-          (b) => FeatureTile(title: b.title.forLang(lang), text: b.text.forLang(lang)),
+          (b) => FeatureTile(
+            icon: Icons.memory_outlined,
+            title: b.title.forLang(lang),
+            text: b.text.forLang(lang),
+          ),
         ),
         const SizedBox(height: 8),
+        ContentSectionTitle(ContentRepository.patientLabel('technology', 'orthochatHeading', lang)),
         Text(
-          ContentRepository.patientLabel('technology', 'orthochatHeading', lang),
-          style: Theme.of(context).textTheme.titleLarge,
+          ContentRepository.patientLabel('technology', 'orthochatLead', lang),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: AppColors.textLight,
+                height: 1.45,
+              ),
         ),
-        const SizedBox(height: 8),
-        Text(ContentRepository.patientLabel('technology', 'orthochatLead', lang)),
-        const SizedBox(height: 8),
+        const SizedBox(height: 12),
         ...ContentRepository.orthochatFeatures.map(
-          (b) => FeatureTile(title: b.title.forLang(lang), text: b.text.forLang(lang)),
+          (b) => FeatureTile(
+            icon: Icons.chat_bubble_outline_rounded,
+            title: b.title.forLang(lang),
+            text: b.text.forLang(lang),
+          ),
         ),
       ],
     );
@@ -478,14 +520,17 @@ class LegalScreen extends StatelessWidget {
         lead: ContentRepository.label('info', 'accessibilityLead', lang),
         children: [
           FeatureTile(
+            icon: Icons.favorite_border_rounded,
             title: ContentRepository.label('info', 'accessibilityCommitment', lang),
             text: ContentRepository.label('info', 'accessibilityLead', lang),
           ),
           FeatureTile(
+            icon: Icons.tune_rounded,
             title: ContentRepository.label('info', 'accessibilityTools', lang),
             text: ContentRepository.label('info', 'accessibilityToolsText', lang),
           ),
           FeatureTile(
+            icon: Icons.support_agent_outlined,
             title: ContentRepository.label('info', 'accessibilityContact', lang),
             text: ContentRepository.label('info', 'accessibilityContactText', lang),
           ),

@@ -120,6 +120,9 @@ class HomeLabels {
           ? 'Entre hoy — o obtenga indicaciones en un toque.'
           : 'Walk in today — or get directions in one tap.';
 
+  static String locationsCompactSubtitle(String lang) =>
+      lang == 'es' ? 'Su clínica más cercana.' : 'Your nearest clinic.';
+
   static String locationsViewAll(String lang) =>
       lang == 'es' ? 'Todas las ubicaciones' : 'All locations';
 
@@ -138,6 +141,9 @@ class HomeLabels {
       lang == 'es'
           ? 'Atención ortopédica de confianza.'
           : 'Walk-in orthopedic care patients trust.';
+
+  static String reviewsCompactSubtitle(String lang) =>
+      lang == 'es' ? 'Valorado en Google.' : 'Rated on Google.';
 
   static String reviewsGoogle(String lang) =>
       lang == 'es' ? 'Reseñas de Google' : 'Google Reviews';

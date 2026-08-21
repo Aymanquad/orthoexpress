@@ -105,11 +105,13 @@ class OrderSuccessScreen extends StatelessWidget {
                     Text(
                       '${ShopLabels.shippingTo(lang)}: ${order.customer.address}, '
                       '${order.customer.city}, ${order.customer.state} ${order.customer.zip}',
+                      softWrap: true,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     const SizedBox(height: 8),
                     Text(
                       ShopLabels.confirmationEmail(lang, order.customer.email),
+                      softWrap: true,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     if (order.payment != null) ...[
@@ -117,6 +119,7 @@ class OrderSuccessScreen extends StatelessWidget {
                       Text(
                         '${ShopLabels.paymentInfo(lang)}: ${ShopLabels.paymentDemo(lang)}'
                         '${order.payment!.last4 != null ? ' •••• ${order.payment!.last4}' : ''}',
+                        softWrap: true,
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],

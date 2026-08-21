@@ -14,6 +14,8 @@ class NavLabels {
   static const tabShop = L10nString(en: 'Shop', es: 'Tienda');
   static const tabLocations = L10nString(en: 'Locations', es: 'Sedes');
   static const tabMore = L10nString(en: 'More', es: 'Más');
+  static const tabAccount = L10nString(en: 'Account', es: 'Cuenta');
+  static const account = L10nString(en: 'Account', es: 'Cuenta');
   static const contactShort = L10nString(en: 'Contact', es: 'Contacto');
   static const about = L10nString(en: 'About', es: 'Nosotros');
   static const workersComp = L10nString(en: "Workers' Comp", es: 'Compensación laboral');
@@ -55,6 +57,8 @@ class NavLabels {
   static const company = L10nString(en: 'Company', es: 'Empresa');
   static const legal = L10nString(en: 'Legal', es: 'Legal');
   static const patientCare = L10nString(en: 'Patient care', es: 'Atención al paciente');
+  static const yourCare = L10nString(en: 'Your care', es: 'Su atención');
+  static const helpAndInfo = L10nString(en: 'Help & info', es: 'Ayuda e info');
   static const checkout = L10nString(en: 'Checkout', es: 'Pago');
   static const paymentTitle = L10nString(en: 'Payment', es: 'Pago');
   static const share = L10nString(en: 'Share', es: 'Compartir');

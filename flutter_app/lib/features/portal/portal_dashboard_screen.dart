@@ -14,6 +14,7 @@ import '../../data/shop_labels.dart';
 import '../../providers/language_provider.dart';
 import '../../providers/portal_auth_provider.dart';
 import 'portal_widgets.dart';
+import 'portal_login_screen.dart' show confirmSignOut;
 
 class PortalDashboardScreen extends StatefulWidget {
   const PortalDashboardScreen({super.key});
@@ -129,9 +130,12 @@ class _PortalDashboardScreenState extends State<PortalDashboardScreen> {
         const SizedBox(height: 16),
         OutlinedButton(
           onPressed: () async {
+            final lang = context.read<LanguageProvider>().locale.languageCode;
+            final ok = await confirmSignOut(context, lang);
+            if (!ok || !context.mounted) return;
             await context.read<PortalAuthProvider>().logout();
             if (!context.mounted) return;
-            context.go('/more/portal/login');
+            context.go('/home');
           },
           child: Text(PortalLabels.signOut.forLang(lang)),
         ),

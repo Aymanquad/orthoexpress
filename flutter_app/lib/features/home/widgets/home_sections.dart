@@ -215,13 +215,12 @@ class _TrustChip extends StatelessWidget {
 class WhatWeTreatSection extends StatelessWidget {
   const WhatWeTreatSection({super.key});
 
+  /// Top patient paths only — full catalog lives on the Services tab.
   static const _cards = [
     _TreatCard('injured', HomeImages.injured, '/services/injuries-fractures-sprains'),
     _TreatCard('pain', HomeImages.pain, '/services/pain-inflammation'),
     _TreatCard('scan', null, '/services/mri-digital-imaging', slug: 'mri-digital-imaging'),
     _TreatCard('sports', 'assets/images/home/snapshot-sports.jpg', '/services/sports-medicine'),
-    _TreatCard('spine', null, '/services/lumbar-cervical-spine', slug: 'lumbar-cervical-spine'),
-    _TreatCard('workers', HomeImages.workers, '/more/workers-comp'),
   ];
 
   @override
@@ -360,22 +359,25 @@ class HowWeCareSection extends StatelessWidget {
 }
 
 class LocationsPreviewSection extends StatelessWidget {
-  const LocationsPreviewSection({super.key});
+  final bool compact;
+
+  const LocationsPreviewSection({super.key, this.compact = false});
 
   @override
   Widget build(BuildContext context) {
     final lang = context.watch<LanguageProvider>().locale.languageCode;
+    final preview = compact ? locations.take(1) : locations;
 
     return _HomeSection(
       eyebrow: HomeLabels.locationsLabel(lang),
       title: HomeLabels.locationsTitle(lang),
-      subtitle: HomeLabels.locationsSubtitle(lang),
+      subtitle: compact ? HomeLabels.locationsCompactSubtitle(lang) : HomeLabels.locationsSubtitle(lang),
       trailing: TextButton(
         onPressed: () => context.go('/locations'),
         child: Text('${HomeLabels.locationsViewAll(lang)} →'),
       ),
       child: Column(
-        children: locations.map((loc) {
+        children: preview.map((loc) {
           return Card(
             margin: const EdgeInsets.only(bottom: 12),
             clipBehavior: Clip.antiAlias,
@@ -421,64 +423,65 @@ class LocationsPreviewSection extends StatelessWidget {
 }
 
 class ReviewsSection extends StatelessWidget {
-  const ReviewsSection({super.key});
+  final bool compact;
+
+  const ReviewsSection({super.key, this.compact = false});
 
   @override
   Widget build(BuildContext context) {
     final lang = context.watch<LanguageProvider>().locale.languageCode;
-    final review = ContentRepository.patientReviews.isEmpty
+    final review = compact || ContentRepository.patientReviews.isEmpty
         ? null
         : ContentRepository.patientReviews.first;
 
     return _HomeSection(
       title: HomeLabels.reviewsTitle(lang),
-      subtitle: HomeLabels.reviewsSubtitle(lang),
+      subtitle: compact ? HomeLabels.reviewsCompactSubtitle(lang) : HomeLabels.reviewsSubtitle(lang),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            children: [
-              _StatBadge(label: '150K+', caption: HomeLabels.statsHappyPatients(lang)),
-              const SizedBox(width: 12),
-              _StatBadge(label: '200K+', caption: HomeLabels.statsPatientsServed(lang)),
-            ],
-          ),
-          const SizedBox(height: 16),
+          if (!compact) ...[
+            Row(
+              children: [
+                _StatBadge(label: '150K+', caption: HomeLabels.statsHappyPatients(lang)),
+                const SizedBox(width: 12),
+                _StatBadge(label: '200K+', caption: HomeLabels.statsPatientsServed(lang)),
+              ],
+            ),
+            const SizedBox(height: 16),
+          ],
           Card(
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(compact ? 14 : 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    HomeLabels.reviewsGoogle(lang),
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 8),
                   Row(
                     children: [
                       ...List.generate(
                         5,
-                        (_) => const Icon(Icons.star, color: Colors.amber, size: 20),
+                        (_) => Icon(Icons.star, color: Colors.amber, size: compact ? 18 : 20),
                       ),
                       const SizedBox(width: 8),
                       Flexible(
                         child: Text(
-                          '${ClinicData.googleRating} ${HomeLabels.reviewsRatingLabel(lang)}',
-                          style: Theme.of(context).textTheme.titleMedium,
+                          '${ClinicData.googleRating} · ${HomeLabels.reviewsCount(lang, ClinicData.googleReviewCount)}',
+                          style: Theme.of(context).textTheme.titleSmall,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
                       ),
                     ],
                   ),
-                  Text(
-                    HomeLabels.reviewsCount(lang, ClinicData.googleReviewCount),
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.textLight,
-                        ),
-                  ),
-                  const SizedBox(height: 12),
+                  if (!compact) ...[
+                    Text(
+                      HomeLabels.reviewsGoogle(lang),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: AppColors.textLight,
+                          ),
+                    ),
+                  ],
+                  SizedBox(height: compact ? 10 : 12),
                   SecondaryButton(
                     label: HomeLabels.reviewsViewOnGoogle(lang),
                     icon: Icons.open_in_new_rounded,

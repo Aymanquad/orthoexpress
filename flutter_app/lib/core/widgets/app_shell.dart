@@ -4,19 +4,28 @@ import 'package:provider/provider.dart';
 import '../../config/route_titles.dart';
 import '../../config/theme.dart';
 import '../../data/nav_labels.dart';
+import '../../data/portal_labels.dart';
 import '../../features/search/site_search.dart';
 import '../../providers/cart_provider.dart';
 import '../../providers/language_provider.dart';
+import '../../providers/portal_auth_provider.dart';
 import '../utils/responsive.dart';
 import 'app_bar_title.dart';
 import 'language_chip.dart';
+import 'quick_action_bar.dart';
 
 class AppShell extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
 
   const AppShell({super.key, required this.navigationShell});
 
-  void _onTab(int index) {
+  void _onTab(BuildContext context, int index) {
+    // Account/More: always open the hub. A stale /portal/login under the
+    // indexed stack used to immediately bounce signed-in users back to Home.
+    if (index == 4) {
+      context.go('/more');
+      return;
+    }
     navigationShell.goBranch(
       index,
       initialLocation: index == navigationShell.currentIndex,
@@ -27,7 +36,12 @@ class AppShell extends StatelessWidget {
     return Icon(selected ? filled : outlined, size: selected ? 23 : 22);
   }
 
-  List<NavigationDestination> _phoneDestinations(int cartCount, String lang) => [
+  List<NavigationDestination> _phoneDestinations({
+    required int cartCount,
+    required String lang,
+    required bool signedIn,
+  }) =>
+      [
         NavigationDestination(
           icon: _navIcon(Icons.home_outlined, Icons.home_rounded),
           selectedIcon: _navIcon(Icons.home_outlined, Icons.home_rounded, selected: true),
@@ -39,6 +53,7 @@ class AppShell extends StatelessWidget {
           label: NavLabels.tabServices.forLang(lang),
         ),
         NavigationDestination(
+          // Badge lives only on the Shop tab — not also in the app bar.
           icon: Badge(
             isLabelVisible: cartCount > 0,
             label: Text('$cartCount', style: const TextStyle(fontSize: 10)),
@@ -57,13 +72,27 @@ class AppShell extends StatelessWidget {
           label: NavLabels.tabLocations.forLang(lang),
         ),
         NavigationDestination(
-          icon: _navIcon(Icons.apps_outlined, Icons.apps_rounded),
-          selectedIcon: _navIcon(Icons.apps_outlined, Icons.apps_rounded, selected: true),
-          label: NavLabels.tabMore.forLang(lang),
+          icon: _navIcon(
+            signedIn ? Icons.person_outline_rounded : Icons.apps_outlined,
+            signedIn ? Icons.person_rounded : Icons.apps_rounded,
+          ),
+          selectedIcon: _navIcon(
+            signedIn ? Icons.person_outline_rounded : Icons.apps_outlined,
+            signedIn ? Icons.person_rounded : Icons.apps_rounded,
+            selected: true,
+          ),
+          label: signedIn
+              ? NavLabels.tabAccount.forLang(lang)
+              : NavLabels.tabMore.forLang(lang),
         ),
       ];
 
-  List<NavigationRailDestination> _railDestinations(int cartCount, String lang) => [
+  List<NavigationRailDestination> _railDestinations({
+    required int cartCount,
+    required String lang,
+    required bool signedIn,
+  }) =>
+      [
         NavigationRailDestination(
           icon: const Icon(Icons.home_outlined),
           selectedIcon: const Icon(Icons.home_rounded),
@@ -93,9 +122,13 @@ class AppShell extends StatelessWidget {
           label: Text(NavLabels.tabLocations.forLang(lang)),
         ),
         NavigationRailDestination(
-          icon: const Icon(Icons.apps_outlined),
-          selectedIcon: const Icon(Icons.apps_rounded),
-          label: Text(NavLabels.tabMore.forLang(lang)),
+          icon: Icon(signedIn ? Icons.person_outline_rounded : Icons.apps_outlined),
+          selectedIcon: Icon(signedIn ? Icons.person_rounded : Icons.apps_rounded),
+          label: Text(
+            signedIn
+                ? NavLabels.tabAccount.forLang(lang)
+                : NavLabels.tabMore.forLang(lang),
+          ),
         ),
       ];
 
@@ -104,11 +137,15 @@ class AppShell extends StatelessWidget {
     required LanguageProvider lang,
     required int cartCount,
     required String currentPath,
+    required bool signedIn,
   }) {
     final showBack = !RouteTitles.isTabRoot(currentPath);
-    final title = RouteTitles.forPath(currentPath, lang.locale.languageCode);
     final code = lang.locale.languageCode;
     final onShop = currentPath.startsWith('/shop');
+    final onMoreRoot = currentPath == '/more';
+    final title = onMoreRoot && signedIn
+        ? NavLabels.account.forLang(code)
+        : RouteTitles.forPath(currentPath, code);
 
     return AppBar(
       automaticallyImplyLeading: false,
@@ -139,6 +176,14 @@ class AppShell extends StatelessWidget {
       titleSpacing: showBack ? 4 : 16,
       title: AppBarTitle(title),
       actions: [
+        // Profile only when guest — signed-in users use the Account tab.
+        if (!signedIn)
+          IconButton(
+            visualDensity: VisualDensity.compact,
+            tooltip: PortalLabels.signInWithPhone.forLang(code),
+            onPressed: () => context.push('/more/portal/login'),
+            icon: const Icon(Icons.person_outline_rounded, size: 22),
+          ),
         IconButton(
           visualDensity: VisualDensity.compact,
           tooltip: NavLabels.search.forLang(code),
@@ -158,17 +203,32 @@ class AppShell extends StatelessWidget {
             icon: const Icon(Icons.receipt_long_outlined, size: 22),
           ),
         const LanguageChip(),
-        IconButton(
-          visualDensity: VisualDensity.compact,
-          tooltip: NavLabels.cart.forLang(code),
-          onPressed: () => context.push('/shop/cart'),
-          icon: Badge(
-            isLabelVisible: cartCount > 0,
-            label: Text('$cartCount', style: const TextStyle(fontSize: 10)),
-            child: const Icon(Icons.shopping_bag_outlined, size: 22),
+        // Cart in app bar only off the Shop tab (Shop tab already badges the bag).
+        if (!onShop)
+          IconButton(
+            visualDensity: VisualDensity.compact,
+            tooltip: NavLabels.cart.forLang(code),
+            onPressed: () => context.push('/shop/cart'),
+            icon: Badge(
+              isLabelVisible: cartCount > 0,
+              label: Text('$cartCount', style: const TextStyle(fontSize: 10)),
+              child: const Icon(Icons.shopping_bag_outlined, size: 22),
+            ),
           ),
-        ),
         const SizedBox(width: 2),
+      ],
+    );
+  }
+
+  Widget _shellBody({
+    required Widget child,
+    required bool showQuickActions,
+  }) {
+    if (!showQuickActions) return child;
+    return Column(
+      children: [
+        Expanded(child: child),
+        const QuickActionBar(),
       ],
     );
   }
@@ -177,10 +237,12 @@ class AppShell extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartCount = context.watch<CartProvider>().cartCount;
     final lang = context.watch<LanguageProvider>();
+    final signedIn = context.watch<PortalAuthProvider>().isAuthenticated;
     final useRail = context.useNavigationRail;
     final currentPath = GoRouterState.of(context).uri.path;
     final localeKey = lang.locale.languageCode;
     final selectedIndex = navigationShell.currentIndex;
+    final showQuickActions = RouteTitles.isTabRoot(currentPath);
 
     if (useRail) {
       return Scaffold(
@@ -190,6 +252,7 @@ class AppShell extends StatelessWidget {
           lang: lang,
           cartCount: cartCount,
           currentPath: currentPath,
+          signedIn: signedIn,
         ),
         body: Row(
           children: [
@@ -197,7 +260,7 @@ class AppShell extends StatelessWidget {
               child: NavigationRail(
                 backgroundColor: AppColors.bgWhite,
                 selectedIndex: selectedIndex,
-                onDestinationSelected: _onTab,
+                onDestinationSelected: (index) => _onTab(context, index),
                 extended: context.useExtendedRail,
                 labelType: context.useExtendedRail
                     ? NavigationRailLabelType.none
@@ -205,11 +268,20 @@ class AppShell extends StatelessWidget {
                 minExtendedWidth: 88,
                 useIndicator: true,
                 indicatorColor: AppColors.primarySoft,
-                destinations: _railDestinations(cartCount, localeKey),
+                destinations: _railDestinations(
+                  cartCount: cartCount,
+                  lang: localeKey,
+                  signedIn: signedIn,
+                ),
               ),
             ),
             const VerticalDivider(width: 1, thickness: 1),
-            Expanded(child: navigationShell),
+            Expanded(
+              child: _shellBody(
+                child: navigationShell,
+                showQuickActions: showQuickActions,
+              ),
+            ),
           ],
         ),
       );
@@ -222,18 +294,26 @@ class AppShell extends StatelessWidget {
         lang: lang,
         cartCount: cartCount,
         currentPath: currentPath,
+        signedIn: signedIn,
       ),
-      body: navigationShell,
+      body: _shellBody(
+        child: navigationShell,
+        showQuickActions: showQuickActions,
+      ),
       bottomNavigationBar: DecoratedBox(
         decoration: const BoxDecoration(
           border: Border(top: BorderSide(color: AppColors.border, width: 0.5)),
         ),
         child: NavigationBar(
           selectedIndex: selectedIndex,
-          onDestinationSelected: _onTab,
+          onDestinationSelected: (index) => _onTab(context, index),
           labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
           animationDuration: const Duration(milliseconds: 220),
-          destinations: _phoneDestinations(cartCount, localeKey),
+          destinations: _phoneDestinations(
+            cartCount: cartCount,
+            lang: localeKey,
+            signedIn: signedIn,
+          ),
         ),
       ),
     );

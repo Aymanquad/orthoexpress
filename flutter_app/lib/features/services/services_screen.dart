@@ -33,18 +33,8 @@ class ServicesScreen extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(ServicesLabels.title.forLang(lang), style: Theme.of(context).textTheme.displayMedium),
-        const SizedBox(height: 8),
-        Text(
-          ServicesLabels.intro.forLang(lang),
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 20),
         Text(ServicesLabels.coreHeading.forLang(lang), style: Theme.of(context).textTheme.titleLarge),
-        const SizedBox(height: 6),
-        Text(
-          ServicesLabels.coreLead.forLang(lang),
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
         const SizedBox(height: 12),
         ResponsiveCardGrid(
           itemCount: primaryServices.length,
@@ -55,11 +45,6 @@ class ServicesScreen extends StatelessWidget {
         ),
         const SizedBox(height: 24),
         Text(ServicesLabels.accidentHeading.forLang(lang), style: Theme.of(context).textTheme.titleLarge),
-        const SizedBox(height: 6),
-        Text(
-          ServicesLabels.accidentLead.forLang(lang),
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
         const SizedBox(height: 12),
         ResponsiveCardGrid(
           itemCount: accidentInjuryServices.length,
@@ -70,11 +55,6 @@ class ServicesScreen extends StatelessWidget {
         ),
         const SizedBox(height: 24),
         Text(ServicesLabels.specialtyHeading.forLang(lang), style: Theme.of(context).textTheme.titleLarge),
-        const SizedBox(height: 6),
-        Text(
-          ServicesLabels.specialtyLead.forLang(lang),
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
         const SizedBox(height: 12),
         ResponsiveCardGrid(
           itemCount: specialtyServices.length,
@@ -89,57 +69,13 @@ class ServicesScreen extends StatelessWidget {
         Card(
           clipBehavior: Clip.antiAlias,
           margin: EdgeInsets.zero,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ListTile(
-                tileColor: AppColors.bgSoft,
-                leading: const Icon(Icons.work_outline, color: AppColors.primary),
-                title: Text(ServiceLabels.name('workers-comp', lang)),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () => context.push('/more/workers-comp'),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 14),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: AccentHeroBookButton(
-                    compact: true,
-                    label: CommonLabels.bookAppointment.forLang(lang),
-                    onPressed: () => context.push('/more/book-appointment'),
-                  ),
-                ),
-              ),
-            ],
+          child: ListTile(
+            tileColor: AppColors.bgSoft,
+            leading: const Icon(Icons.work_outline, color: AppColors.primary),
+            title: Text(ServiceLabels.name('workers-comp', lang)),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push('/more/workers-comp'),
           ),
-        ),
-        const SizedBox(height: 20),
-        Text(
-          ServicesLabels.ctaPrompt.forLang(lang),
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
-        const SizedBox(height: 12),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: [
-            FilledButton(
-              onPressed: () => context.push('/more/book-appointment'),
-              child: Text(
-                CommonLabels.bookAppointment.forLang(lang),
-                maxLines: 2,
-                textAlign: TextAlign.center,
-              ),
-            ),
-            OutlinedButton(
-              onPressed: () => context.push('/more/contact-us'),
-              child: Text(
-                CommonLabels.contactUs.forLang(lang),
-                maxLines: 2,
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ],
         ),
       ],
     );
@@ -160,66 +96,50 @@ class _ServiceTile extends StatelessWidget {
     return Card(
       clipBehavior: Clip.antiAlias,
       margin: EdgeInsets.zero,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          InkWell(
-            onTap: () => context.push('/services/${service.slug}'),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                AssetImageWithFallback(
-                  assetPath: serviceImagePath(service.slug),
-                  fallbackPath: ServiceImages.listFallbackPath(service.slug),
-                  height: 120,
-                  fit: BoxFit.cover,
-                  alignment: ServiceImages.forSlug(service.slug).alignment,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      child: InkWell(
+        onTap: () => context.push('/services/${service.slug}'),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            AssetImageWithFallback(
+              assetPath: serviceImagePath(service.slug),
+              fallbackPath: ServiceImages.listFallbackPath(service.slug),
+              height: 120,
+              fit: BoxFit.cover,
+              alignment: ServiceImages.forSlug(service.slug).alignment,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 12, 12, 14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
                     children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              name,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 15),
-                            ),
-                          ),
-                          const Icon(Icons.arrow_forward, color: AppColors.textMuted, size: 18),
-                        ],
-                      ),
-                      if (summary.isNotEmpty) ...[
-                        const SizedBox(height: 6),
-                        Text(
-                          summary,
-                          maxLines: 3,
+                      Expanded(
+                        child: Text(
+                          name,
+                          maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 13),
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 15),
                         ),
-                      ],
+                      ),
+                      const Icon(Icons.arrow_forward, color: AppColors.textMuted, size: 18),
                     ],
                   ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(12, 10, 12, 14),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: AccentHeroBookButton(
-                compact: true,
-                label: CommonLabels.bookAppointment.forLang(lang),
-                onPressed: () => context.push('/more/book-appointment'),
+                  if (summary.isNotEmpty) ...[
+                    const SizedBox(height: 6),
+                    Text(
+                      summary,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 13),
+                    ),
+                  ],
+                ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

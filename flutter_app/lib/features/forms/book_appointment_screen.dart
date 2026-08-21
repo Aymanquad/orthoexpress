@@ -11,6 +11,9 @@ import '../../data/form_labels.dart';
 import '../../data/locations.dart';
 import '../../data/page_labels.dart';
 import '../../providers/language_provider.dart';
+import '../../providers/portal_auth_provider.dart';
+import '../../data/portal_labels.dart';
+import '../portal/portal_login_screen.dart' show formatPortalPhone;
 
 class BookAppointmentScreen extends StatefulWidget {
   const BookAppointmentScreen({super.key});
@@ -28,6 +31,38 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
   final _reasonController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _prefillFromProfile());
+  }
+
+  void _prefillFromProfile() {
+    if (!mounted) return;
+    final auth = context.read<PortalAuthProvider>();
+    final patient = auth.patient;
+    if (patient == null) return;
+
+    final parts = [patient.firstName, patient.lastName]
+        .where((s) => s != null && s.trim().isNotEmpty)
+        .map((s) => s!.trim())
+        .toList();
+    if (parts.isNotEmpty) _nameController.text = parts.join(' ');
+    if (patient.phone.isNotEmpty) {
+      _phoneController.text = formatPortalPhone(patient.phone);
+    }
+    final email = patient.email?.trim() ?? '';
+    if (email.isNotEmpty) _emailController.text = email;
+
+    final preferred = auth.preferredLocationSlug;
+    if (preferred != null &&
+        preferred.isNotEmpty &&
+        _form.location.isEmpty &&
+        locations.any((l) => l.slug == preferred)) {
+      _form.location = preferred;
+    }
+  }
 
   @override
   void dispose() {
@@ -104,7 +139,10 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
     }
 
     if (!mounted) return;
+    final wasSignedIn = context.read<PortalAuthProvider>().isAuthenticated;
     _clearForm();
+    // Re-apply profile after clear so a second booking stays prefilled.
+    _prefillFromProfile();
     setState(() {});
     await showFormDialog(
       context,
@@ -113,19 +151,30 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
       message: result.viaMailto
           ? BookLabels.successMailto(lang)
           : BookLabels.successForm(lang),
-      primaryLabel: BookLabels.gotIt(lang),
+      primaryLabel: wasSignedIn
+          ? PortalLabels.myAppointments.forLang(lang)
+          : BookLabels.gotIt(lang),
+      onPrimary: wasSignedIn
+          ? () {
+              if (context.mounted) context.go('/more/portal/appointments');
+            }
+          : null,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final lang = context.watch<LanguageProvider>().locale.languageCode;
+    final signedIn = context.watch<PortalAuthProvider>().isAuthenticated;
+    final patient = context.watch<PortalAuthProvider>().patient;
     final info = _InfoSection(lang: lang);
     final form = _FormSection(
       lang: lang,
       form: _form,
       errors: _errors,
       submitting: _submitting,
+      signedIn: signedIn,
+      signedInPhone: patient?.phone ?? '',
       nameController: _nameController,
       phoneController: _phoneController,
       emailController: _emailController,
@@ -258,6 +307,8 @@ class _FormSection extends StatelessWidget {
   final AppointmentFormData form;
   final Map<String, String> errors;
   final bool submitting;
+  final bool signedIn;
+  final String signedInPhone;
   final TextEditingController nameController;
   final TextEditingController phoneController;
   final TextEditingController emailController;
@@ -274,6 +325,8 @@ class _FormSection extends StatelessWidget {
     required this.form,
     required this.errors,
     required this.submitting,
+    required this.signedIn,
+    required this.signedInPhone,
     required this.nameController,
     required this.phoneController,
     required this.emailController,
@@ -315,6 +368,32 @@ class _FormSection extends StatelessWidget {
               BookLabels.formHint(lang),
               style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
             ),
+            if (signedIn) ...[
+              const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                decoration: BoxDecoration(
+                  color: AppColors.primarySoft,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.verified_user_outlined, color: AppColors.primary, size: 20),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        signedInPhone.isEmpty
+                            ? PortalLabels.signedInAs.forLang(lang)
+                            : '${PortalLabels.signedInAs.forLang(lang)} · $signedInPhone',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
             const SizedBox(height: 20),
             Text(
               BookLabels.yourDetails(lang),
@@ -334,10 +413,14 @@ class _FormSection extends StatelessWidget {
             TextField(
               controller: phoneController,
               keyboardType: TextInputType.phone,
+              readOnly: signedIn && signedInPhone.isNotEmpty,
               decoration: InputDecoration(
                 labelText: '${BookLabels.phone(lang)} *',
                 errorText: errors['phone'],
                 border: const OutlineInputBorder(),
+                helperText: signedIn && signedInPhone.isNotEmpty
+                    ? PortalLabels.signedInAs.forLang(lang)
+                    : null,
               ),
               onChanged: (_) => onFieldChanged('phone'),
             ),
