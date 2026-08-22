@@ -112,6 +112,38 @@ class RouteTitles {
           }
         }
         return DoctorLabels.talkToDoctor.forLang(lang);
+      case 'admin':
+        if (segments.length > 2) {
+          switch (segments[2]) {
+            case 'login':
+              return lang == 'es' ? 'Acceso laboral' : 'Workplace sign in';
+            case 'staff':
+              return lang == 'es' ? 'Personal' : 'Staff';
+            case 'appointments':
+              return lang == 'es' ? 'Citas' : 'Appointments';
+            case 'orders':
+              return lang == 'es' ? 'Pedidos' : 'Orders';
+            case 'prescriptions':
+              return lang == 'es' ? 'Recetas' : 'Prescriptions';
+            case 'demographics':
+              return lang == 'es' ? 'Datos' : 'Demographics';
+          }
+        }
+        return lang == 'es' ? 'Portal laboral' : 'Workplace';
+      case 'staff':
+        if (segments.length > 4) {
+          switch (segments[4]) {
+            case 'appointments':
+              return lang == 'es' ? 'Citas' : 'Appointments';
+            case 'orders':
+              return lang == 'es' ? 'Pedidos' : 'Orders';
+            case 'prescriptions':
+              return lang == 'es' ? 'Recetas' : 'Prescriptions';
+            case 'demographics':
+              return lang == 'es' ? 'Datos' : 'Demographics';
+          }
+        }
+        return lang == 'es' ? 'Portal laboral' : 'Workplace';
       case 'after-your-visit':
         return ContentRepository.patientLabel('afterVisit', 'title', lang);
       case 'patient-portal':
@@ -125,6 +157,8 @@ class RouteTitles {
               return PortalLabels.appointmentsTitle.forLang(lang);
             case 'profile':
               return PortalLabels.profileTitle.forLang(lang);
+            case 'records':
+              return PortalLabels.recordsTitle.forLang(lang);
           }
         }
         return PortalLabels.dashboardTitle.forLang(lang);

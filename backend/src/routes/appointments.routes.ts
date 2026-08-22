@@ -29,7 +29,7 @@ router.get('/', requireAuth, async (req, res) => {
 })
 
 router.get('/:id', requireAuth, async (req, res) => {
-  const appointment = await getAppointmentById(req.patient!.patientId, req.params.id)
+  const appointment = await getAppointmentById(req.patient!.patientId, String(req.params.id))
   if (!appointment) return res.status(404).json({ error: 'Appointment not found' })
   return res.json({ appointment })
 })

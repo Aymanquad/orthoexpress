@@ -5,6 +5,14 @@ import { env } from './config/env.js'
 import authRoutes from './routes/auth.routes.js'
 import appointmentsRoutes from './routes/appointments.routes.js'
 import ordersRoutes from './routes/orders.routes.js'
+import workplaceAuthRoutes from './routes/workplaceAuth.routes.js'
+import workplaceStaffRoutes from './routes/workplaceStaff.routes.js'
+import workplaceAppointmentsRoutes from './routes/workplaceAppointments.routes.js'
+import workplaceOrdersRoutes from './routes/workplaceOrders.routes.js'
+import workplacePrescriptionsRoutes from './routes/workplacePrescriptions.routes.js'
+import workplaceDemographicsRoutes from './routes/workplaceDemographics.routes.js'
+import workplacePatientsRoutes from './routes/workplacePatients.routes.js'
+import recordsRoutes from './routes/records.routes.js'
 
 const app = express()
 
@@ -31,6 +39,14 @@ app.get('/api/health', (_req, res) => {
 app.use('/api/auth', authRoutes)
 app.use('/api/appointments', appointmentsRoutes)
 app.use('/api/orders', ordersRoutes)
+app.use('/api/workplace/auth', workplaceAuthRoutes)
+app.use('/api/workplace/staff', workplaceStaffRoutes)
+app.use('/api/workplace/appointments', workplaceAppointmentsRoutes)
+app.use('/api/workplace/orders', workplaceOrdersRoutes)
+app.use('/api/workplace/prescriptions', workplacePrescriptionsRoutes)
+app.use('/api/workplace/demographics', workplaceDemographicsRoutes)
+app.use('/api/workplace/patients', workplacePatientsRoutes)
+app.use('/api/records', recordsRoutes)
 
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error(err)

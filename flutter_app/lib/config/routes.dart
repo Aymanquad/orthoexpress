@@ -12,6 +12,13 @@ import '../features/lawyers/lawyers_screen.dart';
 import '../features/locations/location_detail_screen.dart';
 import '../features/locations/locations_screen.dart';
 import '../features/more/more_screen.dart';
+import '../features/admin/workplace_appointments_screen.dart';
+import '../features/admin/workplace_dashboard_screen.dart';
+import '../features/admin/workplace_login_screen.dart';
+import '../features/admin/workplace_orders_screen.dart';
+import '../features/admin/workplace_prescriptions_screen.dart';
+import '../features/admin/workplace_demographics_screen.dart';
+import '../features/admin/workplace_staff_screen.dart';
 import '../features/doctors/doctor_call_screen.dart';
 import '../features/doctors/doctor_chat_screen.dart';
 import '../features/doctors/doctor_inbox_screen.dart';
@@ -21,6 +28,7 @@ import '../features/portal/portal_appointments_screen.dart';
 import '../features/portal/portal_dashboard_screen.dart';
 import '../features/portal/portal_login_screen.dart';
 import '../features/portal/portal_profile_screen.dart';
+import '../features/portal/portal_records_screen.dart';
 import '../features/services/service_detail_screen.dart';
 import '../features/services/services_screen.dart';
 import '../features/shop/cart_screen.dart';
@@ -33,6 +41,7 @@ import '../features/shared/not_found_screen.dart';
 import '../features/workers_comp/workers_comp_screen.dart';
 import '../providers/doctor_auth_provider.dart';
 import '../providers/portal_auth_provider.dart';
+import '../providers/workplace_auth_provider.dart';
 import 'route_titles.dart';
 
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -163,19 +172,24 @@ String? _authRedirect(BuildContext context, GoRouterState state) {
 
   PortalAuthProvider? patientAuth;
   DoctorAuthProvider? doctorAuth;
+  WorkplaceAuthProvider? workplaceAuth;
   try {
     patientAuth = Provider.of<PortalAuthProvider>(context, listen: false);
     doctorAuth = Provider.of<DoctorAuthProvider>(context, listen: false);
+    workplaceAuth = Provider.of<WorkplaceAuthProvider>(context, listen: false);
   } catch (_) {
     // Providers not ready — don't bounce navigation.
     return null;
   }
-  if (patientAuth.loading || doctorAuth.loading) return null;
+  if (patientAuth.loading || doctorAuth.loading || workplaceAuth.loading) {
+    return null;
+  }
 
   final isPatientLogin = path == '/more/portal/login';
   final isPatientProtected = path == '/more/portal' ||
       path == '/more/portal/appointments' ||
       path == '/more/portal/profile' ||
+      path == '/more/portal/records' ||
       path == '/more/doctors' ||
       path.startsWith('/more/doctors/call/');
   final isPatientChat =
@@ -191,7 +205,6 @@ String? _authRedirect(BuildContext context, GoRouterState state) {
   if (isPatientChat && !patientAuth.isAuthenticated) {
     return '/more/portal/login';
   }
-  // Prefer Account hub over Home so a leftover login route doesn't fight tab nav.
   if (isPatientLogin && patientAuth.isAuthenticated) return '/more';
 
   if (isDoctorLogin && doctorAuth.isAuthenticated) return '/more/doctors/inbox';
@@ -199,12 +212,89 @@ String? _authRedirect(BuildContext context, GoRouterState state) {
   if (isDoctorChat) {
     if (!doctorAuth.isAuthenticated) return '/more/doctors/login';
     final parts = path.split('/');
-    // /more/doctors/chat/:doctorId
     final pathDoctorId = parts.length >= 5 ? parts[4] : '';
     if (pathDoctorId.isNotEmpty &&
         doctorAuth.doctor?.id != null &&
         doctorAuth.doctor!.id != pathDoctorId) {
       return '/more/doctors/inbox';
+    }
+  }
+
+  final isWorkplaceLogin = path == '/more/admin/login';
+  final isAdminRoot = path == '/more/admin';
+  final isWorkplaceStaff = path == '/more/admin/staff';
+  final isAdminAppointments = path == '/more/admin/appointments';
+  final isAdminOrders = path == '/more/admin/orders';
+  final isAdminPrescriptions = path == '/more/admin/prescriptions';
+  final isAdminDemographics = path == '/more/admin/demographics';
+  final isStaffTree = path.startsWith('/more/staff/');
+  final staffHome = workplaceAuth.user?.workplaceHome ?? '/more/admin';
+
+  if (isWorkplaceLogin && workplaceAuth.isAuthenticated) {
+    return staffHome;
+  }
+  if ((isAdminRoot ||
+          isWorkplaceStaff ||
+          isAdminAppointments ||
+          isAdminOrders ||
+          isAdminPrescriptions ||
+          isAdminDemographics ||
+          isStaffTree) &&
+      !workplaceAuth.isAuthenticated) {
+    return '/more/admin/login';
+  }
+  if (isWorkplaceStaff && !workplaceAuth.isAdmin) return staffHome;
+  if ((isAdminAppointments || path.endsWith('/appointments')) &&
+      path.contains('/staff/') &&
+      !workplaceAuth.can('appointments')) {
+    return staffHome;
+  }
+  if ((isAdminOrders || path.endsWith('/orders')) &&
+      path.contains('/staff/') &&
+      !workplaceAuth.can('orders')) {
+    return staffHome;
+  }
+  if ((isAdminPrescriptions || path.endsWith('/prescriptions')) &&
+      (path.contains('/staff/') || isAdminPrescriptions) &&
+      !workplaceAuth.can('prescriptions')) {
+    return staffHome;
+  }
+  if ((isAdminDemographics || path.endsWith('/demographics')) &&
+      (path.contains('/staff/') || isAdminDemographics) &&
+      !workplaceAuth.can('demographics')) {
+    return staffHome;
+  }
+  if (isAdminAppointments && !workplaceAuth.can('appointments')) {
+    return staffHome;
+  }
+  if (isAdminOrders && !workplaceAuth.can('orders')) {
+    return staffHome;
+  }
+  if (!workplaceAuth.isAdmin &&
+      (isAdminRoot ||
+          isAdminAppointments ||
+          isAdminOrders ||
+          isAdminPrescriptions ||
+          isAdminDemographics)) {
+    final rest = path.replaceFirst('/more/admin', '');
+    if (rest.isEmpty || rest == '/') return staffHome;
+    return '$staffHome$rest';
+  }
+  if (workplaceAuth.isAdmin && isStaffTree) {
+    final parts = path.split('/');
+    final rest = parts.length > 5 ? '/${parts.sublist(5).join('/')}' : '';
+    if (rest == '/appointments') return '/more/admin/appointments';
+    if (rest == '/orders') return '/more/admin/orders';
+    if (rest == '/prescriptions') return '/more/admin/prescriptions';
+    if (rest == '/demographics') return '/more/admin/demographics';
+    return '/more/admin';
+  }
+  if (isStaffTree && workplaceAuth.user != null && !workplaceAuth.isAdmin) {
+    final parts = path.split('/');
+    // /more/staff/:slug/:id/...
+    final id = parts.length > 4 ? parts[4] : '';
+    if (id.isNotEmpty && id != workplaceAuth.user!.staffId) {
+      return staffHome;
     }
   }
 
@@ -280,6 +370,58 @@ final List<RouteBase> _moreBranchRoutes = [
     ],
   ),
   GoRoute(
+    path: 'admin',
+    builder: (context, state) => const WorkplaceDashboardScreen(),
+    routes: [
+      GoRoute(
+        path: 'login',
+        builder: (context, state) => const WorkplaceLoginScreen(),
+      ),
+      GoRoute(
+        path: 'staff',
+        builder: (context, state) => const WorkplaceStaffScreen(),
+      ),
+      GoRoute(
+        path: 'appointments',
+        builder: (context, state) => const WorkplaceAppointmentsScreen(),
+      ),
+      GoRoute(
+        path: 'orders',
+        builder: (context, state) => const WorkplaceOrdersScreen(),
+      ),
+      GoRoute(
+        path: 'prescriptions',
+        builder: (context, state) => const WorkplacePrescriptionsScreen(),
+      ),
+      GoRoute(
+        path: 'demographics',
+        builder: (context, state) => const WorkplaceDemographicsScreen(),
+      ),
+    ],
+  ),
+  GoRoute(
+    path: 'staff/:slug/:staffId',
+    builder: (context, state) => const WorkplaceDashboardScreen(),
+    routes: [
+      GoRoute(
+        path: 'appointments',
+        builder: (context, state) => const WorkplaceAppointmentsScreen(),
+      ),
+      GoRoute(
+        path: 'orders',
+        builder: (context, state) => const WorkplaceOrdersScreen(),
+      ),
+      GoRoute(
+        path: 'prescriptions',
+        builder: (context, state) => const WorkplacePrescriptionsScreen(),
+      ),
+      GoRoute(
+        path: 'demographics',
+        builder: (context, state) => const WorkplaceDemographicsScreen(),
+      ),
+    ],
+  ),
+  GoRoute(
     path: 'after-your-visit',
     builder: (context, state) => const AfterVisitScreen(),
   ),
@@ -302,6 +444,10 @@ final List<RouteBase> _moreBranchRoutes = [
       GoRoute(
         path: 'profile',
         builder: (context, state) => const PortalProfileScreen(),
+      ),
+      GoRoute(
+        path: 'records',
+        builder: (context, state) => const PortalRecordsScreen(),
       ),
     ],
   ),

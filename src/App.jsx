@@ -35,13 +35,24 @@ import PatientPortal from './pages/PatientPortal'
 import PortalLogin from './pages/portal/PortalLogin'
 import PortalDashboard from './pages/portal/PortalDashboard'
 import PortalAppointments from './pages/portal/PortalAppointments'
+import PortalRecords from './pages/portal/PortalRecords'
 import PrivateRoute from './components/PrivateRoute'
+import WorkplacePrivateRoute from './components/WorkplacePrivateRoute'
 import Technology from './pages/Technology'
 import AccessibilityStatement from './pages/AccessibilityStatement'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import TermsOfService from './pages/TermsOfService'
 import NotFound from './pages/NotFound'
 import AnatomyViewerEmbed from './pages/embed/AnatomyViewerEmbed'
+import AdminLogin from './pages/admin/AdminLogin'
+import AdminLayout from './pages/admin/AdminLayout'
+import AdminDashboard from './pages/admin/AdminDashboard'
+import AdminStaff from './pages/admin/AdminStaff'
+import AdminAppointments from './pages/admin/AdminAppointments'
+import AdminOrders from './pages/admin/AdminOrders'
+import AdminProfile from './pages/admin/AdminProfile'
+import AdminPrescriptions from './pages/admin/AdminPrescriptions'
+import AdminDemographics from './pages/admin/AdminDemographics'
 import './App.css'
 
 function App() {
@@ -54,6 +65,113 @@ function App() {
       <ErrorBoundary>
         <Routes>
           <Route path="/embed/anatomy-viewer" element={<AnatomyViewerEmbed />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </ErrorBoundary>
+    )
+  }
+
+  // Workplace admin/staff UI — separate from patient marketing chrome.
+  if (pathname.startsWith('/admin') || pathname.startsWith('/staff/')) {
+    return (
+      <ErrorBoundary>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route
+            path="/admin"
+            element={
+              <WorkplacePrivateRoute>
+                <AdminLayout />
+              </WorkplacePrivateRoute>
+            }
+          >
+            <Route index element={<AdminDashboard />} />
+            <Route
+              path="staff"
+              element={
+                <WorkplacePrivateRoute requireAdmin>
+                  <AdminStaff />
+                </WorkplacePrivateRoute>
+              }
+            />
+            <Route
+              path="appointments"
+              element={
+                <WorkplacePrivateRoute module="appointments" access="read">
+                  <AdminAppointments />
+                </WorkplacePrivateRoute>
+              }
+            />
+            <Route
+              path="orders"
+              element={
+                <WorkplacePrivateRoute module="orders" access="read">
+                  <AdminOrders />
+                </WorkplacePrivateRoute>
+              }
+            />
+            <Route
+              path="prescriptions"
+              element={
+                <WorkplacePrivateRoute module="prescriptions" access="read">
+                  <AdminPrescriptions />
+                </WorkplacePrivateRoute>
+              }
+            />
+            <Route
+              path="demographics"
+              element={
+                <WorkplacePrivateRoute module="demographics" access="read">
+                  <AdminDemographics />
+                </WorkplacePrivateRoute>
+              }
+            />
+            <Route path="profile" element={<AdminProfile />} />
+          </Route>
+          <Route
+            path="/staff/:slug/:staffId"
+            element={
+              <WorkplacePrivateRoute>
+                <AdminLayout />
+              </WorkplacePrivateRoute>
+            }
+          >
+            <Route index element={<AdminDashboard />} />
+            <Route
+              path="appointments"
+              element={
+                <WorkplacePrivateRoute module="appointments" access="read">
+                  <AdminAppointments />
+                </WorkplacePrivateRoute>
+              }
+            />
+            <Route
+              path="orders"
+              element={
+                <WorkplacePrivateRoute module="orders" access="read">
+                  <AdminOrders />
+                </WorkplacePrivateRoute>
+              }
+            />
+            <Route
+              path="prescriptions"
+              element={
+                <WorkplacePrivateRoute module="prescriptions" access="read">
+                  <AdminPrescriptions />
+                </WorkplacePrivateRoute>
+              }
+            />
+            <Route
+              path="demographics"
+              element={
+                <WorkplacePrivateRoute module="demographics" access="read">
+                  <AdminDemographics />
+                </WorkplacePrivateRoute>
+              }
+            />
+            <Route path="profile" element={<AdminProfile />} />
+          </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </ErrorBoundary>
@@ -113,6 +231,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <PortalAppointments />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/portal/records"
+              element={
+                <PrivateRoute>
+                  <PortalRecords />
                 </PrivateRoute>
               }
             />

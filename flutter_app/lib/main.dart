@@ -11,6 +11,7 @@ import 'providers/orders_provider.dart';
 import 'providers/chat_provider.dart';
 import 'providers/doctor_auth_provider.dart';
 import 'providers/portal_auth_provider.dart';
+import 'providers/workplace_auth_provider.dart';
 // 3D anatomy viewer temporarily disabled.
 // import 'features/home/widgets/anatomy_embed_view.dart';
 // import 'features/home/widgets/skeleton_3d.dart';
@@ -31,6 +32,7 @@ Future<void> main() async {
   final a11y = AccessibilityProvider();
   final portalAuth = PortalAuthProvider(orders: orders);
   final doctorAuth = DoctorAuthProvider();
+  final workplaceAuth = WorkplaceAuthProvider();
   final chat = ChatProvider();
   await lang.load();
   await cart.load();
@@ -38,6 +40,7 @@ Future<void> main() async {
   await a11y.load();
   await portalAuth.restore();
   await doctorAuth.restore();
+  await workplaceAuth.restore();
   await chat.load();
   await ServiceDetailRepository.ensureLoaded();
   await ContentRepository.ensureLoaded();
@@ -51,6 +54,7 @@ Future<void> main() async {
         ChangeNotifierProvider.value(value: a11y),
         ChangeNotifierProvider.value(value: portalAuth),
         ChangeNotifierProvider.value(value: doctorAuth),
+        ChangeNotifierProvider.value(value: workplaceAuth),
         ChangeNotifierProvider.value(value: chat),
       ],
       child: const OrthoExpressApp(),

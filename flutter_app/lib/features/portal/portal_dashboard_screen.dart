@@ -89,6 +89,10 @@ class _PortalDashboardScreenState extends State<PortalDashboardScreen> {
               child: Text(PortalLabels.myOrders.forLang(lang)),
             ),
             OutlinedButton(
+              onPressed: () => context.push('/more/portal/records'),
+              child: Text(PortalLabels.myRecords.forLang(lang)),
+            ),
+            OutlinedButton(
               onPressed: () => context.push('/more/contact-us'),
               child: Text(PortalLabels.contactClinic.forLang(lang)),
             ),

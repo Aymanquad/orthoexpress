@@ -46,3 +46,11 @@ export const ordersApi = {
   save: (order) => apiFetch('/orders', { method: 'POST', body: JSON.stringify(order) }),
   list: () => apiFetch('/orders'),
 }
+
+export const recordsApi = {
+  prescriptions: () => apiFetch('/records/prescriptions'),
+  demographics: () => apiFetch('/records/demographics'),
+  updateDemographicsContact: (payload) =>
+    apiFetch('/records/demographics', { method: 'PATCH', body: JSON.stringify(payload) }),
+}
+

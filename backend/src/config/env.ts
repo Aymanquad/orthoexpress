@@ -9,6 +9,7 @@ const envSchema = z.object({
   JWT_SECRET: z.string().min(16),
   JWT_EXPIRES_IN: z.string().default('7d'),
   COOKIE_NAME: z.string().default('portal_token'),
+  STAFF_COOKIE_NAME: z.string().default('staff_token'),
   OTP_DEV_MODE: z
     .string()
     .optional()

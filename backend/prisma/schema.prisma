@@ -8,15 +8,17 @@ datasource db {
 }
 
 model Patient {
-  id           String        @id @default(cuid())
-  phone        String        @unique
-  firstName    String?
-  lastName     String?
-  email        String?
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  appointments Appointment[]
-  shopOrders   ShopOrder[]
+  id            String                @id @default(cuid())
+  phone         String                @unique
+  firstName     String?
+  lastName      String?
+  email         String?
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+  appointments  Appointment[]
+  shopOrders    ShopOrder[]
+  demographics  PatientDemographics?
+  prescriptions Prescription[]
 }
 
 model OtpChallenge {
@@ -71,4 +73,103 @@ model ShopOrder {
 
   @@index([patientId, createdAt])
   @@index([phone])
+}
+
+/// Practice owner — v1 seeds one admin; staff always link here.
+model Admin {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  firstName    String?
+  lastName     String?
+  phone        String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  staff        Staff[]
+}
+
+enum StaffRole {
+  MANAGER
+  FRONT_DESK
+  CLINICAL
+  BILLING
+}
+
+/// Staff created only by an Admin; permissions JSON limits module access.
+model Staff {
+  id           String    @id @default(cuid())
+  adminId      String
+  admin        Admin     @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  email        String    @unique
+  passwordHash String
+  firstName    String?
+  lastName     String?
+  phone        String?
+  role         StaffRole @default(FRONT_DESK)
+  /// e.g. {"appointments":{"read":true,"write":false},"orders":{"read":true,"write":false}}
+  permissions  String    @default("{}")
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([adminId, role])
+}
+
+model PatientDemographics {
+  id                    String   @id @default(cuid())
+  patientId             String   @unique
+  patient               Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  dateOfBirth           String?
+  sex                   String?
+  address               String?
+  city                  String?
+  state                 String?
+  country               String?
+  zip                   String?
+  emergencyName         String?
+  emergencyPhone        String?
+  emergencyRelationship String?
+  insuranceProvider     String?
+  insurancePolicyNumber String?
+  allergies             String?
+  bloodType             String?
+  conditions            String?
+  notes                 String?
+  updatedByType         String?
+  updatedById           String?
+  updatedByName         String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+enum PrescriptionStatus {
+  ACTIVE
+  COMPLETED
+  DISCONTINUED
+}
+
+model Prescription {
+  id            String             @id @default(cuid())
+  patientId     String
+  patient       Patient            @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  medication    String
+  dosage        String
+  frequency     String?
+  instructions  String?
+  prescribedBy  String?
+  status        PrescriptionStatus @default(ACTIVE)
+  startsAt      DateTime?
+  endsAt        DateTime?
+  notes         String?
+  createdByType String?
+  createdById   String?
+  createdByName String?
+  updatedByType String?
+  updatedById   String?
+  updatedByName String?
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  @@index([patientId, status])
 }

@@ -165,6 +165,81 @@ class PortalLabels {
     en: 'No shop orders linked to this phone yet.',
     es: 'Aún no hay pedidos vinculados a este teléfono.',
   );
+  static const myRecords = L10nString(en: 'My records', es: 'Mis registros');
+  static const recordsTitle = L10nString(en: 'My records', es: 'Mis registros');
+  static String recordsHeroTitle(String lang, String name) => lang == 'es'
+      ? '$name, su resumen de salud'
+      : '$name, your health snapshot';
+  static const recordsLead = L10nString(
+    en: 'Everything your care team has on file — prescriptions, profile, and contact details in one place.',
+    es: 'Todo lo que su equipo de atención tiene registrado — recetas, perfil y contacto en un solo lugar.',
+  );
+  static const snapshotLabel = L10nString(en: 'Health snapshot', es: 'Resumen de salud');
+  static const lastUpdated = L10nString(en: 'Profile last updated', es: 'Perfil actualizado');
+  static const activeRx = L10nString(en: 'Active medications', es: 'Medicamentos activos');
+  static const insurance = L10nString(en: 'Insurance', es: 'Seguro');
+  static const allergyAlert = L10nString(en: 'Known allergy on file', es: 'Alergia registrada');
+  static const editContact = L10nString(en: 'Update contact info', es: 'Actualizar contacto');
+  static const addContact = L10nString(en: 'Add contact info', es: 'Agregar contacto');
+  static const saveContact = L10nString(en: 'Save contact info', es: 'Guardar contacto');
+  static const savingContact = L10nString(en: 'Saving…', es: 'Guardando…');
+  static const cancel = L10nString(en: 'Cancel', es: 'Cancelar');
+  static const contactSaved = L10nString(
+    en: 'Contact information saved.',
+    es: 'Información de contacto guardada.',
+  );
+  static const contactEditHint = L10nString(
+    en: 'You can update your address and emergency contact. Clinical fields are managed by your care team.',
+    es: 'Puede actualizar su dirección y contacto de emergencia. Los datos clínicos los gestiona su equipo.',
+  );
+  static const clinicalReadOnly = L10nString(
+    en: 'Clinical and insurance details are maintained by your care team.',
+    es: 'Los datos clínicos y de seguro los mantiene su equipo de atención.',
+  );
+  static const sectionIdentity = L10nString(en: 'Identity', es: 'Identidad');
+  static const sectionContact = L10nString(en: 'Contact & address', es: 'Contacto y dirección');
+  static const sectionCoverage = L10nString(en: 'Insurance', es: 'Seguro');
+  static const sectionClinical = L10nString(en: 'Clinical history', es: 'Historial clínico');
+  static const demographicsHint = L10nString(
+    en: 'Your profile and contact details with the clinic.',
+    es: 'Su perfil y datos de contacto en la clínica.',
+  );
+  static const prescriptionsHint = L10nString(
+    en: 'Medications prescribed during your care.',
+    es: 'Medicamentos recetados durante su atención.',
+  );
+  static const filterAll = L10nString(en: 'All', es: 'Todas');
+  static const noRxFilter = L10nString(
+    en: 'No prescriptions match this filter.',
+    es: 'No hay recetas con este filtro.',
+  );
+  static const demographics = L10nString(en: 'Demographics', es: 'Datos demográficos');
+  static const prescriptions = L10nString(en: 'Prescriptions', es: 'Recetas');
+  static const noDemo = L10nString(
+    en: 'No demographic record has been added yet.',
+    es: 'Aún no hay un registro demográfico.',
+  );
+  static const noRx = L10nString(en: 'No prescriptions on file.', es: 'No hay recetas en el expediente.');
+  static const dob = L10nString(en: 'Date of birth', es: 'Fecha de nacimiento');
+  static const sex = L10nString(en: 'Sex', es: 'Sexo');
+  static const bloodType = L10nString(en: 'Blood type', es: 'Tipo de sangre');
+  static const address = L10nString(en: 'Address', es: 'Dirección');
+  static const country = L10nString(en: 'Country', es: 'País');
+  static const emergency = L10nString(en: 'Emergency contact', es: 'Contacto de emergencia');
+  static const emergencyPhone = L10nString(en: 'Emergency phone', es: 'Teléfono de emergencia');
+  static const emergencyRelationship = L10nString(en: 'Relationship', es: 'Parentesco');
+  static const allergies = L10nString(en: 'Allergies', es: 'Alergias');
+  static const conditions = L10nString(en: 'Conditions', es: 'Condiciones');
+
+  static String rxStatus(String key, String lang) {
+    const map = {
+      'ACTIVE': L10nString(en: 'Active', es: 'Activa'),
+      'COMPLETED': L10nString(en: 'Completed', es: 'Completada'),
+      'DISCONTINUED': L10nString(en: 'Discontinued', es: 'Descontinuada'),
+      'STOPPED': L10nString(en: 'Discontinued', es: 'Descontinuada'),
+    };
+    return map[key]?.forLang(lang) ?? key;
+  }
 
   static const appointmentsTitle = L10nString(en: 'My Appointments', es: 'Mis citas');
   static const tabUpcoming = L10nString(en: 'Upcoming', es: 'Próximas');

@@ -11,6 +11,7 @@ import '../../features/portal/portal_login_screen.dart'
 import '../../providers/doctor_auth_provider.dart';
 import '../../providers/language_provider.dart';
 import '../../providers/portal_auth_provider.dart';
+import '../../providers/workplace_auth_provider.dart';
 
 class MoreScreen extends StatelessWidget {
   const MoreScreen({super.key});
@@ -21,6 +22,9 @@ class MoreScreen extends StatelessWidget {
     final signedIn = context.watch<PortalAuthProvider>().isAuthenticated;
     final patient = context.watch<PortalAuthProvider>().patient;
     final doctorSignedIn = context.watch<DoctorAuthProvider>().isAuthenticated;
+    final workplaceAuth = context.watch<WorkplaceAuthProvider>();
+    final workplaceSignedIn = workplaceAuth.isAuthenticated;
+    final workplaceHome = workplaceAuth.user?.workplaceHome ?? '/more/admin';
 
     return ResponsiveScrollPage(
       children: [
@@ -55,6 +59,11 @@ class MoreScreen extends StatelessWidget {
                 Icons.receipt_long_outlined,
               ),
               _LinkItem(
+                PortalLabels.myRecords.forLang(lang),
+                '/more/portal/records',
+                Icons.folder_shared_outlined,
+              ),
+              _LinkItem(
                 DoctorLabels.talkToDoctor.forLang(lang),
                 '/more/doctors',
                 Icons.phone_in_talk_outlined,
@@ -84,6 +93,13 @@ class MoreScreen extends StatelessWidget {
                   : DoctorLabels.imADoctor.forLang(lang),
               doctorSignedIn ? '/more/doctors/inbox' : '/more/doctors/login',
               Icons.medical_services_outlined,
+            ),
+            _LinkItem(
+              workplaceSignedIn
+                  ? (lang == 'es' ? 'Portal laboral' : 'Workplace')
+                  : (lang == 'es' ? 'Personal / Admin' : 'Staff / Admin'),
+              workplaceSignedIn ? workplaceHome : '/more/admin/login',
+              Icons.badge_outlined,
             ),
           ],
         ),

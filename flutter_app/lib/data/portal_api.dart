@@ -163,6 +163,22 @@ class PortalApi {
     await _send('POST', '/orders', body: order.toJson());
   }
 
+  static Future<List<Map<String, dynamic>>> listPrescriptions() async {
+    final data = await _send('GET', '/records/prescriptions', auth: true);
+    final list = data['prescriptions'] as List? ?? const [];
+    return list.whereType<Map>().map((e) => Map<String, dynamic>.from(e)).toList();
+  }
+
+  static Future<Map<String, dynamic>> getDemographics() async {
+    return _send('GET', '/records/demographics', auth: true);
+  }
+
+  static Future<Map<String, dynamic>> updateDemographicsContact(
+    Map<String, dynamic> payload,
+  ) async {
+    return _send('PATCH', '/records/demographics', body: payload, auth: true);
+  }
+
   static Future<void> requestAppointment({
     required String name,
     required String phone,

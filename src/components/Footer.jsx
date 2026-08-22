@@ -102,6 +102,8 @@ const Footer = () => {
             <Link to="/terms">{t('footer.terms')}</Link>
             <span>|</span>
             <Link to="/accessibility">{t('footer.accessibility')}</Link>
+            <span>|</span>
+            <Link to="/admin/login">Staff / Admin</Link>
           </div>
         </div>
       </div>

@@ -96,6 +96,9 @@ const PortalDashboard = () => {
           <Link to="/orders" className="btn btn-outline">
             {t('portal.dashboard.myOrders')}
           </Link>
+          <Link to="/portal/records" className="btn btn-outline">
+            {t('portal.dashboard.myRecords')}
+          </Link>
           <Link to="/contact-us" className="btn btn-outline">
             {t('portal.dashboard.contactClinic')}
           </Link>
